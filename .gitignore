@@ -1,0 +1,69 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.installed.cfg
+*.egg
+
+# ---- Environments ----
+.venv/
+venv/
+env/
+.conda/
+*.conda
+.python-version
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+notebooks/**/*.ipynb_checkpoints/
+
+# ---- Testing / coverage / caches ----
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.hypothesis/
+
+# ---- Data (versioned out of git; tracked via DVC / external download scripts) ----
+data/raw/*
+data/processed/*
+data/external/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+*.cif
+*.pdb
+*.mmcif
+*.sdf
+*.mol2
+*.npz
+*.parquet
+*.h5
+*.hdf5
+
+# ---- Results: keep committed figures small; ignore large intermediates ----
+results/**/*.pkl
+results/**/*.npz
+results/checkpoints/
+!results/figures/.gitkeep
+
+# ---- Model weights (never commit) ----
+weights/
+*.pt
+*.ckpt
+*.safetensors
+
+# ---- OS / editor ----
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# ---- Secrets ----
+.env
+.env.*
+!.env.example

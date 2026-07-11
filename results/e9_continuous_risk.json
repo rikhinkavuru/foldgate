@@ -1,0 +1,32 @@
+{
+  "af3": {
+    "area_mean_rmsd_native": 1.7466480050620645,
+    "area_mean_rmsd_combined": 1.3227987895029751,
+    "mean_rmsd_at_50pct_native": 1.7208148055656374,
+    "mean_rmsd_at_50pct_combined": 1.1397503598951024
+  },
+  "boltz1": {
+    "area_mean_rmsd_native": 2.004089866426914,
+    "area_mean_rmsd_combined": 1.5519018321028828,
+    "mean_rmsd_at_50pct_native": 2.0747987570612234,
+    "mean_rmsd_at_50pct_combined": 1.4229125683676291
+  },
+  "boltz1x": {
+    "area_mean_rmsd_native": 1.9554810578853867,
+    "area_mean_rmsd_combined": 1.5365763223199147,
+    "mean_rmsd_at_50pct_native": 2.0225044334757896,
+    "mean_rmsd_at_50pct_combined": 1.3778003481378156
+  },
+  "chai": {
+    "area_mean_rmsd_native": 2.089495032253384,
+    "area_mean_rmsd_combined": 1.3905648108953634,
+    "mean_rmsd_at_50pct_native": 2.1633672564362842,
+    "mean_rmsd_at_50pct_combined": 1.1482921709074916
+  },
+  "protenix": {
+    "area_mean_rmsd_native": 2.354555520930103,
+    "area_mean_rmsd_combined": 1.6592323884734301,
+    "mean_rmsd_at_50pct_native": 2.5821946760010728,
+    "mean_rmsd_at_50pct_combined": 1.5434093284296015
+  }
+}

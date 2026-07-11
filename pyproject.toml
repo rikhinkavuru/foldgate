@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "foldgate"
+version = "0.0.0.dev0"
+description = "Distribution-shift-aware selective prediction for protein-ligand co-folding: a training-free, model-agnostic conformal reliability layer."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Rikhin Kavuru" }]
+keywords = [
+    "conformal-prediction",
+    "selective-prediction",
+    "co-folding",
+    "alphafold3",
+    "boltz",
+    "chai",
+    "drug-discovery",
+    "distribution-shift",
+]
+
+# Torch-free by design: the reliability layer only consumes frozen models'
+# confidence outputs. Compiled comp-bio tools (foldseek, US-align) come from
+# conda/bioconda via pixi, not from pip -- see pixi.toml and CLAUDE.md.
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scikit-learn>=1.4",
+    "matplotlib>=3.8",
+    "crepes>=0.9.1",          # Mondrian / group-conditional conformal
+    "crepes-weighted>=0.1.3", # weighted CP under covariate shift (early-stage; validate)
+    "rdkit>=2024.3",          # Morgan/ECFP Tanimoto for chemotype novelty
+    "posebusters>=0.6",       # physical-validity checks + RMSD<=2A labels
+]
+
+[project.optional-dependencies]
+# Density-ratio weights + risk control. lightgbm kept optional to avoid the
+# OpenMP/libomp segfault path when not needed (see CLAUDE.md).
+weights = ["lightgbm>=4.3"]
+risk = ["mapie>=1.4"]          # RCPS / LTT / CRC (NOT weighted covariate-shift CP)
+structure = ["biotite>=1.0", "biopython>=1.83"]
+dev = ["pytest>=8.0", "ruff>=0.5", "mypy>=1.10"]
+
+[project.urls]
+Homepage = "https://github.com/rikhinkavuru/foldgate"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/foldgate"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

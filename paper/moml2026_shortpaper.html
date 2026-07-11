@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>moml2026_shortpaper</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#know-when-to-fold-distribution-shift-aware-selective-prediction-for-proteinligand-co-folding"
+id="toc-know-when-to-fold-distribution-shift-aware-selective-prediction-for-proteinligand-co-folding">Know
+When to Fold: Distribution-Shift-Aware Selective Prediction for
+Protein–Ligand Co-Folding</a>
+<ul>
+<li><a href="#abstract" id="toc-abstract">Abstract</a></li>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#method" id="toc-method">2. Method</a></li>
+<li><a href="#results" id="toc-results">3. Results</a></li>
+<li><a href="#discussion-and-limitations"
+id="toc-discussion-and-limitations">4. Discussion and
+limitations</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="know-when-to-fold-distribution-shift-aware-selective-prediction-for-proteinligand-co-folding">Know
+When to Fold: Distribution-Shift-Aware Selective Prediction for
+Protein–Ligand Co-Folding</h1>
+<p><em>MoML 2026 short paper (draft). Non-archival. Rikhin
+Kavuru.</em></p>
+<h2 id="abstract">Abstract</h2>
+<p>Protein–ligand co-folding models (AlphaFold3, Boltz, Chai) report
+confidence scores that correlate with pose accuracy, but a correlation
+is not a decision rule, and the correlation is weakest exactly where
+drug discovery operates: on novel pockets and novel chemotypes. We
+recast co-folding reliability as <strong>selective prediction</strong>
+and build a model-agnostic, training-free layer that turns confidence
+into a risk-controlled accept/abstain decision with a finite-sample
+guarantee. On the released Runs N’ Poses benchmark (13,536 delivered
+poses, six co-folding models) we show three things. (1) A conformal
+selective-risk gate is valid on i.i.d. data. (2) That guarantee
+<strong>breaks</strong> under the novelty shift central to drug
+discovery: a gate whose marginal error looks compliant under-controls
+error 2–3× on novel-ligand strata, and calibrating on familiar ligands
+then deploying on novel ones violates the guarantee in 100% of runs
+(realized error 0.55 against a 0.20 target). (3) The break is repaired
+by group-conditional and weighted conformal keyed on training-set
+similarity, and a combined reliability score cuts the area under the
+risk-coverage curve (AURC) by roughly a quarter to two-fifths over
+native confidence (all gaps have disjoint bootstrap CIs), roughly
+doubling to tripling the predictions retained at a fixed guarantee. The
+layer is released as a pip-installable package that wraps frozen model
+outputs.</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>Co-folding models are increasingly used to prioritise molecules and
+generate starting structures for downstream design. Recent work
+establishes that their confidence tracks accuracy and that accuracy
+drops on inputs dissimilar to training (Runs N’ Poses, FoldBench).
+Neither gives a practitioner what they need: a rule for <strong>which
+predictions to trust</strong>, with a guarantee that survives the
+distribution shift they actually face.</p>
+<p>We provide that rule. Our contribution is (i) selective prediction /
+conformal risk control for co-folding <strong>pose</strong> reliability,
+a structured 3D output rather than a scalar property. The closest prior
+work, CoDrug, conformalizes a scalar molecular property under shift, and
+we are not aware of a prior conformal treatment of pose correctness.
+Further, (ii) a sharp, quantified demonstration that standard conformal
+guarantees collapse under novel-pocket / novel-chemotype shift, using
+training-set structural and chemical similarity as the shift variable;
+and (iii) a shift-robust repair plus a combined reliability score,
+packaged as a training-free layer over frozen AlphaFold3 (AF3) / Boltz /
+Chai outputs.</p>
+<h2 id="method">2. Method</h2>
+<p><strong>Setup.</strong> The unit is the delivered pose: the top-1
+sample per (system, ligand, model) by the model’s own ranking score. The
+label is Y = 1 iff the symmetry-corrected ligand root-mean-square
+deviation (RMSD) is ≤ 2 Å. The gate accepts a pose when its confidence s
+≥ τ and abstains otherwise; we report selective risk (error among
+accepted) against coverage (fraction accepted).</p>
+<p><strong>Certified threshold.</strong> We choose τ by Learn-then-Test
+with fixed-sequence testing [Angelopoulos et al. 2021]. Over a
+pre-specified coverage grid, each null hypothesis H0(τ): P(error | s ≥
+τ) ≥ α is tested with an exact binomial p-value P(Bin(n_accept, α) ≤
+errors); the accept set grows while H0 is rejected at level δ and stops
+at the first failure. This gives P(selective risk ≤ α) ≥ 1 − δ,
+finite-sample and distribution-free. The binomial test conditions on the
+accept count, the correct tool for error-among-accepted.</p>
+<p><strong>Novelty and shift-robustness.</strong> Training-set
+similarity (ECFP4 Tanimoto to the nearest training ligand, pocket
+similarity, temporal cutoff), shipped pre-computed by Runs N’ Poses, is
+the covariate-shift variable. It both stratifies (group-conditional /
+Mondrian conformal: a separate τ per novelty stratum) and weights
+(weighted conformal [Tibshirani et al. 2019]: reweight familiar-source
+calibration points by an estimated likelihood ratio to certify on a
+novel target without target labels). Ligands with no training analog
+form their own extreme stratum.</p>
+<p><strong>Combined score.</strong> Native ranking score is a weak
+sorter for some models. We fit a calibration-only combiner (gradient
+boosting → P(correct)) over native confidence, interface chain-pair
+ipTM, PoseBusters physical validity, intra-model ensemble spread across
+diffusion samples, and ligand difficulty. Novelty is excluded from the
+score and enters only through calibration. A 3-way split (fit combiner /
+calibrate τ / test) preserves conformal validity for the learned score:
+the combiner never sees the test fold and the threshold is calibrated on
+out-of-sample combiner scores, so there is no train/test leakage.</p>
+<h2 id="results">3. Results</h2>
+<p>Data: released Runs N’ Poses predictions consumed as-is (no
+inference), 13,536 delivered poses, six models. α = 0.20, δ = 0.10
+unless noted.</p>
+<p><strong>Raw novelty gradient.</strong> AF3 delivered-pose correctness
+falls from 0.88 on familiar ligands to 0.44 on the most novel
+with-analog stratum. A single global threshold cannot hold a uniform
+guarantee across this gradient.</p>
+<p><strong>E1: valid i.i.d.</strong> Mean realized selective risk ≤ α
+for every model (AF3 0.177), guarantee satisfied 89–96% of splits ≈ the
+nominal 90%. Validity is also unit-tested on synthetic data.</p>
+<p><strong>E2: the break.</strong> AF3’s marginal risk (0.177) hides
+severe per-stratum under-control:</p>
+<table>
+<thead>
+<tr>
+<th>novelty stratum</th>
+<th>S0</th>
+<th>S1</th>
+<th>S2</th>
+<th>S3</th>
+<th>S4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>realized selective risk</td>
+<td>0.07</td>
+<td>0.15</td>
+<td>0.16</td>
+<td><strong>0.38</strong></td>
+<td><strong>0.43</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Calibrating on familiar ligands and deploying on novel ones accepts
+98% of poses at realized error <strong>0.55</strong> with the guarantee
+holding in <strong>0%</strong> of runs (violated in 100%). All six
+models show the same collapse. The break is a property of
+structural/chemical novelty, not recency: it is at least as strong along
+pocket-novelty (AF3 S0 0.06 → S3 0.40, Chai up to 0.77) but weak along a
+temporal release-date axis, which sharpens what the shift variable must
+capture.</p>
+<p><strong>E3: repair.</strong> Group-conditional calibration (a
+separate τ per novelty stratum) restores the guarantee: no stratum’s
+accepted error exceeds α. With native confidence the cost is heavy
+abstention on the hardest strata (the gate folds rather than assure
+falsely). With the combined score, group-conditional calibration instead
+recovers usable coverage across the gradient while holding risk ≤ α: AF3
+accepts 52% of stratum S1 and 39% of S2 (vs 8% and 12% with native
+confidence) and certifies a small fraction of the novel S3 that native
+confidence must abstain on. Only the no-training-analog extreme (S4)
+stays uncertifiable, where abstention is the correct answer.</p>
+<p><strong>E4: utility.</strong> The combined score dominates native
+confidence on the risk-coverage curve:</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>AURC native</th>
+<th>AURC combined</th>
+<th>Δ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AF3</td>
+<td>0.187</td>
+<td>0.125</td>
+<td>−33.1%</td>
+</tr>
+<tr>
+<td>Boltz-1</td>
+<td>0.233</td>
+<td>0.169</td>
+<td>−27.5%</td>
+</tr>
+<tr>
+<td>Boltz-1x</td>
+<td>0.215</td>
+<td>0.163</td>
+<td>−24.1%</td>
+</tr>
+<tr>
+<td>Chai-1</td>
+<td>0.246</td>
+<td>0.149</td>
+<td>−39.5%</td>
+</tr>
+<tr>
+<td>Protenix</td>
+<td>0.280</td>
+<td>0.174</td>
+<td>−37.6%</td>
+</tr>
+</tbody>
+</table>
+<p>Every gap has disjoint 90% bootstrap confidence intervals across 120
+splits (Boltz-2 omitted here for power, n = 933). At α = 0.2 the
+combined gate retains far more predictions at the same guarantee (AF3
+coverage 0.22 → 0.71; Chai 0.00 → 0.61) and unlocks the stringent α =
+0.1 (90%-correct) operating point that native confidence cannot certify
+at all for several models. The combined score fuses native confidence
+with interface ipTM, PoseBusters validity, intra-model ensemble spread,
+and cross-model agreement.</p>
+<p><strong>E3b: weighted repair, label-free.</strong> Calibrating on
+familiar ligands and correcting with likelihood-ratio weights over the
+novelty covariates pulls the realized error on a moderately-novel target
+toward α without target labels (AF3 naive 0.27 → weighted 0.20 at 0.71
+coverage; same trend for all models). On the extreme novel regime (&lt;
+55% correct at baseline) weighted conformal reduces error (0.55 → 0.31)
+but no gate can certify a high-coverage low-error set, so the layer
+correctly abstains.</p>
+<p><strong>E6: downstream payoff.</strong> The gate cleans the delivered
+pose set a downstream pipeline would carry forward: base top-1 purity
+63–70% rises to 82% (α=0.2, retaining 81% of correct AF3 poses) or
+93–94% (α=0.1, all models), with interface LDDT-PLI lifting from ~0.72
+to 0.85–0.92. Downstream structure-based work receives near-clean inputs
+instead of a one-in-three error rate. The Mac1 virtual-screen enrichment
+arm follows when its coordinates release.</p>
+<p><strong>E5: robustness and ablation.</strong> The break and the gain
+do not depend on the 2 Å convention: across thresholds 1.5–3.0 Å the
+novel strata always exceed α (AF3 S3 risk 0.35–0.43 vs S0 0.05–0.09) and
+the combined score cuts AURC 26–29%. A cumulative feature ablation
+attributes the gain mainly to interface ipTM (AURC 0.19 → 0.16),
+intra-model ensemble spread (0.16 → 0.14), and cross-model agreement
+(0.14 → 0.13); PoseBusters and ligand difficulty add little on top.</p>
+<p><strong>E8/E9: task- and label-agnostic.</strong> The layer is not
+tied to the 2 Å pose label. On interface quality (local distance
+difference test on the protein-ligand interface, LDDT-PLI ≥ 0.5) the
+combined score again dominates native confidence on AURC (44–55% lower).
+Dropping the threshold entirely and ordering by continuous RMSD, the
+accepted set’s mean RMSD at 50% coverage falls from ~2.1 Å (native) to
+~1.1–1.5 Å (combined).</p>
+<h2 id="discussion-and-limitations">4. Discussion and limitations</h2>
+<p>The guarantee is over the chosen correctness definition and the
+sampled shift axes, not a universal notion of trust; the findings are
+robust across RMSD thresholds 1.5–3.0 Å (E5), though a continuous-RMSD
+risk is left for future work. Weighted conformal coverage is approximate
+under estimated weights, so we keep group-conditional as the rigorous
+fallback. A cross-dataset test on FoldBench did not replicate the
+advantage: its public per-pose table ships only ranking_score, without
+the interface-ipTM / PoseBusters / ensemble features the ablation
+identifies as the source of the gain, so the feature-poor combiner does
+not beat raw confidence there. A clean second-benchmark test needs a
+release that exposes those confidences per pose. On the extreme
+novel-chemotype regime (base correctness &lt; 55%) no gate can certify a
+high-coverage low-error set; the layer’s value there is principled
+abstention over a naive gate’s false confidence. Code, calibration
+tables, and a one-command reproduction pipeline are provided in the
+accompanying repository (public release on acceptance).</p>
+<h2 id="references">References</h2>
+<p>Abbreviated; full entries in the repository
+<code>REFERENCES.bib</code>. Angelopoulos, Bates, Candès, Jordan, Lei.
+Learn then Test. 2021. Bates, Angelopoulos, Lei, Malik, Jordan.
+Risk-Controlling Prediction Sets. JACM 2021. Tibshirani, Foygel Barber,
+Candès, Ramdas. Conformal Prediction Under Covariate Shift. NeurIPS
+2019. Škrinjar et al. Have protein–ligand co-folding methods moved
+beyond memorisation? (Runs N’ Poses) 2025. Buttenschoen, Morris, Deane.
+PoseBusters. Chem. Sci. 2024.</p>
+</body>
+</html>

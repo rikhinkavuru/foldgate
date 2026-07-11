@@ -1,0 +1,196 @@
+{
+  "moderate (S0,S1 -> S2)": {
+    "af3": {
+      "n_source": 1346,
+      "n_target": 629,
+      "naive": {
+        "risk_on_target": 0.26871280190302693,
+        "coverage_on_target": 0.9569047619047619,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.19831508748280088,
+        "coverage_on_target": 0.7144047619047619,
+        "frac_risk_le_alpha": 0.45569620253164556
+      },
+      "target_cal": {
+        "risk_on_target": 0.1508265526841435,
+        "coverage_on_target": 0.3017063492063492,
+        "frac_risk_le_alpha": 0.851063829787234
+      }
+    },
+    "boltz1": {
+      "n_source": 1144,
+      "n_target": 577,
+      "naive": {
+        "risk_on_target": 0.30423756637335353,
+        "coverage_on_target": 0.7769463667820069,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.2631968843936419,
+        "coverage_on_target": 0.6548875432525951,
+        "frac_risk_le_alpha": 0.0625
+      },
+      "target_cal": {
+        "risk_on_target": 0.23510091171269237,
+        "coverage_on_target": 0.010813148788927337,
+        "frac_risk_le_alpha": 0.6
+      }
+    },
+    "boltz1x": {
+      "n_source": 1119,
+      "n_target": 568,
+      "naive": {
+        "risk_on_target": 0.2631572799330043,
+        "coverage_on_target": 0.7485475352112676,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.22634185417008768,
+        "coverage_on_target": 0.6544454225352113,
+        "frac_risk_le_alpha": 0.13924050632911392
+      },
+      "target_cal": {
+        "risk_on_target": 0.1533754905550479,
+        "coverage_on_target": 0.026848591549295774,
+        "frac_risk_le_alpha": 0.7333333333333333
+      }
+    },
+    "chai": {
+      "n_source": 1261,
+      "n_target": 614,
+      "naive": {
+        "risk_on_target": 0.2802729809310024,
+        "coverage_on_target": 0.8429560260586321,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.21485543123664086,
+        "coverage_on_target": 0.6918973941368078,
+        "frac_risk_le_alpha": 0.2564102564102564
+      },
+      "target_cal": {
+        "risk_on_target": 0.14546024093877705,
+        "coverage_on_target": 0.30557817589576547,
+        "frac_risk_le_alpha": 0.8076923076923077
+      }
+    },
+    "protenix": {
+      "n_source": 1282,
+      "n_target": 618,
+      "naive": {
+        "risk_on_target": 0.3527509789228553,
+        "coverage_on_target": 0.897855987055016,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.2770071704619979,
+        "coverage_on_target": 0.5195388349514563,
+        "frac_risk_le_alpha": 0.0375
+      },
+      "target_cal": {
+        "risk_on_target": 0.11757880840362556,
+        "coverage_on_target": 0.058252427184466014,
+        "frac_risk_le_alpha": 0.8888888888888888
+      }
+    }
+  },
+  "extreme (S0-S2 -> S3,S4)": {
+    "af3": {
+      "n_source": 1975,
+      "n_target": 734,
+      "naive": {
+        "risk_on_target": 0.5199092302959445,
+        "coverage_on_target": 0.8373637602179838,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.30646229403729364,
+        "coverage_on_target": 0.317574931880109,
+        "frac_risk_le_alpha": 0.11594202898550725
+      },
+      "target_cal": {
+        "risk_on_target": 0.1258931529387626,
+        "coverage_on_target": 0.03409400544959128,
+        "frac_risk_le_alpha": 0.88
+      }
+    },
+    "boltz1": {
+      "n_source": 1721,
+      "n_target": 663,
+      "naive": {
+        "risk_on_target": 0.3719697748661623,
+        "coverage_on_target": 0.4231174698795181,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.2420588302393501,
+        "coverage_on_target": 0.10609939759036144,
+        "frac_risk_le_alpha": 0.328125
+      },
+      "target_cal": {
+        "risk_on_target": 0.2692307692307693,
+        "coverage_on_target": 0.0009789156626506025,
+        "frac_risk_le_alpha": 0.0
+      }
+    },
+    "boltz1x": {
+      "n_source": 1687,
+      "n_target": 645,
+      "naive": {
+        "risk_on_target": 0.41407652662596556,
+        "coverage_on_target": 0.5413699690402477,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.31157166150681465,
+        "coverage_on_target": 0.22581269349845198,
+        "frac_risk_le_alpha": 0.05555555555555555
+      },
+      "target_cal": {
+        "risk_on_target": NaN,
+        "coverage_on_target": 0.0,
+        "frac_risk_le_alpha": NaN
+      }
+    },
+    "chai": {
+      "n_source": 1875,
+      "n_target": 696,
+      "naive": {
+        "risk_on_target": 0.48818028208911607,
+        "coverage_on_target": 0.5709410919540231,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.3552002306869431,
+        "coverage_on_target": 0.2896551724137931,
+        "frac_risk_le_alpha": 0.0
+      },
+      "target_cal": {
+        "risk_on_target": 0.27501624431448995,
+        "coverage_on_target": 0.00305316091954023,
+        "frac_risk_le_alpha": 0.0
+      }
+    },
+    "protenix": {
+      "n_source": 1900,
+      "n_target": 707,
+      "naive": {
+        "risk_on_target": 0.534329206443618,
+        "coverage_on_target": 0.5156073446327684,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.27816508803568335,
+        "coverage_on_target": 0.1303319209039548,
+        "frac_risk_le_alpha": 0.1891891891891892
+      },
+      "target_cal": {
+        "risk_on_target": 0.32786090969017795,
+        "coverage_on_target": 0.0059675141242937855,
+        "frac_risk_le_alpha": 0.0
+      }
+    }
+  }
+}

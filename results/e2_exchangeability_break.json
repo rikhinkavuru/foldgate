@@ -1,0 +1,242 @@
+{
+  "af3": {
+    "marginal_risk": 0.176810531412593,
+    "conditional": {
+      "0": {
+        "n_stratum": 692,
+        "pooled_selective_risk": 0.07102726663574042,
+        "risk_p05": 0.023375074537865238,
+        "risk_p95": 0.09458708708708709,
+        "mean_coverage": 0.5072586618097119
+      },
+      "1": {
+        "n_stratum": 654,
+        "pooled_selective_risk": 0.1486932316098768,
+        "risk_p05": 0.10012048192771085,
+        "risk_p95": 0.18051900584795322,
+        "mean_coverage": 0.5319727799951688
+      },
+      "2": {
+        "n_stratum": 629,
+        "pooled_selective_risk": 0.16250422821062127,
+        "risk_p05": 0.11952201257861636,
+        "risk_p95": 0.20201916317337984,
+        "mean_coverage": 0.507930634667785
+      },
+      "3": {
+        "n_stratum": 658,
+        "pooled_selective_risk": 0.37534772817591733,
+        "risk_p05": 0.19586956521739132,
+        "risk_p95": 0.44086190759806004,
+        "mean_coverage": 0.41341678787594843
+      },
+      "4": {
+        "n_stratum": 76,
+        "pooled_selective_risk": 0.42686170212765956,
+        "risk_p05": 0.22361111111111112,
+        "risk_p95": 0.6153846153846154,
+        "mean_coverage": 0.26529417472854794
+      }
+    },
+    "covariate_shift": {
+      "n_low": 1346,
+      "n_high": 734,
+      "mean_realized_risk_on_high": 0.5465220832365667,
+      "mean_coverage_on_high": 0.9846158038147139,
+      "frac_splits_risk_le_alpha": 0.0,
+      "target_guarantee": 0.9
+    }
+  },
+  "boltz1": {
+    "marginal_risk": 0.15316140969460443,
+    "conditional": {
+      "0": {
+        "n_stratum": 563,
+        "pooled_selective_risk": 0.06240713224368499,
+        "risk_p05": 0.0,
+        "risk_p95": 0.125,
+        "mean_coverage": 0.079528322770591
+      },
+      "1": {
+        "n_stratum": 581,
+        "pooled_selective_risk": 0.05671488193928306,
+        "risk_p05": 0.018149920255183413,
+        "risk_p95": 0.09595025934299775,
+        "mean_coverage": 0.20118018846014527
+      },
+      "2": {
+        "n_stratum": 577,
+        "pooled_selective_risk": 0.24013730192316735,
+        "risk_p05": 0.1,
+        "risk_p95": 0.3152898550724638,
+        "mean_coverage": 0.2455502137349139
+      },
+      "3": {
+        "n_stratum": 592,
+        "pooled_selective_risk": 0.2839426430693709,
+        "risk_p05": 0.1108187134502924,
+        "risk_p95": 0.3877551020408163,
+        "mean_coverage": 0.0871662976030314
+      },
+      "4": {
+        "n_stratum": 71,
+        "pooled_selective_risk": 0.0,
+        "risk_p05": 0.0,
+        "risk_p95": 0.0,
+        "mean_coverage": 0.0002941176470588235
+      }
+    },
+    "covariate_shift": {
+      "n_low": 1144,
+      "n_high": 663,
+      "mean_realized_risk_on_high": 0.47793910172257187,
+      "mean_coverage_on_high": 0.6084786120617712,
+      "frac_splits_risk_le_alpha": 0.0,
+      "target_guarantee": 0.9
+    }
+  },
+  "boltz1x": {
+    "marginal_risk": 0.15599465978153146,
+    "conditional": {
+      "0": {
+        "n_stratum": 552,
+        "pooled_selective_risk": 0.059613551685295904,
+        "risk_p05": 0.0,
+        "risk_p95": 0.10423786739576213,
+        "mean_coverage": 0.14169657784607423
+      },
+      "1": {
+        "n_stratum": 567,
+        "pooled_selective_risk": 0.06992727917701312,
+        "risk_p05": 0.019230769230769232,
+        "risk_p95": 0.11387310606060605,
+        "mean_coverage": 0.2678339086393956
+      },
+      "2": {
+        "n_stratum": 568,
+        "pooled_selective_risk": 0.2067387247825934,
+        "risk_p05": 0.10841392649903288,
+        "risk_p95": 0.264484888963099,
+        "mean_coverage": 0.3373464974878674
+      },
+      "3": {
+        "n_stratum": 577,
+        "pooled_selective_risk": 0.32267764921226383,
+        "risk_p05": 0.125,
+        "risk_p95": 0.40561655405405406,
+        "mean_coverage": 0.1793955695939375
+      },
+      "4": {
+        "n_stratum": 68,
+        "pooled_selective_risk": 0.15384615384615385,
+        "risk_p05": 0.0,
+        "risk_p95": 0.5,
+        "mean_coverage": 0.007657985086637089
+      }
+    },
+    "covariate_shift": {
+      "n_low": 1119,
+      "n_high": 645,
+      "mean_realized_risk_on_high": 0.4584341000722844,
+      "mean_coverage_on_high": 0.6168852639700211,
+      "frac_splits_risk_le_alpha": 0.0,
+      "target_guarantee": 0.9
+    }
+  },
+  "chai": {
+    "marginal_risk": 0.23870632918042517,
+    "conditional": {
+      "0": {
+        "n_stratum": 636,
+        "pooled_selective_risk": 0.24939467312348668,
+        "risk_p05": 0.12211538461538463,
+        "risk_p95": 0.43124999999999997,
+        "mean_coverage": 0.03748603642175719
+      },
+      "1": {
+        "n_stratum": 625,
+        "pooled_selective_risk": 0.12535211267605634,
+        "risk_p05": 0.05467836257309941,
+        "risk_p95": 0.17647058823529413,
+        "mean_coverage": 0.065236678323629
+      },
+      "2": {
+        "n_stratum": 614,
+        "pooled_selective_risk": 0.23070097604259096,
+        "risk_p05": 0.15815384615384617,
+        "risk_p95": 0.2948780487804878,
+        "mean_coverage": 0.10422860643791433
+      },
+      "3": {
+        "n_stratum": 624,
+        "pooled_selective_risk": 0.5799256505576208,
+        "risk_p05": 0.38,
+        "risk_p95": 0.7777777777777778,
+        "mean_coverage": 0.0244312020962022
+      },
+      "4": {
+        "n_stratum": 72,
+        "pooled_selective_risk": 0.0,
+        "risk_p05": 0.0,
+        "risk_p95": 0.0,
+        "mean_coverage": 0.0009216589861751152
+      }
+    },
+    "covariate_shift": {
+      "n_low": 1261,
+      "n_high": 696,
+      "mean_realized_risk_on_high": 0.5333885041856673,
+      "mean_coverage_on_high": 0.42209949712643674,
+      "frac_splits_risk_le_alpha": 0.0,
+      "target_guarantee": 0.9
+    }
+  },
+  "protenix": {
+    "marginal_risk": 0.18302042286404877,
+    "conditional": {
+      "0": {
+        "n_stratum": 649,
+        "pooled_selective_risk": 0.06244995996797438,
+        "risk_p05": 0.017351973684210525,
+        "risk_p95": 0.09724170172978024,
+        "mean_coverage": 0.1949631790583526
+      },
+      "1": {
+        "n_stratum": 633,
+        "pooled_selective_risk": 0.12703412073490813,
+        "risk_p05": 0.06788537549407114,
+        "risk_p95": 0.18365665692266805,
+        "mean_coverage": 0.1526001886012208
+      },
+      "2": {
+        "n_stratum": 618,
+        "pooled_selective_risk": 0.1753764393268379,
+        "risk_p05": 0.11,
+        "risk_p95": 0.24774976657329595,
+        "mean_coverage": 0.1843969170038274
+      },
+      "3": {
+        "n_stratum": 635,
+        "pooled_selective_risk": 0.386397768719159,
+        "risk_p05": 0.29244689221085757,
+        "risk_p95": 0.48714285714285704,
+        "mean_coverage": 0.1855516792118034
+      },
+      "4": {
+        "n_stratum": 72,
+        "pooled_selective_risk": 0.22996515679442509,
+        "risk_p05": 0.0,
+        "risk_p95": 0.5416666666666666,
+        "mean_coverage": 0.1007348569283047
+      }
+    },
+    "covariate_shift": {
+      "n_low": 1282,
+      "n_high": 707,
+      "mean_realized_risk_on_high": 0.6125578887617377,
+      "mean_coverage_on_high": 0.6833827787110841,
+      "frac_splits_risk_le_alpha": 0.0,
+      "target_guarantee": 0.9
+    }
+  }
+}

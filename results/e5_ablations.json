@@ -1,0 +1,82 @@
+{
+  "threshold_sweep_af3": {
+    "1.5": {
+      "base_correct": 0.6382428940568475,
+      "per_stratum_risk_global_tau": {
+        "0": 0.091,
+        "1": 0.229,
+        "2": 0.188,
+        "3": 0.352,
+        "4": 0.547
+      },
+      "aurc_native": 0.24858407583481595,
+      "aurc_combined": 0.17215871129841734,
+      "aurc_improve_pct": 30.7
+    },
+    "2.0": {
+      "base_correct": 0.7043189368770764,
+      "per_stratum_risk_global_tau": {
+        "0": 0.062,
+        "1": 0.146,
+        "2": 0.163,
+        "3": 0.361,
+        "4": 0.486
+      },
+      "aurc_native": 0.18600166637202578,
+      "aurc_combined": 0.1240215280258352,
+      "aurc_improve_pct": 33.3
+    },
+    "2.5": {
+      "base_correct": 0.7475083056478405,
+      "per_stratum_risk_global_tau": {
+        "0": 0.064,
+        "1": 0.117,
+        "2": 0.159,
+        "3": 0.427,
+        "4": 0.394
+      },
+      "aurc_native": 0.1523797721869462,
+      "aurc_combined": 0.10027301663190459,
+      "aurc_improve_pct": 34.2
+    },
+    "3.0": {
+      "base_correct": 0.7781469176818014,
+      "per_stratum_risk_global_tau": {
+        "0": 0.05,
+        "1": 0.113,
+        "2": 0.148,
+        "3": 0.42,
+        "4": 0.285
+      },
+      "aurc_native": 0.11956001769316964,
+      "aurc_combined": 0.07908755696067929,
+      "aurc_improve_pct": 33.9
+    }
+  },
+  "feature_ablation_af3": {
+    "native only": {
+      "aurc": 0.1931198411030368,
+      "n_features": 1
+    },
+    "+ interface ipTM": {
+      "aurc": 0.1595766583430806,
+      "n_features": 2
+    },
+    "+ PoseBusters": {
+      "aurc": 0.158823062996262,
+      "n_features": 3
+    },
+    "+ ensemble spread": {
+      "aurc": 0.13742871929482497,
+      "n_features": 6
+    },
+    "+ cross-model agreement": {
+      "aurc": 0.12830299451744612,
+      "n_features": 9
+    },
+    "+ ligand difficulty (all)": {
+      "aurc": 0.1226928122098303,
+      "n_features": 12
+    }
+  }
+}

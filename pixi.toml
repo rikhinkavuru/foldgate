@@ -1,0 +1,56 @@
+# pixi project manifest — conda-forge + bioconda in one solver, with a
+# committed pixi.lock for reproducibility. Run `pixi install` to generate the
+# lock (do not hand-write it). See CLAUDE.md for the two-env rationale.
+
+[project]
+name = "foldgate"
+version = "0.0.0.dev0"
+description = "Training-free conformal reliability layer for protein-ligand co-folding."
+channels = ["conda-forge", "bioconda"]
+platforms = ["osx-arm64", "linux-64"]
+
+# --- analysis env (default): torch-free; conformal + comp-bio feature tools ---
+# All from conda-forge so OpenMP is consistent and lightgbm+numpy don't segfault.
+[dependencies]
+python = ">=3.11,<3.13"
+numpy = "*"
+pandas = "*"
+scikit-learn = "*"
+matplotlib = "*"
+lightgbm = "*"          # density-ratio weights; conda-forge build avoids libomp clash
+rdkit = "*"             # ligand fingerprints / Tanimoto
+biotite = "*"           # structure parsing, pocket extraction
+biopython = "*"
+foldseek = "*"          # fast structural/pocket novelty search (bioconda)
+usalign = "*"           # exact pairwise TM-score (bioconda)
+dvc = "*"
+pip = "*"
+
+[pypi-dependencies]
+posebusters = "*"
+crepes = ">=0.9.1"
+crepes-weighted = ">=0.1.3"
+mapie = ">=1.4"
+foldgate = { path = ".", editable = true }
+# plinder is heavy; install on demand rather than by default:
+# plinder = "*"
+
+[tasks]
+features  = "python -m experiments.build_features"
+calibrate = "python -m experiments.calibrate"
+figures   = { cmd = "python -m experiments.make_figures", depends-on = ["calibrate"] }
+test      = "pytest -q"
+lint      = "ruff check src tests"
+repro     = "dvc repro"
+
+# --- optional feature: co-folding inference env (torch) ---
+# Keep torch OUT of the default env. Enable only when generating a held-out
+# slice: `pixi run -e infer <cmd>`. Boltz (MIT) and Chai (Apache-2.0) are the
+# commercially-safe backbones; AF3 weights are non-commercial/request-gated.
+[feature.infer.pypi-dependencies]
+boltz = "*"
+chai_lab = "*"
+
+[environments]
+default = { solve-group = "default" }
+infer = { features = ["infer"], solve-group = "infer" }

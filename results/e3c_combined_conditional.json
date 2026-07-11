@@ -1,0 +1,112 @@
+{
+  "af3": {
+    "0": {
+      "selective_risk": 0.1175610595115239,
+      "coverage": 0.9366466631761247
+    },
+    "1": {
+      "selective_risk": 0.15614999589726758,
+      "coverage": 0.5163764247277658
+    },
+    "2": {
+      "selective_risk": 0.163529809534543,
+      "coverage": 0.39278441788401947
+    },
+    "3": {
+      "selective_risk": 0.1546218487394958,
+      "coverage": 0.050084175084175085
+    },
+    "4": {
+      "selective_risk": NaN,
+      "coverage": 0.0
+    }
+  },
+  "boltz1": {
+    "0": {
+      "selective_risk": 0.14708243284964495,
+      "coverage": 0.8021694982416168
+    },
+    "1": {
+      "selective_risk": 0.1625693893735131,
+      "coverage": 0.24056851242428579
+    },
+    "2": {
+      "selective_risk": 0.13948170731707318,
+      "coverage": 0.06236037834497837
+    },
+    "3": {
+      "selective_risk": 0.22580645161290322,
+      "coverage": 0.008769861851100947
+    },
+    "4": {
+      "selective_risk": NaN,
+      "coverage": 0.0
+    }
+  },
+  "boltz1x": {
+    "0": {
+      "selective_risk": 0.15773584905660376,
+      "coverage": 0.668112141992739
+    },
+    "1": {
+      "selective_risk": 0.1485133495145631,
+      "coverage": 0.3207629799036543
+    },
+    "2": {
+      "selective_risk": 0.13333333333333333,
+      "coverage": 0.09310344827586207
+    },
+    "3": {
+      "selective_risk": 0.27,
+      "coverage": 0.004786750275238141
+    },
+    "4": {
+      "selective_risk": NaN,
+      "coverage": 0.0
+    }
+  },
+  "chai": {
+    "0": {
+      "selective_risk": 0.16008626410086263,
+      "coverage": 0.7849980466206538
+    },
+    "1": {
+      "selective_risk": 0.15330739299610896,
+      "coverage": 0.5141142476105801
+    },
+    "2": {
+      "selective_risk": 0.14327395577395577,
+      "coverage": 0.29502106646128756
+    },
+    "3": {
+      "selective_risk": 0.23809523809523808,
+      "coverage": 0.001871240810871018
+    },
+    "4": {
+      "selective_risk": NaN,
+      "coverage": 0.0
+    }
+  },
+  "protenix": {
+    "0": {
+      "selective_risk": 0.14326552003430368,
+      "coverage": 0.9068089518707336
+    },
+    "1": {
+      "selective_risk": 0.1501849815018498,
+      "coverage": 0.43452380952380953
+    },
+    "2": {
+      "selective_risk": 0.13737280296022203,
+      "coverage": 0.09706819916490818
+    },
+    "3": {
+      "selective_risk": 0.3,
+      "coverage": 0.0008753884536262966
+    },
+    "4": {
+      "selective_risk": NaN,
+      "coverage": 0.0
+    }
+  }
+}

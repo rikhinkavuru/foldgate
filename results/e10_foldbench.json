@@ -1,0 +1,47 @@
+{
+  "AlphaFold 3": {
+    "n": 441,
+    "base_correct": 0.6598639455782312,
+    "native_gate_coverage": 0.2398496240601504,
+    "frac_risk_le_alpha": 0.8545454545454545,
+    "aurc_native": 0.19880881910437306,
+    "aurc_combined": 0.2253959006978342,
+    "aurc_improve_pct": -13.4
+  },
+  "Boltz-1": {
+    "n": 441,
+    "base_correct": 0.5918367346938775,
+    "native_gate_coverage": 0.21462747778537253,
+    "frac_risk_le_alpha": 0.2727272727272727,
+    "aurc_native": 0.2911772159151307,
+    "aurc_combined": 0.29658461019177784,
+    "aurc_improve_pct": -1.9
+  },
+  "Chai-1": {
+    "n": 441,
+    "base_correct": 0.5396825396825397,
+    "native_gate_coverage": 0.3308270676691729,
+    "frac_risk_le_alpha": 0.0,
+    "aurc_native": 0.3097393638417655,
+    "aurc_combined": 0.3393980012282867,
+    "aurc_improve_pct": -9.6
+  },
+  "HelixFold 3": {
+    "n": 441,
+    "base_correct": 0.5578231292517006,
+    "native_gate_coverage": 0.16240601503759397,
+    "frac_risk_le_alpha": 0.2,
+    "aurc_native": 0.2951846395317216,
+    "aurc_combined": 0.36410601399533427,
+    "aurc_improve_pct": -23.3
+  },
+  "Protenix": {
+    "n": 441,
+    "base_correct": 0.5668934240362812,
+    "native_gate_coverage": 0.11528822055137844,
+    "frac_risk_le_alpha": 0.0,
+    "aurc_native": 0.3668905086148927,
+    "aurc_combined": 0.33298849455432494,
+    "aurc_improve_pct": 9.2
+  }
+}

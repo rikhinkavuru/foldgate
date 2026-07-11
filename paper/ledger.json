@@ -1,0 +1,8 @@
+{
+  "paper": "paper/moml2026_shortpaper.md",
+  "venue": "generic",
+  "mode": "fix",
+  "max_iterations": 5,
+  "iteration": 0,
+  "findings": []
+}

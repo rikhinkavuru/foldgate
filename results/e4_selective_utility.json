@@ -1,0 +1,137 @@
+{
+  "af3": {
+    "n": 2709,
+    "aurc_native": 0.18693960607740717,
+    "aurc_native_ci": [
+      0.18469050728450637,
+      0.18893980667165838
+    ],
+    "aurc_combined": 0.1250517506897695,
+    "aurc_combined_ci": [
+      0.12328864002701617,
+      0.1267998905437965
+    ],
+    "operating_points": {
+      "0.1": {
+        "native_coverage": 0.002029520295202952,
+        "combined_coverage": 0.13699261992619924,
+        "native_realized_risk": 0.1414113588569124,
+        "combined_realized_risk": 0.05942103347515246
+      },
+      "0.2": {
+        "native_coverage": 0.2185321853218532,
+        "combined_coverage": 0.7078720787207872,
+        "native_realized_risk": 0.16681908612330923,
+        "combined_realized_risk": 0.17832843922981745
+      }
+    }
+  },
+  "boltz1": {
+    "n": 2384,
+    "aurc_native": 0.23344597299767134,
+    "aurc_native_ci": [
+      0.2311599784479684,
+      0.2355865101920645
+    ],
+    "aurc_combined": 0.16929082191265207,
+    "aurc_combined_ci": [
+      0.16727963186934475,
+      0.1711268389569125
+    ],
+    "operating_points": {
+      "0.1": {
+        "native_coverage": 0.004469273743016759,
+        "combined_coverage": 0.011568901303538175,
+        "native_realized_risk": 0.09383306191442815,
+        "combined_realized_risk": 0.0914180820369572
+      },
+      "0.2": {
+        "native_coverage": 0.11507216014897577,
+        "combined_coverage": 0.423719739292365,
+        "native_realized_risk": 0.12930674965084651,
+        "combined_realized_risk": 0.16821866751698875
+      }
+    }
+  },
+  "boltz1x": {
+    "n": 2332,
+    "aurc_native": 0.21524157981216177,
+    "aurc_native_ci": [
+      0.21255490646987998,
+      0.21777240647322887
+    ],
+    "aurc_combined": 0.16341514859604103,
+    "aurc_combined_ci": [
+      0.16136068354539376,
+      0.16554214496497832
+    ],
+    "operating_points": {
+      "0.1": {
+        "native_coverage": 0.005083333333333333,
+        "combined_coverage": 0.01763095238095238,
+        "native_realized_risk": 0.10200002648812112,
+        "combined_realized_risk": 0.07629008203137089
+      },
+      "0.2": {
+        "native_coverage": 0.1624047619047619,
+        "combined_coverage": 0.48280952380952386,
+        "native_realized_risk": 0.13813117430617788,
+        "combined_realized_risk": 0.1704136239261498
+      }
+    }
+  },
+  "chai": {
+    "n": 2571,
+    "aurc_native": 0.24598194740330317,
+    "aurc_native_ci": [
+      0.24376512841517878,
+      0.24829176758546942
+    ],
+    "aurc_combined": 0.1489348615413811,
+    "aurc_combined_ci": [
+      0.14718951348382567,
+      0.15060392686677265
+    ],
+    "operating_points": {
+      "0.1": {
+        "native_coverage": 0.0,
+        "combined_coverage": 0.09271373056994818,
+        "native_realized_risk": NaN,
+        "combined_realized_risk": 0.0651647566805683
+      },
+      "0.2": {
+        "native_coverage": 0.003432642487046632,
+        "combined_coverage": 0.6137197754749568,
+        "native_realized_risk": 0.21275252525252525,
+        "combined_realized_risk": 0.16882294658787889
+      }
+    }
+  },
+  "protenix": {
+    "n": 2607,
+    "aurc_native": 0.2795219806340841,
+    "aurc_native_ci": [
+      0.2769777207197383,
+      0.28179527008846444
+    ],
+    "aurc_combined": 0.17447193258408203,
+    "aurc_combined_ci": [
+      0.1724074449001988,
+      0.17630716484537245
+    ],
+    "operating_points": {
+      "0.1": {
+        "native_coverage": 0.0004576415495955726,
+        "combined_coverage": 0.04614729672200937,
+        "native_realized_risk": 0.13953488372093026,
+        "combined_realized_risk": 0.05564802782671199
+      },
+      "0.2": {
+        "native_coverage": 0.022232865048957003,
+        "combined_coverage": 0.4977862920391656,
+        "native_realized_risk": 0.1690856620651827,
+        "combined_realized_risk": 0.170146263860407
+      }
+    }
+  }
+}

@@ -1,0 +1,150 @@
+% References for "Know When to Fold". Assembled from the mid-2026 grounding
+% pass; verify DOIs/venues against the sources before camera-ready. bioRxiv
+% items may have since appeared in journals (noted where known).
+
+% ---------------------------------------------------------------- co-folding models
+@article{abramson2024alphafold3,
+  title   = {Accurate structure prediction of biomolecular interactions with {AlphaFold} 3},
+  author  = {Abramson, Josh and Adler, Jonas and others},
+  journal = {Nature},
+  year    = {2024},
+  doi     = {10.1038/s41586-024-07487-w}
+}
+
+@article{wohlwend2024boltz1,
+  title        = {Boltz-1: Democratizing Biomolecular Interaction Modeling},
+  author       = {Wohlwend, Jeremy and Corso, Gabriele and others},
+  journal      = {bioRxiv},
+  year         = {2024},
+  note         = {github.com/jwohlwend/boltz, MIT license}
+}
+
+@article{passaro2025boltz2,
+  title   = {Boltz-2: Towards Accurate and Efficient Binding Affinity Prediction},
+  author  = {Passaro, Saro and Corso, Gabriele and others},
+  journal = {bioRxiv},
+  year    = {2025},
+  doi     = {10.1101/2025.06.14.659707}
+}
+
+@article{chai2024chai1,
+  title        = {Chai-1: Decoding the molecular interactions of life},
+  author       = {{Chai Discovery}},
+  journal      = {bioRxiv},
+  year         = {2024},
+  note         = {github.com/chaidiscovery/chai-lab, Apache-2.0 (code+weights)}
+}
+
+% ---------------------------------------------------------------- datasets / benchmarks
+@article{buttenschoen2024posebusters,
+  title   = {{PoseBusters}: {AI}-based docking methods fail to generate physically valid poses or generalise to novel sequences},
+  author  = {Buttenschoen, Martin and Morris, Garrett M. and Deane, Charlotte M.},
+  journal = {Chemical Science},
+  year    = {2024},
+  doi     = {10.1039/D3SC04185A}
+}
+
+@article{skrinjar2025runsnposes,
+  title   = {Have protein-ligand co-folding methods moved beyond memorisation?},
+  author  = {{\v S}krinjar, Petar and Eberhardt, Jerome and Tauriello, Gerardo and Schwede, Torsten and Durairaj, Janani},
+  journal = {bioRxiv},
+  year    = {2025},
+  doi     = {10.1101/2025.02.03.636309},
+  note    = {Runs N' Poses benchmark; published Nat. Struct. Mol. Biol. s41594-026-01797-5}
+}
+
+@article{beam2025foldbench,
+  title   = {Benchmarking all-atom biomolecular structure prediction with {FoldBench}},
+  author  = {{BEAM-Labs}},
+  journal = {Nature Communications},
+  year    = {2025},
+  doi     = {10.1038/s41467-025-67127-3},
+  note    = {bioRxiv 2025.05.22.655600}
+}
+
+@article{kim2025mac1,
+  title   = {Large scale prospective evaluation of co-folding across 557 {Mac1}-ligand complexes and three virtual screens},
+  author  = {Kim, Jongbin and Correy, Galen J. and Hall, Brendan W. and Shoichet, Brian K. and Fraser, James S.},
+  journal = {eLife (reviewed preprint 110475); bioRxiv},
+  year    = {2025},
+  doi     = {10.1101/2025.12.25.696505}
+}
+
+@article{durairaj2024plinder,
+  title   = {{PLINDER}: The protein-ligand interactions dataset and evaluation resource},
+  author  = {Durairaj, Janani and others},
+  journal = {bioRxiv (NeurIPS Datasets \& Benchmarks)},
+  year    = {2024},
+  note    = {github.com/plinder-org/plinder}
+}
+
+% ---------------------------------------------------------------- conformal / selective prediction
+@inproceedings{tibshirani2019weightedcp,
+  title     = {Conformal Prediction Under Covariate Shift},
+  author    = {Tibshirani, Ryan J. and Foygel Barber, Rina and Cand{\`e}s, Emmanuel J. and Ramdas, Aaditya},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2019},
+  note      = {arXiv:1904.06019}
+}
+
+@article{angelopoulos2021gentle,
+  title   = {A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification},
+  author  = {Angelopoulos, Anastasios N. and Bates, Stephen},
+  journal = {arXiv preprint arXiv:2107.07511},
+  year    = {2021}
+}
+
+@inproceedings{geifman2017selective,
+  title     = {Selective Classification for Deep Neural Networks},
+  author    = {Geifman, Yonatan and El-Yaniv, Ran},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2017}
+}
+
+@article{bates2021rcps,
+  title   = {Distribution-Free, Risk-Controlling Prediction Sets},
+  author  = {Bates, Stephen and Angelopoulos, Anastasios N. and Lei, Lihua and Malik, Jitendra and Jordan, Michael I.},
+  journal = {Journal of the ACM},
+  year    = {2021},
+  note    = {arXiv:2101.02703}
+}
+
+@article{angelopoulos2021ltt,
+  title   = {Learn then Test: Calibrating Predictive Algorithms to Achieve Risk Control},
+  author  = {Angelopoulos, Anastasios N. and Bates, Stephen and Cand{\`e}s, Emmanuel J. and Jordan, Michael I. and Lei, Lihua},
+  journal = {arXiv preprint arXiv:2110.01052},
+  year    = {2021}
+}
+
+@inproceedings{ding2023classconditional,
+  title     = {Class-Conditional Conformal Prediction with Many Classes},
+  author    = {Ding, Tiffany and Angelopoulos, Anastasios N. and Bates, Stephen and Jordan, Michael I. and Tibshirani, Ryan J.},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2023},
+  note      = {arXiv:2306.09335; Mondrian / group-conditional}
+}
+
+@inproceedings{nguyen2023codrug,
+  title     = {{CoDrug}: Conformal Drug Property Prediction with Density Estimation under Covariate Shift},
+  author    = {Nguyen, Siddhartha Laghuvarapu and others},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2023},
+  note      = {arXiv:2310.12033; closest prior art (scalar property)}
+}
+
+% ---------------------------------------------------------------- conformal libraries
+@article{bostrom2022crepes,
+  title   = {crepes: a Python Package for Generating Conformal Regressors and Predictive Systems},
+  author  = {Bostr{\"o}m, Henrik},
+  journal = {Conformal and Probabilistic Prediction with Applications (COPA)},
+  year    = {2022},
+  note    = {github.com/henrikbostrom/crepes}
+}
+
+@article{jonkers2024weightedcps,
+  title   = {Conformal Predictive Systems Under Covariate Shift},
+  author  = {Jonkers, Jef and others},
+  journal = {arXiv preprint arXiv:2404.15018},
+  year    = {2024},
+  note    = {implemented in crepes-weighted (predict-idlab)}
+}

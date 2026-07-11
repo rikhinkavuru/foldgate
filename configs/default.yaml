@@ -1,0 +1,39 @@
+# Default pipeline config. Override per-experiment in configs/e*.yaml.
+# Resolved config + git SHA + pixi.lock hash are logged into each run dir.
+
+seed: 20260710
+
+paths:
+  raw: data/raw
+  processed: data/processed
+  external: data/external
+  results: results
+
+# Co-folding models in scope. Boltz/Chai are the commercially-safe backbones
+# (MIT / Apache-2.0); AF3 is a non-commercial research comparator.
+models: [boltz2, chai1, af3]
+
+# Primary correctness label; sweep thresholds in ablations.
+label:
+  target: ligand_rmsd
+  threshold_angstrom: 2.0
+  thresholds_sweep: [1.0, 1.5, 2.0, 2.5, 3.0]
+
+conformal:
+  alpha: 0.1            # target miscoverage (1 - coverage)
+  delta: 0.1            # RCPS/LTT failure probability
+  methods: [split, weighted, mondrian]
+
+# Novelty = the covariate-shift variable (stratifier AND weight source).
+novelty:
+  ligand: { fingerprint: ecfp4, radius: 2, n_bits: 2048, metric: tanimoto }
+  pocket: { seq_identity: true, tm_score: usalign, search: foldseek }
+  temporal: true
+  # data-driven quantile bins unless overridden with fixed cutoffs
+  binning: { strategy: quantile, n_bins: 5 }
+
+# Weighted-CP density ratio: train-vs-test probabilistic classifier, w = c/(1-c).
+weights:
+  estimator: lightgbm
+  feature_space: [ligand_fp, pocket_embedding]
+  sensitivity_sweep: true   # report coverage vs weight-model choice
