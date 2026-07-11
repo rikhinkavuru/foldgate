@@ -11,9 +11,12 @@ from __future__ import annotations
 import numpy as np
 
 from experiments._common import DELTA, RESDIR, load_delivered, methods_with_enough, rng, save_json
+from foldgate.conformal import continuous_risk_threshold
 from foldgate.scores import ScoreCombiner
 
 NATIVE = "ranking_score"
+CAP = 10.0          # RMSD cap (A) for the bounded loss
+TARGET_LOSS = 0.20  # certify mean min(RMSD,cap)/cap <= 0.20 (mean accepted RMSD <= 2 A, capped)
 
 
 def three_way(idx, g):

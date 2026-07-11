@@ -113,6 +113,21 @@ def ltt_threshold(
 rcps_threshold = ltt_threshold
 
 
+def _empirical_bernstein_ucb(x: np.ndarray, delta: float) -> float:
+    """(1 - delta) empirical-Bernstein upper bound on a [0,1] mean (Maurer-Pontil).
+
+    Variance-adaptive: far tighter than Hoeffding when the losses concentrate near
+    0 (most accepted poses have small RMSD), which is exactly this setting.
+    """
+    n = len(x)
+    if n < 2:
+        return 1.0
+    mean = float(x.mean())
+    var = float(x.var(ddof=1))
+    log_term = np.log(2.0 / delta)
+    return mean + np.sqrt(2.0 * var * log_term / n) + 7.0 * log_term / (3.0 * (n - 1))
+
+
 def continuous_risk_threshold(
     scores: np.ndarray,
     loss: np.ndarray,
@@ -120,15 +135,18 @@ def continuous_risk_threshold(
     delta: float = 0.1,
     coverage_grid: np.ndarray | None = None,
     min_accept: int = 20,
+    bound: str = "bernstein",
 ) -> float | None:
     """Largest accept set with a certified mean bounded loss <= target.
 
     For a continuous, [0,1]-bounded per-pose loss (e.g. min(RMSD, cap)/cap), pick
-    the threshold so the mean loss among accepted is <= target with a Hoeffding
-    upper bound at confidence 1 - delta. This is the continuous-RMSD analogue of
-    the binary selective-risk gate; loss must be scaled into [0,1] by the caller.
-    Uses the same pre-specified coverage-grid fixed-sequence walk as the binary
-    gate so the Hoeffding slack at small accept sets does not block certification.
+    the threshold so the mean loss among accepted is <= target with confidence
+    1 - delta. This is the continuous-RMSD analogue of the binary selective-risk
+    gate; loss must be scaled into [0,1] by the caller. Uses the pre-specified
+    coverage-grid fixed-sequence walk. bound="bernstein" (default) is the
+    variance-adaptive empirical-Bernstein bound, which certifies meaningful
+    coverage where a distribution-free Hoeffding bound is too loose; bound=
+    "hoeffding" is the conservative alternative.
     """
     scores = np.asarray(scores, dtype=float)
     loss = np.clip(np.asarray(loss, dtype=float), 0.0, 1.0)
@@ -142,7 +160,11 @@ def continuous_risk_threshold(
         n_acc = int(acc.sum())
         if n_acc < min_accept:
             continue
-        ucb = float(loss[acc].mean()) + np.sqrt(np.log(1.0 / delta) / (2.0 * n_acc))
+        la = loss[acc]
+        if bound == "bernstein":
+            ucb = _empirical_bernstein_ucb(la, delta)
+        else:
+            ucb = float(la.mean()) + np.sqrt(np.log(1.0 / delta) / (2.0 * n_acc))
         if ucb <= target:
             last_valid = tau
         else:

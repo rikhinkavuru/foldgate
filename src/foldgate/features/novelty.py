@@ -19,10 +19,14 @@ PROTEIN_SIM = "protein_seqsim_max"      # max protein sequence identity to train
 
 
 def similarity(df: pd.DataFrame, col: str = LIGAND_SIM) -> pd.Series:
-    """Return similarity-to-training in [0, 1]; NaN preserved as no-analog."""
+    """Return similarity-to-training in [0, 1]; NaN preserved as no-analog.
+
+    RNP stores these on a 0-100 scale; any value above 1 means the column is on
+    that scale, so we normalise. A genuine [0,1] column (max <= 1) is left as-is.
+    """
     s = pd.to_numeric(df[col], errors="coerce")
-    # RNP stores these on a 0-100 scale; normalise.
-    if s.dropna().max() is not np.nan and (s.dropna() > 1.0).mean() > 0.5:
+    nn = s.dropna()
+    if len(nn) and nn.max() > 1.5:
         s = s / 100.0
     return s.clip(0.0, 1.0)
 

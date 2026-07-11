@@ -112,6 +112,9 @@ def load_rnp(
         delivered_parts.append(top1)
 
     delivered = pd.concat(delivered_parts, ignore_index=True)
+    # A pose with no BiSyRMSD cannot be labelled; drop it rather than silently
+    # scoring NaN as incorrect (which would inflate the base error rate).
+    delivered = delivered.dropna(subset=["rmsd"]).reset_index(drop=True)
     delivered["correct"] = (delivered["rmsd"] <= RMSD_THRESHOLD_A).astype(int)
 
     samples = pd.concat(sample_parts, ignore_index=True) if keep_samples else None

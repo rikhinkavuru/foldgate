@@ -19,9 +19,9 @@ familiar ligands then deploying on novel ones violates the guarantee in 100% of
 runs (realized error 0.55 against a 0.20 target). (3) The break is repaired by
 group-conditional and weighted conformal keyed on training-set similarity, and a
 combined reliability score cuts the area under the risk-coverage curve (AURC) by
-roughly a quarter to two-fifths over native confidence (all gaps have disjoint
-bootstrap CIs), roughly doubling to tripling the predictions retained at a fixed
-guarantee. The layer is
+roughly a quarter to two-fifths over native confidence (paired data-bootstrap over
+test poses excludes zero for every model), roughly doubling to tripling the
+predictions retained at a fixed guarantee. The layer is
 released as a pip-installable package that wraps frozen model outputs.
 
 ## 1. Introduction
@@ -87,9 +87,14 @@ delivered poses, six models. α = 0.20, δ = 0.10 unless noted.
 familiar ligands to 0.44 on the most novel with-analog stratum. A single global
 threshold cannot hold a uniform guarantee across this gradient.
 
-**E1: valid i.i.d.** Mean realized selective risk ≤ α for every model (AF3
-0.177), guarantee satisfied 89–96% of splits ≈ the nominal 90%. Validity is also
-unit-tested on synthetic data.
+**E1: valid i.i.d.** The certifier's finite-sample guarantee — true selective risk
+≤ α with probability 1 − δ — is validated on synthetic data where the true risk is
+known (the certified gate holds in ≥ 1 − δ of draws; the certifier is tight, so
+realized risk sits at α and a finite-test indicator is a noisy proxy). On RNP the
+certified gate's mean realized risk is ≤ α for models whose native score certifies
+non-trivial coverage (AF3 0.17 at 28% coverage; Boltz similar). Native ranking
+score certifies almost nothing for Chai and Protenix (< 5% coverage): a
+near-vacuous gate that motivates the combined score below.
 
 **E2: the break.** AF3's marginal risk (0.177) hides severe per-stratum
 under-control:
@@ -126,9 +131,11 @@ risk-coverage curve:
 | Chai-1 | 0.246 | 0.149 | −39.5% |
 | Protenix | 0.280 | 0.174 | −37.6% |
 
-Every gap has disjoint 90% bootstrap confidence intervals across 120 splits
-(Boltz-2 omitted here for power, n = 933). At α = 0.2 the combined gate retains far
-more predictions at the same guarantee (AF3 coverage 0.22 → 0.71; Chai 0.00 → 0.61)
+The AURC reduction is significant per model: a paired bootstrap over test poses
+gives 90% CIs on Δ(AURC) that exclude zero (AF3 0.070 [0.049, 0.092], Protenix
+0.092 [0.068, 0.116]; Boltz-2 omitted for power, n = 933). At α = 0.2 the combined
+gate retains far more predictions at the same guarantee (AF3 coverage 0.22 → 0.71;
+Chai 0.00 → 0.61)
 and unlocks the stringent α = 0.1 (90%-correct) operating point that native
 confidence cannot certify at all for several models. The combined score fuses
 native confidence with interface ipTM, PoseBusters validity, intra-model ensemble
@@ -137,7 +144,9 @@ spread, and cross-model agreement.
 **E3b: weighted repair, label-free.** Calibrating on familiar ligands and
 correcting with likelihood-ratio weights over the novelty covariates pulls the
 realized error on a moderately-novel target toward α without target labels (AF3
-naive 0.27 → weighted 0.20 at 0.71 coverage; same trend for all models). On the
+naive 0.27 → weighted 0.20 at 0.71 coverage; same trend for all models). This is a
+reweighted point estimate, not a finite-sample-certified gate; group-conditional
+calibration remains the rigorous fallback where stratum labels exist. On the
 extreme novel regime (< 55% correct at baseline) weighted conformal reduces error
 (0.55 → 0.31) but no gate can certify a high-coverage low-error set, so the layer
 correctly abstains.

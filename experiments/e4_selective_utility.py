@@ -19,7 +19,7 @@ import numpy as np
 from experiments._common import DELTA, FIGDIR, RESDIR, load_delivered, methods_with_enough, rng, save_json
 from foldgate.conformal import ltt_threshold
 from foldgate.scores import ScoreCombiner
-from foldgate.selective import aurc, bootstrap_ci, evaluate_gate
+from foldgate.selective import aurc, evaluate_gate
 
 ALPHAS = [0.10, 0.20]
 NATIVE = "ranking_score"
@@ -69,12 +69,27 @@ def run(n_repeats: int = 120) -> dict:
                 if rc["n_accept"]:
                     risk[a]["combined"].append(rc["selective_risk"])
 
-        aurc_nat_ci = bootstrap_ci(lambda a: float(np.mean(a)), aurc_nat, n_boot=500)
-        aurc_comb_ci = bootstrap_ci(lambda a: float(np.mean(a)), aurc_comb, n_boot=500)
+        # Significance via a paired bootstrap over TEST POSES (data-level), not over
+        # Monte-Carlo repeats: one held-out split, resample its test rows, and take
+        # the paired AURC difference (native - combined). This reflects finite-data
+        # sampling error, unlike bootstrapping the correlated per-repeat means.
+        tr, cal, te = three_way(idx_all, g)
+        comb = ScoreCombiner().fit(sub.iloc[tr], y[tr])
+        s_te, sc_te, y_te = s_nat[te], comb.predict(sub.iloc[te]), y[te]
+        d_native = aurc(s_te, y_te)
+        d_combined = aurc(sc_te, y_te)
+        deltas = []
+        for _ in range(2000):
+            bi = g.integers(0, len(te), len(te))
+            deltas.append(aurc(s_te[bi], y_te[bi]) - aurc(sc_te[bi], y_te[bi]))
+        d_lo, d_hi = float(np.percentile(deltas, 5)), float(np.percentile(deltas, 95))
         out[m] = {
             "n": len(sub),
-            "aurc_native": float(np.mean(aurc_nat)), "aurc_native_ci": aurc_nat_ci,
-            "aurc_combined": float(np.mean(aurc_comb)), "aurc_combined_ci": aurc_comb_ci,
+            "aurc_native": float(np.mean(aurc_nat)),
+            "aurc_combined": float(np.mean(aurc_comb)),
+            "delta_aurc_heldout": float(d_native - d_combined),
+            "delta_aurc_ci_data_bootstrap": [d_lo, d_hi],
+            "delta_excludes_zero": bool(d_lo > 0),
             "operating_points": {
                 str(a): {
                     "native_coverage": float(np.mean(cov[a]["native"])),

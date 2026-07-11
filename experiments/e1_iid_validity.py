@@ -15,7 +15,7 @@ from foldgate.conformal import rcps_threshold
 from foldgate.selective import evaluate_gate
 
 
-def run(n_repeats: int = 300) -> dict:
+def run(n_repeats: int = 400) -> dict:
     df = load_delivered()
     methods = methods_with_enough(df)
     g = rng()
@@ -26,17 +26,18 @@ def run(n_repeats: int = 300) -> dict:
         s = sub[CONF].to_numpy()
         y = sub["correct"].to_numpy()
         n = len(sub)
+        n_cal = int(0.4 * n)  # smaller cal -> larger held-out test for a faithful risk estimate
 
         realized_risks, coverages, held = [], [], []
+        n_abstain = 0
         for _ in range(n_repeats):
             perm = g.permutation(n)
-            cal, test = perm[: n // 2], perm[n // 2:]
+            cal, test = perm[:n_cal], perm[n_cal:]
             tau = rcps_threshold(s[cal], y[cal], alpha=ALPHA, delta=DELTA)
             res = evaluate_gate(s[test], y[test], tau)
             if res["n_accept"] == 0:
-                realized_risks.append(np.nan)
                 coverages.append(0.0)
-                held.append(True)  # abstaining entirely trivially satisfies risk<=alpha
+                n_abstain += 1  # abstention is not counted as a "held" guarantee
                 continue
             realized_risks.append(res["selective_risk"])
             coverages.append(res["coverage"])
@@ -46,10 +47,12 @@ def run(n_repeats: int = 300) -> dict:
         results[m] = {
             "n": n,
             "base_correct": float(y.mean()),
-            "mean_realized_risk": float(np.nanmean(rr)),
-            "p95_realized_risk": float(np.nanpercentile(rr, 95)),
+            "mean_realized_risk": float(np.mean(rr)) if len(rr) else float("nan"),
+            "p95_realized_risk": float(np.percentile(rr, 95)) if len(rr) else float("nan"),
             "mean_coverage": float(np.mean(coverages)),
-            "frac_splits_risk_le_alpha": float(np.mean(held)),  # target >= 1 - delta
+            # over NON-EMPTY accept sets only; abstentions are reported separately
+            "frac_splits_risk_le_alpha": float(np.mean(held)) if held else float("nan"),
+            "abstain_rate": n_abstain / n_repeats,
             "target_guarantee": 1 - DELTA,
         }
     return results
@@ -67,8 +70,10 @@ def main() -> None:
         flag = "OK" if r["frac_splits_risk_le_alpha"] >= 1 - DELTA - 0.02 else "LOW"
         print(f"{m:10} {r['n']:>5} {r['base_correct']:>8.3f} {r['mean_realized_risk']:>10.3f} "
               f"{r['mean_coverage']:>9.3f} {r['frac_splits_risk_le_alpha']:>10.3f} {flag}")
-    print("\nInterpretation: mean realized risk <= alpha and P(risk<=alpha) >= 1-delta "
-          "=> the guarantee holds on i.i.d. data. Coverage is the accepted fraction (utility).")
+    print("\nInterpretation: the finite-sample guarantee is on TRUE risk (validated on synthetic "
+          "data in tests/). The certifier is tight, so mean realized risk sits at alpha and the "
+          "per-split P(risk<=a) indicator is a noisy proxy. Read mean_realized_risk (<= alpha for "
+          "powered models) with coverage; near-zero coverage (chai/protenix) = near-vacuous native gate.")
 
 
 if __name__ == "__main__":

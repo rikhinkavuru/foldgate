@@ -23,11 +23,19 @@ this gradient — which is the whole problem.
 
 ## E1 — the guarantee holds i.i.d.
 
-LTT gate on native `ranking_score`, 300 random 50/50 splits. Mean realized
-selective risk ≤ α for every model (AF3 0.177), and the guarantee is satisfied
-89–96% of splits ≈ the nominal 1 − δ = 90% (AF3 0.893; within Monte-Carlo noise,
-SE ≈ 0.017). AF3 certifies 36% coverage at ≤20% error. Validity is also unit-tested
-on synthetic data (`tests/test_conformal.py`).
+The finite-sample guarantee (P(true selective risk ≤ α) ≥ 1 − δ) is validated on
+synthetic data where the true risk is known: `tests/test_conformal.py` certifies a
+gate, estimates its true risk on a large fresh sample, and confirms it holds in
+≥ 1 − δ of draws. Note the certifier is **tight** — it accepts the largest set with
+true risk ≤ α, so realized risk sits at α and a per-split realized-risk indicator
+on a finite fold crosses α ~half the time even when valid; that indicator is not
+the right success metric.
+
+On RNP (native `ranking_score`, 40/60 splits): the certified gate's mean realized
+risk is ≤ α for models whose native score certifies non-trivial coverage
+(AF3 0.17 at 28% coverage; Boltz-1/1x similar at 14–21%). Native ranking score is a
+near-vacuous gate for Chai and Protenix (< 5% coverage), which motivates the
+combined score (E4).
 
 ## E2 — the exchangeability break (the money result)
 
@@ -92,6 +100,11 @@ validity). Lower AURC = better.
 
 (These include the cross-model confidence-agreement feature; without it the gains
 were 22–38%. Cross-model agreement is the third-largest contributor per the E5 ablation.)
+
+Significance uses a **paired data-bootstrap over test poses** (not over Monte-Carlo
+repeats): the per-model Δ(AURC) 90% CI excludes zero for all five models — AF3
+0.070 [0.049, 0.092], Boltz-1 0.074 [0.054, 0.097], Boltz-1x 0.062 [0.043, 0.084],
+Chai 0.085 [0.059, 0.110], Protenix 0.092 [0.068, 0.116].
 
 Coverage at certified error levels (higher = more usable predictions retained):
 
