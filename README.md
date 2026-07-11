@@ -4,7 +4,7 @@
 
 `foldgate` is a model-agnostic, training-free reliability layer that turns co-folding confidence (AlphaFold3 / Boltz / Chai) into risk-controlled **accept / abstain** decisions with conformal coverage guarantees. It shows that standard conformal guarantees **collapse** under the novel-pocket / novel-chemotype shift central to drug discovery, and **restores** them with shift-robust conformal keyed on training-set similarity.
 
-> Status: early scaffold. The science plan is in [`PLAN.md`](PLAN.md); working conventions and grounded facts in [`CLAUDE.md`](CLAUDE.md); literature and novelty defense in [`RELATED_WORK.md`](RELATED_WORK.md).
+> Status: full study complete on real data (Runs N' Poses, 13,536 delivered poses, 6 models). Findings in [`RESULTS.md`](RESULTS.md); method in [`METHODS.md`](METHODS.md); science plan in [`PLAN.md`](PLAN.md); grounded facts in [`CLAUDE.md`](CLAUDE.md); literature/novelty in [`RELATED_WORK.md`](RELATED_WORK.md); paper draft in [`paper/`](paper/). Reproduce with `make features && make experiments && make paper`.
 
 ## Why
 
@@ -46,7 +46,17 @@ Reuse-first. See [`data/DATASETS.md`](data/DATASETS.md) for sources, DOIs, licen
 
 ## Experiments
 
-Figures E1–E6 map to `experiments/e*.py`; see [`experiments/README.md`](experiments/README.md). `make repro` runs the full DVC pipeline.
+Eleven experiments (`experiments/e*.py`, see [`experiments/README.md`](experiments/README.md)):
+E1 i.i.d. validity, E2 the exchangeability break, E3/E3b/E3c shift-robust repair
+(group-conditional, weighted, full method), E4 selective utility (AURC), E5 threshold
+robustness + feature ablation, E6 downstream pose-set purity, E7 shift axes
+(ligand/pocket/temporal), E8 interface-quality task, E9 continuous-RMSD risk,
+E10 FoldBench cross-dataset. `make experiments` runs them all.
+
+**Headline:** the conformal gate is valid i.i.d. but under-controls error 2–3× on
+novel ligands (deploy-on-novel: 0.55 error vs a 0.20 target, guarantee holds 0% of
+runs); group-conditional + weighted conformal restore it; a combined reliability
+score cuts AURC 24–40% and lifts downstream pose-set purity from 63–70% to 82–94%.
 
 ## Citing
 
