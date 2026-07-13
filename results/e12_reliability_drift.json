@@ -1,0 +1,1784 @@
+{
+  "af3": {
+    "ligand": {
+      "1": {
+        "model": "af3",
+        "axis": "ligand",
+        "k": 1,
+        "D_signed": 0.10527411807580232,
+        "D_signed_ci90": [
+          0.07389511872336507,
+          0.13788658607576698
+        ],
+        "D_abs": 0.11901241851135047,
+        "D_abs_ci90": [
+          0.08841985657237353,
+          0.15224963774209543
+        ],
+        "n_ref": 692,
+        "n_stratum": 654,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 5.291187900076308,
+        "se_boot": 0.01989612163920395,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.04866088487786973,
+          0.1618873512737349
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "af3",
+        "axis": "ligand",
+        "k": 2,
+        "D_signed": 0.15307977246230842,
+        "D_signed_ci90": [
+          0.11816239484023308,
+          0.18730965773964262
+        ],
+        "D_abs": 0.15307977246230842,
+        "D_abs_ci90": [
+          0.11899836754611474,
+          0.18752052036086944
+        ],
+        "n_ref": 692,
+        "n_stratum": 629,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 7.353887299541844,
+        "se_boot": 0.02081617058121702,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.0938485946090183,
+          0.21231095031559855
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "3": {
+        "model": "af3",
+        "axis": "ligand",
+        "k": 3,
+        "D_signed": 0.4220150517684434,
+        "D_signed_ci90": [
+          0.3834462034166885,
+          0.46165532279572297
+        ],
+        "D_abs": 0.4220150517684434,
+        "D_abs_ci90": [
+          0.3834462034166885,
+          0.46165532279572297
+        ],
+        "n_ref": 692,
+        "n_stratum": 658,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 18.2469835728529,
+        "se_boot": 0.02312793509587523,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.3562058852025608,
+          0.487824218334326
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "4": {
+        "model": "af3",
+        "axis": "ligand",
+        "k": 4,
+        "D_signed": 0.2876568040861897,
+        "D_signed_ci90": [
+          0.1841422532525928,
+          0.3889284910161375
+        ],
+        "D_abs": 0.2876568040861897,
+        "D_abs_ci90": [
+          0.19515304279629578,
+          0.39071406565208516
+        ],
+        "n_ref": 692,
+        "n_stratum": 76,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 4.652216933453977,
+        "se_boot": 0.06183219918608196,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.11171695132789441,
+          0.46359665684448503
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      }
+    },
+    "pocket": {
+      "1": {
+        "model": "af3",
+        "axis": "pocket",
+        "k": 1,
+        "D_signed": 0.08740585371023948,
+        "D_signed_ci90": [
+          0.05690675537761432,
+          0.11805371381752515
+        ],
+        "D_abs": 0.09625743390430933,
+        "D_abs_ci90": [
+          0.0676289280764175,
+          0.12937457807832894
+        ],
+        "n_ref": 667,
+        "n_stratum": 646,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 4.657971393723752,
+        "se_boot": 0.018764789716830797,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.03401175834766138,
+          0.1407999490728176
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "af3",
+        "axis": "pocket",
+        "k": 2,
+        "D_signed": 0.22517681690919022,
+        "D_signed_ci90": [
+          0.18885080363968884,
+          0.26020862307766546
+        ],
+        "D_abs": 0.22517681690919022,
+        "D_abs_ci90": [
+          0.19012197964235336,
+          0.26020862307766546
+        ],
+        "n_ref": 667,
+        "n_stratum": 642,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 10.457874478824316,
+        "se_boot": 0.021531795716724342,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.1639093702084606,
+          0.28644426360991987
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "3": {
+        "model": "af3",
+        "axis": "pocket",
+        "k": 3,
+        "D_signed": 0.4718449990115286,
+        "D_signed_ci90": [
+          0.4310172816075555,
+          0.5130756317682843
+        ],
+        "D_abs": 0.4718449990115286,
+        "D_abs_ci90": [
+          0.4310172816075555,
+          0.5130756317682843
+        ],
+        "n_ref": 667,
+        "n_stratum": 675,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 18.881536327691,
+        "se_boot": 0.024989756703194605,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.40073812956970306,
+          0.5429518684533542
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "4": {
+        "model": "af3",
+        "axis": "pocket",
+        "k": 4,
+        "D_signed": 0.3419531412348907,
+        "D_signed_ci90": [
+          0.24622032990656775,
+          0.4385843594290246
+        ],
+        "D_abs": 0.3419531412348907,
+        "D_abs_ci90": [
+          0.2491229000947723,
+          0.43867561386559917
+        ],
+        "n_ref": 667,
+        "n_stratum": 79,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 5.809469828515212,
+        "se_boot": 0.058861333534507274,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.17446671035359668,
+          0.5094395721161846
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      }
+    },
+    "temporal": {
+      "1": {
+        "model": "af3",
+        "axis": "temporal",
+        "k": 1,
+        "D_signed": 0.06190158610392181,
+        "D_signed_ci90": [
+          0.023114536911339842,
+          0.10020967562893075
+        ],
+        "D_abs": 0.07737446510253099,
+        "D_abs_ci90": [
+          0.05092027812915705,
+          0.1178436595303691
+        ],
+        "n_ref": 734,
+        "n_stratum": 719,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          0.023114536911339842,
+          0.10020967562893075
+        ],
+        "t_stat": 2.6218046995225857,
+        "se_boot": 0.023610296417270783,
+        "p_one_sided": 0.0034982508745627187,
+        "rw_p_adjusted": 0.05297351324337831,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          -0.005280110971626589,
+          0.1290832831794702
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "af3",
+        "axis": "temporal",
+        "k": 2,
+        "D_signed": -0.031804904212229465,
+        "D_signed_ci90": [
+          -0.06696788254832652,
+          0.004541662271395818
+        ],
+        "D_abs": 0.05656571181851018,
+        "D_abs_ci90": [
+          0.03325216614445722,
+          0.09446210537697201
+        ],
+        "n_ref": 734,
+        "n_stratum": 791,
+        "verdict": "covariate-only (reweighting admissible)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          -0.06696788254832652,
+          0.004541662271395818
+        ],
+        "t_stat": -1.458633796852454,
+        "se_boot": 0.021804584729121453,
+        "p_one_sided": 0.9225387306346826,
+        "rw_p_adjusted": 0.993503248375812,
+        "rw_reject": false,
+        "bh_reject": false,
+        "simultaneous_band90": [
+          -0.09384855585645124,
+          0.030238747431992313
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      },
+      "3": {
+        "model": "af3",
+        "axis": "temporal",
+        "k": 3,
+        "D_signed": 0.02455505976585202,
+        "D_signed_ci90": [
+          -0.020794493887802166,
+          0.07063071230243463
+        ],
+        "D_abs": 0.030939355488584067,
+        "D_abs_ci90": [
+          0.03628473475862554,
+          0.098891022183876
+        ],
+        "n_ref": 734,
+        "n_stratum": 465,
+        "verdict": "covariate-only (reweighting admissible)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          -0.020794493887802166,
+          0.07063071230243463
+        ],
+        "t_stat": 0.8825698719560391,
+        "se_boot": 0.027822227504130246,
+        "p_one_sided": 0.18640679660169915,
+        "rw_p_adjusted": 0.7486256871564217,
+        "rw_reject": false,
+        "bh_reject": false,
+        "simultaneous_band90": [
+          -0.05461143721985298,
+          0.10372155675155703
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      }
+    }
+  },
+  "boltz1": {
+    "ligand": {
+      "1": {
+        "model": "boltz1",
+        "axis": "ligand",
+        "k": 1,
+        "D_signed": 0.11114365309707404,
+        "D_signed_ci90": [
+          0.0722511526144451,
+          0.14844948555386583
+        ],
+        "D_abs": 0.11114365309707404,
+        "D_abs_ci90": [
+          0.08086118227301813,
+          0.15248302134497577
+        ],
+        "n_ref": 563,
+        "n_stratum": 581,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 4.873688562538169,
+        "se_boot": 0.022804832863426036,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.046253854756020535,
+          0.17603345143812754
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "boltz1",
+        "axis": "ligand",
+        "k": 2,
+        "D_signed": 0.2082320832412946,
+        "D_signed_ci90": [
+          0.16513207032245966,
+          0.2498054774592397
+        ],
+        "D_abs": 0.2082320832412946,
+        "D_abs_ci90": [
+          0.16596969247779478,
+          0.2498054774592397
+        ],
+        "n_ref": 563,
+        "n_stratum": 577,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 8.202104383259737,
+        "se_boot": 0.025387641209040256,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.13599305705436257,
+          0.2804711094282266
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "3": {
+        "model": "boltz1",
+        "axis": "ligand",
+        "k": 3,
+        "D_signed": 0.3915660639003706,
+        "D_signed_ci90": [
+          0.34516624293797243,
+          0.43096895270322616
+        ],
+        "D_abs": 0.3915660639003706,
+        "D_abs_ci90": [
+          0.34516624293797243,
+          0.43096895270322616
+        ],
+        "n_ref": 563,
+        "n_stratum": 592,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 15.428946362982117,
+        "se_boot": 0.02537866518480063,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.31935257845764403,
+          0.4637795493430971
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "4": {
+        "model": "boltz1",
+        "axis": "ligand",
+        "k": 4,
+        "D_signed": 0.306354668233838,
+        "D_signed_ci90": [
+          0.19800918415551755,
+          0.40971620985841245
+        ],
+        "D_abs": 0.3081431770646003,
+        "D_abs_ci90": [
+          0.21142757063664694,
+          0.4129900589145389
+        ],
+        "n_ref": 563,
+        "n_stratum": 71,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 4.806812224681766,
+        "se_boot": 0.06373343786153829,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.12500495367180053,
+          0.48770438279587547
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      }
+    },
+    "pocket": {
+      "1": {
+        "model": "boltz1",
+        "axis": "pocket",
+        "k": 1,
+        "D_signed": 0.10499293885731652,
+        "D_signed_ci90": [
+          0.06676362645634325,
+          0.1438110007360228
+        ],
+        "D_abs": 0.10499293885731652,
+        "D_abs_ci90": [
+          0.08035061858174614,
+          0.14727699112226209
+        ],
+        "n_ref": 566,
+        "n_stratum": 572,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 4.393717532830027,
+        "se_boot": 0.023896151282554064,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.03699785872940689,
+          0.17298801898522614
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "boltz1",
+        "axis": "pocket",
+        "k": 2,
+        "D_signed": 0.23933340788029692,
+        "D_signed_ci90": [
+          0.19653678919488535,
+          0.28136815799430664
+        ],
+        "D_abs": 0.23933340788029692,
+        "D_abs_ci90": [
+          0.19653678919488535,
+          0.28136815799430664
+        ],
+        "n_ref": 566,
+        "n_stratum": 589,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 9.506318980311857,
+        "se_boot": 0.025176244177790626,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.1676958993983986,
+          0.3109709163621952
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "3": {
+        "model": "boltz1",
+        "axis": "pocket",
+        "k": 3,
+        "D_signed": 0.4728452336667355,
+        "D_signed_ci90": [
+          0.42125405961945034,
+          0.5260696342353046
+        ],
+        "D_abs": 0.4728452336667355,
+        "D_abs_ci90": [
+          0.42125405961945034,
+          0.5260696342353046
+        ],
+        "n_ref": 566,
+        "n_stratum": 584,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 15.067488882908423,
+        "se_boot": 0.03138182064319293,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.383550125682069,
+          0.5621403416514019
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "4": {
+        "model": "boltz1",
+        "axis": "pocket",
+        "k": 4,
+        "D_signed": 0.39004266029359985,
+        "D_signed_ci90": [
+          0.28570398526495755,
+          0.4920385281906315
+        ],
+        "D_abs": 0.39656581750168857,
+        "D_abs_ci90": [
+          0.29661087870958286,
+          0.49560827076699593
+        ],
+        "n_ref": 566,
+        "n_stratum": 73,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 6.20191133242749,
+        "se_boot": 0.06289071858448084,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.21109085341516032,
+          0.5689944671720394
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      }
+    },
+    "temporal": {
+      "1": {
+        "model": "boltz1",
+        "axis": "temporal",
+        "k": 1,
+        "D_signed": 0.06832751063461127,
+        "D_signed_ci90": [
+          0.024708144523309203,
+          0.11177289753275088
+        ],
+        "D_abs": 0.07942254782992146,
+        "D_abs_ci90": [
+          0.06328489994242224,
+          0.13215532288559367
+        ],
+        "n_ref": 638,
+        "n_stratum": 653,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          0.024708144523309203,
+          0.11177289753275088
+        ],
+        "t_stat": 2.6125853566882284,
+        "se_boot": 0.026153216567524805,
+        "p_one_sided": 0.0034982508745627187,
+        "rw_p_adjusted": 0.05297351324337831,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          -0.006089914794466272,
+          0.14274493606368882
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "boltz1",
+        "axis": "temporal",
+        "k": 2,
+        "D_signed": 0.037311851628869186,
+        "D_signed_ci90": [
+          -0.006977576869850166,
+          0.07802782814447927
+        ],
+        "D_abs": 0.059041294599691464,
+        "D_abs_ci90": [
+          0.03546159634059891,
+          0.10321558528280607
+        ],
+        "n_ref": 638,
+        "n_stratum": 725,
+        "verdict": "covariate-only (reweighting admissible)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          -0.006977576869850166,
+          0.07802782814447927
+        ],
+        "t_stat": 1.4749572059231406,
+        "se_boot": 0.025296904533251584,
+        "p_one_sided": 0.06296851574212893,
+        "rw_p_adjusted": 0.4542728635682159,
+        "rw_reject": false,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          -0.034668988732745654,
+          0.10929269199048403
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      },
+      "3": {
+        "model": "boltz1",
+        "axis": "temporal",
+        "k": 3,
+        "D_signed": 0.015529701348641062,
+        "D_signed_ci90": [
+          -0.03498100636178927,
+          0.06619950624771268
+        ],
+        "D_abs": 0.06502232828692017,
+        "D_abs_ci90": [
+          0.045899264228198185,
+          0.12777429323991568
+        ],
+        "n_ref": 638,
+        "n_stratum": 368,
+        "verdict": "covariate-only (reweighting admissible)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          -0.03498100636178927,
+          0.06619950624771268
+        ],
+        "t_stat": 0.5043710668241118,
+        "se_boot": 0.030790230388169155,
+        "p_one_sided": 0.3073463268365817,
+        "rw_p_adjusted": 0.88055972013993,
+        "rw_reject": false,
+        "bh_reject": false,
+        "simultaneous_band90": [
+          -0.07208207167896062,
+          0.10314147437624276
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      }
+    }
+  },
+  "boltz1x": {
+    "ligand": {
+      "1": {
+        "model": "boltz1x",
+        "axis": "ligand",
+        "k": 1,
+        "D_signed": 0.11800623760120814,
+        "D_signed_ci90": [
+          0.08022120421380166,
+          0.15702709891171374
+        ],
+        "D_abs": 0.11800623760120814,
+        "D_abs_ci90": [
+          0.09453225497634887,
+          0.1620554306396385
+        ],
+        "n_ref": 552,
+        "n_stratum": 566,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 5.018110756724074,
+        "se_boot": 0.023516068760157268,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.05109265973113096,
+          0.18491981547128533
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "boltz1x",
+        "axis": "ligand",
+        "k": 2,
+        "D_signed": 0.17274780951758112,
+        "D_signed_ci90": [
+          0.1310923085974277,
+          0.21372647923817437
+        ],
+        "D_abs": 0.17274780951758112,
+        "D_abs_ci90": [
+          0.13154014775449988,
+          0.21372647923817437
+        ],
+        "n_ref": 552,
+        "n_stratum": 568,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 6.831845917508692,
+        "se_boot": 0.025285671193909995,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.10079893295631236,
+          0.24469668607884987
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "3": {
+        "model": "boltz1x",
+        "axis": "ligand",
+        "k": 3,
+        "D_signed": 0.39873006966493113,
+        "D_signed_ci90": [
+          0.35558495342751906,
+          0.44103497383335866
+        ],
+        "D_abs": 0.39873006966493113,
+        "D_abs_ci90": [
+          0.35558495342751906,
+          0.44103497383335866
+        ],
+        "n_ref": 552,
+        "n_stratum": 577,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 15.094124049942792,
+        "se_boot": 0.02641624438394902,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.32356421419613035,
+          0.4738959251337319
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "4": {
+        "model": "boltz1x",
+        "axis": "ligand",
+        "k": 4,
+        "D_signed": 0.33531362869341713,
+        "D_signed_ci90": [
+          0.22868377147328833,
+          0.44232437775429473
+        ],
+        "D_abs": 0.339170909310582,
+        "D_abs_ci90": [
+          0.23427107421004745,
+          0.44837500069679614
+        ],
+        "n_ref": 552,
+        "n_stratum": 68,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 5.146474176470237,
+        "se_boot": 0.06515404861574482,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.1499216505500738,
+          0.5207056068367605
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      }
+    },
+    "pocket": {
+      "1": {
+        "model": "boltz1x",
+        "axis": "pocket",
+        "k": 1,
+        "D_signed": 0.09194649972943292,
+        "D_signed_ci90": [
+          0.05498660412000045,
+          0.13119857070304336
+        ],
+        "D_abs": 0.09194649972943292,
+        "D_abs_ci90": [
+          0.07894930985261912,
+          0.14167513451307595
+        ],
+        "n_ref": 559,
+        "n_stratum": 569,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 3.964441747357339,
+        "se_boot": 0.02319279878200345,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.025952767394630885,
+          0.15794023206423496
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "boltz1x",
+        "axis": "pocket",
+        "k": 2,
+        "D_signed": 0.2000165607447591,
+        "D_signed_ci90": [
+          0.15906877220031812,
+          0.2447727861230404
+        ],
+        "D_abs": 0.2000165607447591,
+        "D_abs_ci90": [
+          0.1596995417226873,
+          0.2447727861230404
+        ],
+        "n_ref": 559,
+        "n_stratum": 564,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 7.6742851704206245,
+        "se_boot": 0.026063217133980476,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.1258552233619512,
+          0.274177898127567
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "3": {
+        "model": "boltz1x",
+        "axis": "pocket",
+        "k": 3,
+        "D_signed": 0.4663432392578535,
+        "D_signed_ci90": [
+          0.41811792510208223,
+          0.5169733127323972
+        ],
+        "D_abs": 0.4663432392578535,
+        "D_abs_ci90": [
+          0.41811792510208223,
+          0.5169733127323972
+        ],
+        "n_ref": 559,
+        "n_stratum": 570,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 16.001115729199658,
+        "se_boot": 0.029144420123582156,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.38341452165171747,
+          0.5492719568639894
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "4": {
+        "model": "boltz1x",
+        "axis": "pocket",
+        "k": 4,
+        "D_signed": 0.40199567483667975,
+        "D_signed_ci90": [
+          0.2919270728543924,
+          0.5065433450831244
+        ],
+        "D_abs": 0.40859400168951343,
+        "D_abs_ci90": [
+          0.29998524886695466,
+          0.5123040300885826
+        ],
+        "n_ref": 559,
+        "n_stratum": 69,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 6.17543221790136,
+        "se_boot": 0.06509595776492755,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.21676899076137754,
+          0.5872223589119819
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      }
+    },
+    "temporal": {
+      "1": {
+        "model": "boltz1x",
+        "axis": "temporal",
+        "k": 1,
+        "D_signed": 0.042298432326843764,
+        "D_signed_ci90": [
+          5.7694262393831815e-05,
+          0.08627281765887497
+        ],
+        "D_abs": 0.09664868123092278,
+        "D_abs_ci90": [
+          0.07287189776373303,
+          0.14496819895338198
+        ],
+        "n_ref": 615,
+        "n_stratum": 626,
+        "verdict": "ambiguous",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          5.7694262393831815e-05,
+          0.08627281765887497
+        ],
+        "t_stat": 1.590000341380592,
+        "se_boot": 0.026602781915201462,
+        "p_one_sided": 0.05747126436781609,
+        "rw_p_adjusted": 0.4107946026986507,
+        "rw_reject": false,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          -0.03339820461527449,
+          0.11799506926896203
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      },
+      "2": {
+        "model": "boltz1x",
+        "axis": "temporal",
+        "k": 2,
+        "D_signed": 0.010516956963429629,
+        "D_signed_ci90": [
+          -0.03112874273750758,
+          0.050763798434602235
+        ],
+        "D_abs": 0.07507919639166072,
+        "D_abs_ci90": [
+          0.0523249402946601,
+          0.11855517139067423
+        ],
+        "n_ref": 615,
+        "n_stratum": 730,
+        "verdict": "covariate-only (reweighting admissible)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          -0.03112874273750758,
+          0.050763798434602235
+        ],
+        "t_stat": 0.4208560625500561,
+        "se_boot": 0.024989439143884865,
+        "p_one_sided": 0.3278360819590205,
+        "rw_p_adjusted": 0.88055972013993,
+        "rw_reject": false,
+        "bh_reject": false,
+        "simultaneous_band90": [
+          -0.06058900888222866,
+          0.08162292280908792
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      },
+      "3": {
+        "model": "boltz1x",
+        "axis": "temporal",
+        "k": 3,
+        "D_signed": 0.004366722838440763,
+        "D_signed_ci90": [
+          -0.04712650625187986,
+          0.05757691813495603
+        ],
+        "D_abs": 0.04918501592322165,
+        "D_abs_ci90": [
+          0.035827760937826206,
+          0.1116914081376839
+        ],
+        "n_ref": 615,
+        "n_stratum": 360,
+        "verdict": "covariate-only (reweighting admissible)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          -0.04712650625187986,
+          0.05757691813495603
+        ],
+        "t_stat": 0.1373286775419878,
+        "se_boot": 0.03179760350568913,
+        "p_one_sided": 0.4387806096951524,
+        "rw_p_adjusted": 0.9015492253873063,
+        "rw_reject": false,
+        "bh_reject": false,
+        "simultaneous_band90": [
+          -0.08611147060283149,
+          0.09484491627971302
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      }
+    }
+  },
+  "chai": {
+    "ligand": {
+      "1": {
+        "model": "chai",
+        "axis": "ligand",
+        "k": 1,
+        "D_signed": 0.07913293909935132,
+        "D_signed_ci90": [
+          0.04161743175381457,
+          0.11642274172528366
+        ],
+        "D_abs": 0.07913293909935132,
+        "D_abs_ci90": [
+          0.05664853575985293,
+          0.12127755960512368
+        ],
+        "n_ref": 636,
+        "n_stratum": 625,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 3.518673337977047,
+        "se_boot": 0.02248942470597352,
+        "p_one_sided": 0.0009995002498750624,
+        "rw_p_adjusted": 0.0034982508745627187,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.01514061594940265,
+          0.1431252622493
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "chai",
+        "axis": "ligand",
+        "k": 2,
+        "D_signed": 0.14950304812673074,
+        "D_signed_ci90": [
+          0.11251602975809759,
+          0.19103285877790813
+        ],
+        "D_abs": 0.14950304812673074,
+        "D_abs_ci90": [
+          0.11316886019155978,
+          0.19103285877790813
+        ],
+        "n_ref": 636,
+        "n_stratum": 614,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 6.242092558314501,
+        "se_boot": 0.02395079001633705,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.08135249672490204,
+          0.21765359952855945
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "3": {
+        "model": "chai",
+        "axis": "ligand",
+        "k": 3,
+        "D_signed": 0.40742260787992496,
+        "D_signed_ci90": [
+          0.36117066204171866,
+          0.4514214882753337
+        ],
+        "D_abs": 0.40742260787992496,
+        "D_abs_ci90": [
+          0.36117066204171866,
+          0.4514214882753337
+        ],
+        "n_ref": 636,
+        "n_stratum": 624,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 14.699233447466174,
+        "se_boot": 0.027717269021954045,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.32855476402548317,
+          0.48629045173436675
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "4": {
+        "model": "chai",
+        "axis": "ligand",
+        "k": 4,
+        "D_signed": 0.36373648864425034,
+        "D_signed_ci90": [
+          0.2645734554776848,
+          0.4646882972723797
+        ],
+        "D_abs": 0.3664945658704126,
+        "D_abs_ci90": [
+          0.2732900780870594,
+          0.46800157052709207
+        ],
+        "n_ref": 636,
+        "n_stratum": 72,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 6.101014010345212,
+        "se_boot": 0.059619022022811115,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.194094100141788,
+          0.5333788771467127
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      }
+    },
+    "pocket": {
+      "1": {
+        "model": "chai",
+        "axis": "pocket",
+        "k": 1,
+        "D_signed": 0.0997579168524268,
+        "D_signed_ci90": [
+          0.06617718411826318,
+          0.13540983151195427
+        ],
+        "D_abs": 0.0997579168524268,
+        "D_abs_ci90": [
+          0.0717798216748785,
+          0.13617751690925783
+        ],
+        "n_ref": 621,
+        "n_stratum": 624,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 4.792027654370792,
+        "se_boot": 0.02081747519996842,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.04052302678391471,
+          0.1589928069209389
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "chai",
+        "axis": "pocket",
+        "k": 2,
+        "D_signed": 0.24726618356661179,
+        "D_signed_ci90": [
+          0.20755529372308307,
+          0.2893989208196936
+        ],
+        "D_abs": 0.24726618356661179,
+        "D_abs_ci90": [
+          0.20755529372308307,
+          0.2893989208196936
+        ],
+        "n_ref": 621,
+        "n_stratum": 628,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 9.961047579480772,
+        "se_boot": 0.02482331116216802,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.1766329250324682,
+          0.3178994421007554
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "3": {
+        "model": "chai",
+        "axis": "pocket",
+        "k": 3,
+        "D_signed": 0.5203543875198293,
+        "D_signed_ci90": [
+          0.4699573927381642,
+          0.5731560394893959
+        ],
+        "D_abs": 0.5203543875198293,
+        "D_abs_ci90": [
+          0.4699573927381642,
+          0.5731560394893959
+        ],
+        "n_ref": 621,
+        "n_stratum": 625,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 16.514017612269797,
+        "se_boot": 0.03150986027368711,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.4306949503663332,
+          0.6100138246733254
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "4": {
+        "model": "chai",
+        "axis": "pocket",
+        "k": 4,
+        "D_signed": 0.45859135367675385,
+        "D_signed_ci90": [
+          0.36003876941584845,
+          0.5612522095480713
+        ],
+        "D_abs": 0.46077519326380967,
+        "D_abs_ci90": [
+          0.3620653825633485,
+          0.5648499863244699
+        ],
+        "n_ref": 621,
+        "n_stratum": 73,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 7.359334435005683,
+        "se_boot": 0.0623142429151475,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.28127987409891725,
+          0.6359028332545904
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      }
+    },
+    "temporal": {
+      "1": {
+        "model": "chai",
+        "axis": "temporal",
+        "k": 1,
+        "D_signed": 0.047984827107053644,
+        "D_signed_ci90": [
+          0.005789498146938032,
+          0.08875723766309897
+        ],
+        "D_abs": 0.06378440066782125,
+        "D_abs_ci90": [
+          0.03906927542128458,
+          0.10861819581787138
+        ],
+        "n_ref": 699,
+        "n_stratum": 700,
+        "verdict": "ambiguous",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          0.005789498146938032,
+          0.08875723766309897
+        ],
+        "t_stat": 1.90703807988636,
+        "se_boot": 0.02516196588476778,
+        "p_one_sided": 0.025987006496751622,
+        "rw_p_adjusted": 0.25037481259370314,
+        "rw_reject": false,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          -0.023612053339530585,
+          0.11958170755363787
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      },
+      "2": {
+        "model": "chai",
+        "axis": "temporal",
+        "k": 2,
+        "D_signed": -0.034542393189631336,
+        "D_signed_ci90": [
+          -0.08029708859401877,
+          0.011760839854486598
+        ],
+        "D_abs": 0.043675949814020856,
+        "D_abs_ci90": [
+          0.03198914681699723,
+          0.10046472352035173
+        ],
+        "n_ref": 699,
+        "n_stratum": 759,
+        "verdict": "covariate-only (reweighting admissible)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          -0.08029708859401877,
+          0.011760839854486598
+        ],
+        "t_stat": -1.2746388301406724,
+        "se_boot": 0.027099749648941067,
+        "p_one_sided": 0.9025487256371814,
+        "rw_p_adjusted": 0.993503248375812,
+        "rw_reject": false,
+        "bh_reject": false,
+        "simultaneous_band90": [
+          -0.11165312232078256,
+          0.042568335941519896
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      },
+      "3": {
+        "model": "chai",
+        "axis": "temporal",
+        "k": 3,
+        "D_signed": 0.028199472087704992,
+        "D_signed_ci90": [
+          -0.019149631379995157,
+          0.07582197943067409
+        ],
+        "D_abs": 0.044021349234697714,
+        "D_abs_ci90": [
+          0.03269914206247031,
+          0.10198373423145915
+        ],
+        "n_ref": 699,
+        "n_stratum": 413,
+        "verdict": "covariate-only (reweighting admissible)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          -0.019149631379995157,
+          0.07582197943067409
+        ],
+        "t_stat": 0.964524860294015,
+        "se_boot": 0.029236646196044113,
+        "p_one_sided": 0.1634182908545727,
+        "rw_p_adjusted": 0.7426286856571714,
+        "rw_reject": false,
+        "bh_reject": false,
+        "simultaneous_band90": [
+          -0.05499166933357948,
+          0.11139061350898946
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      }
+    }
+  },
+  "protenix": {
+    "ligand": {
+      "1": {
+        "model": "protenix",
+        "axis": "ligand",
+        "k": 1,
+        "D_signed": 0.11083778854543128,
+        "D_signed_ci90": [
+          0.07430060240691581,
+          0.14779062696859285
+        ],
+        "D_abs": 0.11083778854543128,
+        "D_abs_ci90": [
+          0.07772890908516002,
+          0.14786916215703283
+        ],
+        "n_ref": 649,
+        "n_stratum": 633,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 5.0551746503969985,
+        "se_boot": 0.02192561013430601,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.048449766294171845,
+          0.1732258107966907
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "protenix",
+        "axis": "ligand",
+        "k": 2,
+        "D_signed": 0.2451057342927526,
+        "D_signed_ci90": [
+          0.20479715538237162,
+          0.2832844935059965
+        ],
+        "D_abs": 0.2451057342927526,
+        "D_abs_ci90": [
+          0.20529726815635427,
+          0.2833854348316979
+        ],
+        "n_ref": 649,
+        "n_stratum": 618,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 10.27984975722058,
+        "se_boot": 0.023843318733388102,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.17726098604763968,
+          0.3129504825378655
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "3": {
+        "model": "protenix",
+        "axis": "ligand",
+        "k": 3,
+        "D_signed": 0.5202327360041804,
+        "D_signed_ci90": [
+          0.4809688316049992,
+          0.5587771328899347
+        ],
+        "D_abs": 0.5202327360041804,
+        "D_abs_ci90": [
+          0.4809688316049992,
+          0.5587771328899347
+        ],
+        "n_ref": 649,
+        "n_stratum": 635,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 22.284005383005944,
+        "se_boot": 0.023345566789393986,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.4538043113718332,
+          0.5866611606365276
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "4": {
+        "model": "protenix",
+        "axis": "ligand",
+        "k": 4,
+        "D_signed": 0.4369771751343696,
+        "D_signed_ci90": [
+          0.3398948659480722,
+          0.5402803085829532
+        ],
+        "D_abs": 0.4369771751343696,
+        "D_abs_ci90": [
+          0.34211203738404056,
+          0.5411681151708991
+        ],
+        "n_ref": 649,
+        "n_stratum": 72,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 7.178620889486934,
+        "se_boot": 0.06087202289430289,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.26376944702344807,
+          0.6101849032452912
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      }
+    },
+    "pocket": {
+      "1": {
+        "model": "protenix",
+        "axis": "pocket",
+        "k": 1,
+        "D_signed": 0.14133801202104002,
+        "D_signed_ci90": [
+          0.10923755906166263,
+          0.17469743669235444
+        ],
+        "D_abs": 0.14133801202104002,
+        "D_abs_ci90": [
+          0.11087791934146372,
+          0.17488740464022956
+        ],
+        "n_ref": 632,
+        "n_stratum": 629,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 7.181306499604323,
+        "se_boot": 0.019681378594386338,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.08533581741114754,
+          0.1973402066309325
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "2": {
+        "model": "protenix",
+        "axis": "pocket",
+        "k": 2,
+        "D_signed": 0.3184058787671822,
+        "D_signed_ci90": [
+          0.2814191235275156,
+          0.35409061688852345
+        ],
+        "D_abs": 0.3184058787671822,
+        "D_abs_ci90": [
+          0.2814191235275156,
+          0.35409061688852345
+        ],
+        "n_ref": 632,
+        "n_stratum": 630,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 14.32464924147175,
+        "se_boot": 0.02222783074124811,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.2551579057170535,
+          0.3816538518173109
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "3": {
+        "model": "protenix",
+        "axis": "pocket",
+        "k": 3,
+        "D_signed": 0.6258601795171471,
+        "D_signed_ci90": [
+          0.5903126674616374,
+          0.6580612405160605
+        ],
+        "D_abs": 0.6258601795171471,
+        "D_abs_ci90": [
+          0.5903126674616374,
+          0.6580612405160605
+        ],
+        "n_ref": 632,
+        "n_stratum": 643,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 29.956382544922768,
+        "se_boot": 0.02089238173463046,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.5664121473503019,
+          0.6853082116839924
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      },
+      "4": {
+        "model": "protenix",
+        "axis": "pocket",
+        "k": 4,
+        "D_signed": 0.48964266311553284,
+        "D_signed_ci90": [
+          0.3897310977122801,
+          0.5873793486608806
+        ],
+        "D_abs": 0.48964266311553284,
+        "D_abs_ci90": [
+          0.3908478983143914,
+          0.5892508282340456
+        ],
+        "n_ref": 632,
+        "n_stratum": 73,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "t_stat": 8.229714508382449,
+        "se_boot": 0.059496919682548284,
+        "p_one_sided": 0.0004997501249375312,
+        "rw_p_adjusted": 0.0004997501249375312,
+        "rw_reject": true,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          0.3203477095749523,
+          0.6589376166561134
+        ],
+        "clears_simultaneous_band": true,
+        "adjusted_verdict": "concept drift (FWER-adjusted; group-conditional / abstain)"
+      }
+    },
+    "temporal": {
+      "1": {
+        "model": "protenix",
+        "axis": "temporal",
+        "k": 1,
+        "D_signed": 0.059610093636258264,
+        "D_signed_ci90": [
+          0.017680761136172975,
+          0.10325509629283225
+        ],
+        "D_abs": 0.08944784981071967,
+        "D_abs_ci90": [
+          0.06699184083663977,
+          0.13970697098743928
+        ],
+        "n_ref": 713,
+        "n_stratum": 704,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          0.017680761136172975,
+          0.10325509629283225
+        ],
+        "t_stat": 2.311134107263715,
+        "se_boot": 0.025792572334469202,
+        "p_one_sided": 0.011494252873563218,
+        "rw_p_adjusted": 0.12493753123438281,
+        "rw_reject": false,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          -0.013781140033555218,
+          0.13300132730607175
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      },
+      "2": {
+        "model": "protenix",
+        "axis": "temporal",
+        "k": 2,
+        "D_signed": -0.02597172009762321,
+        "D_signed_ci90": [
+          -0.07017506624330039,
+          0.017687922495856396
+        ],
+        "D_abs": 0.03094441190516548,
+        "D_abs_ci90": [
+          0.024174671903284498,
+          0.08873234618363803
+        ],
+        "n_ref": 713,
+        "n_stratum": 769,
+        "verdict": "covariate-only (reweighting admissible)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          -0.07017506624330039,
+          0.017687922495856396
+        ],
+        "t_stat": -0.9536273063983879,
+        "se_boot": 0.027234664866835564,
+        "p_one_sided": 0.8255872063968016,
+        "rw_p_adjusted": 0.993503248375812,
+        "rw_reject": false,
+        "bh_reject": false,
+        "simultaneous_band90": [
+          -0.10346634247345389,
+          0.05152290227820748
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      },
+      "3": {
+        "model": "protenix",
+        "axis": "temporal",
+        "k": 3,
+        "D_signed": 0.06420686796690854,
+        "D_signed_ci90": [
+          0.014401542417262717,
+          0.11363999788502244
+        ],
+        "D_abs": 0.08195080781369402,
+        "D_abs_ci90": [
+          0.06208332024580122,
+          0.14212920980085939
+        ],
+        "n_ref": 713,
+        "n_stratum": 421,
+        "verdict": "concept drift (group-conditional / abstain)",
+        "tost_equivalent": false,
+        "tost_interval90": [
+          0.014401542417262717,
+          0.11363999788502244
+        ],
+        "t_stat": 2.145988914375629,
+        "se_boot": 0.029919477932433495,
+        "p_one_sided": 0.014992503748125937,
+        "rw_p_adjusted": 0.16941529235382308,
+        "rw_reject": false,
+        "bh_reject": true,
+        "simultaneous_band90": [
+          -0.02092723063106458,
+          0.14934096656488166
+        ],
+        "clears_simultaneous_band": false,
+        "adjusted_verdict": "inconclusive (no FWER drift, no equivalence)"
+      }
+    }
+  },
+  "_multiplicity": {
+    "family_size": 55,
+    "n_boot": 2000,
+    "fwer_level": 0.1,
+    "romano_wolf_crit_value": 2.845440645395939,
+    "romano_wolf_n_reject": 42,
+    "bh_q": 0.1,
+    "bh_n_reject": 47,
+    "tost_margin": 0.05,
+    "tost_alpha": 0.05,
+    "temporal_flat_all_models": {
+      "1": false,
+      "2": false,
+      "3": false
+    },
+    "notes": "Romano-Wolf step-down max-t (one-sided, H0: D_signed<=0) controls the family-wise error at fwer_level across every model x axis x stratum cell; BH is the FDR alternative; TOST turns temporal 'flat' into an equivalence rejection at margin tost_margin. The joint temporal-flat claim is an IUT."
+  }
+}

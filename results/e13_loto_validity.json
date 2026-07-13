@@ -1,0 +1,519 @@
+{
+  "per_model": {
+    "af3": {
+      "n": 2709,
+      "n_targets": 2409,
+      "loto_pooled_risk": 0.18486795146324053,
+      "loto_pooled_risk_ci90": [
+        0.1679526685552991,
+        0.2027691296073949
+      ],
+      "loto_pooled_coverage": 0.5171650055370985,
+      "folds_holding": [
+        5,
+        5
+      ],
+      "loto_pooled_risk_joint": 0.17344589409056024,
+      "loto_pooled_risk_joint_ci90": [
+        0.15636668055531613,
+        0.19162527336058058
+      ],
+      "loto_pooled_coverage_joint": 0.4809892949427833,
+      "folds_holding_joint": [
+        5,
+        5
+      ],
+      "holds_joint": true,
+      "joint_vacuous": false,
+      "aurc_native_oof": 0.18531223008956035,
+      "aurc_combined_oof": 0.11756802817275346,
+      "aurc_native_cluster_ci90": [
+        0.171263107303257,
+        0.20168229774373642
+      ],
+      "aurc_combined_cluster_ci90": [
+        0.10616105723605641,
+        0.12885814264299494
+      ],
+      "aurc_native_row_ci90": [
+        0.16933199881823643,
+        0.20077166269841107
+      ],
+      "delta_aurc_native_minus_combined": 0.0677442019168069,
+      "delta_aurc_cluster_ci90": [
+        0.055962982526209584,
+        0.07874917913333854
+      ],
+      "delta_excludes_zero": true,
+      "delta_p_one_sided": 0.000999000999000999,
+      "per_fold": [
+        {
+          "tau": 0.9434713460681132,
+          "risk": 0.18374558303886926,
+          "coverage": 0.522140221402214,
+          "holds": true,
+          "tau_joint": 0.945657073486914,
+          "risk_joint": 0.1760299625468165,
+          "coverage_joint": 0.492619926199262,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.9435396778600775,
+          "risk": 0.18439716312056736,
+          "coverage": 0.5202952029520295,
+          "holds": true,
+          "tau_joint": 0.9457101741845114,
+          "risk_joint": 0.17110266159695817,
+          "coverage_joint": 0.48523985239852396,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.9445826617335924,
+          "risk": 0.16666666666666666,
+          "coverage": 0.4981549815498155,
+          "holds": true,
+          "tau_joint": 0.9457101741845114,
+          "risk_joint": 0.17110266159695817,
+          "coverage_joint": 0.48523985239852396,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.9425558345948075,
+          "risk": 0.1952054794520548,
+          "coverage": 0.5387453874538746,
+          "holds": true,
+          "tau_joint": 0.9458350752736748,
+          "risk_joint": 0.17307692307692307,
+          "coverage_joint": 0.4797047970479705,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.9415603454931185,
+          "risk": 0.19343065693430658,
+          "coverage": 0.5064695009242144,
+          "holds": true,
+          "tau_joint": 0.9460611276716131,
+          "risk_joint": 0.176,
+          "coverage_joint": 0.46210720887245843,
+          "holds_joint": true
+        }
+      ]
+    },
+    "boltz1": {
+      "n": 2384,
+      "n_targets": 2139,
+      "loto_pooled_risk": 0.15730337078651685,
+      "loto_pooled_risk_ci90": [
+        0.12637272291626786,
+        0.1925617519226181
+      ],
+      "loto_pooled_coverage": 0.1493288590604027,
+      "folds_holding": [
+        5,
+        5
+      ],
+      "loto_pooled_risk_joint": 0.15047021943573669,
+      "loto_pooled_risk_joint_ci90": [
+        0.11850282127296896,
+        0.18738094119340176
+      ],
+      "loto_pooled_coverage_joint": 0.13380872483221476,
+      "folds_holding_joint": [
+        5,
+        5
+      ],
+      "holds_joint": true,
+      "joint_vacuous": false,
+      "aurc_native_oof": 0.2339968711424851,
+      "aurc_combined_oof": 0.16225292742776343,
+      "aurc_native_cluster_ci90": [
+        0.21681028783875286,
+        0.25203751312980605
+      ],
+      "aurc_combined_cluster_ci90": [
+        0.1484667437768729,
+        0.17716243954064637
+      ],
+      "aurc_native_row_ci90": [
+        0.21648126582927166,
+        0.2514852027756319
+      ],
+      "delta_aurc_native_minus_combined": 0.07174394371472168,
+      "delta_aurc_cluster_ci90": [
+        0.06034603588765432,
+        0.08380002913887598
+      ],
+      "delta_excludes_zero": true,
+      "delta_p_one_sided": 0.000999000999000999,
+      "per_fold": [
+        {
+          "tau": 0.965648980140686,
+          "risk": 0.18421052631578946,
+          "coverage": 0.15932914046121593,
+          "holds": true,
+          "tau_joint": 0.9670427143573761,
+          "risk_joint": 0.17391304347826086,
+          "coverage_joint": 0.14465408805031446,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.9657332611083983,
+          "risk": 0.1527777777777778,
+          "coverage": 0.1509433962264151,
+          "holds": true,
+          "tau_joint": 0.9713155031204224,
+          "risk_joint": 0.09259259259259259,
+          "coverage_joint": 0.11320754716981132,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.9687117147445679,
+          "risk": 0.10294117647058823,
+          "coverage": 0.14255765199161424,
+          "holds": true,
+          "tau_joint": 0.9711017668247222,
+          "risk_joint": 0.11864406779661017,
+          "coverage_joint": 0.12368972746331237,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.9659325265884401,
+          "risk": 0.17647058823529413,
+          "coverage": 0.14255765199161424,
+          "holds": true,
+          "tau_joint": 0.9670557022094727,
+          "risk_joint": 0.17647058823529413,
+          "coverage_joint": 0.14255765199161424,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.9657230401039123,
+          "risk": 0.16666666666666666,
+          "coverage": 0.15126050420168066,
+          "holds": true,
+          "tau_joint": 0.9670310348272324,
+          "risk_joint": 0.17391304347826086,
+          "coverage_joint": 0.14495798319327732,
+          "holds_joint": true
+        }
+      ]
+    },
+    "boltz1x": {
+      "n": 2331,
+      "n_targets": 2091,
+      "loto_pooled_risk": 0.16751269035532995,
+      "loto_pooled_risk_ci90": [
+        0.142675415383226,
+        0.19485057587331828
+      ],
+      "loto_pooled_coverage": 0.25353925353925355,
+      "folds_holding": [
+        5,
+        5
+      ],
+      "loto_pooled_risk_joint": 0.15265486725663716,
+      "loto_pooled_risk_joint_ci90": [
+        0.12547505650283855,
+        0.18327373620692414
+      ],
+      "loto_pooled_coverage_joint": 0.19390819390819392,
+      "folds_holding_joint": [
+        4,
+        5
+      ],
+      "holds_joint": true,
+      "joint_vacuous": false,
+      "aurc_native_oof": 0.21490919525159108,
+      "aurc_combined_oof": 0.15377337621819556,
+      "aurc_native_cluster_ci90": [
+        0.19754503806218557,
+        0.23177794613000763
+      ],
+      "aurc_combined_cluster_ci90": [
+        0.1388616510068202,
+        0.16808911640266264
+      ],
+      "aurc_native_row_ci90": [
+        0.1978786678956506,
+        0.23208356928607787
+      ],
+      "delta_aurc_native_minus_combined": 0.061135819033395516,
+      "delta_aurc_cluster_ci90": [
+        0.049618175941188426,
+        0.07283347447500228
+      ],
+      "delta_excludes_zero": true,
+      "delta_p_one_sided": 0.000999000999000999,
+      "per_fold": [
+        {
+          "tau": 0.957205992937088,
+          "risk": 0.15503875968992248,
+          "coverage": 0.2762312633832976,
+          "holds": true,
+          "tau_joint": 0.9612075686454772,
+          "risk_joint": 0.17,
+          "coverage_joint": 0.21413276231263384,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.955836956501007,
+          "risk": 0.1984732824427481,
+          "coverage": 0.2811158798283262,
+          "holds": true,
+          "tau_joint": 0.9602600932121276,
+          "risk_joint": 0.20192307692307693,
+          "coverage_joint": 0.22317596566523606,
+          "holds_joint": false
+        },
+        {
+          "tau": 0.9607710552215577,
+          "risk": 0.13761467889908258,
+          "coverage": 0.23390557939914164,
+          "holds": true,
+          "tau_joint": 0.966511571407318,
+          "risk_joint": 0.0625,
+          "coverage_joint": 0.17167381974248927,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.9559500789642335,
+          "risk": 0.192,
+          "coverage": 0.26824034334763946,
+          "holds": true,
+          "tau_joint": 0.961533031463623,
+          "risk_joint": 0.18681318681318682,
+          "coverage_joint": 0.19527896995708155,
+          "holds_joint": true
+        },
+        {
+          "tau": 0.9605080342292784,
+          "risk": 0.14432989690721648,
+          "coverage": 0.20815450643776823,
+          "holds": true,
+          "tau_joint": 0.9653285646438599,
+          "risk_joint": 0.11688311688311688,
+          "coverage_joint": 0.16523605150214593,
+          "holds_joint": true
+        }
+      ]
+    },
+    "chai": {
+      "n": 2571,
+      "n_targets": 2292,
+      "loto_pooled_risk": 0.30434782608695654,
+      "loto_pooled_risk_ci90": [
+        0.15247968742967719,
+        0.4964350837140628
+      ],
+      "loto_pooled_coverage": 0.008945935433683392,
+      "folds_holding": [
+        0,
+        1
+      ],
+      "loto_pooled_risk_joint": NaN,
+      "loto_pooled_risk_joint_ci90": [
+        NaN,
+        NaN
+      ],
+      "loto_pooled_coverage_joint": 0.0,
+      "folds_holding_joint": [
+        0,
+        0
+      ],
+      "holds_joint": true,
+      "joint_vacuous": true,
+      "aurc_native_oof": 0.24731596402563683,
+      "aurc_combined_oof": 0.1464536013971121,
+      "aurc_native_cluster_ci90": [
+        0.22830738624451308,
+        0.2649685059122566
+      ],
+      "aurc_combined_cluster_ci90": [
+        0.13362963552281112,
+        0.16027035405593196
+      ],
+      "aurc_native_row_ci90": [
+        0.22781437648342315,
+        0.26544558724880796
+      ],
+      "delta_aurc_native_minus_combined": 0.10086236262852472,
+      "delta_aurc_cluster_ci90": [
+        0.08577584428429404,
+        0.11584838496929699
+      ],
+      "delta_excludes_zero": true,
+      "delta_p_one_sided": 0.000999000999000999,
+      "per_fold": [
+        {
+          "tau": null,
+          "risk": NaN,
+          "coverage": 0.0,
+          "holds": null,
+          "tau_joint": null,
+          "risk_joint": NaN,
+          "coverage_joint": 0.0,
+          "holds_joint": null
+        },
+        {
+          "tau": null,
+          "risk": NaN,
+          "coverage": 0.0,
+          "holds": null,
+          "tau_joint": null,
+          "risk_joint": NaN,
+          "coverage_joint": 0.0,
+          "holds_joint": null
+        },
+        {
+          "tau": 0.96908895,
+          "risk": 0.30434782608695654,
+          "coverage": 0.04474708171206226,
+          "holds": false,
+          "tau_joint": null,
+          "risk_joint": NaN,
+          "coverage_joint": 0.0,
+          "holds_joint": null
+        },
+        {
+          "tau": null,
+          "risk": NaN,
+          "coverage": 0.0,
+          "holds": null,
+          "tau_joint": null,
+          "risk_joint": NaN,
+          "coverage_joint": 0.0,
+          "holds_joint": null
+        },
+        {
+          "tau": null,
+          "risk": NaN,
+          "coverage": 0.0,
+          "holds": null,
+          "tau_joint": null,
+          "risk_joint": NaN,
+          "coverage_joint": 0.0,
+          "holds_joint": null
+        }
+      ]
+    },
+    "protenix": {
+      "n": 2607,
+      "n_targets": 2323,
+      "loto_pooled_risk": 0.19117647058823528,
+      "loto_pooled_risk_ci90": [
+        0.14703405474021888,
+        0.2421859531441554
+      ],
+      "loto_pooled_coverage": 0.07825086306098965,
+      "folds_holding": [
+        2,
+        2
+      ],
+      "loto_pooled_risk_joint": NaN,
+      "loto_pooled_risk_joint_ci90": [
+        NaN,
+        NaN
+      ],
+      "loto_pooled_coverage_joint": 0.0,
+      "folds_holding_joint": [
+        0,
+        0
+      ],
+      "holds_joint": true,
+      "joint_vacuous": true,
+      "aurc_native_oof": 0.28051066941349506,
+      "aurc_combined_oof": 0.16595723594570921,
+      "aurc_native_cluster_ci90": [
+        0.2611241827786457,
+        0.3001060424871605
+      ],
+      "aurc_combined_cluster_ci90": [
+        0.15346564416443242,
+        0.17967692200974486
+      ],
+      "aurc_native_row_ci90": [
+        0.26231667257531993,
+        0.2981682377142131
+      ],
+      "delta_aurc_native_minus_combined": 0.11455343346778585,
+      "delta_aurc_cluster_ci90": [
+        0.10008616812460999,
+        0.127897309920426
+      ],
+      "delta_excludes_zero": true,
+      "delta_p_one_sided": 0.000999000999000999,
+      "per_fold": [
+        {
+          "tau": 0.9876254224777221,
+          "risk": 0.19047619047619047,
+          "coverage": 0.20114942528735633,
+          "holds": true,
+          "tau_joint": null,
+          "risk_joint": NaN,
+          "coverage_joint": 0.0,
+          "holds_joint": null
+        },
+        {
+          "tau": null,
+          "risk": NaN,
+          "coverage": 0.0,
+          "holds": null,
+          "tau_joint": null,
+          "risk_joint": NaN,
+          "coverage_joint": 0.0,
+          "holds_joint": null
+        },
+        {
+          "tau": null,
+          "risk": NaN,
+          "coverage": 0.0,
+          "holds": null,
+          "tau_joint": null,
+          "risk_joint": NaN,
+          "coverage_joint": 0.0,
+          "holds_joint": null
+        },
+        {
+          "tau": null,
+          "risk": NaN,
+          "coverage": 0.0,
+          "holds": null,
+          "tau_joint": null,
+          "risk_joint": NaN,
+          "coverage_joint": 0.0,
+          "holds_joint": null
+        },
+        {
+          "tau": 0.987484335899353,
+          "risk": 0.1919191919191919,
+          "coverage": 0.19001919385796545,
+          "holds": true,
+          "tau_joint": null,
+          "risk_joint": NaN,
+          "coverage_joint": 0.0,
+          "holds_joint": null
+        }
+      ]
+    }
+  },
+  "joint": {
+    "delta": 0.1,
+    "delta_joint": 0.02,
+    "K": 5,
+    "all_models_hold_joint": true,
+    "models_joint_vacuous": [
+      "chai",
+      "protenix"
+    ],
+    "all_models_exclude_zero": true,
+    "delta_p_one_sided_max": 0.000999000999000999,
+    "note": "all_models_hold_joint is a Bonferroni union-bound certificate at delta/K; chai/protenix reach it only by abstaining (see models_joint_vacuous / loto_pooled_coverage_joint). all_models_exclude_zero is an IUT and takes no penalty."
+  },
+  "leakage_audit": {
+    "pooled_rows": 13535,
+    "pooled_targets": 2425,
+    "random_split_test_rows_sharing_cal_target": 6436,
+    "random_split_leak_fraction": 0.9509456264775413,
+    "grouped_split_shared_targets": 0
+  }
+}

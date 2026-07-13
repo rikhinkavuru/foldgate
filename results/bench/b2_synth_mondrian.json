@@ -1,0 +1,195 @@
+{
+  "config": {
+    "alpha": 0.2,
+    "delta": 0.1,
+    "K": 8,
+    "D": 1.0,
+    "E": 0.0,
+    "k_novel": 7,
+    "n_seeds": 300,
+    "ncal_grid": [
+      200,
+      500,
+      1000,
+      2000,
+      5000,
+      10000
+    ],
+    "ng_thin": [
+      10,
+      20,
+      40,
+      80,
+      160,
+      320
+    ]
+  },
+  "C3a_conditional_exceedance": {
+    "per_stratum": {
+      "0": {
+        "nu": 0.0,
+        "controllable": true,
+        "oracle_tau_star": 0.6173946229989534,
+        "exceedance_rate": 0.04666666666666667,
+        "abstain_rate": 0.0,
+        "mean_realized_risk": 0.1797723982210818,
+        "exceedance_le_delta": true
+      },
+      "1": {
+        "nu": 0.14285714285714285,
+        "controllable": true,
+        "oracle_tau_star": 0.6638224766211402,
+        "exceedance_rate": 0.05333333333333334,
+        "abstain_rate": 0.0,
+        "mean_realized_risk": 0.1785715772916081,
+        "exceedance_le_delta": true
+      },
+      "2": {
+        "nu": 0.2857142857142857,
+        "controllable": true,
+        "oracle_tau_star": 0.70578076924093,
+        "exceedance_rate": 0.07,
+        "abstain_rate": 0.0,
+        "mean_realized_risk": 0.1768689036918463,
+        "exceedance_le_delta": true
+      },
+      "3": {
+        "nu": 0.42857142857142855,
+        "controllable": true,
+        "oracle_tau_star": 0.7433865510850892,
+        "exceedance_rate": 0.08333333333333333,
+        "abstain_rate": 0.0,
+        "mean_realized_risk": 0.1761400532640039,
+        "exceedance_le_delta": true
+      },
+      "4": {
+        "nu": 0.5714285714285714,
+        "controllable": true,
+        "oracle_tau_star": 0.776845825989755,
+        "exceedance_rate": 0.08333333333333333,
+        "abstain_rate": 0.0033333333333333335,
+        "mean_realized_risk": 0.1718639621102229,
+        "exceedance_le_delta": true
+      },
+      "5": {
+        "nu": 0.7142857142857143,
+        "controllable": true,
+        "oracle_tau_star": 0.806427250306068,
+        "exceedance_rate": 0.07666666666666666,
+        "abstain_rate": 0.013333333333333334,
+        "mean_realized_risk": 0.16911931802646132,
+        "exceedance_le_delta": true
+      },
+      "6": {
+        "nu": 0.8571428571428571,
+        "controllable": true,
+        "oracle_tau_star": 0.832438069184546,
+        "exceedance_rate": 0.08,
+        "abstain_rate": 0.04,
+        "mean_realized_risk": 0.1651087251827437,
+        "exceedance_le_delta": true
+      },
+      "7": {
+        "nu": 1.0,
+        "controllable": true,
+        "oracle_tau_star": 0.8552036368840892,
+        "exceedance_rate": 0.08333333333333333,
+        "abstain_rate": 0.08666666666666667,
+        "mean_realized_risk": 0.1626419951464554,
+        "exceedance_le_delta": true
+      }
+    },
+    "worst_exceedance_rate": 0.08333333333333333,
+    "worst_exceedance_le_delta": true,
+    "n_g": 2000
+  },
+  "C3b_slack_vs_n": {
+    "stratum": 7,
+    "coverage_pin": 0.5,
+    "r_ref": 0.36739431391914795,
+    "n_g": [
+      200,
+      500,
+      1000,
+      2000,
+      5000,
+      10000
+    ],
+    "rmse_realized_vs_ref": [
+      0.014748237476097659,
+      0.009391790187577343,
+      0.006983058005510754,
+      0.00505114516594985,
+      0.003348550062951028,
+      0.0024644428654351062
+    ],
+    "loglog_slope": -0.45539457597637045,
+    "slope_near_minus_half": true
+  },
+  "C3c_thin_strata": {
+    "stratum": 7,
+    "rows": {
+      "10": {
+        "ltt_abstain_rate": 1.0,
+        "ltt_effective_coverage": 0.0,
+        "ltt_exceedance_rate": 0.0,
+        "ltt_valid": true,
+        "naive_exceedance_rate": 0.0,
+        "naive_breaks": false
+      },
+      "20": {
+        "ltt_abstain_rate": 1.0,
+        "ltt_effective_coverage": 0.0,
+        "ltt_exceedance_rate": 0.0,
+        "ltt_valid": true,
+        "naive_exceedance_rate": 0.0,
+        "naive_breaks": false
+      },
+      "40": {
+        "ltt_abstain_rate": 1.0,
+        "ltt_effective_coverage": 0.0,
+        "ltt_exceedance_rate": 0.0,
+        "ltt_valid": true,
+        "naive_exceedance_rate": 0.08333333333333333,
+        "naive_breaks": false
+      },
+      "80": {
+        "ltt_abstain_rate": 0.9833333333333333,
+        "ltt_effective_coverage": 0.016666666666666666,
+        "ltt_exceedance_rate": 0.016666666666666666,
+        "ltt_valid": true,
+        "naive_exceedance_rate": 0.43666666666666665,
+        "naive_breaks": true
+      },
+      "160": {
+        "ltt_abstain_rate": 0.8533333333333334,
+        "ltt_effective_coverage": 0.14666666666666667,
+        "ltt_exceedance_rate": 0.03666666666666667,
+        "ltt_valid": true,
+        "naive_exceedance_rate": 0.43,
+        "naive_breaks": true
+      },
+      "320": {
+        "ltt_abstain_rate": 0.6666666666666666,
+        "ltt_effective_coverage": 0.3333333333333333,
+        "ltt_exceedance_rate": 0.03666666666666667,
+        "ltt_valid": true,
+        "naive_exceedance_rate": 0.45,
+        "naive_breaks": true
+      }
+    }
+  },
+  "C3d_joint_vs_ratio": {
+    "stratum": 7,
+    "n_g": 2000,
+    "mean_joint_error": 0.1994818139905983,
+    "mean_ratio_risk": 0.3792178908687641,
+    "crc_joint_bound": 0.20049975012493754,
+    "joint_controlled": true,
+    "ratio_exceeds_when_crc_only": true,
+    "ratio_over_joint_ratio": 1.901014850840673
+  },
+  "meta": {
+    "git_sha": "a1c7fb78250f205dc926a325c1ff2484cb97b0d9"
+  }
+}

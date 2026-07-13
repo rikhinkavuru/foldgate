@@ -27,7 +27,7 @@ These quantify that accuracy collapses on novel pockets/ligands. We reuse them a
 - **Do co-folding models learn the physics?** (Nature Comms s41467-025-63947-5). Argues predictions come from features largely independent of true physics/pose — confidence is not physics-grounded.
 - **Covalent co-folding benchmark** (Acta Pharmacologica Sinica s41401-025-01721-5). Performance "markedly declines for novel pocket-ligand pairs."
 
-**Delta:** they report the drop; we turn novelty into a calibrated weight that provably repairs coverage and yields an operational abstention rule.
+**Delta:** they report the drop; we turn novelty into a stratifier that repairs per-stratum coverage with group-conditional conformal (the operative guarantee) and yields an operational abstention rule, plus a label-free worst-subpopulation (CVaR) certificate. Weighted conformal is a complement that abstains under the concept shift novel pockets induce, so we do not claim it repairs coverage on real novel data.
 
 ## Cluster 4 — Recall/quality-improvement methods (complementary, not competing)
 
@@ -43,11 +43,13 @@ These make weak predictions better; they do not decide whether to trust a predic
 - **On the Reliability of Boltz-2** (arXiv:2603.05532, 2026). Evaluation: Boltz-2 affinity did not correlate with predicted pose (r=−0.03) though iPTM tracked outcomes. Evaluation, not a decision procedure.
 - **PoseBusters** (Chem. Sci. 2024, doi:10.1039/D3SC04185A). Physical-validity benchmark; AF3 ~80.5% within-2 Å unconstrained, ~93.2% with a specified pocket. Supplies our PB-valid feature/label; provides no guarantee itself.
 
-## Scoop risks (re-sweep near submission)
+## Scoop risks (re-swept 2026-07-12: our cell is STILL OPEN)
 
-- Residue-level **conformal risk control for protein structure** with pLDDT abstention (arXiv:2509.20345) — abstains per-residue, not per protein-ligand complex on a decision-relevant pose label.
+- **Chem Sci D5SC06481C** (Hou group, Dec 2025) — uses AF3 / Boltz / Protenix ipTM as a virtual-screening ranking signal and documents novelty-driven degradation, but with **no conformal guarantee and no abstention gate**. This is the strongest motivation and the confidence-as-VS-ranking **baseline to beat**; it is also the released-screen data source for our E16 / E20. Cite prominently.
+- **GESPI** (arXiv:2509.20345) — general synthetic-data conformal risk control with an AlphaFold **residue** demo, not a decision-relevant protein-ligand pose label. (Correcting the earlier "residue-level CRC for protein structure" description.)
 - Generic ranked-abstention theory — **Confidence Gate Theorem** (arXiv:2603.09947).
-- Any follow-up that bolts a calibration/abstention layer onto RNP or FoldBench — the most likely genuine competitor.
+- Adjacent conformal-selection methods that could be applied to co-folding pose but have not been: **CONFIDE** (arXiv:2512.02033), **SCoRE** (arXiv:2603.24704), **ConfHit** (arXiv:2603.07371).
+- Any follow-up that bolts a calibration/abstention layer onto RNP or FoldBench — the most likely genuine competitor. Watch the Tingjun Hou group (AF3-VS confidence) and the Ying Jin group (SCoRE/ConfHit).
 
 Do a targeted final sweep for "conformal" + "co-folding / pose / binding mode" before submitting.
 

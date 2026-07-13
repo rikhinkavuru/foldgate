@@ -1,0 +1,613 @@
+{
+  "meta": {
+    "dataset": "folktables ACSIncome (US Census PUMS, 2018 1-Year)",
+    "loader": "folktables.ACSDataSource + ACSIncome.df_to_pandas (per-state fetch)",
+    "license": "folktables MIT; underlying ACS PUMS is US Census public data",
+    "shift_type": "spatial (state) covariate shift",
+    "base_classifier": "HistGradientBoostingClassifier (torch-free)",
+    "nu": "state code; train on source state, calibrate/test on target states",
+    "reference_stratum_meaning": "one reference target state, threshold reused for all",
+    "source_states": [
+      "CA"
+    ],
+    "target_states": [
+      "SD",
+      "WY",
+      "MS"
+    ],
+    "year": "2018",
+    "delta": 0.1,
+    "alphas": [
+      0.1,
+      0.2
+    ],
+    "seed": 20260712,
+    "git_sha": "a1c7fb78250f205dc926a325c1ff2484cb97b0d9",
+    "n_eval": 19485,
+    "runtime_sec": 23.2
+  },
+  "block_summary": {
+    "MS": {
+      "n_cal": 6069,
+      "n_test": 6070,
+      "cal_correct_rate": 0.7511945954852529,
+      "test_correct_rate": 0.7514003294892916
+    },
+    "SD": {
+      "n_cal": 2262,
+      "n_test": 2263,
+      "cal_correct_rate": 0.7232537577365163,
+      "test_correct_rate": 0.726911179849757
+    },
+    "WY": {
+      "n_cal": 1410,
+      "n_test": 1411,
+      "cal_correct_rate": 0.7631205673758865,
+      "test_correct_rate": 0.7647058823529411
+    }
+  },
+  "score_aurc_diagnostic": {
+    "per_block_aurc": {
+      "MS": 0.11841098254236566,
+      "SD": 0.13479668362518962,
+      "WY": 0.1097124597725008
+    },
+    "worst_block_aurc": 0.13479668362518962,
+    "worst_block_aurc_ci90": [
+      0.12302324800353617,
+      0.14639188703185343
+    ],
+    "worst_block": "SD",
+    "pooled_test_aurc": 0.12106280216211993
+  },
+  "concept_shift_diagnostic": {
+    "worst_block_by_base_accuracy": "SD",
+    "worst_block_base_correct_rate": 0.726911179849757,
+    "concept_gap_worst_block": {
+      "max_abs_gap": 0.04641095707811249,
+      "mean_abs_gap_target_weighted": 0.025961478774355083
+    },
+    "concept_gap_pooled": {
+      "max_abs_gap": 0.028468085397931775,
+      "mean_abs_gap_target_weighted": 0.011381937058114586
+    }
+  },
+  "operating_points": {
+    "0.1": {
+      "marginal_pooled": {
+        "per_block": {
+          "MS": {
+            "tau": 0.8540569386724473,
+            "coverage": 0.45733113673805603,
+            "selective_risk": 0.10626801152737753,
+            "n_accept": 2776,
+            "errors": 295,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.8540569386724473,
+            "coverage": 0.4021210782147592,
+            "selective_risk": 0.10439560439560436,
+            "n_accept": 910,
+            "errors": 95,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.8540569386724473,
+            "coverage": 0.4053862508858965,
+            "selective_risk": 0.0874125874125874,
+            "n_accept": 572,
+            "errors": 50,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "MS",
+        "worst_block_risk": 0.10626801152737753,
+        "certified_worst_risk_ucb": 0.1293911647110984,
+        "overall_coverage": 0.43698686371100165,
+        "worst_block_risk_ci90": [
+          0.10039033353024093,
+          0.12168230494904649
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "marginal_single": {
+        "per_block": {
+          "MS": {
+            "tau": 0.8532151693116345,
+            "coverage": 0.4581548599670511,
+            "selective_risk": 0.10607695073714496,
+            "n_accept": 2781,
+            "errors": 295,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.8532151693116345,
+            "coverage": 0.40433053468846664,
+            "selective_risk": 0.10382513661202186,
+            "n_accept": 915,
+            "errors": 95,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.8532151693116345,
+            "coverage": 0.4068036853295535,
+            "selective_risk": 0.08885017421602792,
+            "n_accept": 574,
+            "errors": 51,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "MS",
+        "worst_block_risk": 0.10607695073714496,
+        "certified_worst_risk_ucb": 0.12869399866736372,
+        "overall_coverage": 0.4382183908045977,
+        "worst_block_risk_ci90": [
+          0.1000687349075893,
+          0.12169039388916102
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "mondrian": {
+        "per_block": {
+          "MS": {
+            "tau": 0.8532151693116345,
+            "coverage": 0.4581548599670511,
+            "selective_risk": 0.10607695073714496,
+            "n_accept": 2781,
+            "errors": 295,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.8651403073920277,
+            "coverage": 0.3800265134776845,
+            "selective_risk": 0.0918604651162791,
+            "n_accept": 860,
+            "errors": 79,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.8273417616700931,
+            "coverage": 0.4585400425230333,
+            "selective_risk": 0.09582689335394123,
+            "n_accept": 647,
+            "errors": 62,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "MS",
+        "worst_block_risk": 0.10607695073714496,
+        "certified_worst_risk_ucb": 0.12501589668246293,
+        "overall_coverage": 0.4400656814449918,
+        "worst_block_risk_ci90": [
+          0.0997495961843573,
+          0.11863621861976827
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "weighted": {
+        "per_block": {
+          "MS": {
+            "tau": 0.8531717414497718,
+            "coverage": 0.4581548599670511,
+            "selective_risk": 0.10607695073714496,
+            "n_accept": 2781,
+            "errors": 295,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.8614512125397352,
+            "coverage": 0.3866548828988069,
+            "selective_risk": 0.0971428571428572,
+            "n_accept": 875,
+            "errors": 85,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.8614512125397352,
+            "coverage": 0.38979447200566975,
+            "selective_risk": 0.08545454545454545,
+            "n_accept": 550,
+            "errors": 47,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "MS",
+        "worst_block_risk": 0.10607695073714496,
+        "certified_worst_risk_ucb": 0.12198428770207417,
+        "overall_coverage": 0.4316502463054187,
+        "worst_block_risk_ci90": [
+          0.09776411636601247,
+          0.11761543708246272
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "marginal_pooled_certified": {
+        "per_block": {
+          "MS": {
+            "tau": 0.8655456420708748,
+            "coverage": 0.4298187808896211,
+            "selective_risk": 0.09812188577999237,
+            "n_accept": 2609,
+            "errors": 256,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.8655456420708748,
+            "coverage": 0.3791427308882015,
+            "selective_risk": 0.09090909090909094,
+            "n_accept": 858,
+            "errors": 78,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.8655456420708748,
+            "coverage": 0.3827072997873848,
+            "selective_risk": 0.08148148148148149,
+            "n_accept": 540,
+            "errors": 44,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "MS",
+        "worst_block_risk": 0.09812188577999237,
+        "certified_worst_risk_ucb": 0.11538628059650276,
+        "overall_coverage": 0.41122742200328405,
+        "worst_block_risk_ci90": [
+          0.09136690025167453,
+          0.11123992879259485
+        ],
+        "worst_block_risk_exceeds_alpha": false
+      },
+      "weighted_certified": {
+        "per_block": {
+          "MS": {
+            "tau": null,
+            "coverage": 0.0,
+            "selective_risk": NaN,
+            "n_accept": 0,
+            "errors": 0,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": null,
+            "coverage": 0.0,
+            "selective_risk": NaN,
+            "n_accept": 0,
+            "errors": 0,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": null,
+            "coverage": 0.0,
+            "selective_risk": NaN,
+            "n_accept": 0,
+            "errors": 0,
+            "n_test": 1411
+          }
+        },
+        "worst_block": null,
+        "worst_block_risk": NaN,
+        "certified_worst_risk_ucb": NaN,
+        "overall_coverage": 0.0,
+        "worst_block_risk_ci90": [
+          NaN,
+          NaN
+        ],
+        "worst_block_risk_exceeds_alpha": null
+      },
+      "mondrian_certified": {
+        "per_block": {
+          "MS": {
+            "tau": 0.8694871400132079,
+            "coverage": 0.4202635914332784,
+            "selective_risk": 0.09408075264602112,
+            "n_accept": 2551,
+            "errors": 240,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.8783111708964847,
+            "coverage": 0.3535130357931949,
+            "selective_risk": 0.08125000000000004,
+            "n_accept": 800,
+            "errors": 65,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.8519620540997949,
+            "coverage": 0.40963855421686746,
+            "selective_risk": 0.08996539792387548,
+            "n_accept": 578,
+            "errors": 52,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "MS",
+        "worst_block_risk": 0.09408075264602112,
+        "certified_worst_risk_ucb": 0.12032496842091304,
+        "overall_coverage": 0.40322249589490966,
+        "worst_block_risk_ci90": [
+          0.08831290021935984,
+          0.10921784237054445
+        ],
+        "worst_block_risk_exceeds_alpha": false
+      },
+      "weighted_n_eff_per_block": {
+        "MS": 9614.38096071234,
+        "SD": 9514.0932274147,
+        "WY": 9457.928347896906
+      },
+      "reference_stratum": "MS",
+      "alpha": 0.1
+    },
+    "0.2": {
+      "marginal_pooled": {
+        "per_block": {
+          "MS": {
+            "tau": 0.6518043967202484,
+            "coverage": 0.7940691927512356,
+            "selective_risk": 0.20414937759336105,
+            "n_accept": 4820,
+            "errors": 984,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.6518043967202484,
+            "coverage": 0.7711003093239063,
+            "selective_risk": 0.22750716332378218,
+            "n_accept": 1745,
+            "errors": 397,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.6518043967202484,
+            "coverage": 0.7732104890148831,
+            "selective_risk": 0.18790100824931255,
+            "n_accept": 1091,
+            "errors": 205,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "SD",
+        "worst_block_risk": 0.22750716332378218,
+        "certified_worst_risk_ucb": 0.25093385947537794,
+        "overall_coverage": 0.7857142857142857,
+        "worst_block_risk_ci90": [
+          0.2120832331412231,
+          0.24510620445765902
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "marginal_single": {
+        "per_block": {
+          "MS": {
+            "tau": 0.6377262437609191,
+            "coverage": 0.8138385502471169,
+            "selective_risk": 0.2097165991902834,
+            "n_accept": 4940,
+            "errors": 1036,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.6377262437609191,
+            "coverage": 0.7874502872293416,
+            "selective_risk": 0.2328843995510662,
+            "n_accept": 1782,
+            "errors": 415,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.6377262437609191,
+            "coverage": 0.7902197023387668,
+            "selective_risk": 0.19282511210762332,
+            "n_accept": 1115,
+            "errors": 215,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "SD",
+        "worst_block_risk": 0.2328843995510662,
+        "certified_worst_risk_ucb": 0.25622964808977144,
+        "overall_coverage": 0.8042898193760263,
+        "worst_block_risk_ci90": [
+          0.2167712922504695,
+          0.24958817979408054
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "mondrian": {
+        "per_block": {
+          "MS": {
+            "tau": 0.6377262437609191,
+            "coverage": 0.8138385502471169,
+            "selective_risk": 0.2097165991902834,
+            "n_accept": 4940,
+            "errors": 1036,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.7088251999199627,
+            "coverage": 0.6862571807335396,
+            "selective_risk": 0.2021893110109465,
+            "n_accept": 1553,
+            "errors": 314,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.6145688079401195,
+            "coverage": 0.8270729978738484,
+            "selective_risk": 0.2005141388174807,
+            "n_accept": 1167,
+            "errors": 234,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "MS",
+        "worst_block_risk": 0.2097165991902834,
+        "certified_worst_risk_ucb": 0.228243803282399,
+        "overall_coverage": 0.7861247947454844,
+        "worst_block_risk_ci90": [
+          0.20388949536073772,
+          0.22462538053770867
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "weighted": {
+        "per_block": {
+          "MS": {
+            "tau": 0.6346647335789296,
+            "coverage": 0.8179571663920923,
+            "selective_risk": 0.2098690835850957,
+            "n_accept": 4965,
+            "errors": 1042,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.6778332517556527,
+            "coverage": 0.7348652231551038,
+            "selective_risk": 0.21286831028262176,
+            "n_accept": 1663,
+            "errors": 354,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.6778332517556527,
+            "coverage": 0.7271438695960312,
+            "selective_risk": 0.17056530214424948,
+            "n_accept": 1026,
+            "errors": 175,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "SD",
+        "worst_block_risk": 0.21286831028262176,
+        "certified_worst_risk_ucb": 0.23637614448223176,
+        "overall_coverage": 0.7855090311986864,
+        "worst_block_risk_ci90": [
+          0.20532787334964187,
+          0.22864530866065702
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "marginal_pooled_certified": {
+        "per_block": {
+          "MS": {
+            "tau": 0.6704388856557616,
+            "coverage": 0.7688632619439868,
+            "selective_risk": 0.19820012856224556,
+            "n_accept": 4667,
+            "errors": 925,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.6704388856557616,
+            "coverage": 0.7459125055236412,
+            "selective_risk": 0.21623222748815163,
+            "n_accept": 1688,
+            "errors": 365,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.6704388856557616,
+            "coverage": 0.7462792345854005,
+            "selective_risk": 0.1766381766381766,
+            "n_accept": 1053,
+            "errors": 186,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "SD",
+        "worst_block_risk": 0.21623222748815163,
+        "certified_worst_risk_ucb": 0.23967868370893636,
+        "overall_coverage": 0.7602627257799671,
+        "worst_block_risk_ci90": [
+          0.2018942819300117,
+          0.23348001504739474
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "weighted_certified": {
+        "per_block": {
+          "MS": {
+            "tau": 0.6636128742699667,
+            "coverage": 0.7780889621087315,
+            "selective_risk": 0.19987296210035999,
+            "n_accept": 4723,
+            "errors": 944,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.7121002583574774,
+            "coverage": 0.6840477242598321,
+            "selective_risk": 0.20155038759689925,
+            "n_accept": 1548,
+            "errors": 312,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.7057871978968216,
+            "coverage": 0.6775336640680368,
+            "selective_risk": 0.16004184100418406,
+            "n_accept": 956,
+            "errors": 153,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "SD",
+        "worst_block_risk": 0.20155038759689925,
+        "certified_worst_risk_ucb": 0.2255123620647134,
+        "overall_coverage": 0.7416871921182266,
+        "worst_block_risk_ci90": [
+          0.19471054130610568,
+          0.2190441125168857
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "mondrian_certified": {
+        "per_block": {
+          "MS": {
+            "tau": 0.6610803302036388,
+            "coverage": 0.7815485996705107,
+            "selective_risk": 0.2006745362563238,
+            "n_accept": 4744,
+            "errors": 952,
+            "n_test": 6070
+          },
+          "SD": {
+            "tau": 0.738665985491821,
+            "coverage": 0.6407423773751657,
+            "selective_risk": 0.18965517241379315,
+            "n_accept": 1450,
+            "errors": 275,
+            "n_test": 2263
+          },
+          "WY": {
+            "tau": 0.6575579659154555,
+            "coverage": 0.7625797306874557,
+            "selective_risk": 0.18494423791821557,
+            "n_accept": 1076,
+            "errors": 199,
+            "n_test": 1411
+          }
+        },
+        "worst_block": "MS",
+        "worst_block_risk": 0.2006745362563238,
+        "certified_worst_risk_ucb": 0.2140894411976941,
+        "overall_coverage": 0.7461001642036125,
+        "worst_block_risk_ci90": [
+          0.19299748967694486,
+          0.21222806458681645
+        ],
+        "worst_block_risk_exceeds_alpha": true
+      },
+      "weighted_n_eff_per_block": {
+        "MS": 9614.38096071234,
+        "SD": 9514.0932274147,
+        "WY": 9457.928347896906
+      },
+      "reference_stratum": "MS",
+      "alpha": 0.2
+    }
+  }
+}

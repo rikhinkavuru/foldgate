@@ -10,8 +10,6 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-import pandas as pd
-
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from foldgate.features import (  # noqa: E402
@@ -48,6 +46,17 @@ def main() -> None:
         "target_release_date", "num_training_systems_with_similar_ccds",
     ]
     df = df[[c for c in keep if c in df.columns]].copy()
+
+    # W1: left-join cross-model + intra-model pose-agreement features if they have been built
+    # (experiments/build_pose_features.py, from the structure tarball). Optional: absent columns
+    # are simply skipped by the combiner, so the pipeline stays green without them.
+    pose_path = OUT.parent / "rnp_pose_features.parquet"
+    if pose_path.exists():
+        import pandas as pd
+        pose = pd.read_parquet(pose_path)
+        df = df.merge(pose, on=["system_id", "method"], how="left")
+        print(f"joined pose features from {pose_path.name} "
+              f"({df['intra_model_pose_std'].notna().mean():.0%} coverage)")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(OUT, index=False)

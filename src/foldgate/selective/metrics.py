@@ -8,6 +8,22 @@ error rate among accepted predictions; coverage is the accepted fraction.
 from __future__ import annotations
 
 import numpy as np
+from scipy.stats import beta
+
+
+def clopper_pearson(k: int, n: int, ci: float = 0.90) -> tuple[float, float]:
+    """Exact Clopper-Pearson interval for a binomial proportion k/n.
+
+    Used to put an honest CI on the acceptance fraction of a certified gate: a low
+    certified risk earned by accepting almost nothing is not a free lunch, so coverage
+    is always co-reported with its interval.
+    """
+    if n == 0:
+        return (float("nan"), float("nan"))
+    a = 1.0 - ci
+    lo = 0.0 if k == 0 else float(beta.ppf(a / 2, k, n - k + 1))
+    hi = 1.0 if k == n else float(beta.ppf(1 - a / 2, k + 1, n - k))
+    return lo, hi
 
 
 def risk_coverage_curve(scores: np.ndarray, correct: np.ndarray):

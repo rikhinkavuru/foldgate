@@ -110,52 +110,52 @@
     }
   },
   "boltz1x": {
-    "n": 2332,
+    "n": 2331,
     "strata": {
       "0": {
         "global": {
-          "selective_risk": 0.0611044826998466,
-          "coverage": 0.14142120233331726
+          "selective_risk": 0.06060606060606061,
+          "coverage": 0.1431170114084015
         },
         "group": {
-          "selective_risk": 0.16312853645812433,
-          "coverage": 0.6006604637709106
+          "selective_risk": 0.15974753130408226,
+          "coverage": 0.5916828295726969
         }
       },
       "1": {
         "global": {
-          "selective_risk": 0.07097203728362184,
-          "coverage": 0.26517737341399683
+          "selective_risk": 0.07122608079376329,
+          "coverage": 0.2663803376951304
         },
         "group": {
-          "selective_risk": 0.16984242610129202,
-          "coverage": 0.3069960688307714
+          "selective_risk": 0.16525000997645556,
+          "coverage": 0.29567792710410495
         }
       },
       "2": {
         "global": {
-          "selective_risk": 0.20709382151029748,
-          "coverage": 0.3396173093906388
+          "selective_risk": 0.2075673807878369,
+          "coverage": 0.3393885377209133
         },
         "group": {
-          "selective_risk": 0.12854797091250295,
-          "coverage": 0.10039446570503385
+          "selective_risk": 0.12185898999756038,
+          "coverage": 0.09614054016019515
         }
       },
       "3": {
         "global": {
-          "selective_risk": 0.32070330240705897,
-          "coverage": 0.17766737366285504
+          "selective_risk": 0.3237712755785045,
+          "coverage": 0.18139873725109276
         },
         "group": {
           "selective_risk": 0.47368421052631576,
-          "coverage": 0.00021901512357063815
+          "coverage": 0.0002197090589514096
         }
       },
       "4": {
         "global": {
-          "selective_risk": 0.20512820512820512,
-          "coverage": 0.00765531455491216
+          "selective_risk": 0.2125,
+          "coverage": 0.00777378291711204
         },
         "group": {
           "selective_risk": NaN,
@@ -169,38 +169,38 @@
     "strata": {
       "0": {
         "global": {
-          "selective_risk": 0.2288135593220339,
-          "coverage": 0.0037206369225918335
+          "selective_risk": 0.24102564102564103,
+          "coverage": 0.004100601421541826
         },
         "group": {
-          "selective_risk": 0.1780610274237157,
-          "coverage": 0.02721109884912502
+          "selective_risk": 0.171850699844479,
+          "coverage": 0.027042940656937377
         }
       },
       "1": {
         "global": {
-          "selective_risk": 0.13532513181019332,
-          "coverage": 0.00603150374186436
+          "selective_risk": 0.13744075829383887,
+          "coverage": 0.006706716251867391
         },
         "group": {
-          "selective_risk": 0.17787354625420626,
-          "coverage": 0.1795564883716
+          "selective_risk": 0.1763327475102519,
+          "coverage": 0.19894472521534598
         }
       },
       "2": {
         "global": {
-          "selective_risk": 0.23815028901734103,
-          "coverage": 0.009387174840200983
+          "selective_risk": 0.2330978809283552,
+          "coverage": 0.010731844664399732
         },
         "group": {
-          "selective_risk": 0.2890855457227139,
-          "coverage": 0.0036789043593388826
+          "selective_risk": 0.2815126050420168,
+          "coverage": 0.0025773754088063935
         }
       },
       "3": {
         "global": {
-          "selective_risk": 0.6037735849056604,
-          "coverage": 0.0022676949736326977
+          "selective_risk": 0.5798319327731093,
+          "coverage": 0.0025521967121701176
         },
         "group": {
           "selective_risk": NaN,

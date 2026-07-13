@@ -18,6 +18,8 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import HistGradientBoostingClassifier
 
+# Primary combined score: released-tabular-data-only (the cheap, structure-free reliability
+# layer). Consistent across all experiments.
 DEFAULT_FEATURES = [
     "ranking_score",        # native global confidence
     "iface_iptm",           # interface chain-pair ipTM
@@ -31,6 +33,18 @@ DEFAULT_FEATURES = [
     "ligand_molecular_weight",
     "ligand_num_rot_bonds",
     "ligand_num_heavy_atoms",
+]
+
+# W1 structure-based upgrade: pose-agreement features from the model's diffusion samples +
+# cross-model structures (build_pose_features.py). Opt-in (DEFAULT + POSE_FEATURES); the
+# combiner skips any that are absent, so the tabular default stays valid without structures.
+POSE_FEATURES = [
+    "intra_model_pose_std",       # spread of the model's own samples' ligand placement
+    "intra_model_pose_median",
+    "pose_consensus_frac",        # fraction of samples in the delivered binding mode
+    "xmodel_pose_rmsd_median",    # cross-model structural agreement (others' delivered poses)
+    "xmodel_pose_rmsd_min",
+    "pose_consensus_cluster_size",
 ]
 
 
@@ -49,7 +63,7 @@ class ScoreCombiner:
         X = df[cols].apply(pd.to_numeric, errors="coerce")
         return X.to_numpy(dtype=float)
 
-    def fit(self, df: pd.DataFrame, y: np.ndarray) -> "ScoreCombiner":
+    def fit(self, df: pd.DataFrame, y: np.ndarray) -> ScoreCombiner:
         X = self._matrix(df)
         self.model = HistGradientBoostingClassifier(
             max_depth=3, max_iter=200, learning_rate=0.05,

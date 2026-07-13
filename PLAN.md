@@ -14,7 +14,7 @@ A calibrated, model-agnostic reliability layer that converts co-folding confiden
 
 - **vs. Mac1 / COValid / AF3-ligand-discovery papers:** they show confidence correlates with accuracy/potency and stop there. We deliver a *guaranteed decision procedure* and evaluate it as *selective prediction*, not correlation.
 - **vs. CoDrug and weighted-conformal-under-shift:** that is conformal for *scalar molecular properties*. We are first to apply selective prediction / conformal to *co-folding pose reliability* (a structured 3D output), and to use *training-set structural/chemical similarity* as the covariate-shift variable.
-- **vs. RNP / FoldBench:** they report that accuracy drops with novelty. We turn novelty into a calibrated weight that *provably repairs coverage* and yields an operational abstention rule.
+- **vs. RNP / FoldBench:** they report that accuracy drops with novelty. We turn novelty into a stratifier that *repairs per-stratum coverage* with group-conditional conformal (the operative guarantee) and yields an operational abstention rule; weighted conformal is the label-free complement, valid only where reliability drift is small (it abstains under the concept shift novel pockets induce).
 - **vs. SiteAF3 / AF-ClaSeq:** those *improve* low-confidence predictions. We *decide whether to trust any prediction* — complementary, not overlapping.
 
 ## 3. Research questions and hypotheses

@@ -1,10 +1,13 @@
 """E10 -- cross-dataset generality on FoldBench (a second, independent benchmark).
 
-FoldBench ships ranking_score + ligand-RMSD for five co-folding models. We
-confirm the selective-risk gate is valid here too (E1-style) and that a combined
-score (native + ensemble spread + cross-model agreement) improves the
-risk-coverage curve, replicating the RNP finding on independent data. The novelty
-break is not testable here (FoldBench ships no per-pose training-similarity).
+An honest negative. FoldBench's public per-pose table ships only ranking_score +
+ligand-RMSD for five co-folding models -- none of the interface-ipTM / PoseBusters /
+ensemble features the E5 ablation credits for the RNP gain. With that feature-poor
+input and far fewer samples, the learned combiner does NOT beat native ranking_score
+(AURC change -23% to +9% across models), so the advantage does not transfer. This
+corroborates the ablation: the layer's value depends on the rich confidence signals
+RNP ships and FoldBench does not. The novelty break is not testable here either
+(FoldBench ships no per-pose training-similarity).
 """
 
 from __future__ import annotations
@@ -45,7 +48,7 @@ def run(n_repeats: int = 300) -> dict:
         for _ in range(n_repeats):
             tr, cal, te = three_way(idx, g)
             comb = ScoreCombiner(features=FEATURES).fit(sub.iloc[tr], y[tr])
-            sc_cal, sc_te = comb.predict(sub.iloc[cal]), comb.predict(sub.iloc[te])
+            sc_te = comb.predict(sub.iloc[te])
             tau = ltt_threshold(s_nat[cal], y[cal], alpha=ALPHA, delta=DELTA)
             r = evaluate_gate(s_nat[te], y[te], tau)
             if r["n_accept"]:
@@ -72,8 +75,11 @@ def main() -> None:
     for m, r in res.items():
         print(f"{m:14} {r['n']:>5} {r['base_correct']:>6.3f} {r['frac_risk_le_alpha']:>11.2f} "
               f"{r['aurc_native']:>9.3f} {r['aurc_combined']:>10.3f} {r['aurc_improve_pct']:>5.1f}%")
-    print("\nThe gate is valid on a second benchmark and the combined score again lowers AURC, "
-          "replicating the RNP result on independent data.")
+    print("\nHonest negative: the combined score does NOT beat native ranking_score here "
+          "(AURC change -23% to +9%). FoldBench's public table ships only ranking_score -- none "
+          "of the interface-ipTM / PoseBusters / ensemble features the E5 ablation credits for the "
+          "RNP gain -- so the feature-poor combiner cannot transfer. This corroborates the ablation "
+          "rather than contradicting the method.")
 
 
 if __name__ == "__main__":

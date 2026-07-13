@@ -1,0 +1,1867 @@
+{
+  "af3": {
+    "n": 2709,
+    "native_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.15400809003200708,
+        "m_star": 0.7700404501600353,
+        "certified": true
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.12708030124696046,
+        "m_star": 0.6354015062348023,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.1624310070382327,
+        "m_star": 0.8121550351911635,
+        "certified": true
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.1612456891781243,
+        "m_star": 0.8062284458906214,
+        "certified": true
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.1512064975426348,
+        "m_star": 0.7560324877131739,
+        "certified": true
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.15581185717664175,
+        "m_star": 0.7790592858832087,
+        "certified": true
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.16571374388778565,
+        "m_star": 0.8285687194389282,
+        "certified": true
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.17381605996676278,
+        "m_star": 0.8690802998338139,
+        "certified": true
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.18186085105245525,
+        "m_star": 0.9093042552622762,
+        "certified": true
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.1935469825187679,
+        "m_star": 0.9677349125938395,
+        "certified": true
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.20152871786084237,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.2120323947144042,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.21843186389100686,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.22937850862612633,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.24121954962337738,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.2535296347732693,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.26909437628579314,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.28300097676298336,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.29884161713094476,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.30720927396688574,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "combined_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.06761649356257608,
+        "m_star": 0.33808246781288037,
+        "certified": true
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.06491281938194687,
+        "m_star": 0.32456409690973437,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.057668097954192726,
+        "m_star": 0.2883404897709636,
+        "certified": true
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.057862306858705616,
+        "m_star": 0.28931153429352807,
+        "certified": true
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.059505449134135524,
+        "m_star": 0.2975272456706776,
+        "certified": true
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.06173793245413592,
+        "m_star": 0.30868966227067957,
+        "certified": true
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.06671551404628345,
+        "m_star": 0.33357757023141726,
+        "certified": true
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.07816419465794205,
+        "m_star": 0.39082097328971027,
+        "certified": true
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.08956888859071092,
+        "m_star": 0.4478444429535546,
+        "certified": true
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.1047659257360613,
+        "m_star": 0.5238296286803065,
+        "certified": true
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.11559112392568177,
+        "m_star": 0.5779556196284088,
+        "certified": true
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.13671831583467461,
+        "m_star": 0.683591579173373,
+        "certified": true
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.14852176598771427,
+        "m_star": 0.7426088299385714,
+        "certified": true
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.16949549370349892,
+        "m_star": 0.8474774685174946,
+        "certified": true
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.1905108278440895,
+        "m_star": 0.9525541392204474,
+        "certified": true
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.20937161539843224,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.22983754523919533,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.2563889124105043,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.2795771619513877,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.30720927396688574,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "novel_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.23631545003674326,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.17190978011074584,
+        "m_star": 0.8595489005537291,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.15737108469451538,
+        "m_star": 0.7868554234725769,
+        "certified": true
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.17200922138711838,
+        "m_star": 0.8600461069355919,
+        "certified": true
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.20925552730793284,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.23402789136037597,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.27072305296571664,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.3046560036042078,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.340905038770146,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.36870404116065003,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.3811454853582603,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.40839105612830345,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.41566979156751854,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.44146572839845427,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.47181111188616665,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.49236782347677177,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.5184267171134908,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.5354599912581794,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.5542715832553753,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.5731440442753795,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "cov_at_mstar_0.5_native": null,
+    "cov_at_mstar_0.5_combined": 0.45,
+    "cov_at_mstar_0.25_combined": null,
+    "cov_at_mstar_0.5_novel": null
+  },
+  "boltz1": {
+    "n": 2384,
+    "native_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.09693341942116597,
+        "m_star": 0.48466709710582984,
+        "certified": true
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.1397940346432166,
+        "m_star": 0.698970173216083,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.18385537634075505,
+        "m_star": 0.9192768817037752,
+        "certified": true
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.20926556034531169,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.22048244454447394,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.2233716361311073,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.22653577646966486,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.2436426529204019,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.24940106078781693,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.2582308169187784,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.2661753839751081,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.2777315696020507,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.28727962628413156,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.2992394692291063,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.3044710463139962,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.3132755760098932,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.32900556685434257,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.3456195201021154,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.36059860439520053,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.3753233419227579,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "combined_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.08682250049585685,
+        "m_star": 0.43411250247928423,
+        "certified": true
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.06399722435522678,
+        "m_star": 0.3199861217761339,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.07793163903103222,
+        "m_star": 0.38965819515516104,
+        "certified": true
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.09339578359705454,
+        "m_star": 0.4669789179852727,
+        "certified": true
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.10575629914505845,
+        "m_star": 0.5287814957252922,
+        "certified": true
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.11962831375478526,
+        "m_star": 0.5981415687739263,
+        "certified": true
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.12172082928529132,
+        "m_star": 0.6086041464264565,
+        "certified": true
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.1307783417010188,
+        "m_star": 0.6538917085050939,
+        "certified": true
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.1446276842093292,
+        "m_star": 0.7231384210466459,
+        "certified": true
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.15558779606052134,
+        "m_star": 0.7779389803026067,
+        "certified": true
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.17471200906853815,
+        "m_star": 0.8735600453426907,
+        "certified": true
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.18909660396259054,
+        "m_star": 0.9454830198129527,
+        "certified": true
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.20701795144067972,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.2285342213094942,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.24539314037458435,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.26542203386745356,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.2855414960083535,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.31078031358842145,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.3432333736875293,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.3753233419227579,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "novel_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.2630259345531607,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.25745948618190323,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.23034123668946163,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.2467005056518353,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.2633554897077985,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.284451822017963,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.29909869454692045,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.3215191726066792,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.3490277424842627,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.3758462748073906,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.3929677680584679,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.41984694298190456,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.4424603874953252,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.4704107737710549,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.496544301142415,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.5174434556944225,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.5455012508350663,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.5712070729430204,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.5925770870077094,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.6132624560595713,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "cov_at_mstar_0.5_native": 0.05,
+    "cov_at_mstar_0.5_combined": 0.2,
+    "cov_at_mstar_0.25_combined": null,
+    "cov_at_mstar_0.5_novel": null
+  },
+  "boltz1x": {
+    "n": 2331,
+    "native_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.08827744585373587,
+        "m_star": 0.44138722926867935,
+        "certified": true
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.1285840830587582,
+        "m_star": 0.642920415293791,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.15453221247031815,
+        "m_star": 0.7726610623515907,
+        "certified": true
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.17813724215094878,
+        "m_star": 0.8906862107547439,
+        "certified": true
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.18605604692999486,
+        "m_star": 0.9302802346499742,
+        "certified": true
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.20769518685298893,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.2099822127481278,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.2239802274029003,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.22573075374732263,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.23586577167894762,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.24666451185336347,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.2619905732397894,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.26969419369815656,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.27796862419146856,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.2846862200358189,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.2952822625133342,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.3108831493972389,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.3279407172945443,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.3442256588520792,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.3574091741246944,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "combined_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.0985559548938917,
+        "m_star": 0.4927797744694585,
+        "certified": true
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.08524478458679208,
+        "m_star": 0.4262239229339604,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.07648898861285298,
+        "m_star": 0.3824449430642649,
+        "certified": true
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.08619606404183948,
+        "m_star": 0.43098032020919735,
+        "certified": true
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.08775198703577326,
+        "m_star": 0.4387599351788663,
+        "certified": true
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.10866277669315542,
+        "m_star": 0.5433138834657771,
+        "certified": true
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.12179792328278942,
+        "m_star": 0.6089896164139471,
+        "certified": true
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.12821504249402002,
+        "m_star": 0.6410752124701,
+        "certified": true
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.1329953272461363,
+        "m_star": 0.6649766362306815,
+        "certified": true
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.14300137630195392,
+        "m_star": 0.7150068815097695,
+        "certified": true
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.15525797758014792,
+        "m_star": 0.7762898879007396,
+        "certified": true
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.1719178343979773,
+        "m_star": 0.8595891719898865,
+        "certified": true
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.1839988791040566,
+        "m_star": 0.919994395520283,
+        "certified": true
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.2111304541434433,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.23347131561828444,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.25172388725845,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.2725123816212489,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.29563465450513876,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.3255270769533307,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.3574091741246944,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "novel_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.3059379321619147,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.1951032736553883,
+        "m_star": 0.9755163682769414,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.24614112185617604,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.26237935449431926,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.25813063160970257,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.28077421313930184,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.2976177366976396,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.3339923369123747,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.361915610223841,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.3777036304830038,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.40373122766749836,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.43666305255437293,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.45477610932120727,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.47468626541869197,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.4908909521692445,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.5117298960744974,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.5300693232498288,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.5566263572012288,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.5777925577763832,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.5976430276363985,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "cov_at_mstar_0.5_native": 0.05,
+    "cov_at_mstar_0.5_combined": 0.25,
+    "cov_at_mstar_0.25_combined": null,
+    "cov_at_mstar_0.5_novel": null
+  },
+  "chai": {
+    "n": 2571,
+    "native_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.22908825925688422,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.24627606072543837,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.2198540279439152,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.21877029498948325,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.233576503622381,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.24480315730905272,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.2512443013842077,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.2502357549352106,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.26065975589225476,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.26336703062785627,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.2592394669464596,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.25560904206479296,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.2672843415374059,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.27202515097503616,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.28256653171876994,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.29507227961597765,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.31083962073512444,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.3259978054944382,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.34420734237336137,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.36356573987624663,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "combined_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.08956087998698477,
+        "m_star": 0.4478043999349238,
+        "certified": true
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.06387912327896128,
+        "m_star": 0.3193956163948064,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.05471046989605747,
+        "m_star": 0.27355234948028734,
+        "certified": true
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.05881574267343829,
+        "m_star": 0.29407871336719144,
+        "certified": true
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.07285622712543079,
+        "m_star": 0.3642811356271539,
+        "certified": true
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.08192325751825923,
+        "m_star": 0.4096162875912961,
+        "certified": true
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.0916676291110243,
+        "m_star": 0.4583381455551215,
+        "certified": true
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.09993449464697333,
+        "m_star": 0.49967247323486663,
+        "certified": true
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.1134283028109667,
+        "m_star": 0.5671415140548335,
+        "certified": true
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.13622336556783246,
+        "m_star": 0.6811168278391623,
+        "certified": true
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.14965564908137174,
+        "m_star": 0.7482782454068587,
+        "certified": true
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.16935024774761026,
+        "m_star": 0.8467512387380512,
+        "certified": true
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.18477709165091766,
+        "m_star": 0.9238854582545882,
+        "certified": true
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.20692289965476965,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.2287742576031266,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.2541328953780217,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.2788627431136749,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.3054678295287031,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.33511771355409703,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.36356573987624663,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "novel_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.2489592853691529,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.22754306857557247,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.26139657152422435,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.31266063755793577,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.335893423058611,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.3556712772460958,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.3651924802689119,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.39174417987505755,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.4077311966200145,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.43487297502908656,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.4595001685965284,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.49185534999081865,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.5069063080491973,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.5330907673507375,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.553764536150346,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.5771217766322947,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.5959793669067132,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.6183708916594668,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.6374692493237295,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.6531938400682343,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "cov_at_mstar_0.5_native": null,
+    "cov_at_mstar_0.5_combined": 0.4,
+    "cov_at_mstar_0.25_combined": null,
+    "cov_at_mstar_0.5_novel": null
+  },
+  "protenix": {
+    "n": 2607,
+    "native_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.20229679682499926,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.16929982429517954,
+        "m_star": 0.8464991214758977,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.18751847117087225,
+        "m_star": 0.9375923558543612,
+        "certified": true
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.19986521139152133,
+        "m_star": 0.9993260569576066,
+        "certified": true
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.23831774984986764,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.26766607922283503,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.2917167108988358,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.3102627621596117,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.3230921436472334,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.3260389276504042,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.334279442413618,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.34627852753001165,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.35022800484080246,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.3487993917125135,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.3542555435105958,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.3636754903760707,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.3707628785831919,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.37318561607846185,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.3768191007927149,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.37829163455693826,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "combined_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.07017391651684562,
+        "m_star": 0.3508695825842281,
+        "certified": true
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.08495207030165487,
+        "m_star": 0.42476035150827435,
+        "certified": true
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.08849126564675465,
+        "m_star": 0.44245632823377323,
+        "certified": true
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.08138259192894931,
+        "m_star": 0.40691295964474655,
+        "certified": true
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.09674976962008837,
+        "m_star": 0.48374884810044183,
+        "certified": true
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.104029212865781,
+        "m_star": 0.520146064328905,
+        "certified": true
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.11832696459392313,
+        "m_star": 0.5916348229696156,
+        "certified": true
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.12974510084006086,
+        "m_star": 0.6487255042003043,
+        "certified": true
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.147471565454255,
+        "m_star": 0.737357827271275,
+        "certified": true
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.17089460600658804,
+        "m_star": 0.8544730300329402,
+        "certified": true
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.18498865685685895,
+        "m_star": 0.9249432842842947,
+        "certified": true
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.19666088771326282,
+        "m_star": 0.983304438566314,
+        "certified": true
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.2130022891119749,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.23431840907947224,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.25480176791525444,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.27253700039068507,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.2978540534542296,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.32374478383695005,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.3516033257201977,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.37829163455693826,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "novel_curve": [
+      {
+        "coverage": 0.05,
+        "r_ucb": 0.2489592853691529,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.1,
+        "r_ucb": 0.27103732615599757,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.15,
+        "r_ucb": 0.2969820368259235,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.2,
+        "r_ucb": 0.30838612890542155,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.25,
+        "r_ucb": 0.38860939218162216,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.3,
+        "r_ucb": 0.40873077637887906,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.35,
+        "r_ucb": 0.42279727805711925,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.4,
+        "r_ucb": 0.43523922685995975,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.45,
+        "r_ucb": 0.4460579650135324,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.5,
+        "r_ucb": 0.4675761646167134,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.55,
+        "r_ucb": 0.4913434233475364,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.6,
+        "r_ucb": 0.5063514544005854,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.65,
+        "r_ucb": 0.5309170008005679,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.7,
+        "r_ucb": 0.5589253094907238,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.75,
+        "r_ucb": 0.5887451200973977,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.8,
+        "r_ucb": 0.6102321313818289,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.85,
+        "r_ucb": 0.6317473687606748,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.9,
+        "r_ucb": 0.6492967805535459,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 0.95,
+        "r_ucb": 0.6684142840102509,
+        "m_star": 1.0,
+        "certified": false
+      },
+      {
+        "coverage": 1.0,
+        "r_ucb": 0.6809336565284034,
+        "m_star": 1.0,
+        "certified": false
+      }
+    ],
+    "cov_at_mstar_0.5_native": null,
+    "cov_at_mstar_0.5_combined": 0.25,
+    "cov_at_mstar_0.25_combined": null,
+    "cov_at_mstar_0.5_novel": null
+  }
+}

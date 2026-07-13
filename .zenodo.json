@@ -1,0 +1,29 @@
+{
+  "title": "foldgate: a training-free, shift-robust conformal reliability layer for protein-ligand co-folding",
+  "description": "<p>foldgate converts protein-ligand co-folding confidence (AlphaFold3, Boltz, Chai, Protenix) into risk-controlled accept/abstain decisions with finite-sample conformal guarantees. It demonstrates that standard conformal coverage collapses under novel-pocket / novel-chemotype distribution shift and repairs it with group-conditional and weighted conformal keyed on training-set similarity. Training-free and model-agnostic: it consumes frozen models' confidence outputs and never retrains a co-folding model.</p>",
+  "upload_type": "software",
+  "license": "MIT",
+  "access_right": "open",
+  "keywords": [
+    "conformal prediction",
+    "selective prediction",
+    "co-folding",
+    "AlphaFold3",
+    "Boltz",
+    "Chai",
+    "distribution shift",
+    "drug discovery",
+    "risk control"
+  ],
+  "creators": [
+    { "name": "Kavuru, Rikhin" }
+  ],
+  "related_identifiers": [
+    {
+      "relation": "isDerivedFrom",
+      "identifier": "10.5281/zenodo.14794785",
+      "resource_type": "dataset",
+      "scheme": "doi"
+    }
+  ]
+}

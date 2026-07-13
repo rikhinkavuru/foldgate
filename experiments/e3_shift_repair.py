@@ -14,9 +14,18 @@ from __future__ import annotations
 
 import numpy as np
 
-from experiments._common import ALPHA, CONF, DELTA, FIGDIR, RESDIR, load_delivered, methods_with_enough, rng, save_json
+from experiments._common import (
+    ALPHA,
+    CONF,
+    DELTA,
+    FIGDIR,
+    RESDIR,
+    load_delivered,
+    methods_with_enough,
+    rng,
+    save_json,
+)
 from foldgate.conformal import ltt_threshold
-from foldgate.selective import evaluate_gate
 
 STRAT = "novelty_stratum"
 
@@ -92,7 +101,7 @@ def make_figure(res: dict) -> None:
     ax.bar(x + 0.2, grp, 0.4, label="group-conditional gate (E3)", color="#48c")
     ax.axhline(ALPHA, ls="--", color="k", lw=1)
     ax.text(0, ALPHA + 0.01, f"target alpha = {ALPHA}", fontsize=9)
-    for xi, cov in zip(x + 0.2, grp_cov):
+    for xi, cov in zip(x + 0.2, grp_cov, strict=False):
         ax.text(xi, 0.005, f"cov\n{cov:.2f}", ha="center", va="bottom", fontsize=7, color="#246")
     ax.set_xticks(x)
     ax.set_xticklabels([f"S{k}" for k in ks])
@@ -113,7 +122,8 @@ def main() -> None:
     for m, r in res.items():
         print(f"[{m}]  {'stratum':>7} | {'global risk':>11} {'cov':>5} | {'group risk':>10} {'cov':>5}")
         for k in sorted(r["strata"]):
-            gl = r["strata"][k]["global"]; gr = r["strata"][k]["group"]
+            gl = r["strata"][k]["global"]
+            gr = r["strata"][k]["group"]
             print(f"          {k:>7} | {gl['selective_risk']:>11.3f} {gl['coverage']:>5.2f} "
                   f"| {gr['selective_risk']:>10.3f} {gr['coverage']:>5.2f}")
         print()

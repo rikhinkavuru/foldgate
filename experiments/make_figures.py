@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -32,7 +33,9 @@ def fig_e2_all_models():
     ax.set_ylabel("realized selective risk (global gate)")
     ax.set_title("E2: exchangeability break across all models")
     ax.legend(fontsize=8)
-    fig.tight_layout(); fig.savefig(FIGDIR / "e2_all_models.png", dpi=150); plt.close(fig)
+    fig.tight_layout()
+    fig.savefig(FIGDIR / "e2_all_models.png", dpi=150)
+    plt.close(fig)
 
 
 def fig_e4_aurc_bars():
@@ -46,11 +49,14 @@ def fig_e4_aurc_bars():
     fig, ax = plt.subplots(figsize=(8, 5))
     ax.bar(x - 0.2, nat, 0.4, label="native confidence", color="#c44")
     ax.bar(x + 0.2, comb, 0.4, label="combined score", color="#48c")
-    ax.set_xticks(x); ax.set_xticklabels(models, rotation=15)
+    ax.set_xticks(x)
+    ax.set_xticklabels(models, rotation=15)
     ax.set_ylabel("AURC (lower = better)")
     ax.set_title("E4: combined reliability score vs native confidence (AURC)")
     ax.legend(fontsize=9)
-    fig.tight_layout(); fig.savefig(FIGDIR / "e4_aurc_all_models.png", dpi=150); plt.close(fig)
+    fig.tight_layout()
+    fig.savefig(FIGDIR / "e4_aurc_all_models.png", dpi=150)
+    plt.close(fig)
 
 
 def fig_e7_axes():
@@ -59,7 +65,7 @@ def fig_e7_axes():
         return
     axes_names = ["ligand_novelty", "pocket_novelty", "temporal"]
     fig, axs = plt.subplots(1, 3, figsize=(13, 4), sharey=True)
-    for ax, an in zip(axs, axes_names):
+    for ax, an in zip(axs, axes_names, strict=False):
         for m, axd in e7.items():
             if an in axd:
                 ks = sorted(axd[an], key=int)
@@ -70,12 +76,16 @@ def fig_e7_axes():
     axs[0].set_ylabel("realized selective risk")
     axs[-1].legend(fontsize=7)
     fig.suptitle("E7: the break is structural/chemical novelty, not recency")
-    fig.tight_layout(); fig.savefig(FIGDIR / "e7_shift_axes.png", dpi=150); plt.close(fig)
+    fig.tight_layout()
+    fig.savefig(FIGDIR / "e7_shift_axes.png", dpi=150)
+    plt.close(fig)
 
 
 def main():
     FIGDIR.mkdir(parents=True, exist_ok=True)
-    fig_e2_all_models(); fig_e4_aurc_bars(); fig_e7_axes()
+    fig_e2_all_models()
+    fig_e4_aurc_bars()
+    fig_e7_axes()
     print("wrote:", ", ".join(p.name for p in sorted(FIGDIR.glob("*.png"))))
 
 

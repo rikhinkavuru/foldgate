@@ -3,30 +3,215 @@
     "area_mean_rmsd_native": 1.7466480050620645,
     "area_mean_rmsd_combined": 1.3227987895029751,
     "mean_rmsd_at_50pct_native": 1.7208148055656374,
-    "mean_rmsd_at_50pct_combined": 1.1397503598951024
+    "mean_rmsd_at_50pct_combined": 1.1397503598951024,
+    "cap_A": 4.0,
+    "target_guarantee": 0.9,
+    "certified_gate": {
+      "1.0A": {
+        "certified_coverage_wsr": 0.43444034440344403,
+        "certified_coverage_hoeffding": 0.00044075440754407543,
+        "coverage_clopper_pearson90_example": [
+          0.5389267742765262,
+          0.59723650286841
+        ],
+        "realized_capped_mean_rmsd_A": 0.8984914397958246,
+        "frac_accepted_beyond_cap": 0.041546766020052917,
+        "empirical_coverage_of_guarantee": 0.9019607843137255
+      },
+      "1.25A": {
+        "certified_coverage_wsr": 0.7432144321443215,
+        "certified_coverage_hoeffding": 0.4609573595735957,
+        "coverage_clopper_pearson90_example": [
+          0.7393012118580917,
+          0.7893985541306014
+        ],
+        "realized_capped_mean_rmsd_A": 1.1665144996728218,
+        "frac_accepted_beyond_cap": 0.08780982105158823,
+        "empirical_coverage_of_guarantee": 0.8739495798319328
+      },
+      "1.5A": {
+        "certified_coverage_wsr": 0.9201927019270192,
+        "certified_coverage_hoeffding": 0.8583948339483395,
+        "coverage_clopper_pearson90_example": [
+          0.921444085831533,
+          0.9506730618161549
+        ],
+        "realized_capped_mean_rmsd_A": 1.4101183045993309,
+        "frac_accepted_beyond_cap": 0.14343682589668277,
+        "empirical_coverage_of_guarantee": 0.8583333333333333
+      }
+    }
   },
   "boltz1": {
     "area_mean_rmsd_native": 2.004089866426914,
     "area_mean_rmsd_combined": 1.5519018321028828,
     "mean_rmsd_at_50pct_native": 2.0747987570612234,
-    "mean_rmsd_at_50pct_combined": 1.4229125683676291
+    "mean_rmsd_at_50pct_combined": 1.4229125683676291,
+    "cap_A": 4.0,
+    "target_guarantee": 0.9,
+    "certified_gate": {
+      "1.0A": {
+        "certified_coverage_wsr": 0.024359869646182496,
+        "certified_coverage_hoeffding": 0.0,
+        "coverage_clopper_pearson90_example": [
+          0.16346502214992578,
+          0.21276936790529777
+        ],
+        "realized_capped_mean_rmsd_A": 0.8261633259585259,
+        "frac_accepted_beyond_cap": 0.03031700718896222,
+        "empirical_coverage_of_guarantee": 0.8
+      },
+      "1.25A": {
+        "certified_coverage_wsr": 0.44079376163873374,
+        "certified_coverage_hoeffding": 0.004504189944134078,
+        "coverage_clopper_pearson90_example": [
+          0.44219619339842164,
+          0.5048938607634741
+        ],
+        "realized_capped_mean_rmsd_A": 1.1417678747663,
+        "frac_accepted_beyond_cap": 0.06621329752595961,
+        "empirical_coverage_of_guarantee": 0.94
+      },
+      "1.5A": {
+        "certified_coverage_wsr": 0.7583682495344507,
+        "certified_coverage_hoeffding": 0.4936568901303538,
+        "coverage_clopper_pearson90_example": [
+          0.6517067346101955,
+          0.7103064800206066
+        ],
+        "realized_capped_mean_rmsd_A": 1.3965775032079815,
+        "frac_accepted_beyond_cap": 0.1156911444981207,
+        "empirical_coverage_of_guarantee": 0.9083333333333333
+      }
+    }
   },
   "boltz1x": {
     "area_mean_rmsd_native": 1.9554810578853867,
     "area_mean_rmsd_combined": 1.5365763223199147,
     "mean_rmsd_at_50pct_native": 2.0225044334757896,
-    "mean_rmsd_at_50pct_combined": 1.3778003481378156
+    "mean_rmsd_at_50pct_combined": 1.3778003481378156,
+    "cap_A": 4.0,
+    "target_guarantee": 0.9,
+    "certified_gate": {
+      "1.0A": {
+        "certified_coverage_wsr": 0.043821428571428574,
+        "certified_coverage_hoeffding": 0.0,
+        "coverage_clopper_pearson90_example": [
+          0.3075888708086309,
+          0.3677199382076579
+        ],
+        "realized_capped_mean_rmsd_A": 0.8748284985309102,
+        "frac_accepted_beyond_cap": 0.0337906763981088,
+        "empirical_coverage_of_guarantee": 0.8333333333333334
+      },
+      "1.25A": {
+        "certified_coverage_wsr": 0.4197857142857143,
+        "certified_coverage_hoeffding": 0.017464285714285717,
+        "coverage_clopper_pearson90_example": [
+          0.48535151397604,
+          0.5488266771741024
+        ],
+        "realized_capped_mean_rmsd_A": 1.1549717166350228,
+        "frac_accepted_beyond_cap": 0.06953433676207067,
+        "empirical_coverage_of_guarantee": 0.8351648351648352
+      },
+      "1.5A": {
+        "certified_coverage_wsr": 0.7720476190476191,
+        "certified_coverage_hoeffding": 0.4893690476190476,
+        "coverage_clopper_pearson90_example": [
+          0.7615876400585666,
+          0.8137339654582526
+        ],
+        "realized_capped_mean_rmsd_A": 1.3950713634290186,
+        "frac_accepted_beyond_cap": 0.11744970446901547,
+        "empirical_coverage_of_guarantee": 0.8916666666666667
+      }
+    }
   },
   "chai": {
     "area_mean_rmsd_native": 2.089495032253384,
     "area_mean_rmsd_combined": 1.3905648108953634,
     "mean_rmsd_at_50pct_native": 2.1633672564362842,
-    "mean_rmsd_at_50pct_combined": 1.1482921709074916
+    "mean_rmsd_at_50pct_combined": 1.1482921709074916,
+    "cap_A": 4.0,
+    "target_guarantee": 0.9,
+    "certified_gate": {
+      "1.0A": {
+        "certified_coverage_wsr": 0.2498056994818653,
+        "certified_coverage_hoeffding": 0.0,
+        "coverage_clopper_pearson90_example": [
+          0.5646135051982766,
+          0.6239682666775235
+        ],
+        "realized_capped_mean_rmsd_A": 0.8854910668781594,
+        "frac_accepted_beyond_cap": 0.038128686954438336,
+        "empirical_coverage_of_guarantee": 0.8873239436619719
+      },
+      "1.25A": {
+        "certified_coverage_wsr": 0.6444300518134715,
+        "certified_coverage_hoeffding": 0.20139248704663212,
+        "coverage_clopper_pearson90_example": [
+          0.6091537666700313,
+          0.6672601421266267
+        ],
+        "realized_capped_mean_rmsd_A": 1.1479842076121374,
+        "frac_accepted_beyond_cap": 0.07421368851145792,
+        "empirical_coverage_of_guarantee": 0.9152542372881356
+      },
+      "1.5A": {
+        "certified_coverage_wsr": 0.8278281519861831,
+        "certified_coverage_hoeffding": 0.7522236614853196,
+        "coverage_clopper_pearson90_example": [
+          0.836527083413897,
+          0.8790277670955984
+        ],
+        "realized_capped_mean_rmsd_A": 1.4035398788010922,
+        "frac_accepted_beyond_cap": 0.1287032452811892,
+        "empirical_coverage_of_guarantee": 0.9
+      }
+    }
   },
   "protenix": {
     "area_mean_rmsd_native": 2.354555520930103,
     "area_mean_rmsd_combined": 1.6592323884734301,
     "mean_rmsd_at_50pct_native": 2.5821946760010728,
-    "mean_rmsd_at_50pct_combined": 1.5434093284296015
+    "mean_rmsd_at_50pct_combined": 1.5434093284296015,
+    "cap_A": 4.0,
+    "target_guarantee": 0.9,
+    "certified_gate": {
+      "1.0A": {
+        "certified_coverage_wsr": 0.13402511707109407,
+        "certified_coverage_hoeffding": 0.0,
+        "coverage_clopper_pearson90_example": [
+          0.048950462919369025,
+          0.07872687892884532
+        ],
+        "realized_capped_mean_rmsd_A": 0.8274806670280761,
+        "frac_accepted_beyond_cap": 0.032632712757420246,
+        "empirical_coverage_of_guarantee": 0.8732394366197183
+      },
+      "1.25A": {
+        "certified_coverage_wsr": 0.49982971477224347,
+        "certified_coverage_hoeffding": 0.13753724989357172,
+        "coverage_clopper_pearson90_example": [
+          0.5576980236837519,
+          0.6167799635752971
+        ],
+        "realized_capped_mean_rmsd_A": 1.1584970761847584,
+        "frac_accepted_beyond_cap": 0.07160407982487219,
+        "empirical_coverage_of_guarantee": 0.8521739130434782
+      },
+      "1.5A": {
+        "certified_coverage_wsr": 0.7404427415921669,
+        "certified_coverage_hoeffding": 0.6351958280119199,
+        "coverage_clopper_pearson90_example": [
+          0.5783137181180775,
+          0.6369181163259836
+        ],
+        "realized_capped_mean_rmsd_A": 1.4029687787592666,
+        "frac_accepted_beyond_cap": 0.1189804563952118,
+        "empirical_coverage_of_guarantee": 0.8916666666666667
+      }
+    }
   }
 }

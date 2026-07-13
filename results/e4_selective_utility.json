@@ -3,12 +3,20 @@
     "n": 2709,
     "aurc_native": 0.18693960607740717,
     "aurc_combined": 0.1250517506897695,
+    "aurc_combined_pose": 0.1092137738239129,
+    "delta_pose_vs_combined_ci90": [
+      0.003998682006930076,
+      0.020565421401379652
+    ],
+    "pose_delta_excludes_zero": true,
+    "pose_delta_p_one_sided": 0.00849575212393803,
     "delta_aurc_heldout": 0.07036842750422173,
     "delta_aurc_ci_data_bootstrap": [
       0.04931280006674914,
       0.09164854956620797
     ],
     "delta_excludes_zero": true,
+    "delta_p_one_sided": 0.0004997501249375312,
     "operating_points": {
       "0.1": {
         "native_coverage": 0.002029520295202952,
@@ -28,12 +36,20 @@
     "n": 2384,
     "aurc_native": 0.2342724413731334,
     "aurc_combined": 0.1697591529994543,
+    "aurc_combined_pose": 0.13897169331551948,
+    "delta_pose_vs_combined_ci90": [
+      0.02226175891255123,
+      0.04857534749160943
+    ],
+    "pose_delta_excludes_zero": true,
+    "pose_delta_p_one_sided": 0.0004997501249375312,
     "delta_aurc_heldout": 0.07448823435243421,
     "delta_aurc_ci_data_bootstrap": [
       0.054474115940162965,
       0.09680149386877639
     ],
     "delta_excludes_zero": true,
+    "delta_p_one_sided": 0.0004997501249375312,
     "operating_points": {
       "0.1": {
         "native_coverage": 0.006075418994413408,
@@ -53,12 +69,20 @@
     "n": 2331,
     "aurc_native": 0.21618373456234993,
     "aurc_combined": 0.16297965186929317,
+    "aurc_combined_pose": 0.13433073211465046,
+    "delta_pose_vs_combined_ci90": [
+      0.004350773273514722,
+      0.034673836682898605
+    ],
+    "pose_delta_excludes_zero": true,
+    "pose_delta_p_one_sided": 0.018490754622688656,
     "delta_aurc_heldout": 0.062434539973889897,
     "delta_aurc_ci_data_bootstrap": [
       0.04316712417665707,
       0.0835026191176086
     ],
     "delta_excludes_zero": true,
+    "delta_p_one_sided": 0.0004997501249375312,
     "operating_points": {
       "0.1": {
         "native_coverage": 0.004892857142857142,
@@ -78,12 +102,20 @@
     "n": 2571,
     "aurc_native": 0.24821527820387287,
     "aurc_combined": 0.14994111558932205,
+    "aurc_combined_pose": 0.13077917891818072,
+    "delta_pose_vs_combined_ci90": [
+      0.01983920088039974,
+      0.04036567401927386
+    ],
+    "pose_delta_excludes_zero": true,
+    "pose_delta_p_one_sided": 0.0004997501249375312,
     "delta_aurc_heldout": 0.08489882499641835,
     "delta_aurc_ci_data_bootstrap": [
       0.059376946557431524,
       0.10978621372277995
     ],
     "delta_excludes_zero": true,
+    "delta_p_one_sided": 0.0004997501249375312,
     "operating_points": {
       "0.1": {
         "native_coverage": 0.0,
@@ -103,12 +135,20 @@
     "n": 2607,
     "aurc_native": 0.281003247136872,
     "aurc_combined": 0.17499348817051524,
+    "aurc_combined_pose": 0.1389433627335465,
+    "delta_pose_vs_combined_ci90": [
+      0.03177550212487412,
+      0.058499730438211335
+    ],
+    "pose_delta_excludes_zero": true,
+    "pose_delta_p_one_sided": 0.0004997501249375312,
     "delta_aurc_heldout": 0.09237854557676115,
     "delta_aurc_ci_data_bootstrap": [
       0.06760448375123722,
       0.11619921678164224
     ],
     "delta_excludes_zero": true,
+    "delta_p_one_sided": 0.0004997501249375312,
     "operating_points": {
       "0.1": {
         "native_coverage": 0.0,
@@ -123,5 +163,12 @@
         "combined_realized_risk": 0.16680690411185267
       }
     }
+  },
+  "_joint": {
+    "all_models_exclude_zero": true,
+    "delta_p_one_sided_max": 0.0004997501249375312,
+    "all_models_pose_exclude_zero": true,
+    "pose_delta_p_one_sided_max": 0.018490754622688656,
+    "note": "IUT conjunction over models; no penalty (docs/theory/MULTIPLICITY_SPEC.md)."
   }
 }

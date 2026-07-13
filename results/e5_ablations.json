@@ -77,6 +77,10 @@
     "+ ligand difficulty (all)": {
       "aurc": 0.1226928122098303,
       "n_features": 12
+    },
+    "+ pose agreement (W1)": {
+      "aurc": 0.10592882164081428,
+      "n_features": 18
     }
   }
 }

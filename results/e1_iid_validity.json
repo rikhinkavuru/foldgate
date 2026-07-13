@@ -6,6 +6,11 @@
     "p95_realized_risk": 0.2119499063670412,
     "mean_coverage": 0.2828090405904059,
     "frac_splits_risk_le_alpha": 0.852589641434263,
+    "frac_splits_risk_le_alpha_ci90": [
+      0.8106793314430956,
+      0.8881210776606898
+    ],
+    "verified": false,
     "abstain_rate": 0.3725,
     "target_guarantee": 0.9
   },
@@ -16,6 +21,11 @@
     "p95_realized_risk": 0.21252170925816358,
     "mean_coverage": 0.13849231306778478,
     "frac_splits_risk_le_alpha": 0.8826530612244898,
+    "frac_splits_risk_le_alpha_ci90": [
+      0.852456777177013,
+      0.9084418998336519
+    ],
+    "verified": true,
     "abstain_rate": 0.02,
     "target_guarantee": 0.9
   },
@@ -26,6 +36,11 @@
     "p95_realized_risk": 0.2096877121520706,
     "mean_coverage": 0.20600786275911362,
     "frac_splits_risk_le_alpha": 0.904639175257732,
+    "frac_splits_risk_le_alpha_ci90": [
+      0.8764601631861745,
+      0.9280833665535771
+    ],
+    "verified": true,
     "abstain_rate": 0.03,
     "target_guarantee": 0.9
   },
@@ -36,6 +51,11 @@
     "p95_realized_risk": 0.26045487894350694,
     "mean_coverage": 0.005515230071289695,
     "frac_splits_risk_le_alpha": 0.1111111111111111,
+    "frac_splits_risk_le_alpha_ci90": [
+      0.0388549493806689,
+      0.23647644369371146
+    ],
+    "verified": false,
     "abstain_rate": 0.91,
     "target_guarantee": 0.9
   },
@@ -46,7 +66,17 @@
     "p95_realized_risk": 0.22127705627705627,
     "mean_coverage": 0.04639297124600638,
     "frac_splits_risk_le_alpha": 0.7692307692307693,
+    "frac_splits_risk_le_alpha_ci90": [
+      0.6910826811566607,
+      0.8354803410902001
+    ],
+    "verified": false,
     "abstain_rate": 0.74,
     "target_guarantee": 0.9
+  },
+  "_joint": {
+    "all_models_verified": false,
+    "delta_joint_certificate": 0.02,
+    "note": "IUT conjunction, no penalty; deployed joint certificate at delta/K lives in E13/E22."
   }
 }

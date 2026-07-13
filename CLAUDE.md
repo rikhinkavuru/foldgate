@@ -58,11 +58,11 @@ The stack splits into two worlds that must stay apart:
 - **Compiled comp-bio tools** (RDKit, foldseek, US-align, biotite, posebusters) live in conda-forge/bioconda.
 - **Pure-Python ML/conformal** (numpy, pandas, scikit-learn, crepes, crepes-weighted, mapie, matplotlib, lightgbm) can come from PyPI but are safest from conda-forge too.
 
-**Use pixi** (conda-forge + bioconda) and **commit `pixi.lock`** — a bare `environment.yml` does not pin a reproducible resolution. `pixi install` generates the lock; do not fabricate it by hand.
+**Live environment: `uv` + `.venv` (Python 3.12), and `uv.lock` is committed.** The shippable package is torch-free (numpy/pandas/scikit-learn/scipy only), so the analysis env needs no compiled comp-bio stack. Run everything with `.venv/bin/python`. `pixi.toml` / `environment.yml` remain as conda fallbacks for the optional structure-feature pipeline (RDKit, gemmi, spyrmsd), but no `pixi.lock` exists and pixi is not the primary env.
 
 **Segfault gotcha (load-bearing):** lightgbm + torch in one env can segfault on macOS from two OpenMP runtimes (LLVM `libomp` vs Intel `libiomp`). Fixes: install everything from conda-forge (patched OpenMP), **or** isolate any torch co-folding inference in a separate env/process from the lightgbm+conformal analysis. `KMP_DUPLICATE_LIB_OK=TRUE` is NOT a safe workaround (can crash or silently corrupt results). Because the reliability layer is training-free, the default is: no torch in the analysis env at all.
 
-**Local machine note:** system `python3` here is homebrew 3.14 (too new for some wheels). Create the project env with pixi; do not rely on system python.
+**Local machine note:** system `python3` here is homebrew 3.14 (too new for some wheels). Use the project env at `.venv/bin/python` (created by `uv venv --python 3.12`); do not rely on system python.
 
 ---
 
@@ -165,4 +165,4 @@ Workshops are non-archival → they don't burn journal novelty; the journal pape
 
 ## Scoop watch (re-sweep near submission)
 
-No paper currently occupies our cell (training-free + guaranteed accept/abstain + shift-robust + pose-correctness label). Closest prior art = **CoDrug** (conformal for scalar molecular property under shift, KDE weights — not structured pose). Watch: residue-level conformal-risk-control-for-protein-structure (arXiv:2509.20345), Confidence Gate Theorem (arXiv:2603.09947), and any follow-up that bolts abstention onto RNP/FoldBench. Do a targeted "conformal" + "co-folding/pose/binding-mode" sweep before submitting.
+**Re-swept 2026-07-12: our cell is STILL OPEN** (training-free + guaranteed conformal accept/abstain + similarity-keyed shift-robust + co-folding pose-correctness label + virtual-screening abstention decision). No 2025-26 paper satisfies all five. Closest prior art = **CoDrug** (conformal for scalar molecular property under shift, KDE weights — scalar, not structured pose). Nearest threats, all confirmed OUT of cell: **Chem Sci D5SC06481C** (Hou group, Dec 2025 — uses AF3/Boltz/Protenix ipTM as a VS ranking signal and documents novelty degradation, but NO conformal guarantee and NO abstention; this is our baseline-to-beat and the E16/E20 data source); **GESPI** (arXiv:2509.20345 — general synthetic-data conformal risk control with an AlphaFold residue demo, not our label); **Confidence Gate Theorem** (arXiv:2603.09947 — generic ranked-abstention theory); adjacent conformal-selection methods **CONFIDE** (2512.02033), **SCoRE** (2603.24704), **ConfHit** (2603.07371). Re-sweep near submission; watch the Tingjun Hou group (AF3-VS) and Ying Jin group (SCoRE/ConfHit).

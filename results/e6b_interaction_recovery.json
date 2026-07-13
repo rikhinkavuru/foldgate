@@ -1,0 +1,77 @@
+{
+  "af3": {
+    "n": 2683,
+    "base_ifp_recall": 0.8577016203977279,
+    "base_ifp_jaccard": 0.7918523308270085,
+    "mean_coverage": 0.7357273344120256,
+    "accepted_ifp_recall": 0.9084647992308401,
+    "rejected_ifp_recall": 0.7184395071255403,
+    "accepted_ifp_jaccard": 0.8508968345826305,
+    "rejected_ifp_jaccard": 0.6304092125855324,
+    "recall_gap_accepted_minus_rejected_ci90": [
+      0.14439248765998658,
+      0.2270660028524343
+    ],
+    "gap_excludes_zero": true
+  },
+  "boltz1": {
+    "n": 2353,
+    "base_ifp_recall": 0.8394682303791945,
+    "base_ifp_jaccard": 0.7553160544976528,
+    "mean_coverage": 0.5286710456682128,
+    "accepted_ifp_recall": 0.9108806053910785,
+    "rejected_ifp_recall": 0.7567387484944136,
+    "accepted_ifp_jaccard": 0.8436712302471562,
+    "rejected_ifp_jaccard": 0.6541233958232956,
+    "recall_gap_accepted_minus_rejected_ci90": [
+      0.1664568137555499,
+      0.23063667638462576
+    ],
+    "gap_excludes_zero": true
+  },
+  "boltz1x": {
+    "n": 2311,
+    "base_ifp_recall": 0.8453583502949807,
+    "base_ifp_jaccard": 0.7636622136308774,
+    "mean_coverage": 0.5720315547404885,
+    "accepted_ifp_recall": 0.9115805674171132,
+    "rejected_ifp_recall": 0.7504854362831453,
+    "accepted_ifp_jaccard": 0.8456003616945617,
+    "rejected_ifp_jaccard": 0.6480961893008964,
+    "recall_gap_accepted_minus_rejected_ci90": [
+      0.12408273166085476,
+      0.1941325212682959
+    ],
+    "gap_excludes_zero": true
+  },
+  "chai": {
+    "n": 2545,
+    "base_ifp_recall": 0.8378192054066053,
+    "base_ifp_jaccard": 0.7622921817812234,
+    "mean_coverage": 0.6359019107710209,
+    "accepted_ifp_recall": 0.9107495717326122,
+    "rejected_ifp_recall": 0.7056365617156568,
+    "accepted_ifp_jaccard": 0.8459727013847588,
+    "rejected_ifp_jaccard": 0.6113653276468842,
+    "recall_gap_accepted_minus_rejected_ci90": [
+      0.14331104770473407,
+      0.20732002407054045
+    ],
+    "gap_excludes_zero": true
+  },
+  "protenix": {
+    "n": 2583,
+    "base_ifp_recall": 0.8338732623498015,
+    "base_ifp_jaccard": 0.7586603067089746,
+    "mean_coverage": 0.5102351011481684,
+    "accepted_ifp_recall": 0.9016682683778596,
+    "rejected_ifp_recall": 0.7593935308732399,
+    "accepted_ifp_jaccard": 0.8400949976394968,
+    "rejected_ifp_jaccard": 0.6698496735465925,
+    "recall_gap_accepted_minus_rejected_ci90": [
+      0.12312260434697009,
+      0.1762203499245416
+    ],
+    "gap_excludes_zero": true
+  }
+}

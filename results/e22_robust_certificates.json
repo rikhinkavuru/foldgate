@@ -1,0 +1,297 @@
+{
+  "alpha": 0.2,
+  "delta": 0.1,
+  "per_model": {
+    "af3": {
+      "n": 2709,
+      "radius_curve": [
+        {
+          "coverage": 0.1,
+          "m_star": 0.32456409690973437,
+          "rho_star": 0.3006392641711352,
+          "certified": true,
+          "r_ucb": 0.06491281938194687
+        },
+        {
+          "coverage": 0.2,
+          "m_star": 0.28931153429352807,
+          "rho_star": 0.37060254874557175,
+          "certified": true,
+          "r_ucb": 0.057862306858705616
+        },
+        {
+          "coverage": 0.3,
+          "m_star": 0.30868966227067957,
+          "rho_star": 0.33001209246386615,
+          "certified": true,
+          "r_ucb": 0.06173793245413592
+        },
+        {
+          "coverage": 0.4,
+          "m_star": 0.39082097328971027,
+          "rho_star": 0.20601006844178907,
+          "certified": true,
+          "r_ucb": 0.07816419465794205
+        },
+        {
+          "coverage": 0.5,
+          "m_star": 0.5238296286803065,
+          "rho_star": 0.09670035541541337,
+          "certified": true,
+          "r_ucb": 0.1047659257360613
+        }
+      ],
+      "rho_star_at_cov_0.3": 0.33001209246386615
+    },
+    "boltz1": {
+      "n": 2384,
+      "radius_curve": [
+        {
+          "coverage": 0.1,
+          "m_star": 0.3199861217761339,
+          "rho_star": 0.3087857632021847,
+          "certified": true,
+          "r_ucb": 0.06399722435522678
+        },
+        {
+          "coverage": 0.2,
+          "m_star": 0.4669789179852727,
+          "rho_star": 0.13421583564087125,
+          "certified": true,
+          "r_ucb": 0.09339578359705454
+        },
+        {
+          "coverage": 0.3,
+          "m_star": 0.5981415687739263,
+          "rho_star": 0.06133468123985382,
+          "certified": true,
+          "r_ucb": 0.11962831375478526
+        },
+        {
+          "coverage": 0.4,
+          "m_star": 0.6538917085050939,
+          "rho_star": 0.0421519463917849,
+          "certified": true,
+          "r_ucb": 0.1307783417010188
+        },
+        {
+          "coverage": 0.5,
+          "m_star": 0.7779389803026067,
+          "rho_star": 0.01501324668139598,
+          "certified": true,
+          "r_ucb": 0.15558779606052134
+        }
+      ],
+      "rho_star_at_cov_0.3": 0.06133468123985382
+    },
+    "boltz1x": {
+      "n": 2331,
+      "radius_curve": [
+        {
+          "coverage": 0.1,
+          "m_star": 0.4262239229339604,
+          "rho_star": 0.16887764075192957,
+          "certified": true,
+          "r_ucb": 0.08524478458679208
+        },
+        {
+          "coverage": 0.2,
+          "m_star": 0.43098032020919735,
+          "rho_star": 0.164427368232816,
+          "certified": true,
+          "r_ucb": 0.08619606404183948
+        },
+        {
+          "coverage": 0.3,
+          "m_star": 0.5433138834657771,
+          "rho_star": 0.08613363336304562,
+          "certified": true,
+          "r_ucb": 0.10866277669315542
+        },
+        {
+          "coverage": 0.4,
+          "m_star": 0.6410752124701,
+          "rho_star": 0.04610187019195144,
+          "certified": true,
+          "r_ucb": 0.12821504249402002
+        },
+        {
+          "coverage": 0.5,
+          "m_star": 0.7150068815097695,
+          "rho_star": 0.0265099187502791,
+          "certified": true,
+          "r_ucb": 0.14300137630195392
+        }
+      ],
+      "rho_star_at_cov_0.3": 0.08613363336304562
+    },
+    "chai": {
+      "n": 2571,
+      "radius_curve": [
+        {
+          "coverage": 0.1,
+          "m_star": 0.3193956163948064,
+          "rho_star": 0.30985506351706754,
+          "certified": true,
+          "r_ucb": 0.06387912327896128
+        },
+        {
+          "coverage": 0.2,
+          "m_star": 0.29407871336719144,
+          "rho_star": 0.3600844007403902,
+          "certified": true,
+          "r_ucb": 0.05881574267343829
+        },
+        {
+          "coverage": 0.3,
+          "m_star": 0.4096162875912961,
+          "rho_star": 0.18537131384942693,
+          "certified": true,
+          "r_ucb": 0.08192325751825923
+        },
+        {
+          "coverage": 0.4,
+          "m_star": 0.49967247323486663,
+          "rho_star": 0.11132155072461902,
+          "certified": true,
+          "r_ucb": 0.09993449464697333
+        },
+        {
+          "coverage": 0.5,
+          "m_star": 0.6811168278391623,
+          "rho_star": 0.03456767233746308,
+          "certified": true,
+          "r_ucb": 0.13622336556783246
+        }
+      ],
+      "rho_star_at_cov_0.3": 0.18537131384942693
+    },
+    "protenix": {
+      "n": 2607,
+      "radius_curve": [
+        {
+          "coverage": 0.1,
+          "m_star": 0.42476035150827435,
+          "rho_star": 0.17027065466481758,
+          "certified": true,
+          "r_ucb": 0.08495207030165487
+        },
+        {
+          "coverage": 0.2,
+          "m_star": 0.40691295964474655,
+          "rho_star": 0.18820478949792444,
+          "certified": true,
+          "r_ucb": 0.08138259192894931
+        },
+        {
+          "coverage": 0.3,
+          "m_star": 0.520146064328905,
+          "rho_star": 0.09881638256987925,
+          "certified": true,
+          "r_ucb": 0.104029212865781
+        },
+        {
+          "coverage": 0.4,
+          "m_star": 0.6487255042003043,
+          "rho_star": 0.043713520561913695,
+          "certified": true,
+          "r_ucb": 0.12974510084006086
+        },
+        {
+          "coverage": 0.5,
+          "m_star": 0.8544730300329402,
+          "rho_star": 0.005978729013903431,
+          "certified": true,
+          "r_ucb": 0.17089460600658804
+        }
+      ],
+      "rho_star_at_cov_0.3": 0.09881638256987925
+    }
+  },
+  "simultaneous_at_ltt": {
+    "delta_per_model": 0.02,
+    "per_model": [
+      {
+        "n": 2086,
+        "errors": 386,
+        "m_star": 1.0,
+        "certified": false,
+        "rho_star": 0.0
+      },
+      {
+        "n": 1478,
+        "errors": 273,
+        "m_star": 1.0,
+        "certified": false,
+        "rho_star": 0.0
+      },
+      {
+        "n": 1562,
+        "errors": 289,
+        "m_star": 1.0,
+        "certified": false,
+        "rho_star": 0.0
+      },
+      {
+        "n": 1748,
+        "errors": 324,
+        "m_star": 1.0,
+        "certified": false,
+        "rho_star": 0.0
+      },
+      {
+        "n": 1590,
+        "errors": 297,
+        "m_star": 1.0,
+        "certified": false,
+        "rho_star": 0.0
+      }
+    ],
+    "joint_m_star": 1.0,
+    "joint_rho_star": 0.0,
+    "all_certified": false
+  },
+  "simultaneous_at_cov_0.2": {
+    "delta_per_model": 0.02,
+    "per_model": [
+      {
+        "n": 542,
+        "errors": 24,
+        "m_star": 0.33111799477987824,
+        "certified": true,
+        "rho_star": 0.2894032094554487
+      },
+      {
+        "n": 477,
+        "errors": 36,
+        "m_star": 0.5215985407496239,
+        "certified": true,
+        "rho_star": 0.09797733018046453
+      },
+      {
+        "n": 466,
+        "errors": 32,
+        "m_star": 0.4844981103551447,
+        "certified": true,
+        "rho_star": 0.12146814725427234
+      },
+      {
+        "n": 514,
+        "errors": 23,
+        "m_star": 0.3373943249673698,
+        "certified": true,
+        "rho_star": 0.27908972066547605
+      },
+      {
+        "n": 521,
+        "errors": 34,
+        "m_star": 0.45616930729735705,
+        "certified": true,
+        "rho_star": 0.1426852982785921
+      }
+    ],
+    "joint_m_star": 0.5215985407496239,
+    "joint_rho_star": 0.09797733018046453,
+    "all_certified": true
+  }
+}

@@ -3,96 +3,136 @@
     "af3": {
       "n_source": 1346,
       "n_target": 629,
+      "n_eff_median": 137.2641638569779,
+      "concept_shift_mean_gap": 0.07684820959444127,
+      "weighted_plugin_risk_alt_weightmodel": 0.22329216039728092,
       "naive": {
-        "risk_on_target": 0.26871280190302693,
-        "coverage_on_target": 0.9569047619047619,
+        "risk_on_target": 0.26691999095826624,
+        "coverage_on_target": 0.9817460317460316,
         "frac_risk_le_alpha": 0.0
       },
       "weighted": {
-        "risk_on_target": 0.19831508748280088,
-        "coverage_on_target": 0.7144047619047619,
-        "frac_risk_le_alpha": 0.45569620253164556
+        "risk_on_target": 0.19117047320774921,
+        "coverage_on_target": 0.696111111111111,
+        "frac_risk_le_alpha": 0.5897435897435898
+      },
+      "weighted_ltt": {
+        "risk_on_target": NaN,
+        "coverage_on_target": 0.0,
+        "frac_risk_le_alpha": NaN
       },
       "target_cal": {
-        "risk_on_target": 0.1508265526841435,
-        "coverage_on_target": 0.3017063492063492,
-        "frac_risk_le_alpha": 0.851063829787234
+        "risk_on_target": 0.14857771508639897,
+        "coverage_on_target": 0.3215873015873016,
+        "frac_risk_le_alpha": 0.8636363636363636
       }
     },
     "boltz1": {
       "n_source": 1144,
       "n_target": 577,
+      "n_eff_median": 120.86250874946694,
+      "concept_shift_mean_gap": 0.10829607196470614,
+      "weighted_plugin_risk_alt_weightmodel": 0.2834738264546327,
       "naive": {
-        "risk_on_target": 0.30423756637335353,
-        "coverage_on_target": 0.7769463667820069,
+        "risk_on_target": 0.30517321407036746,
+        "coverage_on_target": 0.8555795847750864,
         "frac_risk_le_alpha": 0.0
       },
       "weighted": {
-        "risk_on_target": 0.2631968843936419,
-        "coverage_on_target": 0.6548875432525951,
-        "frac_risk_le_alpha": 0.0625
+        "risk_on_target": 0.24019645377482277,
+        "coverage_on_target": 0.5224913494809689,
+        "frac_risk_le_alpha": 0.15
+      },
+      "weighted_ltt": {
+        "risk_on_target": NaN,
+        "coverage_on_target": 0.0,
+        "frac_risk_le_alpha": NaN
       },
       "target_cal": {
-        "risk_on_target": 0.23510091171269237,
-        "coverage_on_target": 0.010813148788927337,
-        "frac_risk_le_alpha": 0.6
+        "risk_on_target": 0.22357567151373714,
+        "coverage_on_target": 0.01055363321799308,
+        "frac_risk_le_alpha": 0.42857142857142855
       }
     },
     "boltz1x": {
-      "n_source": 1119,
+      "n_source": 1118,
       "n_target": 568,
+      "n_eff_median": 114.358141351299,
+      "concept_shift_mean_gap": 0.08471890309702772,
+      "weighted_plugin_risk_alt_weightmodel": 0.2450217555544217,
       "naive": {
-        "risk_on_target": 0.2631572799330043,
-        "coverage_on_target": 0.7485475352112676,
+        "risk_on_target": 0.2653919238082431,
+        "coverage_on_target": 0.8007922535211268,
         "frac_risk_le_alpha": 0.0
       },
       "weighted": {
-        "risk_on_target": 0.22634185417008768,
-        "coverage_on_target": 0.6544454225352113,
-        "frac_risk_le_alpha": 0.13924050632911392
+        "risk_on_target": 0.19978426445550374,
+        "coverage_on_target": 0.4723591549295775,
+        "frac_risk_le_alpha": 0.4155844155844156
+      },
+      "weighted_ltt": {
+        "risk_on_target": NaN,
+        "coverage_on_target": 0.0,
+        "frac_risk_le_alpha": NaN
       },
       "target_cal": {
-        "risk_on_target": 0.1533754905550479,
-        "coverage_on_target": 0.026848591549295774,
-        "frac_risk_le_alpha": 0.7333333333333333
+        "risk_on_target": 0.13885703613528905,
+        "coverage_on_target": 0.03604753521126761,
+        "frac_risk_le_alpha": 0.7
       }
     },
     "chai": {
       "n_source": 1261,
       "n_target": 614,
+      "n_eff_median": 134.5558510651299,
+      "concept_shift_mean_gap": 0.08022856461745423,
+      "weighted_plugin_risk_alt_weightmodel": 0.2433828890017895,
       "naive": {
-        "risk_on_target": 0.2802729809310024,
-        "coverage_on_target": 0.8429560260586321,
+        "risk_on_target": 0.28347579833478503,
+        "coverage_on_target": 0.8861156351791533,
         "frac_risk_le_alpha": 0.0
       },
       "weighted": {
-        "risk_on_target": 0.21485543123664086,
-        "coverage_on_target": 0.6918973941368078,
-        "frac_risk_le_alpha": 0.2564102564102564
+        "risk_on_target": 0.2005961794034925,
+        "coverage_on_target": 0.6221498371335505,
+        "frac_risk_le_alpha": 0.4625
+      },
+      "weighted_ltt": {
+        "risk_on_target": NaN,
+        "coverage_on_target": 0.0,
+        "frac_risk_le_alpha": NaN
       },
       "target_cal": {
-        "risk_on_target": 0.14546024093877705,
-        "coverage_on_target": 0.30557817589576547,
-        "frac_risk_le_alpha": 0.8076923076923077
+        "risk_on_target": 0.14482248004478235,
+        "coverage_on_target": 0.2702768729641694,
+        "frac_risk_le_alpha": 0.8297872340425532
       }
     },
     "protenix": {
       "n_source": 1282,
       "n_target": 618,
+      "n_eff_median": 135.29535537111914,
+      "concept_shift_mean_gap": 0.15836956439562289,
+      "weighted_plugin_risk_alt_weightmodel": 0.29337140194011324,
       "naive": {
-        "risk_on_target": 0.3527509789228553,
-        "coverage_on_target": 0.897855987055016,
+        "risk_on_target": 0.3402075411158994,
+        "coverage_on_target": 0.8968851132686083,
         "frac_risk_le_alpha": 0.0
       },
       "weighted": {
-        "risk_on_target": 0.2770071704619979,
-        "coverage_on_target": 0.5195388349514563,
-        "frac_risk_le_alpha": 0.0375
+        "risk_on_target": 0.26735588062283994,
+        "coverage_on_target": 0.6006877022653723,
+        "frac_risk_le_alpha": 0.1
+      },
+      "weighted_ltt": {
+        "risk_on_target": NaN,
+        "coverage_on_target": 0.0,
+        "frac_risk_le_alpha": NaN
       },
       "target_cal": {
-        "risk_on_target": 0.11757880840362556,
-        "coverage_on_target": 0.058252427184466014,
-        "frac_risk_le_alpha": 0.8888888888888888
+        "risk_on_target": 0.13611942314219636,
+        "coverage_on_target": 0.056836569579288024,
+        "frac_risk_le_alpha": 0.9333333333333333
       }
     }
   },
@@ -100,95 +140,135 @@
     "af3": {
       "n_source": 1975,
       "n_target": 734,
+      "n_eff_median": 212.9504138472726,
+      "concept_shift_mean_gap": 0.24376371873348113,
+      "weighted_plugin_risk_alt_weightmodel": 0.3995144196731438,
       "naive": {
-        "risk_on_target": 0.5199092302959445,
-        "coverage_on_target": 0.8373637602179838,
+        "risk_on_target": 0.5044115976464516,
+        "coverage_on_target": 0.8391348773841962,
         "frac_risk_le_alpha": 0.0
       },
       "weighted": {
-        "risk_on_target": 0.30646229403729364,
-        "coverage_on_target": 0.317574931880109,
-        "frac_risk_le_alpha": 0.11594202898550725
+        "risk_on_target": 0.3516833056805074,
+        "coverage_on_target": 0.41822207084468666,
+        "frac_risk_le_alpha": 0.08108108108108109
+      },
+      "weighted_ltt": {
+        "risk_on_target": NaN,
+        "coverage_on_target": 0.0,
+        "frac_risk_le_alpha": NaN
       },
       "target_cal": {
-        "risk_on_target": 0.1258931529387626,
-        "coverage_on_target": 0.03409400544959128,
-        "frac_risk_le_alpha": 0.88
+        "risk_on_target": 0.13346013367827267,
+        "coverage_on_target": 0.01737057220708447,
+        "frac_risk_le_alpha": 0.8666666666666667
       }
     },
     "boltz1": {
       "n_source": 1721,
       "n_target": 663,
+      "n_eff_median": 194.4027014772505,
+      "concept_shift_mean_gap": 0.1674669472708086,
+      "weighted_plugin_risk_alt_weightmodel": 0.25275192029232035,
       "naive": {
-        "risk_on_target": 0.3719697748661623,
-        "coverage_on_target": 0.4231174698795181,
+        "risk_on_target": 0.36726387433144264,
+        "coverage_on_target": 0.4443524096385542,
         "frac_risk_le_alpha": 0.0
       },
       "weighted": {
-        "risk_on_target": 0.2420588302393501,
-        "coverage_on_target": 0.10609939759036144,
-        "frac_risk_le_alpha": 0.328125
+        "risk_on_target": 0.2700895378502968,
+        "coverage_on_target": 0.26020331325301205,
+        "frac_risk_le_alpha": 0.13924050632911392
       },
-      "target_cal": {
-        "risk_on_target": 0.2692307692307693,
-        "coverage_on_target": 0.0009789156626506025,
-        "frac_risk_le_alpha": 0.0
-      }
-    },
-    "boltz1x": {
-      "n_source": 1687,
-      "n_target": 645,
-      "naive": {
-        "risk_on_target": 0.41407652662596556,
-        "coverage_on_target": 0.5413699690402477,
-        "frac_risk_le_alpha": 0.0
-      },
-      "weighted": {
-        "risk_on_target": 0.31157166150681465,
-        "coverage_on_target": 0.22581269349845198,
-        "frac_risk_le_alpha": 0.05555555555555555
-      },
-      "target_cal": {
+      "weighted_ltt": {
         "risk_on_target": NaN,
         "coverage_on_target": 0.0,
         "frac_risk_le_alpha": NaN
+      },
+      "target_cal": {
+        "risk_on_target": 0.2750814000814001,
+        "coverage_on_target": 0.004480421686746988,
+        "frac_risk_le_alpha": 0.3333333333333333
+      }
+    },
+    "boltz1x": {
+      "n_source": 1686,
+      "n_target": 645,
+      "n_eff_median": 186.51869238234326,
+      "concept_shift_mean_gap": 0.1728589305725264,
+      "weighted_plugin_risk_alt_weightmodel": 0.31546068727543136,
+      "naive": {
+        "risk_on_target": 0.393784060847546,
+        "coverage_on_target": 0.5029798761609907,
+        "frac_risk_le_alpha": 0.0
+      },
+      "weighted": {
+        "risk_on_target": 0.3054969330938577,
+        "coverage_on_target": 0.3255417956656347,
+        "frac_risk_le_alpha": 0.025974025974025976
+      },
+      "weighted_ltt": {
+        "risk_on_target": NaN,
+        "coverage_on_target": 0.0,
+        "frac_risk_le_alpha": NaN
+      },
+      "target_cal": {
+        "risk_on_target": 0.2868624423010388,
+        "coverage_on_target": 0.008978328173374614,
+        "frac_risk_le_alpha": 0.1111111111111111
       }
     },
     "chai": {
       "n_source": 1875,
       "n_target": 696,
+      "n_eff_median": 202.17124068317656,
+      "concept_shift_mean_gap": 0.2113275176560717,
+      "weighted_plugin_risk_alt_weightmodel": 0.3803862144877684,
       "naive": {
-        "risk_on_target": 0.48818028208911607,
-        "coverage_on_target": 0.5709410919540231,
+        "risk_on_target": 0.4830715444379943,
+        "coverage_on_target": 0.5835488505747126,
         "frac_risk_le_alpha": 0.0
       },
       "weighted": {
-        "risk_on_target": 0.3552002306869431,
-        "coverage_on_target": 0.2896551724137931,
+        "risk_on_target": 0.37990056928316934,
+        "coverage_on_target": 0.3471623563218391,
         "frac_risk_le_alpha": 0.0
       },
+      "weighted_ltt": {
+        "risk_on_target": NaN,
+        "coverage_on_target": 0.0,
+        "frac_risk_le_alpha": NaN
+      },
       "target_cal": {
-        "risk_on_target": 0.27501624431448995,
-        "coverage_on_target": 0.00305316091954023,
-        "frac_risk_le_alpha": 0.0
+        "risk_on_target": 0.25275333985011406,
+        "coverage_on_target": 0.005567528735632184,
+        "frac_risk_le_alpha": 0.16666666666666666
       }
     },
     "protenix": {
       "n_source": 1900,
       "n_target": 707,
+      "n_eff_median": 205.42302965859008,
+      "concept_shift_mean_gap": 0.28657271233539483,
+      "weighted_plugin_risk_alt_weightmodel": 0.3492599691837791,
       "naive": {
-        "risk_on_target": 0.534329206443618,
-        "coverage_on_target": 0.5156073446327684,
+        "risk_on_target": 0.4771810771064029,
+        "coverage_on_target": 0.5104166666666666,
         "frac_risk_le_alpha": 0.0
       },
       "weighted": {
-        "risk_on_target": 0.27816508803568335,
-        "coverage_on_target": 0.1303319209039548,
-        "frac_risk_le_alpha": 0.1891891891891892
+        "risk_on_target": 0.34316991149669807,
+        "coverage_on_target": 0.24745762711864402,
+        "frac_risk_le_alpha": 0.0375
+      },
+      "weighted_ltt": {
+        "risk_on_target": NaN,
+        "coverage_on_target": 0.0,
+        "frac_risk_le_alpha": NaN
       },
       "target_cal": {
-        "risk_on_target": 0.32786090969017795,
-        "coverage_on_target": 0.0059675141242937855,
+        "risk_on_target": 0.283921999884998,
+        "coverage_on_target": 0.0047316384180790955,
         "frac_risk_le_alpha": 0.0
       }
     }

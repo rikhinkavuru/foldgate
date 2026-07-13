@@ -6,6 +6,6 @@ land here next; confirm field names against a real output file before parsing
 """
 
 from .foldbench import load_foldbench
-from .rnp import RNP_METHODS, RMSD_THRESHOLD_A, RNPData, load_rnp
+from .rnp import RMSD_THRESHOLD_A, RNP_METHODS, RNPData, load_rnp
 
 __all__ = ["RNPData", "load_rnp", "RNP_METHODS", "RMSD_THRESHOLD_A", "load_foldbench"]

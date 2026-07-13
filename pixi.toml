@@ -4,7 +4,7 @@
 
 [project]
 name = "foldgate"
-version = "0.0.0.dev0"
+version = "0.1.0"
 description = "Training-free conformal reliability layer for protein-ligand co-folding."
 channels = ["conda-forge", "bioconda"]
 platforms = ["osx-arm64", "linux-64"]
@@ -15,6 +15,7 @@ platforms = ["osx-arm64", "linux-64"]
 python = ">=3.11,<3.13"
 numpy = "*"
 pandas = "*"
+scipy = "*"
 scikit-learn = "*"
 matplotlib = "*"
 lightgbm = "*"          # density-ratio weights; conda-forge build avoids libomp clash

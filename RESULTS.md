@@ -1,7 +1,7 @@
 # Results (real, on released Runs N' Poses)
 
 All numbers are from released RNP predictions consumed as-is (no model inference):
-13,536 delivered poses (top-1 by `ranking_score`, proper ligands) across 6 co-folding
+13,535 delivered poses (top-1 by `ranking_score`, proper ligands) across 6 co-folding
 models. Label: BiSyRMSD ≤ 2 Å. Target: error among accepted ≤ α, confidence 1 − δ.
 Defaults α = 0.20, δ = 0.10. Reproduce: `make features && python -m experiments.e1_iid_validity` (etc.).
 
@@ -37,6 +37,18 @@ risk is ≤ α for models whose native score certifies non-trivial coverage
 near-vacuous gate for Chai and Protenix (< 5% coverage), which motivates the
 combined score (E4).
 
+To make the real-data claim checkable rather than asserted, we report the fraction
+of the 300 splits whose realized selective risk was ≤ α, with a Clopper-Pearson
+interval: Boltz-1 0.88 [0.85, 0.91], Boltz-1x 0.91 [0.88, 0.93], AF3 0.85 [0.81, 0.89].
+For the well-powered models this reaches the 1 − δ = 0.90 target. The realized-risk
+indicator is a **downward-biased proxy** for P(true risk ≤ α): because the certifier
+is tight, the true risk sits at α, so on a finite test fold the realized risk crosses
+α about half the time even when the guarantee holds. The rigorous evidence is the
+synthetic test, where the true risk is known and the gate holds in ≥ 1 − δ of draws
+(`tests/test_conformal.py`). Chai/Protenix show a low fraction only because their
+native gate accepts almost nothing (the indicator is computed over a handful of
+non-abstaining splits), which is the E1 finding motivating the combined score.
+
 ## E2 — the exchangeability break (the money result)
 
 Global iid-calibrated gate, native score. AF3 **marginal** risk 0.177 looks
@@ -56,7 +68,8 @@ Boltz-1 0.48, Boltz-1x 0.46, Chai 0.53, Protenix 0.61).
 ## E3 — group-conditional (Mondrian) restores the guarantee
 
 A separate LTT threshold per novelty stratum (needs only stratum labels, which RNP
-ships). No stratum's accepted error then exceeds α. The honest cost with the
+ships). Each stratum's accepted error is then ≤ α with probability 1 − δ (per-stratum
+marginal; a simultaneous statement follows by calibrating each at δ/K). The honest cost with the
 *native* score: on the hardest strata there is not enough signal to safely accept,
 so the gate abstains (AF3 S3 coverage → 0) rather than give false assurance — it
 correctly folds. That is the intended behaviour; recovering *usable* coverage on
@@ -93,10 +106,10 @@ validity). Lower AURC = better.
 | model | AURC native | AURC combined | improvement |
 |---|---|---|---|
 | AF3 | 0.187 | 0.125 | **33.1%** |
-| Boltz-1 | 0.233 | 0.169 | 27.5% |
-| Boltz-1x | 0.215 | 0.163 | 24.1% |
-| Chai-1 | 0.246 | 0.149 | **39.5%** |
-| Protenix | 0.280 | 0.174 | **37.6%** |
+| Boltz-1 | 0.234 | 0.170 | 27.5% |
+| Boltz-1x | 0.216 | 0.163 | 24.6% |
+| Chai-1 | 0.248 | 0.150 | **39.6%** |
+| Protenix | 0.281 | 0.175 | **37.7%** |
 
 (These include the cross-model confidence-agreement feature; without it the gains
 were 22–38%. Cross-model agreement is the third-largest contributor per the E5 ablation.)
@@ -110,9 +123,9 @@ Coverage at certified error levels (higher = more usable predictions retained):
 
 | | α = 0.2 native → combined | α = 0.1 native → combined |
 |---|---|---|
-| AF3 | 0.22 → **0.67** | 0.00 → **0.12** |
-| Chai-1 | 0.00 → **0.59** | 0.00 → **0.08** |
-| Protenix | 0.02 → **0.35** | 0.00 → 0.03 |
+| AF3 | 0.22 → **0.71** | 0.00 → **0.14** |
+| Chai-1 | 0.01 → **0.60** | 0.00 → **0.10** |
+| Protenix | 0.04 → **0.51** | 0.00 → 0.04 |
 
 At the same guarantee, the combined gate retains ~3× more predictions, and unlocks
 the stringent 90%-correct operating point that native confidence cannot certify at
@@ -121,27 +134,50 @@ all for several models.
 ## E3b — weighted covariate-shift repair (label-free, combined score)
 
 Calibrate on familiar ligands, deploy on more-novel ligands, correct with
-likelihood-ratio weights over the novelty covariates — no target labels used.
+likelihood-ratio weights over the novelty covariates — no target labels used. The
+weights are estimated **out-of-fold with a probability-calibrated** source-vs-target
+classifier (`estimate_weights_cv`, isotonic, 5-fold), the correctness requirement an
+in-sample logistic fit misses. We report two weighted certifiers: the plug-in Hájek
+estimator (approximate coverage) and an importance-weighted LTT with a WSR betting
+p-value (Almeida et al. 2025) that is finite-sample **conditional on the weights**.
 
-**Moderate shift (S0,S1 → S2), where certification is feasible:** weighted
-conformal pulls realized target error toward α without target labels.
+**Moderate shift (S0,S1 → S2):** the weighted plug-in pulls realized target error
+toward α without target labels, and the repair survives swapping the weight model.
 
-| model | naive risk (cov) | weighted risk (cov) | target-cal risk (cov) |
-|---|---|---|---|
-| AF3 | 0.269 (0.96) | **0.198 (0.71)** | 0.151 (0.30) |
-| Chai-1 | 0.280 (0.84) | 0.215 (0.69) | 0.145 (0.31) |
-| Protenix | 0.353 (0.90) | 0.277 (0.52) | 0.118 (0.06) |
+| model | naive risk (cov) | weighted plug-in risk (cov) | alt weight-model risk | target-cal risk (cov) |
+|---|---|---|---|---|
+| AF3 | 0.267 (0.98) | **0.191 (0.70)** | 0.223 | 0.149 (0.32) |
+| Chai-1 | 0.283 (0.89) | 0.201 (0.62) | 0.243 | 0.145 (0.27) |
+| Protenix | 0.340 (0.90) | 0.267 (0.60) | 0.293 | 0.136 (0.06) |
 
-Naive (source-calibrated) over-accepts at error above α; weighted reweighting
-brings AF3 to 0.198 ≈ the 0.20 target at 71% coverage, using no target labels.
+Naive (source-calibrated) over-accepts at error above α; weighted reweighting brings
+AF3 to 0.191 ≈ the 0.20 target at 70% coverage, using no target labels, and the
+alternative (in-sample) weight model lands close by (0.223), so the repair is not an
+artifact of one weight estimator. Kish effective sample size n_eff ≈ 115–140.
 
-**Extreme shift (S0–S2 → S3,S4):** naive error 0.52; weighted reduces it to 0.31
-but cannot reach α, because the novel target is < 55% correct at baseline —
-uncertifiable by any gate (even the label-using target-calibrated one abstains).
-The honest conclusion: weighted conformal closes most of the gap on moderate
-shift; on the extreme drug-discovery regime the layer's value is principled
-abstention, not the naive gate's false confidence. Group-conditional (E3) remains
-the rigorous fallback where stratum labels exist.
+**The finite-sample weighted certificate is honest-conservative.** The
+importance-weighted LTT gate (WSR betting) **abstains on every model/regime** (0%
+certified coverage): on real co-folding data even the plug-in barely clears α, so
+there is no certifiable margin once the finite-sample slack is paid. This is not a
+code artifact — the certifier controls true risk when the shift is clean (validated on
+synthetic data with known weights, `tests/test_conformal.py`); it reflects that the
+guarantee is exact only *conditional on correct weights*, which is a strong condition
+here.
+
+**Why: concept shift, not just covariate shift.** A per-confidence-bin diagnostic
+shows P(correct | confidence) itself moves between source and target. The mean gap
+grows from the moderate regime (0.08–0.16) to the **extreme regime (S0–S2 → S3,S4:
+0.17–0.29)**. Pure covariate reweighting controls an *aligned* distribution, so under
+this residual concept shift the true target risk can exceed α — which is exactly what
+the extreme regime shows (naive error 0.48–0.50; weighted reduces it to 0.34–0.38 but
+cannot reach α; even the label-using target-calibrated gate abstains because the novel
+target is < 55% correct at baseline).
+
+**Honest conclusion.** Weighted conformal is the *label-free complement*: its plug-in
+closes most of the gap on moderate covariate shift. The *rigorous finite-sample*
+guarantee under novel-pocket shift is the group-conditional (E3) certificate, which
+needs only stratum labels (which RNP ships) and does not assume the confidence-
+reliability map is stable.
 
 ## E7 — the break generalizes across shift axes
 
@@ -167,10 +203,10 @@ quality, while retaining most correct poses.
 
 | model | α | kept | purity (base→gate) | enrichment | correct retained | LDDT-PLI (all→kept) |
 |---|---|---|---|---|---|---|
-| AF3 | 0.2 | 0.69 | 0.70 → **0.82** | 1.17× | 0.81 | 0.77 → 0.85 |
-| AF3 | 0.1 | 0.20 | 0.70 → **0.94** | 1.33× | 0.27 | 0.77 → 0.91 |
-| Chai-1 | 0.1 | 0.19 | 0.65 → **0.94** | 1.44× | 0.27 | 0.73 → 0.91 |
-| Protenix | 0.1 | 0.08 | 0.63 → **0.94** | 1.47× | 0.11 | 0.72 → 0.92 |
+| AF3 | 0.2 | 0.73 | 0.70 → **0.82** | 1.17× | 0.86 | 0.77 → 0.85 |
+| AF3 | 0.1 | 0.24 | 0.70 → **0.94** | 1.34× | 0.31 | 0.76 → 0.92 |
+| Chai-1 | 0.1 | 0.21 | 0.65 → **0.93** | 1.44× | 0.30 | 0.73 → 0.91 |
+| Protenix | 0.1 | 0.09 | 0.63 → **0.94** | 1.49× | 0.13 | 0.72 → 0.92 |
 
 At the stringent operating point every model yields a ~93% pure set with clearly
 higher interface quality: downstream structure-based work gets near-clean inputs
@@ -206,11 +242,15 @@ mainly by interface ipTM and intra-model ensemble spread:
 | + interface ipTM | 0.160 |
 | + PoseBusters validity | 0.159 |
 | + ensemble spread | 0.137 |
-| + ligand difficulty (all) | 0.130 |
+| + cross-model agreement | 0.128 |
+| + ligand difficulty (all) — tabular combined | 0.123 |
+| + pose agreement (W1, structures) | **0.106** |
 
 Interface ipTM (0.193→0.160), ensemble spread (0.159→0.137), and cross-model
-agreement (0.137→0.128) do the work; PoseBusters and ligand physicochemistry add
-little on top.
+agreement (0.137→0.128) do the work among the tabular features; PoseBusters and ligand
+physicochemistry add little. The structural pose-agreement features (W1) are the
+single largest jump after ipTM: 0.123→0.106 (−14%). Full W1 result in the pose-agreement
+section below.
 
 ## E8 — task-agnostic (interface quality)
 
@@ -233,13 +273,33 @@ set's mean RMSD at every coverage. At 50% coverage:
 
 | model | mean accepted RMSD, native → combined |
 |---|---|
-| AF3 | 2.07 → **1.14 Å** |
+| AF3 | 1.72 → **1.14 Å** |
 | Chai-1 | 2.16 → **1.15 Å** |
 | Protenix | 2.58 → **1.54 Å** |
 
-The finding survives dropping the 2 Å convention entirely. (A finite-sample
-*certified* continuous-mean bound is loose at these sample sizes with a
-distribution-free Hoeffding bound; a variance-adaptive bound is future work.)
+The finding survives dropping the 2 Å convention entirely.
+
+**Certified continuous gate.** Beyond ordering, we certify a gate whose mean
+bounded-RMSD among the accepted is ≤ a target, with P(mean ≤ target) ≥ 1 − δ, using a
+variance-adaptive **WSR betting bound** on the loss min(RMSD, 4 Å)/4 Å. It certifies
+non-trivial coverage where a distribution-free Hoeffding bound certifies almost none
+(AF3, certified coverage, WSR vs Hoeffding):
+
+| target mean-RMSD | WSR coverage | Hoeffding coverage | realized capped-mean RMSD |
+|---|---|---|---|
+| ≤ 1.00 Å | **0.43** | 0.00 | 0.90 Å |
+| ≤ 1.25 Å | **0.74** | 0.46 | 1.17 Å |
+| ≤ 1.50 Å | 0.92 | 0.86 | 1.41 Å |
+
+At the tight 1.0 Å target the Hoeffding bound certifies **zero** coverage for every
+model, while WSR certifies a non-trivial slice (2–43% across models, AF3 43%);
+realized capped-mean-RMSD stays under the target and
+the empirical coverage of the guarantee sits near 1 − δ (0.80–0.94 across models/targets,
+with the same tight-certifier noise as E1 — the tightest targets accept few poses, so the
+finite-sample realized-risk indicator is noisiest there). The acceptance fraction is co-reported with a
+Clopper-Pearson interval so a low certified risk from accepting almost nothing is not
+mistaken for a free lunch. Binarising the loss reproduces the E1 exact-binomial gate
+(`tests/test_conformal.py`).
 
 ## E10 — FoldBench cross-dataset (honest negative)
 
@@ -255,3 +315,105 @@ validity check is noisy at the smaller scale. The takeaway is consistent with th
 ablation: the layer's value depends on the rich confidence signals RNP ships and
 FoldBench does not. A clean cross-dataset test needs a benchmark that releases
 ipTM/PoseBusters per pose.
+
+## E11 — baselines, and calibration is not conformal
+
+The baselines a reviewer expects, on the same splits.
+
+**Ranker quality (AURC, lower = better).** The combined score beats every native
+confidence a practitioner would reach for:
+
+| model | ranking_score | native ipTM | combined |
+|---|---|---|---|
+| AF3 | 0.186 | 0.159 | **0.124** |
+| Chai-1 | 0.249 | 0.206 | **0.150** |
+| Protenix | 0.280 | 0.264 | **0.172** |
+
+PoseBusters validity alone is a weak gate — accepting all PB-valid poses leaves a
+26–34% error rate (it is a physical filter, not a reliability ranker).
+
+**Gate validity — the guarantee, not the features.** Fix the *same* combined score and
+turn it into a gate three ways: LTT (conformal), or Platt/isotonic calibration
+thresholded at P(correct) ≥ 1 − α (the practitioner's calibrated classifier). i.i.d.,
+all control error (conformal ~0.17 at the target; Platt/isotonic ~0.10, more
+conservative). **Under the novelty shift (calibrate on familiar S0, deploy on novel
+S1–S2) every source-calibrated gate breaks — naive conformal exactly like calibration**
+(AF3 realized error: naive conformal 0.24, Platt 0.22, isotonic 0.18, native ipTM 0.25,
+all against a 0.20 target; Boltz/Protenix worse). The break is a property of naive
+transfer, not of calibration-vs-conformal.
+
+What repairs it has no calibration analogue — group-conditional (Mondrian) conformal,
+which restores realized error ≤ α for **every** model by abstaining more on the novel
+strata:
+
+| model | naive conformal (shift) | Platt (shift) | group-conditional (shift) |
+|---|---|---|---|
+| AF3 | 0.244 | 0.217 | **0.153 (cov 0.22)** |
+| Chai-1 | 0.269 | 0.197 | **0.137 (cov 0.18)** |
+| Protenix | 0.303 | 0.283 | **0.151 (cov 0.08)** |
+
+The reviewer-facing conclusion: calibration fixes only the marginal probability, carries
+no finite-sample coverage, and breaks under shift; conformal carries a distribution-free
+finite-sample guarantee, and only its shift-robust variants (group-conditional here,
+weighted in E3b) repair the exchangeability break. (Boltz-2 affinity-probability, the
+other honest-negative baseline, is not in the released tabular dump; it is a follow-up.)
+
+## W1 — cross-model + intra-model pose agreement (structure-based upgrade)
+
+Beyond the released confidence tables, the predicted structures carry an orthogonal,
+model-agnostic signal: whether the *binding modes* agree. Computed from RNP's
+`prediction_files` (streamed, no GPU) with spyrmsd + gemmi over 11,711 delivered poses
+(93–97% coverage):
+
+- **intra-model pose diversity** across a model's 25 diffusion samples (pocket-superposed,
+  symmetry-corrected ligand-RMSD to the delivered pose). Median spread by model: AF3 0.61,
+  Boltz-1 0.47, Boltz-1x 0.28, Chai-1 0.41, **Protenix 1.90 Å** — Protenix's samples disagree
+  on placement most, a reliability red flag its scalar confidence does not expose.
+- **cross-model pose agreement** (delivered-pose ligand-RMSD to the other models). Median by
+  model: AF3 2.93, Boltz-1 2.22, Boltz-1x 2.09, **Chai-1 5.23**, Protenix 3.39 Å — Chai-1 is
+  the structural outlier, agreeing least with the consensus.
+
+Adding these six features to the combined score (an opt-in upgrade over the tabular default,
+using the frozen model's own diffusion samples) lowers AURC further, on top of every tabular
+feature. The pose-upgrade Δ(AURC) 90% CI excludes zero for **all five models**:
+
+| model | native | tabular combined | + pose (W1) | pose Δ(AURC) CI90 |
+|---|---|---|---|---|
+| AF3 | 0.187 | 0.125 (33%) | **0.109 (42%)** | [0.004, 0.021] |
+| Boltz-1 | 0.234 | 0.170 (28%) | **0.139 (41%)** | [0.022, 0.049] |
+| Boltz-1x | 0.216 | 0.163 (25%) | **0.134 (38%)** | [0.004, 0.035] |
+| Chai-1 | 0.248 | 0.150 (40%) | **0.131 (47%)** | [0.020, 0.040] |
+| Protenix | 0.281 | 0.175 (38%) | **0.139 (51%)** | [0.032, 0.058] |
+
+The AF3 feature ablation confirms it: pose agreement is the single largest AURC drop after
+interface ipTM (0.123→0.106, −14%). The tabular combined score remains the cheap,
+structure-free primary; pose agreement is the upgrade when the structures are retained
+(they are a free byproduct of running the model).
+
+## E6b — interaction-fingerprint recovery (non-circular downstream payoff)
+
+E6's purity is arithmetically 1 − selective risk, so it cannot show the gate buys anything
+beyond the guarantee. Contact recovery is a genuinely different, downstream question a chemist
+reads: does the accepted pose recover the correct protein-ligand interactions (receptor
+residues within 4.5 Å of the ligand, keyed on (seqid, resname)) vs the crystal structure?
+Recovery is only correlated with, not equal to, the 2 Å RMSD label.
+
+Under the reliability gate (α = 0.2), accepted poses recover markedly more crystal contacts
+than rejected poses, for every model, with the accepted-minus-rejected recall gap 90% CI
+excluding zero:
+
+| model | base recall | accepted | rejected | gap CI90 |
+|---|---|---|---|---|
+| AF3 | 0.858 | **0.908** | 0.718 | [0.144, 0.227] |
+| Boltz-1 | 0.839 | **0.911** | 0.757 | [0.166, 0.231] |
+| Boltz-1x | 0.845 | **0.912** | 0.750 | [0.124, 0.194] |
+| Chai-1 | 0.838 | **0.911** | 0.706 | [0.143, 0.207] |
+| Protenix | 0.834 | **0.902** | 0.759 | [0.123, 0.176] |
+
+The gate raises interaction recovery by 0.15–0.20 on a metric that is not the guaranteed
+label, so — unlike E6 purity — this is a genuine, non-circular downstream lift: the abstention
+routes forward the poses whose interaction patterns a downstream SAR or structure-based step
+can actually trust. A screening-enrichment harness (`selective.enrichment`: EF/BEDROC,
+selective-EF, coverage-enrichment and active-retention curves, random-abstention control) is
+implemented and unit-tested, awaiting a screening dataset (the Mac1 prospective screen when its
+coordinates release, or a co-fold run) for a headline enrichment number.

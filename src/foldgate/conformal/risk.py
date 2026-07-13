@@ -116,8 +116,10 @@ rcps_threshold = ltt_threshold
 def _empirical_bernstein_ucb(x: np.ndarray, delta: float) -> float:
     """(1 - delta) empirical-Bernstein upper bound on a [0,1] mean (Maurer-Pontil).
 
-    Variance-adaptive: far tighter than Hoeffding when the losses concentrate near
-    0 (most accepted poses have small RMSD), which is exactly this setting.
+    Variance-adaptive: tighter than Hoeffding when the losses concentrate near 0
+    (most accepted poses have small RMSD), which is exactly this setting. Kept as a
+    closed-form fallback; the default certifier below is the (uniformly tighter)
+    WSR betting bound.
     """
     n = len(x)
     if n < 2:
@@ -128,6 +130,41 @@ def _empirical_bernstein_ucb(x: np.ndarray, delta: float) -> float:
     return mean + np.sqrt(2.0 * var * log_term / n) + 7.0 * log_term / (3.0 * (n - 1))
 
 
+def wsr_betting_pvalue(losses: np.ndarray, target: float, delta: float) -> float:
+    """Waudby-Smith & Ramdas (JRSSB 2024) betting p-value for H0: E[L] >= target.
+
+    L must lie in [0,1]. Builds the hedged capital process with a predictable-
+    plug-in empirical-Bernstein bet  lambda_i = sqrt(2 log(1/delta) / (n * sigma2_{i-1}))
+    (truncated to keep the wealth non-negative) that pays off  1 + lambda_i*(target - L_i).
+    Under H0 the wealth K_t is a non-negative supermartingale (E[target - L] <= 0),
+    so p = 1 / max_t K_t is a valid p-value by Ville's inequality: reject H0 (certify
+    mean loss < target at level 1 - delta) when p <= delta. Uses the whole sample and
+    is variance-adaptive, so it dominates Hoeffding-Bentkus and the Maurer-Pontil bound
+    without the worst-case-binomial slack. delta appears only through the bet size, so
+    validity holds for any delta in (0,1).
+    """
+    L = np.clip(np.asarray(losses, dtype=float), 0.0, 1.0)
+    n = len(L)
+    if n == 0:
+        return 1.0
+    m = float(np.clip(target, 1e-9, 1.0 - 1e-9))
+    log1d = np.log(1.0 / delta)
+    lam_cap = 0.5 / (1.0 - m)  # keeps 1 + lam*(m - L) >= 0.5 since (m - L) >= -(1 - m)
+
+    # Vectorised predictable plug-ins: everything at step i depends only on j < i.
+    idx = np.arange(n)
+    prefix_x = np.concatenate([[0.0], np.cumsum(L)])            # prefix_x[i] = sum_{j<i} L_j
+    muhat = (0.5 + prefix_x[:-1]) / (idx + 1)                   # plug-in mean before i
+    v = (L - muhat) ** 2
+    prefix_v = np.concatenate([[0.0], np.cumsum(v)])
+    sigma2 = (0.25 + prefix_v[:-1]) / (idx + 1)                 # plug-in variance before i
+    lam = np.minimum(np.sqrt(2.0 * log1d / (n * sigma2)), lam_cap)
+    log_factors = np.log(1.0 + lam * (m - L))
+    log_k = np.cumsum(log_factors)                             # log K_t, t = 1..n
+    k_max = float(np.exp(max(log_k.max(), 0.0)))               # include the empty product K_0 = 1
+    return float(min(1.0, 1.0 / k_max))
+
+
 def continuous_risk_threshold(
     scores: np.ndarray,
     loss: np.ndarray,
@@ -135,18 +172,25 @@ def continuous_risk_threshold(
     delta: float = 0.1,
     coverage_grid: np.ndarray | None = None,
     min_accept: int = 20,
-    bound: str = "bernstein",
+    bound: str = "wsr",
 ) -> float | None:
     """Largest accept set with a certified mean bounded loss <= target.
 
-    For a continuous, [0,1]-bounded per-pose loss (e.g. min(RMSD, cap)/cap), pick
-    the threshold so the mean loss among accepted is <= target with confidence
-    1 - delta. This is the continuous-RMSD analogue of the binary selective-risk
-    gate; loss must be scaled into [0,1] by the caller. Uses the pre-specified
-    coverage-grid fixed-sequence walk. bound="bernstein" (default) is the
-    variance-adaptive empirical-Bernstein bound, which certifies meaningful
-    coverage where a distribution-free Hoeffding bound is too loose; bound=
-    "hoeffding" is the conservative alternative.
+    For a continuous, [0,1]-bounded per-pose loss (e.g. min(RMSD, cap)/cap), pick the
+    threshold so the mean loss among accepted is <= target with confidence 1 - delta.
+    This is the continuous-RMSD analogue of the binary selective-risk gate; loss must
+    be scaled into [0,1] by the caller. Uses the same pre-specified coverage-grid
+    fixed-sequence walk as the binary gate, so the family-wise 1 - delta certificate
+    carries over.
+
+    bound:
+      "wsr"       (default) WSR betting p-value -- variance-adaptive, uses the whole
+                  sample, uniformly tighter than the alternatives; certifies non-trivial
+                  coverage where a distribution-free Hoeffding bound certifies almost none.
+      "bernstein" Maurer-Pontil empirical-Bernstein closed-form UCB.
+      "hoeffding" conservative distribution-free UCB.
+      "binomial"  exact binomial tail for a 0/1 loss -- the degenerate case that must
+                  reproduce the E1 binary gate (used only for the equivalence check).
     """
     scores = np.asarray(scores, dtype=float)
     loss = np.clip(np.asarray(loss, dtype=float), 0.0, 1.0)
@@ -161,11 +205,17 @@ def continuous_risk_threshold(
         if n_acc < min_accept:
             continue
         la = loss[acc]
-        if bound == "bernstein":
-            ucb = _empirical_bernstein_ucb(la, delta)
+        if bound == "wsr":
+            certified = wsr_betting_pvalue(la, target, delta) <= delta
+        elif bound == "binomial":
+            errors = int(np.rint(la.sum()))       # la must be 0/1 for this mode
+            certified = binom.cdf(errors, n_acc, target) <= delta
+        elif bound == "bernstein":
+            certified = _empirical_bernstein_ucb(la, delta) <= target
         else:
             ucb = float(la.mean()) + np.sqrt(np.log(1.0 / delta) / (2.0 * n_acc))
-        if ucb <= target:
+            certified = ucb <= target
+        if certified:
             last_valid = tau
         else:
             break

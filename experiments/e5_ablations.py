@@ -15,14 +15,15 @@ import numpy as np
 from experiments._common import DELTA, RESDIR, load_delivered, rng, save_json
 from foldgate.conformal import ltt_threshold
 from foldgate.scores import ScoreCombiner
-from foldgate.selective import aurc, conditional_coverage, evaluate_gate
+from foldgate.selective import aurc, conditional_coverage
 
 THRESHOLDS = [1.5, 2.0, 2.5, 3.0]
 FEATURE_SETS = {
     "native only": ["ranking_score"],
     "+ interface ipTM": ["ranking_score", "iface_iptm"],
     "+ PoseBusters": ["ranking_score", "iface_iptm", "pb_valid"],
-    "+ ensemble spread": ["ranking_score", "iface_iptm", "pb_valid", "ens_ranking_std", "ens_ranking_range", "ens_iptm_std"],
+    "+ ensemble spread": ["ranking_score", "iface_iptm", "pb_valid",
+                          "ens_ranking_std", "ens_ranking_range", "ens_iptm_std"],
     "+ cross-model agreement": ["ranking_score", "iface_iptm", "pb_valid", "ens_ranking_std",
                                 "ens_ranking_range", "ens_iptm_std", "xmodel_iptm_mean",
                                 "xmodel_iptm_std", "xmodel_n_models"],
@@ -30,6 +31,15 @@ FEATURE_SETS = {
                                   "ens_ranking_range", "ens_iptm_std", "xmodel_iptm_mean",
                                   "xmodel_iptm_std", "xmodel_n_models", "ligand_molecular_weight",
                                   "ligand_num_rot_bonds", "ligand_num_heavy_atoms"],
+    # W1: only contributes once build_pose_features.py has populated the pose columns; absent
+    # columns are filtered by ScoreCombiner, so this row equals the previous one until then.
+    "+ pose agreement (W1)": ["ranking_score", "iface_iptm", "pb_valid", "ens_ranking_std",
+                              "ens_ranking_range", "ens_iptm_std", "xmodel_iptm_mean",
+                              "xmodel_iptm_std", "xmodel_n_models", "ligand_molecular_weight",
+                              "ligand_num_rot_bonds", "ligand_num_heavy_atoms",
+                              "intra_model_pose_std", "intra_model_pose_median",
+                              "pose_consensus_frac", "xmodel_pose_rmsd_median",
+                              "xmodel_pose_rmsd_min", "pose_consensus_cluster_size"],
 }
 
 
@@ -43,7 +53,8 @@ def threshold_sweep(df, m="af3", n_repeats=120):
     for t in THRESHOLDS:
         y = (rmsd <= t).astype(int)
         # E2-style: global iid tau, per-stratum risk (pooled over repeats)
-        acc_err = {}; acc_n = {}
+        acc_err = {}
+        acc_n = {}
         aurc_nat, aurc_comb = [], []
         for _ in range(n_repeats):
             perm = g.permutation(len(sub))
@@ -91,11 +102,13 @@ def main() -> None:
     save_json(res, RESDIR / "e5_ablations.json")
 
     print("=== RMSD-threshold sensitivity (AF3) ===")
-    print(f"{'thresh':>7} {'base_ok':>8} {'S0':>6} {'S3':>6} {'S4':>6} {'AURC nat':>9} {'AURC comb':>10} {'improve':>8}")
+    print(f"{'thresh':>7} {'base_ok':>8} {'S0':>6} {'S3':>6} {'S4':>6} "
+          f"{'AURC nat':>9} {'AURC comb':>10} {'improve':>8}")
     for t, v in res["threshold_sweep_af3"].items():
         ps = v["per_stratum_risk_global_tau"]
         print(f"{t:>7} {v['base_correct']:>8.3f} {ps.get(0,float('nan')):>6.3f} {ps.get(3,float('nan')):>6.3f} "
-              f"{ps.get(4,float('nan')):>6.3f} {v['aurc_native']:>9.3f} {v['aurc_combined']:>10.3f} {v['aurc_improve_pct']:>7.1f}%")
+              f"{ps.get(4,float('nan')):>6.3f} {v['aurc_native']:>9.3f} "
+              f"{v['aurc_combined']:>10.3f} {v['aurc_improve_pct']:>7.1f}%")
     print("\n=== Feature ablation (AF3, cumulative AURC; lower better) ===")
     for name, v in res["feature_ablation_af3"].items():
         print(f"  {name:28} AURC {v['aurc']:.3f}  ({v['n_features']} feats)")

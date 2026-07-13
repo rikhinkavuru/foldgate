@@ -1,0 +1,417 @@
+{
+  "af3": {
+    "n": 2709,
+    "spearman_disagreement_vs_novelty": 0.08952438511835523,
+    "mean_disagreement_by_stratum": {
+      "0": 6.476624695318432,
+      "1": 5.20567755489092,
+      "2": 4.120553298613134,
+      "3": 5.0133395199526944,
+      "4": 8.259333617399934
+    },
+    "strata": {
+      "0": {
+        "global": {
+          "selective_risk": 0.07102726663574042,
+          "coverage": 0.37550443711108744
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.05178977188892496,
+          "coverage": 0.32793976754763726
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.11824701349869476,
+          "coverage": 0.9972322491362875
+        }
+      },
+      "1": {
+        "global": {
+          "selective_risk": 0.1486932316098768,
+          "coverage": 0.39438881829733163
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.07728706624605679,
+          "coverage": 0.27067852604828463
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.19645608628659475,
+          "coverage": 0.07916645489199492
+        }
+      },
+      "2": {
+        "global": {
+          "selective_risk": 0.16250422821062127,
+          "coverage": 0.3754868755292125
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.06157003591585428,
+          "coverage": 0.24754445385266724
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.15163863360499394,
+          "coverage": 0.1220787468247248
+        }
+      },
+      "3": {
+        "global": {
+          "selective_risk": 0.37534772817591733,
+          "coverage": 0.3052290026180392
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.23628081457663452,
+          "coverage": 0.1886201215012787
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.23055555555555557,
+          "coverage": 0.003638973405169364
+        }
+      },
+      "4": {
+        "global": {
+          "selective_risk": 0.42686170212765956,
+          "coverage": 0.19819028375647896
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.21189120809614168,
+          "coverage": 0.13889132917508565
+        },
+        "similarity_oracle": {
+          "selective_risk": NaN,
+          "coverage": 0.0
+        }
+      }
+    }
+  },
+  "boltz1": {
+    "n": 2384,
+    "spearman_disagreement_vs_novelty": 0.1586872542262776,
+    "mean_disagreement_by_stratum": {
+      "0": 2.5917937239479265,
+      "1": 2.92415925714639,
+      "2": 3.0301421993971043,
+      "3": 3.570424204196186,
+      "4": 4.599097707254724
+    },
+    "strata": {
+      "0": {
+        "global": {
+          "selective_risk": 0.059480676328502416,
+          "coverage": 0.07843230122550471
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.07643806382772335,
+          "coverage": 0.12206500503226571
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.16614300462318776,
+          "coverage": 0.5275945769936653
+        }
+      },
+      "1": {
+        "global": {
+          "selective_risk": 0.05798599150304283,
+          "coverage": 0.20036350250770718
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.08836922127035579,
+          "coverage": 0.14904753140385588
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.16013850789225165,
+          "coverage": 0.25579763493305113
+        }
+      },
+      "2": {
+        "global": {
+          "selective_risk": 0.237660741301059,
+          "coverage": 0.24433688733842368
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.16056291663237593,
+          "coverage": 0.1403620233570909
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.11765447667087012,
+          "coverage": 0.09160322979357506
+        }
+      },
+      "3": {
+        "global": {
+          "selective_risk": 0.2736996924722557,
+          "coverage": 0.08406487798846764
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.3384420697412823,
+          "coverage": 0.07993975294210212
+        },
+        "similarity_oracle": {
+          "selective_risk": NaN,
+          "coverage": 0.0
+        }
+      },
+      "4": {
+        "global": {
+          "selective_risk": 0.0,
+          "coverage": 9.365926758452749e-05
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.28101644245142005,
+          "coverage": 0.0626580500140489
+        },
+        "similarity_oracle": {
+          "selective_risk": NaN,
+          "coverage": 0.0
+        }
+      }
+    }
+  },
+  "boltz1x": {
+    "n": 2331,
+    "spearman_disagreement_vs_novelty": 0.17221376871001493,
+    "mean_disagreement_by_stratum": {
+      "0": 1.8764919682834247,
+      "1": 1.9074754393842668,
+      "2": 1.9457375280200369,
+      "3": 2.869603810327686,
+      "4": 3.6795782550742993
+    },
+    "strata": {
+      "0": {
+        "global": {
+          "selective_risk": 0.06060606060606061,
+          "coverage": 0.1431170114084015
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.07709326072157931,
+          "coverage": 0.14157500993868136
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.15974753130408226,
+          "coverage": 0.5916828295726969
+        }
+      },
+      "1": {
+        "global": {
+          "selective_risk": 0.07122608079376329,
+          "coverage": 0.2663803376951304
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.0539839507173543,
+          "coverage": 0.14556760392207763
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.16525000997645556,
+          "coverage": 0.29567792710410495
+        }
+      },
+      "2": {
+        "global": {
+          "selective_risk": 0.2075673807878369,
+          "coverage": 0.3393885377209133
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.1404101128222021,
+          "coverage": 0.14240480350881307
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.12185898999756038,
+          "coverage": 0.09614054016019515
+        }
+      },
+      "3": {
+        "global": {
+          "selective_risk": 0.3237712755785045,
+          "coverage": 0.18139873725109276
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.34815825375170534,
+          "coverage": 0.08476144221651749
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.47368421052631576,
+          "coverage": 0.0002197090589514096
+        }
+      },
+      "4": {
+        "global": {
+          "selective_risk": 0.2125,
+          "coverage": 0.00777378291711204
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.12580645161290321,
+          "coverage": 0.030123408803809152
+        },
+        "similarity_oracle": {
+          "selective_risk": NaN,
+          "coverage": 0.0
+        }
+      }
+    }
+  },
+  "chai": {
+    "n": 2571,
+    "spearman_disagreement_vs_novelty": 0.19933804685295392,
+    "mean_disagreement_by_stratum": {
+      "0": 3.9219621397960673,
+      "1": 3.597753763460452,
+      "2": 3.2733441295694097,
+      "3": 4.1741085449151205,
+      "4": 5.254278341167193
+    },
+    "strata": {
+      "0": {
+        "global": {
+          "selective_risk": 0.24102564102564103,
+          "coverage": 0.004100601421541826
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.1050492083868207,
+          "coverage": 0.09828826176557177
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.171850699844479,
+          "coverage": 0.027042940656937377
+        }
+      },
+      "1": {
+        "global": {
+          "selective_risk": 0.13744075829383887,
+          "coverage": 0.006706716251867391
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.105731410376475,
+          "coverage": 0.1131347806278673
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.1763327475102519,
+          "coverage": 0.19894472521534598
+        }
+      },
+      "2": {
+        "global": {
+          "selective_risk": 0.2330978809283552,
+          "coverage": 0.010731844664399732
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.16446730060159132,
+          "coverage": 0.11160685278638106
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.2815126050420168,
+          "coverage": 0.0025773754088063935
+        }
+      },
+      "3": {
+        "global": {
+          "selective_risk": 0.5798319327731093,
+          "coverage": 0.0025521967121701176
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.41516566599955523,
+          "coverage": 0.048223649641298404
+        },
+        "similarity_oracle": {
+          "selective_risk": NaN,
+          "coverage": 0.0
+        }
+      },
+      "4": {
+        "global": {
+          "selective_risk": NaN,
+          "coverage": 0.0
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.18663594470046083,
+          "coverage": 0.040507746873249956
+        },
+        "similarity_oracle": {
+          "selective_risk": NaN,
+          "coverage": 0.0
+        }
+      }
+    }
+  },
+  "protenix": {
+    "n": 2607,
+    "spearman_disagreement_vs_novelty": 0.048280887310073343,
+    "mean_disagreement_by_stratum": {
+      "0": 7.861215058777986,
+      "1": 8.467538394197533,
+      "2": 8.955760309432753,
+      "3": 6.469065890850214,
+      "4": 10.145224066436153
+    },
+    "strata": {
+      "0": {
+        "global": {
+          "selective_risk": 0.05589914367269267,
+          "coverage": 0.04312502564523409
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.038373161764705885,
+          "coverage": 0.04464322350334414
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.14490862981245892,
+          "coverage": 0.9829202740962619
+        }
+      },
+      "1": {
+        "global": {
+          "selective_risk": 0.1263125386040766,
+          "coverage": 0.03405947259358992
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.11359461114513165,
+          "coverage": 0.03435399551904406
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.16322492889823173,
+          "coverage": 0.08506453207670218
+        }
+      },
+      "2": {
+        "global": {
+          "selective_risk": 0.1689672801635992,
+          "coverage": 0.04217244130139497
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.15812994156067378,
+          "coverage": 0.03135982406588905
+        },
+        "similarity_oracle": {
+          "selective_risk": 0.17490494296577946,
+          "coverage": 0.03685776503309545
+        }
+      },
+      "3": {
+        "global": {
+          "selective_risk": 0.3806386213887481,
+          "coverage": 0.04145828955662954
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.39374464438731793,
+          "coverage": 0.024521958394620718
+        },
+        "similarity_oracle": {
+          "selective_risk": NaN,
+          "coverage": 0.0
+        }
+      },
+      "4": {
+        "global": {
+          "selective_risk": 0.2318181818181818,
+          "coverage": 0.020551144325081736
+        },
+        "disagree_keyed": {
+          "selective_risk": 0.1813953488372093,
+          "coverage": 0.02008407286314806
+        },
+        "similarity_oracle": {
+          "selective_risk": NaN,
+          "coverage": 0.0
+        }
+      }
+    }
+  }
+}
