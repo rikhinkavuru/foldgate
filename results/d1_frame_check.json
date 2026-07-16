@@ -1,0 +1,55 @@
+{
+  "n_systems_with_crystal": 2425,
+  "n_model_instances": 13618,
+  "n_instances_with_label": 13507,
+  "label_nan_rate": 0.008150976648553385,
+  "n_pairs": 13215,
+  "n_pairs_with_rmsd": 13162,
+  "pair_skip_rate": 0.0040105940219447595,
+  "frame_check": {
+    "n_pairs_checked": 13146,
+    "n_threshold_violations": 0,
+    "n_triangle_violations": 0,
+    "min_triangle_slack": 0.03754047855363357,
+    "passes": true
+  },
+  "label_agreement_vs_rnp": {
+    "n": 6163,
+    "spearman": 0.9948464811731642,
+    "pearson": 0.9989276557466297,
+    "correctness_call_agreement": 0.993996430309914,
+    "median_abs_diff_A": 0.017550587899602288,
+    "frac_abs_diff_gt_5A": 0.0009735518416355671
+  },
+  "label_agreement_vs_rnp_unfiltered": {
+    "n": 13433,
+    "spearman": 0.6198592480328059,
+    "pearson": 0.28109268619314304,
+    "correctness_call_agreement": 0.8541651157596962,
+    "median_abs_diff_A": 0.028732578716491042,
+    "frac_abs_diff_gt_5A": 0.21149408173900097
+  },
+  "frame_exclusions": {
+    "n_instances": 13618,
+    "n_frame_ok": 6223,
+    "frac_frame_ok": 0.4569687178734029,
+    "n_excluded_chain_count_mismatch": 3649,
+    "n_excluded_ambiguous_ligand_copy": 2494
+  },
+  "eps": {
+    "median": 0.36797310970789826,
+    "p90": 1.1274920040681933,
+    "p99": 4.074759548257946,
+    "max": 21.424826991135156,
+    "by_method": {
+      "af3": 0.30845517839059267,
+      "boltz1": 0.39354273246427274,
+      "boltz1x": 0.392388529471786,
+      "boltz2": 0.4324728044117572,
+      "chai": 0.36606215904501643,
+      "protenix": 0.35240841120817135
+    },
+    "note": "reported on the bijective-frame subset; eps is meaningless where the frame is not"
+  },
+  "disagreement_rate_marginal": 0.20522133938706016
+}

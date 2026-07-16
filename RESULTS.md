@@ -437,3 +437,185 @@ can actually trust. A screening-enrichment harness (`selective.enrichment`: EF/B
 selective-EF, coverage-enrichment and active-retention curves, random-abstention control) is
 implemented and unit-tested, awaiting a screening dataset (the Mac1 prospective screen when its
 coordinates release, or a co-fold run) for a headline enrichment number.
+
+## D1 — the label-free danger floor (the escape, and its ceiling)
+
+The impossibility forbids a training-free *upper* bound on risk. It says nothing about a *lower*
+bound. Pose correctness is a thresholded distance, so if two frozen models' poses sit more than
+2ρ = 4 Å apart, the triangle inequality forces at least one to be wrong. That is a certified danger
+signal costing no labels. Prior art owns the bare inequality and its factor one-half
+(arXiv:2507.00057 discrete I/O; arXiv:2603.14070 classification under shift); what is new here is
+the metric conversion against a *latent* crystal target, the K-model packing floor, the
+diverse-vs-consensus decomposition, and the reconciliation with our own theorem.
+Drivers: `d1_extract_delivered.py` → `d1_single_frame.py` → `d1_floor.py`.
+
+**The frame is the whole difficulty, and it hides a trap.** W1's `xmodel_pose_rmsd_*` superpose the
+other models onto *each reference model's* pocket in turn, so their distances live in one frame per
+reference model. That is fine for a monotone "do the models agree" covariate, which is all W1 uses
+them for, and it is wrong for T1, which needs the two poses and the crystal pose in ONE frame. D1
+recomputes: pocket defined once from the crystal ligand, every receptor superposed onto the crystal
+receptor, label and pairwise distance both recomputed in that frozen frame.
+
+RNP ships only the system's receptor chain while co-folding models predict the full assembly (for
+`8ttz` the crystal has 1 chain, AF3 predicts the homodimer plus 9 ligand copies). A chain-ordinal
+correspondence then superposes onto the wrong protomer: the backbone fits well (ε stays ~0.3 Å)
+while the ligand lands 30–50 Å away. **Neither ε nor the triangle-inequality check detects this** —
+a displaced pose is far from everything, so its trigger fires and the inequality holds vacuously.
+The frame check passed 0/13,146 while ~21% of labels were wrong. Only the external comparison to
+RNP's shipped label exposes it:
+
+| subset | n | Spearman | correctness calls | frac \|diff\| > 5 Å |
+|---|---|---|---|---|
+| no filter | 13,433 | 0.620 | 0.854 | 0.212 |
+| chain counts match + unique ligand copy | 9,545 | 0.700 | 0.891 | 0.144 |
+| of those, multi-chain receptors | 3,382 | 0.373 | 0.702 | **0.406** |
+| **single-chain receptor + unique copy** | **6,163** | **0.995** | **0.994** | **0.001** |
+
+So the valid frame requires a single-chain receptor and an unambiguous ligand copy: 6,223 of 13,618
+instances (45.7%), of which **1,115 retain all K=5 models**. The exclusion is a property of the
+system, not the model (models never disagree on predicted chain count, 0/2303; per-model survival
+42–51%), so cross-model comparison stays fair. Mild composition bias, reported: the kept subset is
+slightly more novel (mean ligand similarity 0.452 vs 0.500) and slightly less accurate (0.651 vs
+0.672). Repairing the excluded cases needs quotienting by the receptor symmetry group; that is
+future work, since resolving it per-instance against the crystal ligand would put a label inside a
+label-free statistic and would let each model pick its own frame.
+
+**The floors.** Pre-registered pair (AF3, Chai-1): `R_max ≥ ½·p_L`, exact one-sided
+Clopper-Pearson. Any-pair union: constant is `1/K`, **not** ½. Packing (headline): correct poses
+form an independent set in the >2ρ graph, so `R̄ ≥ 1 − E[α(G)|A]/K`; α(G)/K is a bounded mean, not
+a binomial proportion, so Clopper-Pearson is invalid and we use a WSR betting upper bound
+(`conformal/risk.py:wsr_upper_bound`). It is kept because it is variance-adaptive and never worse on
+average, not because it buys much: measured against Hoeffding-Bentkus over 470 cells
+(`wsr_gain_vs_hb` in the artifact) it is tighter in 61% for a median gain of **0.006** of floor, and
+at the accept counts below 50 that the novel strata leave, the median gain is **0.000** and
+Hoeffding-Bentkus is tighter in 23% of cells. An earlier draft claimed 0.02 to 0.06; that was read
+off a synthetic simulation and is not what the real cells do.
+Because disagreement cannot assign blame, every floor bounds the ensemble mean or the worst model,
+never the deployed one.
+
+**Valid and non-vacuous:** 0/386 cells where a certified floor exceeded the realized quantity it
+bounds. That is a consequence of the construction rather than a test at level δ: the pointwise
+inequality already forces the empirical floor under the empirical risk on the same sample, so the
+check can catch an implementation error but cannot exhibit the δ-level step from sample to
+population. Marginally the packing floor certifies R̄ ≥ 0.124 against realized 0.348.
+
+AF3, ligand axis, 50% coverage (floors carry no labels; R̄ is the validation truth):
+
+| stratum | n_acc | disagree | floor (certified) | realized R̄ | consensus rate | R̄ on consensus |
+|---|---|---|---|---|---|---|
+| S0 | 127 | 0.079 | 0.010 | 0.090 | 0.921 | 0.063 |
+| S1 | 102 | 0.118 | 0.006 | 0.157 | 0.882 | 0.111 |
+| S2 | 101 | 0.178 | 0.031 | 0.178 | 0.822 | 0.113 |
+| S3 | 112 | 0.402 | **0.109** | 0.320 | 0.598 | 0.200 |
+| S4 (no analog) | 11 | 0.273 | **0.000** | 0.455 | 0.727 | 0.275 |
+
+The floor rises with novelty through S3 and then goes **vacuous on S4**, the no-analog stratum this
+project treats as the sharpest extrapolation test: `floor_packing = 0.000` for all five models at
+this coverage while realized R̄ = 0.455. Only 11 complexes survive there, so the certificate reads
+zero exactly where the question is hardest. This is reported, not buried.
+
+**The honest negative.** The floor does **not** certify a positive ensemble concept gap: it exceeds
+a (1−δ) upper bound on R̄_ref in **1 of 124 cells** at per-cell level 0.80, which survives no
+family-wise correction, so we report it as null. The reason is measured, and it is exactly T2c: the
+floor is blind to consensus error (all K share one wrong mode → no edges → floor reads 0).
+Consensus covers 64% of instances and carries risk 0.152 against 0.698 on the diverse remainder;
+along the novelty axis the consensus rate falls 0.92 → 0.60 while risk *inside* consensus rises
+0.063 → 0.200. The models fail together precisely where they fail most. Label-free danger
+certification is real and valid, and structurally too weak to audit the concept gap it targets.
+
+## D2 — the certification feasibility map (the cost)
+
+Margin `m_g = α − R_Q,g(τ)`. Where `m_g > 0` labels can certify; where `m_g ≤ 0` the rule genuinely
+violates α and no certificate, label-free or label-fed, can certify a false statement. Driver:
+`d2_feasibility_map.py`. Query unit is the **target**, not the pose: 12,125 independent
+target-labels over 2,425 systems, one delivered pose per (system, model).
+
+**Why a frontier and not one operating point.** At the project default α=0.20 the familiar
+stratum's own risk is 0.130, already below α, so LTT certifies the whole set and the gate
+degenerates to accept-everything (AF3 τ=0.237, coverage 1.00 on *every* stratum). For Chai-1,
+fixed-sequence LTT rejects its first hypothesis and returns no threshold at all. Both are artifacts
+of one calibrator, not facts about co-folding. So we sweep source coverage and report
+`c*_g(α) = max{c : R_Q,g(τ(c)) ≤ α}`, with τ calibrated on a held-out half of S0 and deployed frozen.
+
+`c*_feasible` on the ligand axis (0.00 = no operating point at any coverage on the grid):
+
+| model | S0 | S1 | S2 | S3 | S4 |
+|---|---|---|---|---|---|
+| AF3 (α=0.20) | 1.00 | 0.85 | 0.75 | 0.20 | **0.00** |
+| Chai-1 (α=0.20) | 1.00 | 0.80 | 0.00 | 0.00 | 0.25 |
+| Protenix (α=0.20) | 1.00 | 0.35 | 0.20 | **0.00** | 0.05 |
+| AF3 (α=0.10) | 0.65 | 0.40 | 0.10 | **0.00** | **0.00** |
+| Chai-1 (α=0.10) | 0.45 | 0.05 | **0.00** | **0.00** | 0.25 |
+
+Across both axes and five models, 39 of 50 strata admit an operating point at α=0.20 and 11 admit
+none at any coverage; at α=0.10 that worsens to 33 and 17, with only 3 strata certifiable from the
+labels in hand. The deployed view is starker: the AF3 rule LTT certifies at α=0.20 on familiar
+targets realizes **0.538** on S3 (margin −0.338), so the certificate is inverted, not merely loose.
+
+Certification is feasible on the familiar half of the novelty axis, where labels are cheapest and
+least needed, and infeasible on the novel tail, where the decision matters, because what fails there
+is the rule rather than the estimate of it. S4 is non-monotone (it sometimes exceeds S3); it is the
+no-analog bin, n≈60 per model, and its CIs are wide.
+
+### D2b — what certification costs, and the win that does not exist
+
+The feasibility map says *where* the rule holds. This says what it costs to prove it there. On each
+feasible cell we hide the labels, reveal one independent target-label at a time in random order
+(200 orders), and record the budget at which each certificate first fires. Driver: `d2_certify.py`.
+All four certifiers are allowed to peek at every budget, which is legitimate only for the
+anytime-valid WSR sequence and is anti-conservative for the fixed-n bounds, so the comparison is
+tilted *toward* the baselines.
+
+| certifier | cells certified | median target-labels |
+|---|---|---|
+| Hoeffding (pure) | 12/23 | 102 |
+| Hoeffding-Bentkus (project default) | 19/23 | 60 |
+| WSR betting (variance-adaptive) | 16/23 | 62 |
+| **exact binomial** | **23/23** | **38** |
+
+**The exact binomial dominates uniformly**: it certifies every feasible cell, and it is cheaper
+than WSR in 16/16 cells where both fire and cheaper than Hoeffding-Bentkus in 18/19. WSR beats
+Hoeffding-Bentkus in only 2/16.
+
+**The planned win was real but aimed at a baseline we had already beaten.** The D2 design predicted
+that empirical-Bernstein variance-adaptivity would be the robust saving over passive Hoeffding-RCPS
+at the small accepted error rates these cells show (R_Q = 0.06–0.18). It is not, but an earlier
+draft of this section got the reason wrong and the correction matters. That draft claimed there is
+"nothing for a variance-adaptive bound to adapt to" because a Bernoulli variance p(1−p) is a
+deterministic function of the mean. The premise is true and the inference is false: pure Hoeffding
+does not use the count's information at all, it substitutes the worst-case variance ¼, so there is
+plenty to adapt to and **WSR does capture it** (cheaper than pure Hoeffding in **12/12** cells where
+both fire, median 49 vs 102).
+
+The correct statement is about **sufficiency**, not variance. The count is a sufficient statistic for
+a Bernoulli mean and the exact binomial tail is its exact inversion, so every fixed-n concentration
+bound is a *relaxation* of that tail and none can be tighter. Variance-adaptivity buys back the
+distance from pure Hoeffding to the tail, but a Bentkus binomial term buys the same thing, and this
+project's `hb_upper_bound` already carried one (60 vs WSR's 62). `ltt_threshold` already used the
+exact test. So the recommended "upgrade" was measuring itself against a baseline the repo had left
+behind. Note WSR is *not* merely a relaxation of the fixed-n tail: it is anytime-valid, so its extra
+width is the premium for validity under optional stopping, a different guarantee rather than a worse
+one.
+
+**The budget grows as the margin shrinks, more slowly than the theoretical rate.** A log-log fit of
+the exact-binomial budget on the margin over the 23 cells gives an exponent of **−1.07** (90% CI
+[−1.26, −0.91]), which excludes the Θ(m⁻²) rate the theory predicts; `n·m²` spreads 11.1× where a
+1/m² law would hold it constant. The margin does not determine the budget on its own: two cells
+sharing margin 0.025 **and** error rate 0.075 cost **164 and 72** labels. An earlier draft asserted
+"the budget follows 1/margin², visibly" from four hand-picked points, quoting the 164 and omitting
+the 72. It does not. At α=0.10 only 6 of 40 cells are feasible at all, their margins are ≤ 0.040,
+and pure Hoeffding certifies none of them within the labels RNP provides.
+
+**The PPI control covariate, measured.** Median |ρ| = 0.256 over the candidate label-free
+covariates, so the asymptotic PPI variance reduction keeps 0.934 of the variance, roughly a 7%
+saving. It is reported as a measured add-on and is deliberately **not** spliced into the curves
+above: PPI's (1 − ρ²) is asymptotic and the control-variate variable is unbounded, so mixing it into
+a finite-sample labels-to-certify plot would compare two different guarantees.
+
+**One caveat belongs with this ranking rather than under it.** A fixed-n bound (Hoeffding,
+Hoeffding-Bentkus, exact binomial) is valid only at a budget fixed in advance, so reading its
+first-firing budget off a reveal sequence flatters it; the WSR sequence is the one construction here
+that stays valid under optional stopping. The table therefore prices a certificate at a *planned*
+budget. It is not a licence to watch the binomial and stop the moment it fires, and the honest
+reading is that the exact binomial is the right tool when you fix n in advance, which is what a
+label-acquisition plan does.

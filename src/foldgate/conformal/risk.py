@@ -165,6 +165,37 @@ def wsr_betting_pvalue(losses: np.ndarray, target: float, delta: float) -> float
     return float(min(1.0, 1.0 / k_max))
 
 
+def wsr_upper_bound(x: np.ndarray, delta: float) -> float:
+    """(1 - delta) WSR betting UPPER confidence bound on a [0,1]-bounded mean.
+
+    Inverts `wsr_betting_pvalue`: it tests H0: E[X] >= m and rejecting certifies E[X] < m, so the
+    rejected m are exactly the valid upper bounds and the tightest is their infimum. The p-value is
+    monotone decreasing in m (a larger m makes the bet (m - X) more favourable, so the wealth grows
+    and H0 is easier to reject), which makes a bisection on m sound.
+
+    Preferred over `hb_upper_bound` for a low-variance bounded mean. Hoeffding-Bentkus pays for the
+    worst-case variance at a given mean, while the betting bound adapts to the realized variance,
+    so on a quantity that concentrates -- e.g. the packing statistic alpha(G)/K, which sits near
+    0.87 with little spread -- it is materially tighter at the small accept counts the novel strata
+    leave. Validity is Ville's inequality and holds for any delta in (0,1); delta enters the bet
+    size only.
+    """
+    v = np.clip(np.asarray(x, dtype=float), 0.0, 1.0)
+    if len(v) == 0:
+        return 1.0
+    mean = float(v.mean())
+    if wsr_betting_pvalue(v, 1.0 - 1e-9, delta) > delta:
+        return 1.0
+    lo, hi = mean, 1.0                       # p(lo) ~ 1 (not rejected); p(hi) <= delta (rejected)
+    for _ in range(60):
+        mid = 0.5 * (lo + hi)
+        if wsr_betting_pvalue(v, mid, delta) <= delta:
+            hi = mid                          # mid is a valid upper bound; tighten
+        else:
+            lo = mid
+    return float(hi)
+
+
 def continuous_risk_threshold(
     scores: np.ndarray,
     loss: np.ndarray,

@@ -220,6 +220,7 @@ def shift_decomposition(
     # Two-level bootstrap for the Gap_concept interval.
     rng = np.random.default_rng(seed)
     boot = np.empty(n_boot, dtype=float)
+    boot_ref = np.empty(n_boot, dtype=float)
     ys_a_f = ys_a.astype(float)
     yt_a_f = yt_a.astype(float)
     for b in range(n_boot):
@@ -227,11 +228,17 @@ def shift_decomposition(
         p_src_b = _source_map(bin_s[si], ys_a_f[si], nb)
         ti = rng.integers(0, n_acc_t, n_acc_t)
         boot[b] = float(np.mean(p_src_b[bin_t[ti]] - yt_a_f[ti]))
+        # R_ref itself, on the same resample: the reference certificate a covariate reweighting
+        # of the score would report. Bootstrapped here so downstream users can compare a certified
+        # bound AGAINST R_ref without treating R_ref as if it were known exactly.
+        boot_ref[b] = 1.0 - float(np.mean(p_src_b[bin_t[ti]]))
 
     lo = float(np.quantile(boot, delta / 2.0))
     hi = float(np.quantile(boot, 1.0 - delta / 2.0))
     floor_lower = float(np.quantile(boot, delta))       # one-sided (1 - delta) lower bound
     nonvacuous = bool(lo > 0.0 or hi < 0.0)
+    r_ref = 1.0 - a_transported
+    r_ref_upper = float(np.quantile(boot_ref, 1.0 - delta))   # one-sided (1 - delta) UPPER bound
 
     # Per-bin table for auditability (point-estimate quantities).
     bins = []
@@ -263,6 +270,8 @@ def shift_decomposition(
         floor_lower=floor_lower,
         concept_nonvacuous=nonvacuous,
         boot_mean=float(boot.mean()),
+        R_ref=float(r_ref),
+        R_ref_upper=r_ref_upper,
         bins=bins,
     )
     return base

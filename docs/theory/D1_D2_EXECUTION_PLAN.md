@@ -4,6 +4,79 @@
 
 ---
 
+## EXECUTION STATUS (2026-07-15, read first)
+
+**Both Week-1 MVPs are built and both gates PASS.** Numbers live in `RESULTS.md` (sections D1, D2)
+and `results/{d1_floor,d1_frame_check,d2_feasibility_map}.json`. Paper sections `sec:danger` (D1)
+and `sec:cost` (D2) are written into `paper/moml2026_foldgate.tex`.
+
+Pipeline: `d1_extract_delivered.py` (streams the 39.5 GB tarball once, caches 12,597 delivered poses
+to `data/processed/delivered_poses.tar.gz`, ~5 min) → `d1_single_frame.py` (~12 min) →
+`d1_floor.py`. `d2_feasibility_map.py` runs on the delivered parquet alone.
+
+Four findings that change what this plan said:
+
+1. **Section 2.4 step 1 was right to worry, and the frame trap is worse than described.** The
+   delivered `xmodel_pose_rmsd_*` are indeed not single-frame. But the deeper problem is that RNP
+   ships only the system's receptor chain while models predict the full assembly, so chain-ordinal
+   keying superposes onto the wrong protomer with a SMALL eps and a 30-50 A ligand displacement.
+   **Neither eps nor the triangle-inequality check detects this** (a displaced pose satisfies the
+   inequality vacuously: the check passed 0/13,146 while 21% of labels were wrong). Only comparison
+   against RNP's shipped label exposes it. Valid frame requires a single-chain receptor and a
+   unique ligand copy: 6,223/13,618 instances, **1,115 complete K=5** (D1's effective n), verified
+   at Spearman 0.995 / 99.4% correctness-call agreement. See `features/single_frame.py`.
+2. **The Week-1 D1 gate passes: the floor is valid (0/386) and non-vacuous and tracks novelty**
+   (AF3, 50% coverage: 0.010 on S0 → 0.109 on S3). It is NOT the pairwise-prior-art restatement.
+3. **Headline item 2 (the reconciliation) does not fire empirically, as pre-registered.** The floor
+   exceeds a (1-delta) upper bound on `R_bar_ref` in 1/124 cells at per-cell level 0.80, null under
+   any family-wise correction. Cause is measured and is exactly T2c: consensus covers 64% of
+   instances, carries risk 0.152 vs 0.698 on the diverse remainder, and the consensus rate falls
+   0.92 → 0.60 with novelty while risk INSIDE consensus rises 0.063 → 0.200. **The escape is real
+   and provably narrow, and quantifying the narrowness is the contribution.** FUTURE_WORK_PLAN
+   already pre-registered the theory-first framing for exactly this outcome; the paper does not
+   hinge on the floor beating the baseline.
+4. **D2 must be a COVERAGE SWEEP, not the single LTT operating point Section 3 assumed.** At
+   alpha=0.20 the source stratum's own risk (0.130) is below alpha, so LTT certifies everything and
+   the gate degenerates to accept-everything; for chai, fixed-sequence LTT returns no threshold at
+   all. Both are calibrator artifacts. The frontier `c*_g = max{c : R_Q,g(tau(c)) <= alpha}` is
+   robust and gives a stronger result: **c* = 0 on the most novel strata means no operating point
+   at any coverage**, strictly stronger than the coverage-pinned Thm 1(c).
+
+Two rigor fixes made while building, both of which went AGAINST the headline and both of which
+should not be undone: `R_bar_ref` is compared via a bootstrapped (1-delta) UPPER bound with a
+delta/K union bound (comparing a certified floor to a point estimate would have produced a false
+positive here), and each model's reference is binned on ITS OWN score, which is the hardest
+baseline the reweighting is entitled to. New: `conformal/risk.py:wsr_upper_bound` (validated by
+simulation, coverage >= 0.91 at target 0.90), `conformal/shift_decomp.py` now returns
+`R_ref` / `R_ref_upper`.
+
+5. **D2's Weeks 2-3 MVR is built (`d2_certify.py`) and its predicted mechanism is wrong.** Median
+   independent target-labels to certify on the 23 cells feasible at 50% coverage: pure Hoeffding
+   102 (fires on 12/23), Hoeffding-Bentkus 60 (19/23), WSR betting 62 (16/23), **exact binomial 38
+   (23/23)**. Section 3.3's "the robust win over passive Hoeffding-RCPS is empirical-Bernstein
+   variance-adaptivity for small-p Bernoulli" does not survive contact with the repo's OWN
+   baseline. The correct reason is sufficiency, not variance: the count is sufficient for a
+   Bernoulli mean and the exact binomial tail is its exact inversion, so every fixed-n bound is a
+   relaxation of it. Variance-adaptivity does buy a real 2x saving over PURE Hoeffding (WSR wins
+   12/12 there, 49 vs 102), but a Bentkus term buys the same thing and `hb_upper_bound` already had
+   one, while `ltt_threshold` already used the exact test. Do NOT "upgrade" the certifier.
+   Separately, the budget does NOT visibly follow 1/m^2: log-log slope -1.07 (90% CI [-1.26,-0.91]),
+   and two cells sharing margin 0.025 and error rate 0.075 cost 164 and 72 labels.
+6. **Two adversarial audits of the write-up caught real overclaims that survived my own review**
+   (see the workflow transcripts). Three were blockers: an unsupported "0.02-0.06 floor gain" for
+   the betting bound read off a synthetic simulation rather than the cells (true median 0.006, and
+   HB is tighter in 23% of them); the 1/m^2 assertion above; and an abstract sentence saying the
+   consensus regime "grows where risk is highest" when the consensus RATE falls 0.92 -> 0.60 and it
+   is the error hidden INSIDE consensus that grows (0.058 -> 0.120). Numbers now come from stored
+   artifact fields (`wsr_gain_vs_hb`, `floor_packing_hb`) rather than from prose.
+
+Not done / next: the receptor-symmetry quotient that would recover the 54% excluded instances; the
+DRO ambiguity-radius morsel (Section 3.4 T2); emitting `hidden_error_mass` (consensus rate times
+risk inside consensus) from `d1_floor.py` rather than multiplying it in prose. Mac1 stays blocked
+per Section 0.
+
+---
+
 ## 0. Status of item #1 (Mac1 prospective screen) — BLOCKED, deferred
 
 Checked the primary source on 2026-07-15. The Mac1 co-folding benchmark (eLife reviewed-preprint 110475, bioRxiv `10.64898/2025.12.25.696505` v3, published March 2026) states the 557 X-ray structures "will be released after a small delay to preserve the potential for blind predictions by any new methods." The crystal ground-truth is under embargo, and the co-folding predicted poses are not released either. Only the input-prep and post-process scripts are public (`github.com/jongbin99/Cofolding`).
