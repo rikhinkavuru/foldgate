@@ -9,12 +9,15 @@
       "pages_target": "8"
     },
     "moml_short": {
-      "source": "paper/moml2026_shortpaper.md",
+      "source": "paper/moml2026_shortpaper.tex",
       "output": "paper/moml2026_shortpaper.pdf",
       "venue": "MoML 2026 @ MIT",
       "archival": false,
-      "build": "python paper/build_pdf.py paper/moml2026_shortpaper.md",
-      "page_limit": "2-4 (refs + appendices excluded)",
+      "build": "tectonic paper/moml2026_shortpaper.tex -o paper/",
+      "page_limit": "2-4 body (refs + appendices excluded)",
+      "pages": "4 body + 1 refs",
+      "style": "reproduces MoML/LoG example style; verified against MoML_example_style_files.pdf",
+      "legacy_draft": "paper/moml2026_shortpaper.md (pandoc, superseded, do not submit)",
       "deadline": "2026-09-01 23:59 AOE"
     }
   },

@@ -21,12 +21,19 @@ each other; they target different venues at different lengths and are maintained
 
 ## 2. Non-archival short paper — MoML 2026 @ MIT
 
-- **Source:** `moml2026_shortpaper.md`  →  **build:** `python paper/build_pdf.py paper/moml2026_shortpaper.md`  (4 pages)
+- **Source:** `moml2026_shortpaper.tex`  →  **build:** `tectonic paper/moml2026_shortpaper.tex`
+  (4 body pages + references). This is the canonical submission file; it reproduces the MoML/LoG
+  example style (title rules, running header, first-page venue footer, booktabs tables, a
+  4-to-6-sentence single-paragraph abstract). `moml2026_shortpaper.md` is the earlier
+  pandoc-rendered draft, kept for reference only; do not submit it.
 - **Title:** *Know When to Fold: Distribution-Shift-Aware Selective Prediction for Protein–Ligand Co-Folding*
 - **Status:** non-archival, non-anonymous. MoML has no proceedings, so this does not burn the
   journal's novelty and may be submitted alongside it.
-- **Venue rules (verified 2026-07-16 at moml.mit.edu/submit):** 2 to 4 page PDF; references and
-  appendices do not count toward the limit; optional LaTeX template via Overleaf. **Deadline
+- **Venue rules (verified 2026-07-16 at moml.mit.edu/submit) and compliance:** 2 to 4 page PDF
+  (this paper: 4 body pages); references and appendices do not count toward the limit; optional
+  LaTeX template via Overleaf (we reproduce the style in a self-contained preamble, no external
+  `.sty` dependency). Abstract is a single 6-sentence paragraph; tables use booktabs with no
+  vertical rules and captions above; figures (none here) would caption below. **Deadline
   2026-09-01 23:59 AOE**, decisions 2026-09-08, in-person poster 2026-10-14.
 - **Scope:** the co-folding reliability story only — the gate, the exchangeability break, the
   group-conditional and weighted repair, the combined reliability score, the pose-agreement
