@@ -64,7 +64,9 @@ distribution-free bound certifies none. On a released co-folded virtual screen t
 signal the layer is calibrated on enriches actives above docking on the post-2022 novel targets
 (EF@1\% $9.3$ vs $2.0$), abstaining on unreliable poses preserves enrichment that random abstention
 destroys on $75\%$ of them, and the retained poses recover $0.15$ to $0.20$ more crystal contacts
-than the rejected ones. Everything runs on released predictions with no GPU.
+than the rejected ones. The reliability layer is training-free and every result on Runs N' Poses
+runs on released predictions with no GPU; the one cross-dataset check regenerates a single withheld
+confidence field.
 \end{abstract}
 
 \section{Introduction}
@@ -342,8 +344,9 @@ item.
 \section{Conclusion}
 Co-folding confidence becomes a risk-controlled decision only when the guarantee is audited where it
 fails. That failure is concept shift on structural novelty; the paper proves which repairs it admits
-and applies group-conditional and label-free methods that need no training-set access, all on
-released predictions with no GPU. The code is public.
+and applies group-conditional and label-free methods that need no training-set access, on the
+frozen models' released predictions and CPU alone. The one cross-dataset check regenerates a
+confidence field the public release withholds, the sole GPU step. The code is public.
 
 \small
 \bibliographystyle{unsrtnat}
