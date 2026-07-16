@@ -51,20 +51,20 @@ frozen score the realized target risk is the covariate-corrected reference plus 
 concept gap that is invariant to any training-free reweighting. So weighted conformal silently
 violates its own certificate, level $\alpha$ is unachievable at the operating coverage once the gap
 exceeds the remaining slack, and only in-stratum recalibration attains the floor, given stratum
-labels. We validate the theorem against a known conditional and on public tabular benchmarks, and
-repair coverage with group-conditional calibration and a label-free worst-subpopulation (CVaR/DRO)
-certificate under multiplicity control. We then bracket the theorem from both sides. The
-impossibility is one-sided, so we certify \emph{danger} label-free instead: cross-model pose
-disagreement converts, by triangle inequality against the latent crystal pose, into a valid lower
-bound on ensemble risk that runs from $0.01$ on familiar chemotypes to $0.11$ on novel ones. That
-escape is narrow, because the floor is blind to consensus error, and the consensus regime it cannot
-see covers $64\%$ of the analyzed complexes while the error hidden inside it grows exactly where
-risk is highest. On the label side, a per-stratum feasibility map shows the frontier of feasible
-coverage decaying to zero on novel strata, so no label budget certifies there, while on the strata
-that remain an exact binomial test is the cheapest certifier we find. On a released co-folded virtual screen the pose-confidence signal the layer is calibrated on
-enriches actives above docking on the post-2022 novel targets (EF@1\% $9.3$ vs $2.0$), and abstaining
-on unreliable poses preserves enrichment that random abstention destroys on $75\%$ of them.
-Everything runs on released predictions with no GPU.
+labels. We validate the theorem against a known conditional and on public tabular benchmarks. The
+impossibility is coverage-pinned, and a per-stratum feasibility map sharpens it: the frozen score's
+usable coverage decays with novelty to zero, so on the most novel strata no operating point holds
+$\alpha$ at any coverage and abstention is the only certified action. We then repair what is
+repairable with group-conditional calibration and a label-free worst-subpopulation (CVaR/DRO)
+certificate under multiplicity control, and we report the label budget it costs. The matching
+continuous story is the other half of the same principle: on the binary pose label an exact
+binomial certifier is unbeatable, while on the graded RMSD loss a variance-adaptive betting bound
+certifies a usable operating point ($43\%$ coverage at a mean-RMSD target of $1$\,\AA) where a
+distribution-free bound certifies none. On a released co-folded virtual screen the pose-confidence
+signal the layer is calibrated on enriches actives above docking on the post-2022 novel targets
+(EF@1\% $9.3$ vs $2.0$), abstaining on unreliable poses preserves enrichment that random abstention
+destroys on $75\%$ of them, and the retained poses recover $0.15$ to $0.20$ more crystal contacts
+than the rejected ones. Everything runs on released predictions with no GPU.
 \end{abstract}
 
 \section{Introduction}
@@ -76,25 +76,23 @@ rate among accepted poses stays below a target $\alpha$ with high probability~\c
 that this guarantee assumes exchangeability, which breaks precisely where deployment matters,
 on ligands and pockets dissimilar to the training set.
 
-We make six contributions, all training-free with respect to the co-folding model and all
+We make five contributions, all training-free with respect to the co-folding model and all
 computed from released predictions on CPU. (1) We give a finite-sample selective-risk gate
 over frozen co-folding confidence and show its guarantee collapses under novelty shift, then
 measure \emph{reliability drift} to identify the collapse as concept shift (Sec.~\ref{sec:break}).
 (2) We prove an impossibility and a matching achievability result characterizing what a
 training-free reweighting of a frozen score can control under concept shift, validated against a
-known conditional and on a public non-co-folding benchmark (Sec.~\ref{sec:theory}). (3) Because that
-impossibility forbids only certified \emph{upper} bounds, we route around it and certify danger
-label-free, converting cross-model pose disagreement into a valid lower bound on ensemble risk, and
-we show the escape is structurally narrow and say by how much (Sec.~\ref{sec:danger}). (4) We repair
-coverage with group-conditional calibration and a label-free worst-subpopulation CVaR/DRO
-certificate, with explicit multiplicity control across the five models (Sec.~\ref{sec:repair}).
-(5) We map the price of the repair, showing per stratum where target labels can certify the deployed
-rule and where the frontier of certifiable coverage is zero and no budget helps
-(Sec.~\ref{sec:cost}). (6) We produce the downstream decision on the pose-confidence signal the gate
-is calibrated on: on a released co-folded screen, abstaining on unreliable poses lifts enrichment on
-novel targets (Sec.~\ref{sec:screen}). Together these close a bracket: the concept gap cannot be
-certified away, cannot be fully exposed label-free, and cannot be bought off with labels where it
-matters most.
+known conditional and on a public non-co-folding benchmark, and we map its empirical shadow: a
+per-stratum feasibility frontier that decays to zero on novel strata, strictly stronger than the
+coverage-pinned theorem (Sec.~\ref{sec:theory}). (3) We repair coverage with group-conditional
+calibration and a label-free worst-subpopulation CVaR/DRO certificate, with explicit multiplicity
+control across the five models, and report the target-label budget the repair costs
+(Sec.~\ref{sec:repair}). (4) We match the certifier to the loss: an exact binomial on the binary
+pose label, a variance-adaptive betting bound on the graded RMSD loss, which certifies a usable
+operating point where a distribution-free bound certifies none (Sec.~\ref{sec:repair}).
+(5) We produce the downstream decision on the pose-confidence signal the gate is calibrated on: on a
+released co-folded screen, abstaining on unreliable poses lifts enrichment on novel targets and
+recovers more of the crystal binding contacts (Sec.~\ref{sec:screen}).
 
 \section{The gate}\label{sec:method}
 We consider a delivered top-1 pose per system with a native confidence $s$ and a binary label
@@ -108,8 +106,13 @@ score, a shallow gradient-boosted map from cheap per-prediction features (confid
 ipTM, ensemble spread, cross-model agreement, ligand descriptors) to $P(\text{correct})$; the
 co-folding model is never retrained, and novelty is excluded from the score and enters only in
 calibration. We evaluate five models
-(AF3~\citep{af3}, Boltz-1, Boltz-1x, Chai-1, Protenix~\citep{boltz}) on Runs N' Poses~\citep{rnp}, 13{,}535 delivered
-poses, at $\alpha=0.20$, $\delta=0.10$.
+(AF3~\citep{af3}, Boltz-1, Boltz-1x, Chai-1, Protenix~\citep{boltz}) on Runs N' Poses~\citep{rnp},
+$12{,}602$ delivered poses over $2{,}425$ systems, at $\alpha=0.20$, $\delta=0.10$ (a released
+Boltz-2 affinity head, used only as an ungoverned screening comparator in Sec.~\ref{sec:screen},
+brings the raw table to $13{,}535$). The selective-risk experiments score one delivered pose per
+prediction; where a certificate must be per deployed model, we reduce to one pose per (system,
+model), $12{,}125$ independent target-labels, since several ligand instances of one system fail
+together and pooling them as independent draws would be anti-conservative.
 
 \section{The exchangeability break and its mechanism}\label{sec:break}
 \textbf{The break.} We stratify targets by training-set structural and chemical similarity into
@@ -174,6 +177,32 @@ certifies control by abstaining on the blocks it cannot cover: on elec2 (worst-b
 $0.36$) the realized worst-block risks are $0.31$, $0.34$, and $0.20$, and on ACS Income (covariate
 gap $0.05$) weighted conformal already repairs the worst state ($0.23\to0.20$).
 
+\textbf{The empirical shadow: a feasibility frontier.} The theorem is pinned at a fixed coverage and
+leaves open reaching $\alpha$ by lowering it, so we measure that directly. We fix the deployed rule
+on the familiar stratum and, per target stratum, report the largest source coverage
+$c^\star_g=\max\{c:R_{Q,g}(\tau(c))\le\alpha\}$ at which it still holds $\alpha$, one delivered pose
+per (system, model). The frontier decays with novelty and then vanishes: for AF3 on the ligand axis
+$c^\star$ runs $1.00,\,0.85,\,0.75,\,0.20,\,0.00$ across $S_0$ to $S_4$ at $\alpha=0.20$, and
+$0.65,\,0.40,\,0.10,\,0.00,\,0.00$ at $\alpha=0.10$. Requiring at least $20$ accepted targets to call
+a stratum feasible, $21$ of $50$ model-by-stratum cells admit no operating point at any coverage at
+$\alpha=0.20$ and $26$ of $50$ at $\alpha=0.10$; the claim survives an exact Clopper-Pearson lower
+bound on $R_{Q,g}$ at every measurable coverage in $35$ of the $47$ pooled zero-frontier cells. A
+zero frontier is strictly stronger than the coverage-pinned theorem, which speaks only at the
+deployed coverage, and it is an empirical finding rather than a corollary. The deployed view is
+starker: the AF3 rule that Learn-then-Test certifies at $\alpha=0.20$ on familiar targets realizes
+risk $0.538$ on $S_3$, a margin of $-0.338$, so the certificate is inverted, not merely loose.
+
+A one-sided escape is not forbidden by the theorem, which constrains only certified \emph{upper}
+bounds. Cross-model pose disagreement supplies a label-free \emph{lower} bound on ensemble risk by
+triangle inequality to the crystal pose, extending an oracle-free disagreement floor known for
+discrete outputs~\citep{incoherence,credal} and the older folklore that pose agreement filters wrong
+poses~\citep{consensusdocking} to a continuous structured target. It does rise with novelty, but it
+is blind to consensus error, where all models share one wrong mode; the consensus regime covers $64\%$ of the analyzed
+complexes at risk $0.152$ against $0.698$ on the diverse remainder, and the error it hides grows from
+$0.058$ to $0.120$ through $S_3$ even as the consensus mass shrinks. The blind spot was predicted as
+a corollary before it was measured, and it is exactly the novel-chemotype regime the certificate
+most needs, so the escape is real and narrow; we develop it and its metric construction separately.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.66\textwidth]{../results/figures/e16_selective_screening.png}
@@ -205,116 +234,6 @@ coverage to certify $m^\star\!\le\!.5$ & $.45$ & $.20$ & $.25$ & $.40$ & $.25$ \
 \end{tabular}
 \end{table}
 
-\section{Certifying danger without labels}\label{sec:danger}
-The impossibility is one-sided. What it forbids is a training-free \emph{upper} bound on risk,
-because a covariate-measurable weight recovers only $\eta_P$. It places no constraint on a certified
-\emph{lower} bound, and the structured output supplies one. Pose correctness is a thresholded
-distance, $Y_m=\mathbf 1\{\mathrm{RMSD}(x_m,y^\star)\le\rho\}$ with $\rho=2$\,\AA, so whenever two
-frozen models' poses lie more than $2\rho$ apart the triangle inequality forces at least one of them
-to be wrong. Disagreement is covariate-measurable, so it adds nothing to the theorem's information
-set; what puts it outside the theorem is its direction, since it bounds risk from below, where the
-theorem is silent.
-
-We concede the mechanism. That disagreement among frozen models supplies a sound, oracle-free lower
-bound on error is already published, for generated code~\citep{incoherence} and, through the
-total-variation diameter of credal sets, for classification under shift~\citep{credal}; the pairwise
-inequality and its factor one-half are elementary, and wrapping a disagreement indicator in a
-one-sided Clopper-Pearson bound is textbook binomial inference. The empirical folklore that pose
-agreement filters wrong poses is older still~\citep{consensusdocking}. What is ours is the
-conversion of a \emph{continuous} structured output into an error count against a \emph{latent}
-target through the $2\rho$ trigger, the $K$-model packing floor, the diverse-versus-consensus
-decomposition, and the reconciliation above.
-
-\textbf{One frame, or no theorem.} The triangle inequality relates three points in one metric space,
-so the pairwise distance and the label must be measured after the \emph{same} superposition. We
-define the pocket once from the crystal ligand, superpose every model's receptor onto the crystal
-receptor on those shared C$\alpha$, and recompute both the label and every pairwise distance in that
-frozen frame with symmetry-corrected RMSD at \texttt{minimize=False}, which is a genuine quotient
-metric under the ligand automorphism group. This step is where the result is won or lost, and it
-carries a trap worth reporting. Runs N' Poses ships only the system's receptor chain while a
-co-folding model routinely predicts the full assembly, so a chain-ordinal correspondence superposes
-onto whichever protomer comes first; for a homodimer the wrong protomer fits the backbone just as
-well, leaving the residual $\varepsilon$ small while the ligand is carried tens of \AA ngstr\"om into
-the other site. Neither $\varepsilon$ nor the triangle-inequality check sees this, since a displaced
-pose is far from everything and satisfies the inequality vacuously: the check passed at $0/13{,}146$
-violations while $21\%$ of recomputed distances sat more than $5$\,\AA\ from the shipped value and
-$15\%$ of binary labels flipped. Only an external comparison exposes it. Restricting to
-instances with a single-chain receptor and an unambiguous ligand copy ($6{,}223$ of $13{,}618$)
-raises agreement with the shipped BiSyRMSD label from Spearman $0.620$ to $0.995$ (Pearson $0.999$,
-correctness calls agreeing $99.4\%$, $0.1\%$ off by more than $5$\,\AA). The exclusion is a property
-of the system rather than the model, since the models never disagree on predicted chain count
-($0/2303$) and per-model survival is uniform ($42$--$51\%$), so cross-model comparison stays fair.
-The kept subset is not a random half of the benchmark, and we report its composition rather than
-correct it: it is slightly more novel (mean ligand similarity $0.452$ against $0.500$) and slightly
-less accurate ($0.651$ against $0.672$) than the excluded half, so the floors below describe the
-single-chain half of Runs N' Poses. $1{,}115$ instances retain all $K{=}5$ models, and that is the
-sample every number below runs on. Recovering the excluded half needs a quotient by the receptor
-symmetry group, which we leave to future work: resolving the mapping per instance against the
-crystal ligand would put a label inside a statistic that must stay label-free.
-
-\textbf{Three floors, each with the tool its estimand admits.} For one pre-registered pair
-(AF3 and Chai-1, fixed on the architectural argument rather than on measured disagreement),
-$R_{\max}\ge\tfrac12 p_L$ with $p_L$ an exact one-sided Clopper-Pearson bound. For the any-pair
-statistic the constant is $1/K$ and not $\tfrac12$, since one model erring away from $K-1$ correct
-poses fires the statistic while $R_{\max}=1/K$. The headline is the packing floor: correct poses lie
-within $\rho$ of $y^\star$, hence within $2\rho$ of each other, hence carry no edge in the graph $G$
-joining poses more than $2\rho$ apart, so they form an independent set and
-$\bar R\ge 1-\mathbb{E}[\alpha(G)\mid A]/K$. Here $\alpha(G)/K$ is a bounded mean rather than a
-binomial proportion, so Clopper-Pearson is invalid and we use a betting upper
-bound~\citep{waudbysmith2024betting}. We keep it because it is variance-adaptive and never worse on
-average, not because it buys much: measured against Hoeffding-Bentkus on these cells it is tighter
-in $61\%$ of them for a median gain of only $0.006$ of floor, and at the accept counts below $50$
-that the novel strata leave the median gain is $0$ and Hoeffding-Bentkus is sometimes tighter.
-Because disagreement is symmetric it cannot assign blame, so every floor is stated for the ensemble
-mean or the worst model and never for the deployed one. That is a real limit rather than a
-conservative choice: if the deployed model were correct everywhere on $A$ while two others erred in
-mutually $>2\rho$ directions, the statistic would fire at full strength while the deployed model's
-risk was exactly $0$.
-
-\textbf{Valid, and narrow by construction} (Fig.~\ref{fig:d1d2}A,B). The floors never exceed the
-realized quantity they bound ($0/386$ cells). That follows from the construction rather than testing the $\delta$ level,
-since the pointwise inequality already forces the empirical floor under the empirical risk on the
-same sample; what $\delta$ buys is the step from the sample to the population, which no finite check
-can exhibit. The floors are not vacuous: marginally the packing floor certifies $\bar R\ge0.124$
-against a realized $0.348$. They track novelty, which is the point. For AF3 at $50\%$ coverage on
-the ligand axis the certified floor runs $0.010$ on $S_0$ to $0.109$ on $S_3$ while realized
-$\bar R$ runs $0.090$ to $0.320$, so a caller with no labels at all learns that ensemble risk on
-novel chemotypes is bounded away from zero. The exception is instructive and we state it: on $S_4$,
-the no-analog stratum this paper treats as the sharpest extrapolation test, the floor collapses to
-$0.000$ for all five models, while realized $\bar R$ runs from $0.000$ to $0.455$ on samples of $1$
-to $11$ complexes (AF3: $0.455$ on $n=11$). The certificate is vacuous exactly where the question is
-hardest, and the stratum is too thin at this coverage to say more than that.
-
-What the floor does \emph{not} do is expose the theorem's blind spot: it exceeds a bootstrap
-$(1-\delta)$ upper bound on $\bar R_{\mathrm{ref}}$ (a percentile interval, asymptotic, unlike the
-finite-sample floor it is compared against) in $1$ of $124$ cells at per-cell level $0.80$, which no
-family-wise correction survives, so we report it as null. The reason is measured rather than
-assumed, and it is structural. The floor is blind to consensus error: when all $K$ models share one
-wrong mode, $G$ has no edges, $\alpha(G)=K$, and the floor reads exactly $0$. Over the $1{,}115$
-analyzed complexes, consensus covers $64\%$ and carries risk $0.152$ against $0.698$ on the diverse
-remainder. Conditioning on AF3's accept region at $50\%$ coverage along the ligand axis, the
-consensus rate falls from $0.92$ on $S_0$ to $0.60$ on $S_3$ while the risk \emph{inside} consensus
-rises from $0.063$ to $0.200$. The models that still agree are increasingly agreeing on a wrong
-mode, so the error the floor cannot see, the consensus rate times the risk inside it, grows from
-$0.058$ to $0.120$ even as the consensus mass itself shrinks. Label-free danger certification is
-therefore real and valid, and it is structurally too weak to audit the concept gap it is aimed at.
-The size of that shortfall is what we contribute.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.92\textwidth]{../results/figures/d1_d2_summary.png}
-\caption{The bracket, measured. (A) The label-free disagreement floor tracks novelty and stays under
-the realized ensemble risk it bounds, and goes vacuous on the no-analog stratum $S_4$ ($n=11$).
-(B) Why the escape is narrow: through $S_3$ the consensus mass the floor cannot see shrinks while
-the risk inside it rises, so the hidden error (their product) grows; $S_4$ is unresolved at $n=11$.
-(C) The D2 feasibility frontier $c^\star$, the largest source coverage at which the deployed rule
-still holds $\alpha=0.20$; zero means no operating point anywhere on the swept grid.
-(D) On the cells that remain feasible, the exact binomial certifies with the fewest target-labels
-and is the only certifier that fires on all of them; variance-adaptive betting beats \emph{pure}
-Hoeffding but not a binomial term.}
-\label{fig:d1d2}
-\end{figure}
-
 \section{Repairing the guarantee}\label{sec:repair}
 \textbf{Group-conditional calibration} keys a separate threshold per novelty stratum, restoring
 per-stratum control at an honest coverage cost (with the combined score AF3 accepts $52\%$ of $S_1$
@@ -343,104 +262,25 @@ step-down bootstrap~\citep{romanowolf2005} at family-wise $0.10$; $42$ cells sur
 ones among them, while the temporal cells fail a $0.05$-margin equivalence test, leaving only the
 temporal-versus-structural magnitude contrast supported.
 
+\textbf{Match the certifier to the loss.} Group-conditional repair spends target labels, and how
+many depends on what is being certified. For the binary pose label the loss is Bernoulli, its count
+is a sufficient statistic, and the exact binomial tail is that statistic's exact inversion, so no
+concentration bound improves on it: on the feasible strata it certifies at a median of $38$
+independent target-labels against $60$ for a Hoeffding-Bentkus bound and $102$ for pure Hoeffding,
+and it is the only one of the four that certifies every feasible cell. Variance-adaptive machinery
+buys nothing here, because a Bernoulli variance is fixed by its mean. It is essential on the
+\emph{graded} loss. Replacing the $2$\,\AA\ cutoff with the capped RMSD $\min(\mathrm{RMSD},4)/4$ and
+certifying a mean-RMSD target with a betting bound~\citep{waudbysmith2024betting}, AF3 certifies
+$43\%$ coverage at a $1$\,\AA\ target where a distribution-free Hoeffding bound certifies essentially
+none ($0.04\%$), with realized capped-mean RMSD $0.90$\,\AA\ and empirical guarantee coverage $0.90$;
+the other models certify $2$--$25\%$ where Hoeffding certifies zero. The reliability layer is
+therefore not tied to the $2$\,\AA\ convention, and the certifier follows from the sufficiency
+structure of the loss rather than from a default.
+
 \textbf{Weighted conformal serves as a label-free complement} that abstains on real novel data
 (Sec.~\ref{sec:theory}), so group-conditional calibration stays the operative guarantee. A
 training-free surrogate that keys the gate on the model's own ensemble disagreement recovers control
 on moderate novelty but stays a weak proxy on the extreme.
-
-\section{Where labels certify, and where nothing does}\label{sec:cost}
-If a label-free certificate cannot see the concept gap and a label-free danger floor is too weak to
-expose it, the remaining question is what target labels buy and where. Fix the deployed rule
-$\{s\ge\tau\}$ and write the certification margin $m_g=\alpha-R_{Q,g}(\tau)$. Its sign is the whole
-map. Where $m_g>0$ the rule really does hold $\alpha$ on stratum $g$, labels can certify it, and the
-budget is governed by $m_g$~\citep{csa,ppi}. Where $m_g\le0$ the rule genuinely violates $\alpha$,
-and no certificate, label-free or label-fed, can certify a false statement; the only honest action
-is to abstain or drop coverage. That is the impossibility regime seen from the label side.
-
-\textbf{The query unit is the target.} Runs N' Poses ships several rows per system when a system has
-several ligand instances, and losses cluster hard by target, so pooling them as independent draws is
-anti-conservative and silently changes the estimand. We reduce to one delivered pose per
-(system, model), which leaves $12{,}125$ independent target-labels over $2{,}425$ systems, and report
-every budget in those units.
-
-\textbf{A frontier, not an operating point.} Part (ii) of the theorem (App.~\ref{app:proof}) is
-pinned at a fixed coverage and deliberately does not claim $\alpha$ is unreachable at lower
-coverage, which would need $R_Q$
-monotone in coverage. Reporting one calibrator's threshold would hide that question and would make
-the map an artifact: at our default $\alpha=0.20$ the familiar stratum's own risk is $0.13$, already
-below $\alpha$, so Learn-then-Test certifies the whole set and the gate degenerates to accepting
-everything ($\tau=0.237$ for AF3, coverage $1.00$ on every stratum); and for Chai-1, whose top-ranked
-poses contain early errors, fixed-sequence testing rejects its first hypothesis and returns no
-threshold at all. Neither degeneracy is a fact about co-folding. So we sweep the rule over source
-coverages and report, per stratum, the largest coverage at which it still holds $\alpha$,
-$c^\star_g(\alpha)=\max\{c: R_{Q,g}(\tau(c))\le\alpha\}$, calibrating $\tau$ on a held-out half of
-the familiar stratum and deploying it frozen.
-
-The frontier decays with novelty through $S_3$ and then vanishes on the strata that matter
-(Fig.~\ref{fig:d1d2}C). For AF3
-on the ligand axis at $\alpha=0.20$, $c^\star$ runs $1.00,\,0.85,\,0.75,\,0.20,\,0.00$ across $S_0$
-to $S_4$; tightening to $\alpha=0.10$ collapses it to $0.65,\,0.40,\,0.10,\,0.00,\,0.00$. The decay
-is not monotone at $S_4$, which exceeds $S_3$ in $8$ of the $10$ model-axis cells at both levels:
-that is the no-analog bin at $n\approx60$ per model, and its intervals are wide enough that we read
-the trend through $S_3$ and report $S_4$ as unresolved. Across models and both novelty axes, $39$ of $50$ strata admit an
-operating point at $\alpha=0.20$ and $11$ admit none anywhere on the grid, worsening to $33$ and
-$17$ at $\alpha=0.10$. That count is an oracle one, computed from the realized risk with every label
-revealed; the honest number a caller could stand behind is smaller, $23$ of the $39$ at
-$\alpha=0.20$ and only $3$ of the $33$ at $\alpha=0.10$, where the labels in hand actually certify
-the frontier they mark.
-
-A frontier of $0.00$ is the sharper statement: on those strata the frozen score has no operating
-point anywhere on the swept grid, which runs down to $5\%$ source coverage, and below that the
-accepted set falls under $20$ targets and nothing is resolvable. The claim also survives the
-sampling noise on $19$ of the $28$ zero-frontier strata pooled across both levels ($11$ at
-$\alpha=0.20$ and $17$ at $\alpha=0.10$), where the exact Clopper-Pearson lower bound
-on $R_{Q,g}$ exceeds $\alpha$ at every coverage that leaves enough accepted targets to measure. Even
-bounded this way it is stronger than the coverage-pinned theorem, which speaks only at the deployed
-coverage, and it is an empirical finding rather than a corollary of it. The deployed view is starker
-still. The AF3 rule that Learn-then-Test certifies at $\alpha=0.20$ on familiar targets realizes risk
-$0.538$ on $S_3$, a margin of $-0.338$, so the certificate is not merely loose but inverted.
-
-\textbf{What it costs where it is feasible, and a win that does not exist.} On each feasible cell we
-hide the labels, reveal one independent target-label at a time in random order, and record the
-budget at which each certificate first fires. On the $23$ cells that carry a budget curve (feasible
-at a fixed $50\%$ source coverage, $18$ at $\alpha=0.20$ and $5$ at $\alpha=0.10$, a different set
-from the label-certified strata above), the \emph{exact binomial} test is the only certifier that
-fires in a majority of reveal orders on every one, at a median first-firing budget of $38$
-target-labels, against $60$ for Hoeffding-Bentkus ($19/23$ cells), $62$ for a variance-adaptive WSR
-betting sequence ($16/23$), and $102$ for pure Hoeffding ($12/23$).
-
-We had expected empirical-Bernstein variance-adaptivity to be the robust saving at the small
-accepted error rates these cells show ($R_Q=0.06$ to $0.18$), and it is not: the exact binomial is
-cheaper than WSR in $16$ of the $16$ cells where both fire. The reason is structural. The count is a
-sufficient statistic for a Bernoulli mean and the exact binomial tail is its exact inversion, so
-every fixed-$n$ concentration bound is a relaxation of that tail and none of them is tighter.
-Variance-adaptivity is not useless here, and we should say so: WSR is cheaper than \emph{pure}
-Hoeffding, which assumes the worst-case variance $\tfrac14$, in $12$ of the $12$ cells where both
-fire, at a median of $49$ against $102$. That saving simply closes once the baseline carries a
-binomial term, which our Hoeffding-Bentkus certifier already did ($60$ against WSR's $62$), and it
-never reaches the exact tail. So the win we planned for was real but aimed at a baseline we had
-already beaten.
-
-Two caveats belong with this ranking rather than under it. A fixed-$n$ bound is valid only at a
-budget fixed in advance, so reading its first-firing budget off a reveal sequence flatters it,
-whereas the WSR sequence is the one construction here that stays valid under optional stopping. The
-tilt runs against WSR and WSR loses anyway, so the ordering is conservative; the budgets are not, and
-the $38$ is a lower bound on the planned budget a caller could stand behind rather than the price of
-a valid certificate. Budgets are also medians over the orders in which a certifier fires, so the two
-cells where the binomial fails in $42\%$ and $22\%$ of orders report their successful half. Finally,
-the budget grows as the margin shrinks but more slowly than the $\Theta(m_g^{-2})$ rate the theory
-predicts~\citep{csa}: a log-log fit over the $23$ cells gives an exponent of $-1.07$ (90\% CI
-$[-1.26,-0.91]$). The margin does not determine the budget on its own, since two cells sharing a
-margin of $0.025$ and an error rate of $0.075$ cost $164$ and $72$ labels. A
-prediction-powered control covariate is likewise a measured null here: the best label-free covariate
-reaches median $|\rho|=0.26$, keeping $0.93$ of the variance, and we report it rather than curve-fit
-it, since PPI's $(1-\rho^2)$ is asymptotic and its adjusted variable is unbounded, so splicing it
-into a finite-sample budget plot would compare two different guarantees.
-
-This is the cost side of the bracket, and it sets the price honestly. Certification is feasible on
-the familiar half of the novelty axis, where labels are cheapest and least needed, and it is
-infeasible on the novel tail, where the decision matters and where no label budget helps, because
-what fails there is the rule and not the estimate of it.
 
 \section{Utility and a downstream decision}\label{sec:screen}
 \textbf{Ranking utility, validated without leakage.} The combined score dominates native
@@ -450,6 +290,15 @@ retained at a fixed guarantee. Because a target recurs across models, a naive po
 leaks $95.1\%$ of test targets into calibration; under target-grouped cross-validation the gate
 still holds (AF3 risk $0.185$, $[0.168,0.203]$, $5/5$ folds) and the advantage survives
 (Table~\ref{tab:results}).
+
+\textbf{The gate improves a non-circular quality, not just the label it certifies.} Accepted-pose
+purity is arithmetically $1$ minus the selective risk, so it cannot show the gate buys anything past
+the guarantee. Interaction-fingerprint recovery, the fraction of the crystal's protein-ligand
+contacts the pose reproduces, is a different quantity a medicinal chemist reads and is only
+correlated with the $2$\,\AA\ label. Under the gate at $\alpha=0.20$ the accepted poses recover $0.90$
+to $0.91$ of crystal contacts against $0.71$ to $0.76$ for the rejected ones, a gap of $0.15$ to
+$0.20$ whose $90\%$ bootstrap interval excludes zero for every model. Abstention keeps the poses that
+recover the right interactions, which is the property downstream structure-based work actually needs.
 
 \textbf{The decision number.} We reuse a released co-folded virtual screen~\citep{shen2026vs}
 with per-compound confidence and active/decoy labels for DEKOIS2.0 (79 targets), LIT-PCBA (5),
@@ -545,13 +394,6 @@ of Docking in a Virtual Screening Context. J. Chem. Inf. Model. 53(2):384--390, 
 \bibitem{waudbysmith2024betting} I. Waudby-Smith, A. Ramdas. Estimating Means of Bounded Random
 Variables by Betting. J. R. Stat. Soc. B, 2024. arXiv:2010.09686.
 
-\bibitem{ppi} A. Angelopoulos, S. Bates, C. Fannjiang, M. Jordan, T. Zrnic. Prediction-Powered
-Inference. Science 382:669--674, 2023. arXiv:2301.09633.
-
-\bibitem{csa} H. Khosravi, X. Huo. Conformal Selective Acting: Anytime-Valid Risk Control for
-RLVR-Trained LLMs. arXiv:2605.20270, 2026. (Rate-optimal certification matching
-$\Theta(\bar\eta^{-2}\log(1/\delta))$ in the margin $\bar\eta$.)
-
 \bibitem{romanowolf2005} J. Romano, M. Wolf. Stepwise Multiple Testing as Formalized Data
 Snooping. Econometrica, 2005.
 \end{thebibliography}
@@ -615,5 +457,18 @@ worst-stratum selective risk at $\alpha=0.20$: elec2 marginal $0.31$, weighted-c
 group-conditional $0.20$; ACS Income marginal $0.23$, weighted-conformal $0.20$, group-conditional
 $0.20$. The reliability drift that separates the two cases is $0.36$ (elec2, concept) against
 $0.05$ (ACS, covariate).
+
+\textbf{A benchmark-integrity note for cross-model pose geometry on Runs N' Poses.} Recomputing pose
+RMSD in a common frame carries a silent trap that anyone comparing predicted poses to the released
+structures will hit. Runs N' Poses ships only the system's receptor chain while co-folding models
+predict the full biological assembly, so a chain-ordinal superposition can land the ligand in the
+wrong protomer of a homodimer: the backbone still fits (the superposition residual stays near
+$0.3$\,\AA) while the ligand sits tens of \AA ngstr\"om away. Neither the residual nor a
+triangle-inequality consistency check detects it, since a displaced pose is far from everything and
+satisfies the inequality vacuously, and a distance-consistency check passed at $0/13{,}146$ while
+$21\%$ of recomputed distances and $15\%$ of binary correctness labels were wrong. Only comparison
+against the shipped BiSyRMSD label exposes it. Restricting to single-chain receptors with an
+unambiguous ligand copy raises agreement from Spearman $0.620$ to $0.995$. We flag this for reuse;
+a symmetry-aware chain assignment is the general fix.
 
 \end{document}
