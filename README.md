@@ -1,89 +1,77 @@
 # Know When to Fold
 
-**Distribution-shift-aware selective prediction for protein–ligand co-folding.**
+**A training-free reliability layer that turns protein-ligand co-folding confidence into risk-controlled accept/abstain decisions, and a theorem for when that guarantee can hold under distribution shift.**
 
-`foldgate` is a model-agnostic, training-free reliability layer that turns co-folding confidence (AlphaFold3 / Boltz / Chai) into risk-controlled **accept / abstain** decisions with conformal coverage guarantees. It shows that standard conformal guarantees **collapse** under the novel-pocket / novel-chemotype shift central to drug discovery, and **restores** them with shift-robust conformal keyed on training-set similarity.
+`foldgate` wraps a frozen co-folding model (AlphaFold3, Boltz, Chai, Protenix) and converts its confidence into a calibrated gate: accept a predicted pose or abstain, with a conformal coverage guarantee such as "among accepted poses, 95% are correct." The correctness label is binding-mode accuracy, ligand-RMSD within 2 Angstrom.
 
-> Status: full study complete on real data (Runs N' Poses, 13,536 delivered poses, 6 models). Findings in [`RESULTS.md`](RESULTS.md); method in [`METHODS.md`](METHODS.md); science plan in [`PLAN.md`](PLAN.md); grounded facts in [`CLAUDE.md`](CLAUDE.md); literature/novelty in [`RELATED_WORK.md`](RELATED_WORK.md); paper draft in [`paper/`](paper/). Reproduce with `make repro` (download → features → E1–E11 → figures → tests).
+The layer never retrains a co-folding model. It consumes frozen models' outputs, so it runs on released prediction sets with no GPU.
 
-## Why
+## The result
 
-Co-folding models emit confidence (ipTM, PAE, ligand-pLDDT, Boltz-2 affinity), and prior work shows it *correlates* with pose accuracy. But correlation is not a decision rule, and the correlation degrades exactly where drug discovery operates: novel pockets and novel chemotypes. `foldgate` gives you a calibrated gate with a guarantee ("at 50% coverage, accepted poses are 95% correct") and repairs that guarantee under shift.
+Three findings, in order.
 
-## What it does
+1. **An impossibility.** Any label-free certificate built from covariate-measurable weights recovers only the source conditional, so on a shifted test set it silently under-reports realized risk by a concept-gap term that no reweighting can detect. The construction and its matching achievability floor are in [`docs/theory/THEOREM_RECONCILED.md`](docs/theory/THEOREM_RECONCILED.md), and the theorem generalizes beyond co-folding to standard tabular shift benchmarks (`experiments/b1`-`b7`).
 
-1. Wrap a frozen model's outputs (or reuse released prediction sets like Runs N' Poses).
-2. Compute novelty features (ligand Tanimoto-to-train, pocket similarity, temporal), ensemble/cross-model agreement, and PoseBusters validity.
-3. Calibrate a conformal gate on held-out data — split (baseline), then weighted + group-conditional (shift-robust).
-4. Decide accept/abstain on new predictions and report risk-coverage / AURC and per-novelty-stratum coverage.
+2. **The break, on real data.** A conformal gate calibrated i.i.d. hits its nominal coverage, then under-controls error by 2 to 3 times on novel ligands. Deployed on the novel-chemotype stratum it realizes 0.55 error against a 0.20 target, and the guarantee holds in 0% of runs. Ordinary calibration (Platt, isotonic) breaks the same way.
 
-Primary correctness label: ligand-RMSD ≤ 2 Å.
+3. **The repair.** Weighted and group-conditional conformal keyed on training-set similarity restore per-stratum coverage. A combined reliability score cuts AURC by 24 to 40%, and a structure-based pose-agreement upgrade pushes that to 38 to 51%. Abstention lifts pose-set purity from 63-70% to 82-94% and raises crystal-contact recovery to 0.90 on accepted versus 0.72 on rejected poses.
 
-## Install (planned)
+Full numbers with confidence intervals are in [`RESULTS.md`](RESULTS.md).
 
-Environment is managed with [pixi](https://pixi.sh) (conda-forge + bioconda), because the stack mixes compiled comp-bio tools (RDKit, foldseek, US-align, posebusters) with pure-Python ML:
+## Install
 
-```bash
-pixi install          # creates the env from pixi.toml, commits pixi.lock
-pixi run test
-```
-
-The reliability layer alone is torch-free and pip-installable (uv or pip):
+The environment is `uv` + a Python 3.12 virtualenv, and the lockfile is committed. The shippable layer is torch-free (numpy, pandas, scikit-learn, scipy only).
 
 ```bash
-uv venv --python 3.12 .venv && uv pip install -e .   # or: pip install -e .
+uv venv --python 3.12 .venv
+uv pip install -e .
 ```
 
-One-command reproduction (downloads the ~52 MB RNP tabular bundle, no GPU):
+`pixi.toml` and `environment.yml` remain as conda fallbacks for the optional structure-feature pipeline (RDKit, gemmi, spyrmsd). They are not the primary environment.
+
+## Reproduce
+
+One command, no GPU. It downloads the Runs N' Poses tabular bundle, builds features, runs the experiment suite, and rebuilds the figures.
 
 ```bash
-make repro            # download -> features -> E1..E11 -> figures -> tests
+make repro          # download -> features -> experiments -> tests
 ```
 
-Or step through it in [`notebooks/quickstart.ipynb`](notebooks/quickstart.ipynb):
-calibrate a gate, watch it break under novelty shift, repair it with group-conditional
-conformal — in a few CPU seconds.
+Individual stages are `make download`, `make features`, `make experiments`, `make figures`, and `make test`. Run `make help` for the full list.
+
+## Repository map
+
+```
+src/foldgate/
+  io/          parse AF3/Boltz/Chai/Protenix + RNP/FoldBench into Prediction records
+  features/    novelty (Tanimoto, pocket similarity, temporal), ensemble + cross-model agreement, PoseBusters
+  scores/      nonconformity scores from confidence and derived signals
+  conformal/   split, weighted, group-conditional (Mondrian), RCPS, Learn-then-Test
+  selective/   accept/abstain gate, risk-coverage, AURC
+  eval/        experiment drivers and figures
+  bench/       the general shift benchmark behind the theorem
+experiments/   E1-E24 co-folding studies + b1-b7 benchmark (see experiments/README.md)
+docs/theory/   the theorem, its reconciliation, and the D1/D2 research plan
+paper/         MoML 2026 short paper (tex, pdf) + the extended draft
+data/          reuse-first datasets, not committed (see data/DATASETS.md)
+```
+
+The experiment arc: E1 i.i.d. validity, E2 the exchangeability break, E3 the shift repair, E4 selective utility, E5 through E14 robustness and shift-axis studies, E15/E15b the FoldBench cross-dataset transfer, E16 through E24 screening honesty and robust certificates. See [`experiments/README.md`](experiments/README.md) for the full table and [`METHODS.md`](METHODS.md) for the method.
 
 ## Data
 
-Reuse-first. See [`data/DATASETS.md`](data/DATASETS.md) for sources, DOIs, licenses, and what novelty metadata each ships:
+Reuse-first. Sources, DOIs, licenses, and the novelty metadata each ships are in [`data/DATASETS.md`](data/DATASETS.md).
 
-- **Runs N' Poses** (primary) — released multi-model predictions + pre-computed training-similarity metadata.
-- **FoldBench** — low-homology multi-task benchmark.
-- **Mac1 557** — prospective, post-cutoff single-target depth (crystal coords release-delayed).
-- **PoseBusters** — physical-validity checks (`pip install posebusters`).
-- **PLINDER** — similarity engine to compute missing novelty features.
+- **Runs N' Poses** (primary) released multi-model predictions plus pre-computed training-similarity metadata. Near-zero GPU.
+- **FoldBench** low-homology multi-task benchmark. We regenerated its Protenix predictions to recover the interface-ipTM field the public table withholds, giving a feature-matched cross-dataset positive (E15b).
+- **Mac1 557** prospective, post-cutoff single-target depth. Crystal coordinates are under release embargo as of July 2026, so it is deferred.
+- **PoseBusters** physical-validity checks.
+- **PLINDER** similarity engine for computing missing novelty features.
 
-## Experiments
+## Paper and citing
 
-Twelve experiments (`experiments/e*.py`, see [`experiments/README.md`](experiments/README.md)):
-E1 i.i.d. validity, E2 the exchangeability break, E3/E3b/E3c shift-robust repair
-(group-conditional, weighted, full method), E4 selective utility (AURC), E5 threshold
-robustness + feature ablation, E6 downstream pose-set purity, E7 shift axes
-(ligand/pocket/temporal), E8 interface-quality task, E9 continuous-RMSD risk with a
-certified (WSR betting) gate, E10 FoldBench cross-dataset honest negative, E11 baselines
-(native ipTM / PoseBusters / Platt / isotonic) and calibration-vs-conformal.
-`make experiments` runs them all.
-
-**Headline:** the conformal gate is valid i.i.d. but under-controls error 2–3× on
-novel ligands (deploy-on-novel: 0.55 error vs a 0.20 target, guarantee holds 0% of
-runs); group-conditional + weighted conformal restore it; a combined reliability
-score cuts AURC 24–40%, and a structure-based pose-agreement upgrade (W1) pushes it to
-38–51% (pose Δ(AURC) CI excludes 0 for all models). Abstention lifts pose-set purity
-63–70%→82–94% and, on a non-circular downstream metric, raises crystal-contact recovery
-to 0.90 vs 0.72 on accepted vs rejected poses (E6b). Under shift, ordinary calibration
-(Platt/isotonic) breaks exactly as naive conformal does — only the shift-robust conformal
-repair holds (E11).
-
-New in this release: an importance-weighted Learn-then-Test gate with a finite-sample
-guarantee conditional on the weights and a concept-shift diagnostic (E3b), a certified
-continuous-RMSD gate via a variance-adaptive WSR betting bound (E9), and a full
-baselines suite (E11).
-
-## Citing
-
-See [`REFERENCES.bib`](REFERENCES.bib). If you use `foldgate`, cite the paper (in prep) and the datasets/methods it builds on.
+The MoML 2026 short paper is in [`paper/`](paper/); an extended journal version is in progress. Bibliography is [`REFERENCES.bib`](REFERENCES.bib). The novelty defense and literature map are in [`RELATED_WORK.md`](RELATED_WORK.md).
 
 ## License
 
-Code: MIT (see `LICENSE`, to be added). The shippable layer is built to run on permissively-licensed models (Boltz — MIT; Chai-1 — Apache-2.0). AlphaFold3 support is for non-commercial research use only, per AF3's weights terms.
+Code is MIT. The shippable layer runs on permissively-licensed models (Boltz is MIT, Chai-1 is Apache-2.0). AlphaFold3 support is for non-commercial research use only, per AF3's weights terms.
