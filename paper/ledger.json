@@ -1,8 +1,22 @@
 {
-  "paper": "paper/moml2026_shortpaper.md",
-  "venue": "generic",
-  "mode": "fix",
-  "max_iterations": 5,
-  "iteration": 0,
-  "findings": []
+  "papers": {
+    "journal_sts": {
+      "source": "paper/foldgate_journal.tex",
+      "output": "paper/foldgate_journal.pdf",
+      "venue": "Digital Discovery (RSC) / Regeneron STS",
+      "archival": true,
+      "build": "tectonic paper/foldgate_journal.tex -o paper/",
+      "pages_target": "8"
+    },
+    "moml_short": {
+      "source": "paper/moml2026_shortpaper.md",
+      "output": "paper/moml2026_shortpaper.pdf",
+      "venue": "MoML 2026 @ MIT",
+      "archival": false,
+      "build": "python paper/build_pdf.py paper/moml2026_shortpaper.md",
+      "page_limit": "2-4 (refs + appendices excluded)",
+      "deadline": "2026-09-01 23:59 AOE"
+    }
+  },
+  "note": "See paper/README.md. Two distinct submissions, not drafts of each other."
 }
