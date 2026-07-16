@@ -41,36 +41,28 @@ Protein--Ligand Co-Folding under Novelty Shift}}
 \begin{abstract}
 \small
 Protein--ligand co-folding models (AlphaFold3, Boltz, Chai) report confidence scores that
-correlate with pose accuracy, yet a correlation is not a decision rule and it is weakest on
-the novel pockets and chemotypes that drug discovery cares about. We build \texttt{foldgate},
-a training-free layer that turns frozen co-folding confidence into a risk-controlled
-accept/abstain gate with a finite-sample selective-risk guarantee, and we show the guarantee
-collapses under training-similarity shift: a marginally compliant gate under-controls error by
-about a factor of two on novel strata, and calibrating on familiar targets while deploying on novel
-ones violates the guarantee in every run. Measuring reliability drift, the movement of
-$P(\text{correct}\mid\text{confidence})$ along a novelty axis, shows the shift is concept shift,
-large on structure and near zero on recency. We then prove what that implies. For a threshold on a
-frozen score the realized target risk is the covariate-corrected reference plus an accept-region
-concept gap that is invariant to any training-free reweighting. So weighted conformal silently
-violates its own certificate, level $\alpha$ is unachievable at the operating coverage once the gap
-exceeds the remaining slack, and only in-stratum recalibration attains the floor, given stratum
-labels. We validate the theorem against a known conditional and on public tabular benchmarks. The
-impossibility is coverage-pinned, and a per-stratum feasibility map sharpens it: the frozen score's
-usable coverage decays with novelty to zero, so on the most novel strata no operating point holds
-$\alpha$ at any coverage and abstention is the only certified action. We then repair what is
-repairable with group-conditional calibration and a label-free worst-subpopulation (CVaR/DRO)
-certificate under multiplicity control, and we report the label budget it costs. The matching
-continuous story is the other half of the same principle: on the binary pose label an exact
-binomial certifier is unbeatable, while on the graded RMSD loss a variance-adaptive betting bound
-certifies a usable operating point ($43\%$ coverage at a mean-RMSD target of $1$\,\AA) where the
-worst-case Hoeffding bound certifies none. On a released co-folded virtual screen the pose-confidence
-signal the layer is calibrated on enriches actives above docking on the post-2022 novel targets
-(EF@1\% $9.3$ vs $2.0$), and used as an abstention gate over a Boltz-2 affinity ranker it preserves
-enrichment that random abstention destroys on $75\%$ of them. On Runs N' Poses the accepted poses
-recover $0.14$ to $0.21$ more crystal contacts than the rejected ones, a non-circular quality the
-$2$\,\AA\ label does not encode. The reliability layer is training-free and every result on Runs N'
-Poses runs on released predictions with no GPU; the one cross-dataset check regenerates a single
-withheld confidence field.
+correlate with pose accuracy, yet a correlation is not a decision rule and it is weakest on the
+novel pockets and chemotypes that drug discovery cares about. We build \texttt{foldgate}, a
+training-free layer that turns frozen co-folding confidence into a risk-controlled accept/abstain
+gate with a finite-sample selective-risk guarantee, and we show the guarantee collapses under
+training-similarity shift: a marginally compliant gate under-controls error about twofold on novel
+strata, and calibrating on familiar targets while deploying on novel ones violates the guarantee in
+every run. Reliability drift, the movement of $P(\text{correct}\mid\text{confidence})$ along a
+novelty axis, identifies the cause as concept shift. We then prove what that implies: at a fixed
+coverage the realized target risk is a covariate-corrected reference plus an accept-region concept
+gap invariant to any training-free reweighting, so weighted conformal silently violates its own
+certificate and only in-stratum recalibration attains the floor, given stratum labels. A per-stratum
+feasibility map sharpens the impossibility, the frozen score's usable coverage decaying to zero on
+the most novel strata where abstention is the only certified action. We repair what is repairable
+with group-conditional calibration and a label-free worst-subpopulation (CVaR/DRO) certificate under
+multiplicity control, and match the certifier to the loss: an exact binomial on the binary pose
+label, and on the graded RMSD loss a variance-adaptive betting bound that certifies a usable
+operating point ($43\%$ coverage at $1$\,\AA) where a worst-case bound certifies none. Downstream, on
+a released co-folded screen the governed pose signal enriches actives above docking on post-2022
+novel targets (EF@1\% $9.3$ vs $2.0$), and as an abstention gate over a Boltz-2 affinity ranker it
+preserves enrichment random abstention destroys on $75\%$ of them; on Runs N' Poses the accepted
+poses recover $0.14$ to $0.21$ more crystal contacts than the rejected ones. The layer is
+training-free and runs on released predictions with no GPU, the one cross-dataset check aside.
 \end{abstract}
 
 \section{Introduction}
@@ -136,8 +128,8 @@ $S_0$ (familiar) through $S_4$ (no analog). A single global threshold hides seve
 under-coverage: for AF3 the marginal realized risk of $0.177$ masks $0.375$ on $S_3$ and $0.427$
 on $S_4$. The operational failure is starker. When we calibrate the gate on familiar targets and
 deploy it on the novel region, the realized error is $0.55$ while the target is $0.20$, and the
-finite-sample guarantee holds in $0$ of $300$ resampled runs across all models. Marginal
-validity is not enough, which is the whole point.
+finite-sample guarantee holds in $0$ of $300$ resampled runs across all models (Fig.~\ref{fig:break}).
+Marginal validity is not enough, which is the whole point.
 
 \textbf{Why it breaks.} Weighted conformal would fix this if the shift were pure covariate shift,
 where the map $P(Y\mid s)$ is stable and only the marginal $P(s)$ moves. We test that assumption
@@ -150,7 +142,20 @@ on pocket novelty, Chai $+0.52$); on temporal novelty it is an order of magnitud
 optimistic on novel structure, the signature of concept shift. A signed accept-region decomposition
 makes this quantitative: for AF3 on $S_3$ the target risk gap of $0.328$ splits into a concept term
 of $0.309$ (90\% CI $[0.27,0.35]$) and a covariate term of $0.018$, which the next section turns
-into a theorem.
+into a theorem. This split evaluates the source conditional $\eta_P$ on the target's support, which
+on genuinely novel pockets is an extrapolation, so the concept-versus-covariate attribution is
+model-relative rather than identifiable; we report the axis and the base model with it.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\textwidth]{../results/figures/e2_all_models.png}
+\caption{The exchangeability break (the money result). A single global selective-risk threshold,
+calibrated to look marginally compliant, under-controls error on the novel strata for every model:
+realized risk climbs well above the target $\alpha=0.20$ as training-set similarity falls, and
+calibrate-on-familiar / deploy-on-novel drives it to $0.55$ against the $0.20$ target with the
+finite-sample guarantee holding in none of the resampled runs.}
+\label{fig:break}
+\end{figure}
 
 \section{What a training-free reweighting can and cannot fix}\label{sec:theory}
 The decomposition above is an instance of a general fact. Fix the frozen score $s$ and the accept
@@ -192,8 +197,9 @@ at the worst stratum as in the co-folding break. On public benchmarks
 with no co-folding, a single-threshold gate under-controls the worst novelty block, weighted
 conformal issues a certificate its realized risk then violates, and group-conditional calibration
 certifies control by abstaining on the blocks it cannot cover (App.~\ref{app:bench}): on elec2 (worst-block concept gap
-$0.36$) the realized worst-block risks are $0.31$, $0.34$, and $0.20$, and on ACS Income (covariate
-gap $0.05$) weighted conformal already repairs the worst state ($0.23\to0.20$).
+$0.36$) the realized worst-block risks are $0.31$, $0.34$, and $0.20$, and on ACS Income, whose
+worst-block concept gap is only $0.05$ so the shift is covariate-dominated, weighted conformal
+already repairs the worst state ($0.23\to0.20$).
 
 \textbf{The empirical shadow: a feasibility frontier.} The theorem is pinned at a fixed coverage and
 leaves open reaching $\alpha$ by lowering it, so we measure that directly. We fix the deployed rule
@@ -305,9 +311,10 @@ on moderate novelty but stays a weak proxy on the extreme.
 \textbf{Ranking utility, validated without leakage.} The combined score dominates native
 confidence on the risk-coverage curve, cutting its area by $28$--$41\%$ (AF3
 $0.185\!\to\!0.118$, Protenix $0.281\!\to\!0.166$), about two to three times more poses
-retained at a fixed guarantee. Because a target recurs across models, a naive pooled split
-leaks $95.1\%$ of test targets into calibration; under target-grouped cross-validation the gate
-still holds (AF3 risk $0.185$, $[0.168,0.203]$, $5/5$ folds) and the advantage survives
+retained at a fixed guarantee. A pooled split across models would leak $95.1\%$ of test targets into
+calibration, and even a per-model random split duplicates the roughly $10$--$11\%$ of systems with
+several ligand instances; under target-grouped cross-validation the gate still holds (AF3 risk
+$0.185$, $[0.168,0.203]$, $5/5$ folds) and the advantage survives with a target-cluster bootstrap
 (Table~\ref{tab:results}).
 
 \textbf{The gate improves a non-circular quality, not just the label it certifies.} Accepted-pose
@@ -319,9 +326,11 @@ to $0.91$ of crystal contacts against $0.71$ to $0.76$ for the rejected ones, a 
 $0.14$ to $0.21$ whose $90\%$ bootstrap interval excludes zero for every model. Abstention keeps the poses that
 recover the right interactions, which is the property downstream structure-based work actually needs.
 
-\textbf{The decision number.} We reuse a released co-folded virtual screen~\citep{shen2026vs}
-with per-compound confidence and active/decoy labels for DEKOIS2.0 (79 targets), LIT-PCBA (5),
-and GPCRrecent (16 post-2022 novel targets), with no GPU and no crystal coordinates. We report
+\textbf{The decision number.} We reuse a released co-folded virtual screen~\citep{shen2026vs}, which
+established co-folding ipTM as a screening ranking signal and its degradation on novel targets, for
+per-compound confidence and active/decoy labels on DEKOIS2.0 (79 targets), LIT-PCBA (5),
+and GPCRrecent (16 post-2022 novel targets), with no GPU and no crystal coordinates. Our contribution
+on this screen is the abstention rule layered over that signal, not the base enrichment. We report
 the pose confidence (ipTM) the reliability layer governs and keep the Boltz-2 affinity head as an
 ungoverned comparator (Fig.~\ref{fig:screen}). The governed pose signal enriches actives above
 docking, and the gap widens on novelty: EF@1\% is $20.7$ against Gnina $10.3$ on DEKOIS, and $9.3$

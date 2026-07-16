@@ -123,7 +123,7 @@ def run() -> dict:
         "feature_parity_note": (
             "interface-ipTM + ranking_score are the RNP-shared signals recovered by "
             "regeneration. Feature and label are self-consistent (both from the same "
-            "Protenix v0.5.0 run; ligand-RMSD self-scored vs the deposited assembly). "
+            "Protenix v0.5.5 run; ligand-RMSD self-scored vs the deposited assembly). "
             "PoseBusters / ensemble / cross-model were not reconstructed; other FoldBench "
             "models were not regenerated (still ranking_score-only in E15)."
         ),
