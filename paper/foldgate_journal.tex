@@ -62,14 +62,15 @@ repairable with group-conditional calibration and a label-free worst-subpopulati
 certificate under multiplicity control, and we report the label budget it costs. The matching
 continuous story is the other half of the same principle: on the binary pose label an exact
 binomial certifier is unbeatable, while on the graded RMSD loss a variance-adaptive betting bound
-certifies a usable operating point ($43\%$ coverage at a mean-RMSD target of $1$\,\AA) where a
-distribution-free bound certifies none. On a released co-folded virtual screen the pose-confidence
+certifies a usable operating point ($43\%$ coverage at a mean-RMSD target of $1$\,\AA) where the
+worst-case Hoeffding bound certifies none. On a released co-folded virtual screen the pose-confidence
 signal the layer is calibrated on enriches actives above docking on the post-2022 novel targets
-(EF@1\% $9.3$ vs $2.0$), abstaining on unreliable poses preserves enrichment that random abstention
-destroys on $75\%$ of them, and the retained poses recover $0.15$ to $0.20$ more crystal contacts
-than the rejected ones. The reliability layer is training-free and every result on Runs N' Poses
-runs on released predictions with no GPU; the one cross-dataset check regenerates a single withheld
-confidence field.
+(EF@1\% $9.3$ vs $2.0$), and used as an abstention gate over a Boltz-2 affinity ranker it preserves
+enrichment that random abstention destroys on $75\%$ of them. On Runs N' Poses the accepted poses
+recover $0.14$ to $0.21$ more crystal contacts than the rejected ones, a non-circular quality the
+$2$\,\AA\ label does not encode. The reliability layer is training-free and every result on Runs N'
+Poses runs on released predictions with no GPU; the one cross-dataset check regenerates a single
+withheld confidence field.
 \end{abstract}
 
 \section{Introduction}
@@ -96,8 +97,17 @@ control across the five models, and report the target-label budget the repair co
 pose label, a variance-adaptive betting bound on the graded RMSD loss, which certifies a usable
 operating point where a distribution-free bound certifies none (Sec.~\ref{sec:repair}).
 (5) We produce the downstream decision on the pose-confidence signal the gate is calibrated on: on a
-released co-folded screen, abstaining on unreliable poses lifts enrichment on novel targets and
-recovers more of the crystal binding contacts (Sec.~\ref{sec:screen}).
+released co-folded screen, abstaining on unreliable poses (the layer's gate) preserves the enrichment
+that a Boltz-2 affinity ranker delivers on novel targets, and, on Runs N' Poses, the accepted poses
+recover more of the crystal binding contacts (Sec.~\ref{sec:screen}).
+
+The closest prior work is CoDrug~\citep{codrug}, which conformalizes a \emph{scalar} molecular property
+under covariate shift; we are not aware of a prior conformal treatment of co-folding pose correctness,
+a structured 3D output, or of training-set similarity used as the shift variable for it. Confidence-
+tracks-accuracy studies for co-folding virtual screening~\citep{shen2026vs} rank by ipTM but supply
+neither a coverage guarantee nor an abstention rule, which is the gap this layer fills, and weighted
+conformal under covariate shift~\citep{tibshirani2019} is the tool our own theorem shows concept shift
+defeats.
 
 \section{The gate}\label{sec:method}
 We consider a delivered top-1 pose per system with a native confidence $s$ and a binary label
@@ -111,13 +121,14 @@ score, a shallow gradient-boosted map from cheap per-prediction features (confid
 ipTM, ensemble spread, cross-model agreement, ligand descriptors) to $P(\text{correct})$; the
 co-folding model is never retrained, and novelty is excluded from the score and enters only in
 calibration. We evaluate five models
-(AF3~\citep{af3}, Boltz-1, Boltz-1x, Chai-1, Protenix~\citep{boltz}) on Runs N' Poses~\citep{rnp},
+(AF3~\citep{af3}, Boltz-1, Boltz-1x~\citep{boltz}, Chai-1~\citep{chai}, Protenix~\citep{protenix}) on Runs N' Poses~\citep{rnp},
 $12{,}602$ delivered poses over $2{,}425$ systems, at $\alpha=0.20$, $\delta=0.10$ (a released
 Boltz-2 affinity head, used only as an ungoverned screening comparator in Sec.~\ref{sec:screen},
 brings the raw table to $13{,}535$). The selective-risk experiments score one delivered pose per
 prediction; where a certificate must be per deployed model, we reduce to one pose per (system,
-model), $12{,}125$ independent target-labels, since several ligand instances of one system fail
-together and pooling them as independent draws would be anti-conservative.
+model), $11{,}254$ independent target-labels across the five governed models, since several ligand
+instances of one system fail together and pooling them as independent draws would be
+anti-conservative.
 
 \section{The exchangeability break and its mechanism}\label{sec:break}
 \textbf{The break.} We stratify targets by training-set structural and chemical similarity into
@@ -125,7 +136,7 @@ $S_0$ (familiar) through $S_4$ (no analog). A single global threshold hides seve
 under-coverage: for AF3 the marginal realized risk of $0.177$ masks $0.375$ on $S_3$ and $0.427$
 on $S_4$. The operational failure is starker. When we calibrate the gate on familiar targets and
 deploy it on the novel region, the realized error is $0.55$ while the target is $0.20$, and the
-finite-sample guarantee holds in $0$ of $100$ resampled runs across all models. Marginal
+finite-sample guarantee holds in $0$ of $300$ resampled runs across all models. Marginal
 validity is not enough, which is the whole point.
 
 \textbf{Why it breaks.} Weighted conformal would fix this if the shift were pure covariate shift,
@@ -143,8 +154,9 @@ into a theorem.
 
 \section{What a training-free reweighting can and cannot fix}\label{sec:theory}
 The decomposition above is an instance of a general fact. Fix the frozen score $s$ and the accept
-rule $\{s\ge\tau\}$. Let $\eta_P(x)=P(Y{=}1\mid X{=}x)$ and $\eta_Q$ be the error conditionals on
-the calibration law $P$ and the deployment law $Q$, and call a reweighting \emph{training-free} if
+rule $\{s\ge\tau\}$. For this section only we take $Y{=}1$ to mean \emph{error} (the complement of
+the gate's correctness label), so that risks read directly. Let $\eta_P(x)=P(Y{=}1\mid X{=}x)$ and
+$\eta_Q$ be the error conditionals on the calibration law $P$ and the deployment law $Q$, and call a reweighting \emph{training-free} if
 its weights are covariate-measurable and use no target labels (density-ratio, classifier, or
 KLIEP weights, including the point mass of weighted conformal). Write $R_{\mathrm{ref}}(\tau_c)=
 \mathbb{E}_Q[\eta_P\mid s\ge\tau_c]$ for the covariate-corrected reference at coverage $c$ and
@@ -163,7 +175,8 @@ $\bar\Delta_c>\alpha-R_{\mathrm{ref}}(\tau_c)$.
 The proof (App.~\ref{app:proof}) is a tower-property identity: a covariate-measurable weight
 recovers only the \emph{source} conditional $\eta_P$ and cannot reach $\eta_Q$, which completes the
 covariate-shift boundary of weighted conformal~\citep{tibshirani2019} and specializes the
-irreducible term of domain-adaptation lower bounds~\citep{bendavid2010}. Matching achievability:
+irreducible term of domain-adaptation lower bounds~\citep{bendavid2010}; a reweighting-invariant
+selective-risk floor of the same character was shown independently for LLM abstention~\citep{crcgupta}. Matching achievability:
 in-stratum recalibration attains the floor $R_{Q_g}$ given $n_g$ stratum labels, with slack
 $O(\sqrt{\log(1/\delta)/n_g})$; pointwise conditional coverage being
 impossible~\citep{barber2021limits}, the guarantee is neighborhood-conditional.
@@ -178,7 +191,7 @@ reproduces the decomposition and invariance with a near-zero pooled gap, placing
 at the worst stratum as in the co-folding break. On public benchmarks
 with no co-folding, a single-threshold gate under-controls the worst novelty block, weighted
 conformal issues a certificate its realized risk then violates, and group-conditional calibration
-certifies control by abstaining on the blocks it cannot cover: on elec2 (worst-block concept gap
+certifies control by abstaining on the blocks it cannot cover (App.~\ref{app:bench}): on elec2 (worst-block concept gap
 $0.36$) the realized worst-block risks are $0.31$, $0.34$, and $0.20$, and on ACS Income (covariate
 gap $0.05$) weighted conformal already repairs the worst state ($0.23\to0.20$).
 
@@ -203,8 +216,9 @@ triangle inequality to the crystal pose, extending an oracle-free disagreement f
 discrete outputs~\citep{incoherence,credal} and the older folklore that pose agreement filters wrong
 poses~\citep{consensusdocking} to a continuous structured target. It does rise with novelty, but it
 is blind to consensus error, where all models share one wrong mode; the consensus regime covers $64\%$ of the analyzed
-complexes at risk $0.152$ against $0.698$ on the diverse remainder, and the error it hides grows from
-$0.058$ to $0.120$ through $S_3$ even as the consensus mass shrinks. The blind spot was predicted as
+complexes at risk $0.152$ against $0.698$ on the diverse remainder (marginal), and the error it
+hides, the consensus rate times the risk inside it, grows from $0.058$ on $S_0$ to $0.120$ on $S_3$
+(AF3, accept region at $50\%$ coverage) even as the consensus mass shrinks. The blind spot was predicted as
 a corollary before it was measured, and it is exactly the novel-chemotype regime the certificate
 most needs, so the escape is real and narrow; we develop it and its metric construction separately.
 
@@ -240,7 +254,7 @@ coverage to certify $m^\star\!\le\!.5$ & $.45$ & $.20$ & $.25$ & $.40$ & $.25$ \
 \end{table}
 
 \section{Repairing the guarantee}\label{sec:repair}
-\textbf{Group-conditional calibration} keys a separate threshold per novelty stratum, restoring
+\textbf{Group-conditional calibration}~\citep{mondrian} keys a separate threshold per novelty stratum, restoring
 per-stratum control at an honest coverage cost (with the combined score AF3 accepts $52\%$ of $S_1$
 and $39\%$ of $S_2$ at risk $\le\alpha$, against $8\%$ and $12\%$ natively). It needs stratum
 labels, which Runs N' Poses ships.
@@ -276,7 +290,7 @@ and it is the only one of the four that certifies every feasible cell. Variance-
 buys nothing here, because a Bernoulli variance is fixed by its mean. It is essential on the
 \emph{graded} loss. Replacing the $2$\,\AA\ cutoff with the capped RMSD $\min(\mathrm{RMSD},4)/4$ and
 certifying a mean-RMSD target with a betting bound~\citep{waudbysmith2024betting}, AF3 certifies
-$43\%$ coverage at a $1$\,\AA\ target where a distribution-free Hoeffding bound certifies essentially
+$43\%$ coverage at a $1$\,\AA\ target where the worst-case (Hoeffding) bound certifies essentially
 none ($0.04\%$), with realized capped-mean RMSD $0.90$\,\AA\ and empirical guarantee coverage $0.90$;
 the other models certify $2$--$25\%$ where Hoeffding certifies zero. The reliability layer is
 therefore not tied to the $2$\,\AA\ convention, and the certifier follows from the sufficiency
@@ -301,8 +315,8 @@ purity is arithmetically $1$ minus the selective risk, so it cannot show the gat
 the guarantee. Interaction-fingerprint recovery, the fraction of the crystal's protein-ligand
 contacts the pose reproduces, is a different quantity a medicinal chemist reads and is only
 correlated with the $2$\,\AA\ label. Under the gate at $\alpha=0.20$ the accepted poses recover $0.90$
-to $0.91$ of crystal contacts against $0.71$ to $0.76$ for the rejected ones, a gap of $0.15$ to
-$0.20$ whose $90\%$ bootstrap interval excludes zero for every model. Abstention keeps the poses that
+to $0.91$ of crystal contacts against $0.71$ to $0.76$ for the rejected ones, a per-model gap of
+$0.14$ to $0.21$ whose $90\%$ bootstrap interval excludes zero for every model. Abstention keeps the poses that
 recover the right interactions, which is the property downstream structure-based work actually needs.
 
 \textbf{The decision number.} We reuse a released co-folded virtual screen~\citep{shen2026vs}
@@ -331,14 +345,18 @@ A threshold frozen on Runs N' Poses and deployed on FoldBench~\citep{foldbench} 
 ($0.15\le\alpha$) and under-controls for Protenix ($0.25$), an honest transfer limited by the
 confidence fields FoldBench releases. Regenerating the FoldBench Protenix predictions recovers the
 interface-ipTM field the release withholds and turns this into a feature-matched cross-dataset
-positive: on $436$ protein-ligand targets ($384$ train-similar, $52$ no-analog, ligand-RMSD
+positive: on $436$ protein-ligand targets ($384$ train-similar, $52$ low-homology, ligand-RMSD
 self-scored against the deposited assembly so feature and label come from one run), the frozen
 Runs N' Poses interface-ipTM gate transfers with a risk-coverage AURC of $0.380$, ahead of the
 matched \texttt{ranking\_score} control at $0.454$. That same frozen threshold accepts $5\%$ of
 FoldBench against $26\%$ at home, the coverage collapse of Sec.~\ref{sec:break} reproduced across
-a second dataset and a different confidence source. The break is structural, and the theorem and its
-repair generalize beyond co-folding to the public elec2 and ACS benchmarks (Sec.~\ref{sec:theory}).
-The no-analog stratum ($n\!\approx\!72$ per model) is uncertifiable under every method, where the only
+a second dataset and a different confidence source. This regeneration is a comparison of gates, not a
+re-benchmark of Protenix: our self-scored top-1 success is $0.40$ against FoldBench's released $0.57$,
+a gap attributable to the scoring convention, the model version, and the MSA source, which does not
+affect the transfer because feature and label are self-consistent within the one run. The break is
+structural, and the theorem and its repair generalize beyond co-folding to the public elec2 and ACS
+benchmarks (Sec.~\ref{sec:theory}; details in App.~\ref{app:bench}).
+The no-analog stratum ($n\!\approx\!63$ per model) is uncertifiable under every method, where the only
 action is abstention, and a randomly-localized gate keyed continuously on
 novelty~\citep{hore2024rlcp} still leaves that tail. The co-folding coverage guarantee is calibrated
 on a single labeled dataset (Runs N' Poses); a prospective screen validation is the remaining reach
@@ -348,8 +366,14 @@ item.
 Co-folding confidence becomes a risk-controlled decision only when the guarantee is audited where it
 fails. That failure is concept shift on structural novelty; the paper proves which repairs it admits
 and applies group-conditional and label-free methods that need no training-set access, on the
-frozen models' released predictions and CPU alone. The one cross-dataset check regenerates a
-confidence field the public release withholds, the sole GPU step. The code is public.
+frozen models' released predictions and CPU alone.
+
+\textbf{Data and code availability.} The analysis code, calibration tables, and a one-command
+reproduction over the released Runs N' Poses predictions are public. Runs N' Poses is at Zenodo
+(\texttt{10.5281/zenodo.14794785}); the screening scores are from~\citet{shen2026vs}. The one
+cross-dataset check regenerates a Protenix confidence field the FoldBench release withholds, the sole
+GPU step and the sole result outside the one-command path; those regenerated predictions and their
+self-scored labels are available on request and will be archived to a Zenodo record on publication.
 
 \small
 \bibliographystyle{unsrtnat}
@@ -376,6 +400,20 @@ biomolecular structure prediction. Nature Communications, 2025.
 approaches in virtual screening. Chemical Science, 2026. Zenodo 10.5281/zenodo.17568813.
 \bibitem{af3} J. Abramson et al. Accurate structure prediction of biomolecular interactions
 with AlphaFold3. Nature, 2024.
+\bibitem{chai} Chai Discovery Team. Chai-1: Decoding the Molecular Interactions of Life. bioRxiv, 2024.
+
+\bibitem{protenix} ByteDance AML AI4Science Team. Protenix: Advancing Structure Prediction Through
+a Comprehensive AlphaFold3 Reproduction. bioRxiv, 2025.
+
+\bibitem{codrug} K. Nguyen et al. CoDrug: Conformal Drug Property Prediction with Density Estimation
+under Covariate Shift. NeurIPS 2023.
+
+\bibitem{mondrian} V. Vovk. Conditional Validity of Inductive Conformal Predictors. Machine Learning
+92:349--376, 2013. (Mondrian / group-conditional conformal.)
+
+\bibitem{crcgupta} S. Gupta et al. When Can Conformal Risk Control Certify LLM Outputs?
+arXiv:2606.29054, 2026. (A reweighting-invariant selective-risk abstention floor.)
+
 \bibitem{boltz} J. Wohlwend et al. Boltz-1/Boltz-2: democratizing biomolecular interaction
 modeling. bioRxiv, 2024--2025.
 \bibitem{vovk2005} V. Vovk, A. Gammerman, G. Shafer. Algorithmic Learning in a Random World.

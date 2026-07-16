@@ -547,9 +547,12 @@ of one calibrator, not facts about co-folding. So we sweep source coverage and r
 | AF3 (α=0.10) | 0.65 | 0.40 | 0.10 | **0.00** | **0.00** |
 | Chai-1 (α=0.10) | 0.45 | 0.05 | **0.00** | **0.00** | 0.25 |
 
-Across both axes and five models, 39 of 50 strata admit an operating point at α=0.20 and 11 admit
-none at any coverage; at α=0.10 that worsens to 33 and 17, with only 3 strata certifiable from the
-labels in hand. The deployed view is starker: the AF3 rule LTT certifies at α=0.20 on familiar
+Across both axes and five models, requiring ≥20 accepted targets to call a stratum feasible, 29 of
+50 strata admit an operating point at α=0.20 and 21 admit none at any coverage; at α=0.10 that
+worsens to 24 and 26, robust to sampling noise on 35 of the 47 pooled zero-frontier cells. (An
+earlier draft quoted 39/11 and 33/17 from the JSON summary field, which ignored the file's own
+min_accept=20 and counted S4 cells feasible on 1–3 accepted targets; the paper uses the correct
+≥20-accept counts.) The deployed view is starker: the AF3 rule LTT certifies at α=0.20 on familiar
 targets realizes **0.538** on S3 (margin −0.338), so the certificate is inverted, not merely loose.
 
 Certification is feasible on the familiar half of the novelty axis, where labels are cheapest and

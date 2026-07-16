@@ -10,11 +10,12 @@ rule, and the correlation is weakest exactly where drug discovery operates: on
 novel pockets and novel chemotypes. We recast co-folding reliability as
 **selective prediction** and build a model-agnostic, training-free layer that
 turns confidence into a risk-controlled accept/abstain decision with a
-finite-sample guarantee. On the released Runs N' Poses benchmark (13,535
-delivered poses, six co-folding models) we show three things. (1) A conformal
+finite-sample guarantee. On the released Runs N' Poses benchmark (five governed
+co-folding models, 12,602 delivered poses, plus a Boltz-2 affinity comparator for
+13,535 in the raw table) we show three things. (1) A conformal
 selective-risk gate is valid on i.i.d. data. (2) That guarantee **breaks** under
 the novelty shift central to drug discovery: a gate whose marginal error looks
-compliant under-controls error 2–3× on novel-ligand strata, and calibrating on
+compliant under-controls error roughly twofold on novel-ligand strata, and calibrating on
 familiar ligands then deploying on novel ones violates the guarantee in 100% of
 runs (realized error 0.55 against a 0.20 target). (3) The break is repaired by
 group-conditional and weighted conformal keyed on training-set similarity, and a
@@ -22,9 +23,9 @@ combined reliability score cuts the area under the risk-coverage curve (AURC) by
 roughly a quarter to two-fifths over native confidence (paired data-bootstrap over
 test poses excludes zero for every model), roughly doubling to tripling the
 predictions retained at a fixed guarantee. Adding structural pose-agreement features
-from the model's own diffusion samples pushes the AURC reduction to about a half (pose
+from the model's own diffusion samples pushes the AURC reduction to 38–51% across models (pose
 Δ(AURC) CI excludes zero for all models), and abstention raises a genuinely downstream,
-non-circular metric — recovery of the correct crystal contacts (0.90 vs 0.72 on accepted
+non-circular metric, recovery of the correct crystal contacts (0.90 vs 0.72 on accepted
 vs rejected poses). The layer is released as a pip-installable package that wraps frozen
 model outputs.
 
@@ -44,8 +45,8 @@ molecular property under shift, and we are not aware of a prior conformal
 treatment of pose correctness. Further, (ii) a sharp, quantified demonstration that
 standard conformal guarantees collapse under novel-pocket / novel-chemotype shift,
 using training-set structural and chemical similarity as the shift variable; and
-(iii) a shift-robust repair — group-conditional and importance-weighted conformal
-keyed on that similarity — plus a combined reliability score, packaged as a
+(iii) a shift-robust repair (group-conditional and importance-weighted conformal
+keyed on that similarity) plus a combined reliability score, packaged as a
 training-free layer over frozen AlphaFold3 (AF3) / Boltz / Chai outputs. We show
 ordinary probability calibration is not a substitute: it carries no finite-sample
 coverage and breaks under the same shift, whereas the conformal variants repair it.
@@ -88,26 +89,31 @@ not of all fitting. Novelty is
 excluded from the score and enters only through calibration. A 3-way split (fit
 combiner / calibrate τ / test) preserves conformal validity for the learned score:
 the combiner never sees the test fold and the threshold is calibrated on
-out-of-sample combiner scores, so there is no train/test leakage.
+out-of-sample combiner scores, so the learned score carries no combiner-fit leakage
+(target-clustering across folds is addressed separately in E4).
 
 ## 3. Results
 
-Data: released Runs N' Poses predictions consumed as-is (no inference), 13,535
-delivered poses, six models. α = 0.20, δ = 0.10 unless noted.
+Data: released Runs N' Poses predictions consumed as-is (no inference), five
+governed models (12,602 delivered poses); a Boltz-2 affinity head brings the raw
+table to 13,535 and is used only as an ungoverned comparator. α = 0.20, δ = 0.10 unless noted.
 
 **Raw novelty gradient.** AF3 delivered-pose correctness falls from 0.88 on
 familiar ligands to 0.44 on the most novel with-analog stratum. A single global
 threshold cannot hold a uniform guarantee across this gradient.
 
-**E1: valid i.i.d.** The certifier's finite-sample guarantee — true selective risk
-≤ α with probability 1 − δ — is validated on synthetic data where the true risk is
+**E1: valid i.i.d.** The certifier's finite-sample guarantee, true selective risk
+≤ α with probability 1 − δ, is validated on synthetic data where the true risk is
 known (the gate holds in ≥ 1 − δ of draws). The realized-risk indicator on a finite
 test fold is a *downward-biased* proxy for that event, and we demonstrate the bias
 rather than assert it: on synthetic data the small-fold indicator dips below 1 − δ
 while the large-sample (true-risk) indicator meets it. On RNP the fraction of splits
-holding, with a Clopper-Pearson interval, reaches the target for the well-powered
-models (Boltz-1x 0.91 [0.88, 0.93], Boltz-1 0.88 [0.85, 0.91], AF3 0.85 [0.81, 0.89]),
-and the certified gate's mean realized risk is ≤ α there (AF3 0.17 at 28% coverage).
+holding, with a Clopper-Pearson interval, reaches the 1 − δ = 0.90 target for Boltz-1x
+(0.90 [0.88, 0.93]) and approaches it for Boltz-1 (0.88 [0.85, 0.91]) and AF3
+(0.85 [0.81, 0.89]), whose interval sits just below 0.90; the tight-certifier
+realized-risk indicator is the reason it is a downward-biased proxy rather than the
+guarantee itself, and the certified gate's mean realized risk is ≤ α there
+(AF3 0.17 at 28% coverage).
 Native ranking score certifies almost nothing for Chai and Protenix (< 5% coverage):
 a near-vacuous gate that motivates the combined score below.
 
@@ -120,7 +126,7 @@ under-control:
 
 Calibrating on familiar ligands and deploying on novel ones accepts 98% of poses
 at realized error **0.55** with the guarantee holding in **0%** of runs (violated
-in 100%). All six models show the same collapse. The break is a property of
+in 100%). All five governed models show the same collapse. The break is a property of
 structural/chemical novelty, not recency: it is at least as strong along
 pocket-novelty (AF3 S0 0.06 → S3 0.40, Chai up to 0.77) but weak along a temporal
 release-date axis, which sharpens what the shift variable must capture.
@@ -150,7 +156,10 @@ risk-coverage curve:
 
 The AURC reduction is significant per model: a paired bootstrap over test poses
 gives 90% CIs on Δ(AURC) that exclude zero (AF3 0.070 [0.049, 0.092], Protenix
-0.092 [0.068, 0.116]; Boltz-2 omitted for power, n = 933). At α = 0.2 the combined
+0.092 [0.068, 0.116]; Boltz-2 omitted for power, n = 933). Because a target recurs
+across ~5 poses, the pooled random split leaks 95% of test targets into calibration;
+a target-grouped split and a target-cluster bootstrap give the same conclusion
+(AF3 Δ(AURC) [0.056, 0.079]), so the gain is not an artifact of clustering. At α = 0.2 the combined
 gate retains far more predictions at the same guarantee (AF3 coverage 0.22 → 0.71;
 Chai 0.01 → 0.60)
 and unlocks the stringent α = 0.1 (90%-correct) operating point that native
@@ -163,7 +172,8 @@ correcting with cross-fitted, probability-calibrated likelihood-ratio weights ov
 the novelty covariates pulls the realized error on a moderately-novel target toward
 α without target labels (AF3 naive 0.27 → weighted 0.19 at 0.70 coverage; same trend
 for all models, and robust to the weight-model choice). We also implement an
-importance-weighted Learn-then-Test gate (WSR betting p-value [Almeida et al. 2025])
+importance-weighted Learn-then-Test gate [Almeida et al. 2025] built on a WSR betting
+p-value [Waudby-Smith & Ramdas 2024]
 that is finite-sample valid *conditional on correct weights*; on real co-folding data
 it abstains, because even the plug-in barely clears α, so no certifiable margin
 remains. A concept-shift diagnostic explains why: P(correct | confidence) itself moves
@@ -181,13 +191,13 @@ AURC among the confidences a practitioner would reach for (AF3 0.12 vs native ip
 alone is a poor gate (realized error 0.26–0.34). The decisive comparison isolates the
 guarantee from the features: the same combined score as a Platt/isotonic-calibrated
 classifier with a fixed threshold versus inside the conformal layer. i.i.d., both
-control error; **under the novelty shift the calibrated fixed-threshold gates break
-exactly as naive conformal does** (realized error climbs above α), because the break is
-a property of naive transfer, not of calibration-vs-conformal. Only the shift-robust
-conformal repair — group-conditional, which has no calibration analogue — restores
-realized error ≤ α, by abstaining more on the novel strata. Calibration fixes the
-marginal probability but carries no finite-sample coverage and no distribution-shift
-repair.
+control error; **under the novelty shift the Platt-calibrated fixed-threshold gate breaks
+like naive conformal** (realized error 0.22 above α). Isotonic calibration sits near α
+(0.18) only by abstaining down to 71% coverage, and even then holds the guarantee in 76%
+of runs rather than the required 90%, since calibration carries no finite-sample coverage.
+Only the shift-robust conformal repair (group-conditional, which has no calibration
+analogue) restores realized error ≤ α with a guarantee, by abstaining more on the novel
+strata.
 
 **E6: downstream payoff.** The gate cleans the delivered pose set a downstream
 pipeline would carry forward: base top-1 purity 63–70% rises to 82% (α=0.2,
@@ -208,7 +218,7 @@ prospective screen is the drop-in target when its coordinates release.
 
 **E5: robustness and ablation.** The break and the gain do not depend on the 2 Å
 convention: across thresholds 1.5–3.0 Å the novel strata always exceed α (AF3 S3
-risk 0.35–0.43 vs S0 0.05–0.09) and the combined score cuts AURC 26–29%. A
+risk 0.35–0.43 vs S0 0.05–0.09) and the combined score cuts AURC 31–34%. A
 cumulative feature ablation attributes the gain mainly to interface ipTM (AURC
 0.19 → 0.16), intra-model ensemble spread (0.16 → 0.14), and cross-model agreement
 (0.14 → 0.13); PoseBusters and ligand difficulty add little on top.
@@ -217,8 +227,8 @@ cumulative feature ablation attributes the gain mainly to interface ipTM (AURC
 predicted structures carry an orthogonal signal: whether the binding *modes* agree. From the
 model's own 25 diffusion samples we compute intra-model pose diversity, and across models the
 delivered-pose ligand-RMSD (spyrmsd, pocket-superposed, symmetry-corrected; over 11,711 poses,
-no GPU). Adding these lowers AURC further on top of every tabular feature — the single largest
-drop after ipTM (AF3 0.123 → 0.106) — raising the overall reduction to 38–51% across models,
+no GPU). Adding these lowers AURC further on top of every tabular feature (the single largest
+drop after ipTM, AF3 0.123 → 0.106), raising the overall reduction to 38–51% across models,
 the pose-only Δ(AURC) 90% CI excluding zero for all five. Intra-model pose diversity is a free
 byproduct of running the model, so this keeps the training-free framing; the tabular combined
 score remains the cheap, structure-free primary.
@@ -226,10 +236,10 @@ score remains the cheap, structure-free primary.
 **E8/E9: task- and label-agnostic.** The layer is not tied to the 2 Å pose label.
 On interface quality (local distance difference test on the protein-ligand
 interface, LDDT-PLI ≥ 0.5) the combined score again dominates native confidence on
-AURC (44–55% lower). Dropping the threshold entirely and ordering by continuous RMSD,
+AURC (38–55% lower). Dropping the threshold entirely and ordering by continuous RMSD,
 the accepted set's mean RMSD at 50% coverage falls from ~2.1 Å (native) to ~1.1–1.5 Å
-(combined). We also certify a *continuous* gate — mean bounded-RMSD among accepted ≤ a
-target with probability 1 − δ — using a variance-adaptive WSR betting bound, which
+(combined). We also certify a *continuous* gate (mean bounded-RMSD among accepted ≤ a
+target with probability 1 − δ) using a variance-adaptive WSR betting bound, which
 certifies non-trivial coverage where a distribution-free Hoeffding bound certifies
 almost none (AF3, target 1 Å mean-RMSD: WSR 43% coverage vs Hoeffding 0%).
 
@@ -245,11 +255,14 @@ finite-sample guarantee and scope weighted conformal as the label-free complemen
 cross-dataset test on FoldBench closes this once the missing feature is restored:
 the public per-pose table ships only ranking_score, so we regenerated the FoldBench
 Protenix predictions to recover interface-ipTM and self-scored ligand-RMSD against
-the deposited assemblies (436 targets, 384 train-similar, 52 no-analog; feature and
-label from one run). The frozen Runs N' Poses interface-ipTM gate then transfers
+the deposited assemblies (436 targets, 384 train-similar, 52 low-homology; feature and
+label from one run). This compares gates, not benchmarks: our self-scored Protenix top-1
+success is 0.40 against FoldBench's released 0.57, a gap from the scoring convention,
+model version, and MSA source that does not affect the transfer because feature and
+label are self-consistent. The frozen Runs N' Poses interface-ipTM gate then transfers
 with a risk-coverage AURC of 0.380, ahead of the matched ranking_score control at
-0.454, and the same threshold accepts 5% of FoldBench against 26% at home, the
-coverage collapse reproduced on a second dataset. On the extreme
+0.454, and the same threshold accepts only 5% of FoldBench against 26% at home, so the
+coverage the gate can certify collapses on the low-homology second dataset. On the extreme
 novel-chemotype regime (base correctness < 55%) no gate can certify a
 high-coverage low-error set; the layer's value there is principled abstention over
 a naive gate's false confidence. Code, calibration tables, and a one-command
@@ -262,5 +275,8 @@ Abbreviated; full entries in the repository `REFERENCES.bib`.
 Angelopoulos, Bates, Candès, Jordan, Lei. Learn then Test. 2021.
 Bates, Angelopoulos, Lei, Malik, Jordan. Risk-Controlling Prediction Sets. JACM 2021.
 Tibshirani, Foygel Barber, Candès, Ramdas. Conformal Prediction Under Covariate Shift. NeurIPS 2019.
+Nguyen et al. CoDrug: Conformal Drug Property Prediction under Covariate Shift. NeurIPS 2023.
+Waudby-Smith, Ramdas. Estimating Means of Bounded Random Variables by Betting. JRSS-B 2024.
+Vovk. Conditional Validity of Inductive Conformal Predictors (Mondrian). Mach. Learn. 2013.
 Škrinjar et al. Have protein–ligand co-folding methods moved beyond memorisation? (Runs N' Poses) 2025.
 Buttenschoen, Morris, Deane. PoseBusters. Chem. Sci. 2024.
