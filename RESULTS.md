@@ -316,6 +316,26 @@ ablation: the layer's value depends on the rich confidence signals RNP ships and
 FoldBench does not. A clean cross-dataset test needs a benchmark that releases
 ipTM/PoseBusters per pose.
 
+## E15b — FoldBench cross-dataset positive (feature recovered by regeneration)
+
+E10 was blocked by a missing feature, not by the method. We removed the block by
+regenerating the FoldBench Protenix predictions ourselves (Protenix 0.5.5, 5 seeds
+× 5 samples = 25 poses per target, ColabFold MSAs) to recover the interface-ipTM
+field the public table withholds, then self-scored ligand-RMSD against the
+deposited assemblies with pocket-Cα superposition and symmetric spyrmsd, so the
+feature and the label come from the same run. Result on 436 protein-ligand targets
+(384 train-similar, 52 no-analog, regen top-1 success 0.401): the frozen Runs N'
+Poses interface-ipTM gate transfers with a risk-coverage **AURC of 0.380, ahead of
+the matched `ranking_score` control at 0.454**. The same frozen threshold
+(τ=0.989) accepts only 5% of FoldBench against 26% at home, so the coverage
+collapse of the break section reproduces on a second dataset and a different
+confidence source. The self-scored success rate (0.401) sits below FoldBench's
+released Protenix top-1 (0.567); the gap is expected drift from the scoring method
+(our pocket-superposed ligand-RMSD vs their BiSyRMSD), the model version (0.5.5 vs
+0.5.0), and the MSA source, and it does not affect E15b because feature and label
+are self-consistent. Script `experiments/e15b_foldbench_iptm_transfer.py`, figure
+`results/figures/e15b_foldbench_iptm_transfer.png`.
+
 ## E11 — baselines, and calibration is not conformal
 
 The baselines a reviewer expects, on the same splits.

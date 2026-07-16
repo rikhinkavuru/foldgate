@@ -242,12 +242,14 @@ The finite-sample weighted-conformal guarantee is exact only conditional on corr
 importance weights, and under novel-pocket shift there is residual concept shift
 (P(correct | confidence) moves), so we keep group-conditional as the rigorous
 finite-sample guarantee and scope weighted conformal as the label-free complement. A
-cross-dataset test on FoldBench did
-not replicate the advantage: its public per-pose table ships only ranking_score,
-without the interface-ipTM / PoseBusters / ensemble features the ablation
-identifies as the source of the gain, so the feature-poor combiner does not beat
-raw confidence there. A clean second-benchmark test needs a release that exposes
-those confidences per pose. On the extreme
+cross-dataset test on FoldBench closes this once the missing feature is restored:
+the public per-pose table ships only ranking_score, so we regenerated the FoldBench
+Protenix predictions to recover interface-ipTM and self-scored ligand-RMSD against
+the deposited assemblies (436 targets, 384 train-similar, 52 no-analog; feature and
+label from one run). The frozen Runs N' Poses interface-ipTM gate then transfers
+with a risk-coverage AURC of 0.380, ahead of the matched ranking_score control at
+0.454, and the same threshold accepts 5% of FoldBench against 26% at home, the
+coverage collapse reproduced on a second dataset. On the extreme
 novel-chemotype regime (base correctness < 55%) no gate can certify a
 high-coverage low-error set; the layer's value there is principled abstention over
 a naive gate's false confidence. Code, calibration tables, and a one-command

@@ -255,14 +255,20 @@ pose-over-docking gap and novelty trend carry the claim.
 \section{Cross-dataset generality and limitations}
 A threshold frozen on Runs N' Poses and deployed on FoldBench~\citep{foldbench} holds for AF3
 ($0.15\le\alpha$) and under-controls for Protenix ($0.25$), an honest transfer limited by the
-confidence fields FoldBench releases. The break is structural, and the theorem and its repair
-generalize beyond co-folding to the public elec2 and ACS benchmarks (Sec.~\ref{sec:theory}). The
-no-analog stratum ($n\!\approx\!72$ per model) is uncertifiable under every method, where the only
+confidence fields FoldBench releases. Regenerating the FoldBench Protenix predictions recovers the
+interface-ipTM field the release withholds and turns this into a feature-matched cross-dataset
+positive: on $436$ protein-ligand targets ($384$ train-similar, $52$ no-analog, ligand-RMSD
+self-scored against the deposited assembly so feature and label come from one run), the frozen
+Runs N' Poses interface-ipTM gate transfers with a risk-coverage AURC of $0.380$, ahead of the
+matched \texttt{ranking\_score} control at $0.454$. That same frozen threshold accepts $5\%$ of
+FoldBench against $26\%$ at home, the coverage collapse of Sec.~\ref{sec:break} reproduced across
+a second dataset and a different confidence source. The break is structural, and the theorem and its
+repair generalize beyond co-folding to the public elec2 and ACS benchmarks (Sec.~\ref{sec:theory}).
+The no-analog stratum ($n\!\approx\!72$ per model) is uncertifiable under every method, where the only
 action is abstention, and a randomly-localized gate keyed continuously on
-novelty~\citep{hore2024rlcp} still leaves that tail. The co-folding guarantee itself rests on a
-single labeled dataset (Runs N' Poses), since FoldBench contributes one shared field and the public
-benchmarks are tabular analogues; a feature-matched cross-dataset positive and a prospective screen
-validation are the main reach items.
+novelty~\citep{hore2024rlcp} still leaves that tail. The co-folding coverage guarantee is calibrated
+on a single labeled dataset (Runs N' Poses); a prospective screen validation is the remaining reach
+item.
 
 \section{Conclusion}
 Co-folding confidence becomes a risk-controlled decision only when the guarantee is audited where it

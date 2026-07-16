@@ -1,0 +1,173 @@
+{
+  "alpha": 0.2,
+  "delta": 0.1,
+  "novelty_axis": "is_unseen_protein (1 = low-homology unseen protein)",
+  "model": "protenix (regenerated on FoldBench, self-scored ligand-RMSD)",
+  "n_targets_scored": 436,
+  "n_unseen": 52,
+  "n_seen": 384,
+  "regen_success_rate": 0.4013761467889908,
+  "feature_parity_note": "interface-ipTM + ranking_score are the RNP-shared signals recovered by regeneration. Feature and label are self-consistent (both from the same Protenix v0.5.0 run; ligand-RMSD self-scored vs the deposited assembly). PoseBusters / ensemble / cross-model were not reconstructed; other FoldBench models were not regenerated (still ranking_score-only in E15).",
+  "iptm_transfer": {
+    "feature": "iface_iptm",
+    "tau": 0.9887774348258972,
+    "rnp_n_calib": 2607,
+    "rnp_home": {
+      "n": 2607,
+      "n_accept": 678,
+      "n_errors": 119,
+      "base_correct": 0.6340621403912543,
+      "coverage": 0.2600690448791715,
+      "coverage_ci90": [
+        0.24594976915770372,
+        0.2745882367172726
+      ],
+      "selective_risk": 0.17551622418879054,
+      "selective_risk_ci90": [
+        0.15183037263118349,
+        0.20132279132398612
+      ],
+      "risk_over_alpha": false,
+      "risk_ci_lo_over_alpha": false,
+      "aurc": 0.26632645247575104
+    },
+    "overall": {
+      "n": 436,
+      "n_accept": 21,
+      "n_errors": 2,
+      "base_correct": 0.4013761467889908,
+      "coverage": 0.0481651376146789,
+      "coverage_ci90": [
+        0.03249858861827781,
+        0.06862069408199051
+      ],
+      "selective_risk": 0.09523809523809523,
+      "selective_risk_ci90": [
+        0.01719099663247961,
+        0.2705516993045313
+      ],
+      "risk_over_alpha": false,
+      "risk_ci_lo_over_alpha": false,
+      "aurc": 0.37997672010226863
+    },
+    "seen": {
+      "n": 384,
+      "n_accept": 18,
+      "n_errors": 2,
+      "base_correct": 0.3984375,
+      "coverage": 0.046875,
+      "coverage_ci90": [
+        0.030513055198644515,
+        0.06872045782020213
+      ],
+      "selective_risk": 0.11111111111111116,
+      "selective_risk_ci90": [
+        0.020110675876131672,
+        0.31026273969821105
+      ],
+      "risk_over_alpha": false,
+      "risk_ci_lo_over_alpha": false,
+      "aurc": 0.38517028539822934
+    },
+    "unseen": {
+      "n": 52,
+      "n_accept": 3,
+      "n_errors": 0,
+      "base_correct": 0.4230769230769231,
+      "coverage": 0.057692307692307696,
+      "coverage_ci90": [
+        0.01590775471357961,
+        0.142414005203974
+      ],
+      "selective_risk": 0.0,
+      "selective_risk_ci90": [
+        0.0,
+        0.6315968501359612
+      ],
+      "risk_over_alpha": false,
+      "risk_ci_lo_over_alpha": false,
+      "aurc": 0.34403880470121856
+    }
+  },
+  "ranking_transfer": {
+    "feature": "ranking_score",
+    "tau": 0.9874455451965332,
+    "rnp_n_calib": 2607,
+    "rnp_home": {
+      "n": 2607,
+      "n_accept": 522,
+      "n_errors": 92,
+      "base_correct": 0.6340621403912543,
+      "coverage": 0.2002301495972382,
+      "coverage_ci90": [
+        0.18740036105490196,
+        0.21356039910025287
+      ],
+      "selective_risk": 0.1762452107279694,
+      "selective_risk_ci90": [
+        0.14926908282472665,
+        0.2059821226989725
+      ],
+      "risk_over_alpha": false,
+      "risk_ci_lo_over_alpha": false,
+      "aurc": 0.28051066941349506
+    },
+    "overall": {
+      "n": 436,
+      "n_accept": 1,
+      "n_errors": 0,
+      "base_correct": 0.4013761467889908,
+      "coverage": 0.0022935779816513763,
+      "coverage_ci90": [
+        0.00011763825069193141,
+        0.010833820446037862
+      ],
+      "selective_risk": 0.0,
+      "selective_risk_ci90": [
+        0.0,
+        0.95
+      ],
+      "risk_over_alpha": false,
+      "risk_ci_lo_over_alpha": false,
+      "aurc": 0.4537586811891281
+    },
+    "seen": {
+      "n": 384,
+      "n_accept": 1,
+      "n_errors": 0,
+      "base_correct": 0.3984375,
+      "coverage": 0.0026041666666666665,
+      "coverage_ci90": [
+        0.00013356736655250468,
+        0.012293754345837998
+      ],
+      "selective_risk": 0.0,
+      "selective_risk_ci90": [
+        0.0,
+        0.95
+      ],
+      "risk_over_alpha": false,
+      "risk_ci_lo_over_alpha": false,
+      "aurc": 0.46894563634074427
+    },
+    "unseen": {
+      "n": 52,
+      "n_accept": 0,
+      "n_errors": 0,
+      "base_correct": 0.4230769230769231,
+      "coverage": 0.0,
+      "coverage_ci90": [
+        0.0,
+        0.05598218012623554
+      ],
+      "selective_risk": NaN,
+      "selective_risk_ci90": [
+        NaN,
+        NaN
+      ],
+      "risk_over_alpha": null,
+      "risk_ci_lo_over_alpha": null,
+      "aurc": 0.33513891357888737
+    }
+  }
+}
