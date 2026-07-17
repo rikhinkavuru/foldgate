@@ -262,8 +262,24 @@ coverage to certify $m^\star\!\le\!.5$ & $.45$ & $.20$ & $.25$ & $.40$ & $.25$ \
 \section{Repairing the guarantee}\label{sec:repair}
 \textbf{Group-conditional calibration}~\citep{mondrian} keys a separate threshold per novelty stratum, restoring
 per-stratum control at an honest coverage cost (with the combined score AF3 accepts $52\%$ of $S_1$
-and $39\%$ of $S_2$ at risk $\le\alpha$, against $8\%$ and $12\%$ natively). It needs stratum
-labels, which Runs N' Poses ships.
+and $39\%$ of $S_2$ at risk $\le\alpha$, against $8\%$ and $12\%$ natively; Fig.~\ref{fig:repair}). It needs stratum
+labels, which Runs N' Poses ships. Where the marginal gate over-shoots $\alpha$ on the novel strata, the
+per-stratum gate holds risk at or below it and, on the no-analog tail where no certified slice remains,
+folds to zero coverage rather than issue a false certificate.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{../results/figures/e3_repair.png}
+\caption{The repair. Group-conditional calibration holds the realized selective risk at or below the
+target $\alpha=0.20$ on the strata where the marginal (global) gate over-shoots. (a)~AF3: the global
+gate (native score) exceeds $\alpha$ on the novel strata $S_3$ ($0.38$) and $S_4$ ($0.43$), while the
+full method (combined score, group-conditional) holds risk $\le\alpha$ across $S_0$--$S_3$ at the
+annotated retained coverage and folds entirely on the no-analog stratum $S_4$. The coverage cost is
+real and grows with novelty ($94\%$ of familiar poses retained, $5\%$ on $S_3$). (b)~The repaired gate
+across all five models; marker area is the retained coverage and $\triangledown$ marks strata where the
+gate abstains. Realized risk stays $\le\alpha$ wherever a certified slice remains.}
+\label{fig:repair}
+\end{figure}
 
 \textbf{A label-free worst-subpopulation certificate.} When the novel subpopulation is unnamed,
 we control the conditional value-at-risk of the accepted loss. For the binary label,
@@ -302,20 +318,42 @@ the other models certify $2$--$25\%$ where Hoeffding certifies zero. The reliabi
 therefore not tied to the $2$\,\AA\ convention, and the certifier follows from the sufficiency
 structure of the loss rather than from a default.
 
+\textbf{Reliability drift selects the repair.} Reliability drift $D(\nu)$ (Sec.~\ref{sec:break}) is the
+empirical proxy for the accept-region concept gap $\bar\Delta_c$ the impossibility names, so it decides,
+from a labeled probe rather than after a failed deployment, which repair a target region admits. The
+theorem says a training-free weighted gate under-reports its realized risk by exactly $\bar\Delta_c$:
+a small drift means the shift is covariate-dominated and weighted conformal repairs it, a large drift
+means it is concept-dominated and weighted conformal silently violates its own certificate, leaving
+group-conditional recalibration as the only valid repair. The measured values separate the regimes. On
+the moderate ligand shift $S_0,S_1\!\to\!S_2$, where the drift is small, the weighted plug-in pulls
+realized error to the target with no target labels (AF3 $0.27\to0.19$ at $70\%$ coverage), and the
+temporal axis, whose drift is an order of magnitude smaller ($|D|\le0.07$), produces no break to repair.
+On structural novelty the drift reaches $+0.47$ to $+0.63$, and deploying onto the novel tail
+$\to\!S_3,S_4$ the weighted plug-in cannot reach $\alpha$ (naive $0.48$--$0.50$, weighted
+$0.34$--$0.38$), exactly where group-conditional holds. Drift is a heuristic selector and not a
+guarantee: it needs a labeled probe to measure, and a mis-specified stratifier leaves residual
+within-stratum drift, so we use it to choose the repair, not to certify one.
+
 \textbf{Weighted conformal serves as a label-free complement} that abstains on real novel data
 (Sec.~\ref{sec:theory}), so group-conditional calibration stays the operative guarantee. A
 training-free surrogate that keys the gate on the model's own ensemble disagreement recovers control
 on moderate novelty but stays a weak proxy on the extreme.
 
 \section{Utility and a downstream decision}\label{sec:screen}
-\textbf{Ranking utility, validated without leakage.} The combined score dominates native
-confidence on the risk-coverage curve, cutting its area by $28$--$41\%$ (AF3
-$0.185\!\to\!0.118$, Protenix $0.281\!\to\!0.166$), about two to three times more poses
-retained at a fixed guarantee. A pooled split across models would leak $95.1\%$ of test targets into
-calibration, and even a per-model random split duplicates the roughly $10$--$11\%$ of systems with
-several ligand instances; under target-grouped cross-validation the gate still holds (AF3 risk
-$0.185$, $[0.168,0.203]$, $5/5$ folds) and the advantage survives with a target-cluster bootstrap
-(Table~\ref{tab:results}).
+\textbf{Ranking utility, validated without leakage.} At the $\alpha=0.20$ guarantee the combined score
+keeps $71\%$ of AF3 poses, $82\%$ of them binding-mode correct, where a native-confidence gate at the
+same certified error keeps only $22\%$; for Chai and Protenix, whose native ranking certifies almost
+nothing ($1\%$ and $4\%$ coverage), the same gate recovers $60\%$ and $51\%$. Aggregated over the
+risk-coverage curve this is a $28$--$41\%$ area reduction, out-of-fold under target-grouped
+(leakage-free) cross-validation (AF3 $0.185\!\to\!0.118$, Protenix $0.281\!\to\!0.166$;
+Table~\ref{tab:results}), two to three times more poses retained at a fixed guarantee. The combined
+score is an optional calibration-only map, not a retrained model and not a separate contribution: the
+finite-sample guarantee and the impossibility theorem (Sec.~\ref{sec:theory}) hold on the native
+confidence alone, and the combiner only improves the operating point. A pooled split across models would
+leak $95.1\%$ of test targets into calibration, and even a per-model random split duplicates the roughly
+$10$--$11\%$ of systems with several ligand instances; under target-grouped cross-validation the gate
+still holds (AF3 risk $0.185$, $[0.168,0.203]$, $5/5$ folds) and the advantage survives with a
+target-cluster bootstrap.
 
 \textbf{The gate improves a non-circular quality, not just the label it certifies.} Accepted-pose
 purity is arithmetically $1$ minus the selective risk, so it cannot show the gate buys anything past
@@ -330,7 +368,9 @@ recover the right interactions, which is the property downstream structure-based
 established co-folding ipTM as a screening ranking signal and its degradation on novel targets, for
 per-compound confidence and active/decoy labels on DEKOIS2.0 (79 targets), LIT-PCBA (5),
 and GPCRrecent (16 post-2022 novel targets), with no GPU and no crystal coordinates. Our contribution
-on this screen is the abstention rule layered over that signal, not the base enrichment. We report
+on this screen is the abstention rule layered over that signal, not the base enrichment;
+Table~\ref{tab:headtohead} places the layer's accept/abstain gate head-to-head against the Hou-style
+ipTM ranking without abstention on identical targets. We report
 the pose confidence (ipTM) the reliability layer governs and keep the Boltz-2 affinity head as an
 ungoverned comparator (Fig.~\ref{fig:screen}). The governed pose signal enriches actives above
 docking, and the gap widens on novelty: EF@1\% is $20.7$ against Gnina $10.3$ on DEKOIS, and $9.3$
@@ -348,6 +388,31 @@ echo of Sec.~\ref{sec:break}. A Murcko-scaffold split of the DEKOIS actives show
 novel scaffolds for every method, recomputed rather than inherited; because the released decoys ship
 no structures we cannot correct for analog bias, so absolute EF may be inflated and the
 pose-over-docking gap and novelty trend carry the claim.
+
+\begin{table}[t]
+\centering\small
+\caption{Head-to-head on the released co-folded screens~\citep{shen2026vs}, EF@1\% (median, $90\%$
+target-bootstrap CI). Rows above the rule are ranking without abstention (the Hou-style baseline); the
+two indented rows add the ipTM accept/abstain gate at $50\%$ coverage over the affinity ranker and the
+matched random-abstention control. The pose (ipTM) signal is the one the conformal layer governs; the
+Boltz-2 affinity head is an ungoverned comparator ($^{\ddagger}$, no coverage guarantee), shown for
+context. Bottom row: fraction of targets whose selective EF beats the random-abstention $95$th
+percentile. GPCR is the post-2022 novel set; LIT-PCBA CIs are wide at $n{=}5$.}
+\label{tab:headtohead}
+\begin{tabular}{lccc}
+\toprule
+EF@1\% & DEKOIS ($79$) & GPCR novel ($16$) & LIT-PCBA ($5$) \\
+\midrule
+Docking (Gnina) & $10.3\,[10.3,15.5]$ & $2.0\,[1.5,2.6]$ & $3.0\,[0,18.7]$ \\
+Pose ipTM, no abstention (Hou) & $20.7\,[18.1,20.7]$ & $9.3\,[5.7,14.8]$ & $4.0\,[0,26.1]$ \\
+Affinity head, no abstention$^{\ddagger}$ & $31.0\,[28.4,31.0]$ & $26.6\,[19.3,35.7]$ & $5.1\,[4.9,23.1]$ \\
+\quad $+$ ipTM gate, $50\%$ cov. (ours) & $31.0\,[28.4,31.0]$ & $\mathbf{27.1}\,[18.8,35.7]$ & $7.7\,[4.9,18.7]$ \\
+\quad $+$ random abstention (control) & $26.7\,[25.7,27.6]$ & $19.0\,[14.3,25.2]$ & $8.0\,[2.4,12.3]$ \\
+\midrule
+targets: selective $>$ random$_{95}$ & $13\%$ & $\mathbf{75\%}$ & $40\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Cross-dataset generality and limitations}
 A threshold frozen on Runs N' Poses and deployed on FoldBench~\citep{foldbench} holds for AF3
@@ -367,9 +432,12 @@ structural, and the theorem and its repair generalize beyond co-folding to the p
 benchmarks (Sec.~\ref{sec:theory}; details in App.~\ref{app:bench}).
 The no-analog stratum ($n\!\approx\!63$ per model) is uncertifiable under every method, where the only
 action is abstention, and a randomly-localized gate keyed continuously on
-novelty~\citep{hore2024rlcp} still leaves that tail. The co-folding coverage guarantee is calibrated
-on a single labeled dataset (Runs N' Poses); a prospective screen validation is the remaining reach
-item.
+novelty~\citep{hore2024rlcp} still leaves that tail. The co-folding coverage guarantee rests on one
+full retrospective dataset (Runs N' Poses, five governed models) and one partial single-model
+regenerated one (FoldBench Protenix), all retrospective. The impossibility and achievability theorem is
+dataset-independent and is the most defensible contribution; the empirical reliability claim is bounded
+by this validation breadth until a full second model panel or a prospective screen lands, which is the
+remaining reach item and the one thing that most separates this from a broadly validated method.
 
 \section{Conclusion}
 Co-folding confidence becomes a risk-controlled decision only when the guarantee is audited where it
