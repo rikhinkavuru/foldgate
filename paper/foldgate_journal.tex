@@ -109,7 +109,11 @@ accuracy studies for co-folding virtual screening~\citep{shen2026vs} rank by ipT
 coverage guarantee nor an abstention rule, which is the gap this layer fills. A reweighting-invariant
 selective-risk floor of the same abstract character was shown independently and concurrently for LLM
 abstention~\citep{crcgupta}; our result is its co-folding specialization, localized per novelty stratum
-with a matching in-stratum achievability bracket.
+with a matching in-stratum achievability bracket. Conformal selection~\citep{jin2023selection,bai2026score}
+is complementary rather than competing: it certifies which \emph{compounds} to advance given a labeled
+calibration set, while this layer certifies the \emph{pose} correctness a co-folding screen rests on,
+training-free, its own screening use being a heuristic transfer because the released decoys carry no
+pose-RMSD label.
 
 \section{The gate}\label{sec:method}
 We consider a delivered top-1 pose per system with a native confidence $s$ and a binary label
@@ -278,6 +282,11 @@ coverage to certify $m^\star\!\le\!.5$ & $.45$ & $.20$ & $.25$ & $.40$ & $.25$ \
 \end{table}
 
 \section{Repairing the guarantee}\label{sec:repair}
+We repair what the theorem allows in three moves: a group-conditional gate that restores per-stratum
+control given stratum labels, a label-free worst-subpopulation certificate for when the novel group is
+unnamed, and a certifier matched to the loss so the label cost is minimal; a measured drift diagnostic
+then says which repair a deployment region admits.
+
 \textbf{Group-conditional calibration}~\citep{mondrian} keys a separate threshold per novelty stratum, restoring
 per-stratum control at an honest coverage cost (with the combined score AF3 accepts $52\%$ of $S_1$
 and $39\%$ of $S_2$ at risk $\le\alpha$, against $8\%$ and $12\%$ natively; Fig.~\ref{fig:repair}). It needs stratum
@@ -302,7 +311,8 @@ strata where the gate abstains. Realized risk stays $\le\alpha$ wherever a certi
 \end{figure}
 
 \textbf{A label-free worst-subpopulation certificate.} When the novel subpopulation is unnamed,
-we control the conditional value-at-risk of the accepted loss. For the binary label,
+we control the conditional value-at-risk of the accepted loss, the mean error of its worst
+$\beta$-fraction. For the binary label,
 $\mathrm{CVaR}_\beta=\min(1,r/(1-\beta))$ with accepted error rate $r$, so a finite-sample upper
 bound on $r$~\citep{bates2021rcps} yields a $\mathrm{CVaR}_\beta$ bound at every $\beta$, and those with
 $\beta\le\beta^\star$ certify $\mathrm{CVaR}_\beta\le\alpha$~\citep{snell2022qrc}. By CVaR--DRO duality this certifies that every accepted subpopulation of
@@ -517,6 +527,12 @@ a Comprehensive AlphaFold3 Reproduction. bioRxiv, 2025.
 
 \bibitem{codrug} K. Nguyen et al. CoDrug: Conformal Drug Property Prediction with Density Estimation
 under Covariate Shift. NeurIPS 2023.
+
+\bibitem{jin2023selection} Y. Jin, E. Cand\`es. Selection by Prediction with Conformal p-values.
+Journal of Machine Learning Research, 2023. arXiv:2210.01408.
+
+\bibitem{bai2026score} T. Bai, Y. Jin. Conformal Selective Prediction with General Risk Control.
+arXiv:2603.24704, 2026.
 
 \bibitem{mondrian} V. Vovk. Conditional Validity of Inductive Conformal Predictors. Machine Learning
 92:349--376, 2013. (Mondrian / group-conditional conformal.)

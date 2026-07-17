@@ -23,18 +23,29 @@ def fig_e2_all_models():
     if not e2:
         return
     fig, ax = plt.subplots(figsize=(8, 5))
-    for m, r in e2.items():
-        cond = r.get("conditional", {})
+    for m in _MODEL_ORDER:
+        if m not in e2:
+            continue
+        cond = e2[m].get("conditional", {})
         ks = sorted(cond, key=int)
-        ax.plot([int(k) for k in ks], [cond[k]["pooled_selective_risk"] for k in ks], marker="o", label=m)
+        xs = [int(k) for k in ks]
+        ys = [cond[k]["pooled_selective_risk"] for k in ks]
+        lo = [max(0.0, ys[i] - cond[k].get("risk_p05", ys[i])) for i, k in enumerate(ks)]
+        hi = [max(0.0, cond[k].get("risk_p95", ys[i]) - ys[i]) for i, k in enumerate(ks)]
+        ax.errorbar(xs, ys, yerr=[lo, hi], marker="o", capsize=3, lw=1.7, elinewidth=1,
+                    color=_MODEL_COLOR[m], label=_MODEL_NAME[m])
     ax.axhline(ALPHA, ls="--", color="k", lw=1)
-    ax.text(0, ALPHA + 0.01, f"alpha = {ALPHA}", fontsize=9)
-    ax.set_xlabel("ligand-novelty stratum (0 familiar -> top no analog)")
+    ax.text(3.55, ALPHA + 0.012, f"target $\\alpha={ALPHA}$", fontsize=10)
+    ax.set_xticks([0, 1, 2, 3, 4])
+    ax.set_xticklabels(["S0\nfamiliar", "S1", "S2", "S3", "S4\nno analog"], fontsize=9)
+    ax.set_xlabel("ligand-novelty stratum")
     ax.set_ylabel("realized selective risk (global gate)")
-    ax.set_title("E2: exchangeability break across all models")
-    ax.legend(fontsize=8)
+    ax.set_title("The exchangeability break across five co-folding models")
+    ax.legend(fontsize=9, frameon=False)
+    ax.text(0.015, 0.02, "bars = 5th to 95th pct over splits; $S_4$ ($n\\approx70$/model) is small-sample",
+            transform=ax.transAxes, fontsize=7.5, color="0.4")
     fig.tight_layout()
-    fig.savefig(FIGDIR / "e2_all_models.png", dpi=150)
+    fig.savefig(FIGDIR / "e2_all_models.png", dpi=200, bbox_inches="tight")
     plt.close(fig)
 
 
