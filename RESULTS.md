@@ -333,7 +333,7 @@ confidence source. The self-scored success rate (0.401) sits below FoldBench's
 released Protenix top-1 (0.567); the gap is expected drift from the scoring method
 (our pocket-superposed ligand-RMSD vs their BiSyRMSD), the model version (0.5.5 vs
 0.5.0), and the MSA source, and it does not affect E15b because feature and label
-are self-consistent. Script `experiments/e15b_foldbench_iptm_transfer.py`, figure
+are self-consistent. Regenerated predictions + self-scored labels archived at Zenodo 10.5281/zenodo.21417241. Script `experiments/e15b_foldbench_iptm_transfer.py`, figure
 `results/figures/e15b_foldbench_iptm_transfer.png`.
 
 ## E11 — baselines, and calibration is not conformal

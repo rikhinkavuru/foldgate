@@ -24,6 +24,12 @@
       "identifier": "10.5281/zenodo.14794785",
       "resource_type": "dataset",
       "scheme": "doi"
+    },
+    {
+      "relation": "isSupplementedBy",
+      "identifier": "10.5281/zenodo.21417241",
+      "resource_type": "dataset",
+      "scheme": "doi"
     }
   ]
 }

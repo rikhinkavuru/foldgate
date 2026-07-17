@@ -44,9 +44,9 @@ reproduced cross-dataset). Source: `results/e15b_foldbench_iptm_transfer.json`.
 
 ---
 
-## 1. Archive the FoldBench regeneration to a Zenodo dataset DOI (reproducibility)
+## 1. Archive the FoldBench regeneration to a Zenodo dataset DOI (reproducibility) -- DONE 2026-07-17
 
-**Priority: do first. Effort: half a day, no GPU. Closes an audit finding.**
+**DONE.** Zenodo dataset DOI `10.5281/zenodo.21417241` (regen predictions + self-scored labels + provenance README). Paper data-availability statement updated to cite it; `.zenodo.json` links it via `isSupplementedBy`.
 
 - *Current state.* The regen data is on disk (`data/external/foldbench/`, ~21 MB:
   `foldbench_protenix_regen.csv`, `regen_scores.csv`, `foldbench_protein_ligand_rmsd_lddtlp.csv`,
