@@ -275,9 +275,11 @@ target $\alpha=0.20$ on the strata where the marginal (global) gate over-shoots.
 gate (native score) exceeds $\alpha$ on the novel strata $S_3$ ($0.38$) and $S_4$ ($0.43$), while the
 full method (combined score, group-conditional) holds risk $\le\alpha$ across $S_0$--$S_3$ at the
 annotated retained coverage and folds entirely on the no-analog stratum $S_4$. The coverage cost is
-real and grows with novelty ($94\%$ of familiar poses retained, $5\%$ on $S_3$). (b)~The repaired gate
-across all five models; marker area is the retained coverage and $\triangledown$ marks strata where the
-gate abstains. Realized risk stays $\le\alpha$ wherever a certified slice remains.}
+real and grows with novelty ($94\%$ of familiar poses retained, $5\%$ on $S_3$). Risk control
+($\le\alpha$) rests on the group-conditional calibration; the combined score is what turns the native
+gate's abstention into that retained coverage (native-score group-conditional folds on $S_3$). (b)~The
+repaired gate across all five models; marker area is the retained coverage and $\triangledown$ marks
+strata where the gate abstains. Realized risk stays $\le\alpha$ wherever a certified slice remains.}
 \label{fig:repair}
 \end{figure}
 
@@ -318,19 +320,19 @@ the other models certify $2$--$25\%$ where Hoeffding certifies zero. The reliabi
 therefore not tied to the $2$\,\AA\ convention, and the certifier follows from the sufficiency
 structure of the loss rather than from a default.
 
-\textbf{Reliability drift selects the repair.} Reliability drift $D(\nu)$ (Sec.~\ref{sec:break}) is the
-empirical proxy for the accept-region concept gap $\bar\Delta_c$ the impossibility names, so it decides,
-from a labeled probe rather than after a failed deployment, which repair a target region admits. The
-theorem says a training-free weighted gate under-reports its realized risk by exactly $\bar\Delta_c$:
-a small drift means the shift is covariate-dominated and weighted conformal repairs it, a large drift
-means it is concept-dominated and weighted conformal silently violates its own certificate, leaving
-group-conditional recalibration as the only valid repair. The measured values separate the regimes. On
-the moderate ligand shift $S_0,S_1\!\to\!S_2$, where the drift is small, the weighted plug-in pulls
-realized error to the target with no target labels (AF3 $0.27\to0.19$ at $70\%$ coverage), and the
-temporal axis, whose drift is an order of magnitude smaller ($|D|\le0.07$), produces no break to repair.
-On structural novelty the drift reaches $+0.47$ to $+0.63$, and deploying onto the novel tail
-$\to\!S_3,S_4$ the weighted plug-in cannot reach $\alpha$ (naive $0.48$--$0.50$, weighted
-$0.34$--$0.38$), exactly where group-conditional holds. Drift is a heuristic selector and not a
+\textbf{Reliability drift selects the repair.} Reliability drift $D(\nu)$ (Sec.~\ref{sec:break}) is a
+label-based diagnostic that tracks the accept-region concept gap $\bar\Delta_c$ the impossibility names,
+so it decides, from a labeled probe rather than after a failed deployment, which repair a target region
+admits. The theorem says a training-free weighted gate under-reports its realized risk by exactly
+$\bar\Delta_c$: a small drift signals a covariate-dominated shift that weighted conformal repairs, a
+large drift signals a concept-dominated one where weighted conformal silently violates its own
+certificate, leaving group-conditional recalibration as the only valid repair. The measured values
+separate the regimes. On the moderate ligand shift $S_0,S_1\!\to\!S_2$, where the drift is small, the
+weighted plug-in pulls realized error to the target with no target labels (AF3 $0.27\to0.19$ at $70\%$
+coverage), and the temporal axis, whose drift is an order of magnitude smaller ($|D|\le0.07$), produces
+no break to repair. On structural novelty the drift reaches $+0.47$ to $+0.63$, and deploying onto the
+novel tail $\to\!S_3,S_4$ the weighted plug-in cannot reach $\alpha$ (naive $0.37$--$0.50$, weighted
+$0.27$--$0.38$ across the five models), exactly where group-conditional holds. Drift is a heuristic selector and not a
 guarantee: it needs a labeled probe to measure, and a mis-specified stratifier leaves residual
 within-stratum drift, so we use it to choose the repair, not to certify one.
 
@@ -340,20 +342,20 @@ training-free surrogate that keys the gate on the model's own ensemble disagreem
 on moderate novelty but stays a weak proxy on the extreme.
 
 \section{Utility and a downstream decision}\label{sec:screen}
-\textbf{Ranking utility, validated without leakage.} At the $\alpha=0.20$ guarantee the combined score
-keeps $71\%$ of AF3 poses, $82\%$ of them binding-mode correct, where a native-confidence gate at the
-same certified error keeps only $22\%$; for Chai and Protenix, whose native ranking certifies almost
-nothing ($1\%$ and $4\%$ coverage), the same gate recovers $60\%$ and $51\%$. Aggregated over the
-risk-coverage curve this is a $28$--$41\%$ area reduction, out-of-fold under target-grouped
-(leakage-free) cross-validation (AF3 $0.185\!\to\!0.118$, Protenix $0.281\!\to\!0.166$;
-Table~\ref{tab:results}), two to three times more poses retained at a fixed guarantee. The combined
-score is an optional calibration-only map, not a retrained model and not a separate contribution: the
-finite-sample guarantee and the impossibility theorem (Sec.~\ref{sec:theory}) hold on the native
-confidence alone, and the combiner only improves the operating point. A pooled split across models would
-leak $95.1\%$ of test targets into calibration, and even a per-model random split duplicates the roughly
-$10$--$11\%$ of systems with several ligand instances; under target-grouped cross-validation the gate
-still holds (AF3 risk $0.185$, $[0.168,0.203]$, $5/5$ folds) and the advantage survives with a
-target-cluster bootstrap.
+\textbf{Ranking utility, validated without leakage.} On a held-out test split, at the $\alpha=0.20$
+guarantee the combined score keeps $71\%$ of AF3 poses, $82\%$ of them binding-mode correct, where a
+native-confidence gate at the same certified error keeps only $22\%$; for Chai and Protenix, whose
+native ranking certifies almost nothing ($1\%$ and $4\%$ coverage), the same gate recovers $60\%$ and
+$51\%$. This survives a strict leakage audit. A pooled split across models would leak $95.1\%$ of test
+targets into calibration, and even a per-model random split duplicates the roughly $10$--$11\%$ of
+systems with several ligand instances, so we re-evaluate out-of-fold under target-grouped (leakage-free)
+cross-validation: the risk-coverage area still falls $28$--$41\%$ (AF3 $0.185\!\to\!0.118$, Protenix
+$0.281\!\to\!0.166$; Table~\ref{tab:results}), the leakage-free leave-one-target-out gate accepts $52\%$
+of AF3 poses at realized risk $0.185\le\alpha$ ($5/5$ folds), and the advantage survives a
+target-cluster bootstrap. The combined score is an optional calibration-only map, not a retrained model
+and not a separate contribution: the finite-sample guarantee and the impossibility theorem
+(Sec.~\ref{sec:theory}) hold on the native confidence alone, and the combiner only improves the
+operating point.
 
 \textbf{The gate improves a non-circular quality, not just the label it certifies.} Accepted-pose
 purity is arithmetically $1$ minus the selective risk, so it cannot show the gate buys anything past
@@ -397,13 +399,16 @@ two indented rows add the ipTM accept/abstain gate at $50\%$ coverage over the a
 matched random-abstention control. The pose (ipTM) signal is the one the conformal layer governs; the
 Boltz-2 affinity head is an ungoverned comparator ($^{\ddagger}$, no coverage guarantee), shown for
 context. Bottom row: fraction of targets whose selective EF beats the random-abstention $95$th
-percentile. GPCR is the post-2022 novel set; LIT-PCBA CIs are wide at $n{=}5$.}
+percentile. GPCR is the post-2022 novel set; LIT-PCBA CIs are wide at $n{=}5$. On the screen the gate is
+a heuristic transfer: decoys carry no crystal pose, so the RMSD label it is calibrated on is unavailable
+and no coverage guarantee is claimed here (the selective win is against random abstention, not the
+affinity head).}
 \label{tab:headtohead}
 \begin{tabular}{lccc}
 \toprule
 EF@1\% & DEKOIS ($79$) & GPCR novel ($16$) & LIT-PCBA ($5$) \\
 \midrule
-Docking (Gnina) & $10.3\,[10.3,15.5]$ & $2.0\,[1.5,2.6]$ & $3.0\,[0,18.7]$ \\
+Docking (Gnina) & $10.3\,[10.3,15.5]$ & $2.0\,[1.5,2.6]$ & $3.0\,[0,7.7]$ \\
 Pose ipTM, no abstention (Hou) & $20.7\,[18.1,20.7]$ & $9.3\,[5.7,14.8]$ & $4.0\,[0,26.1]$ \\
 Affinity head, no abstention$^{\ddagger}$ & $31.0\,[28.4,31.0]$ & $26.6\,[19.3,35.7]$ & $5.1\,[4.9,23.1]$ \\
 \quad $+$ ipTM gate, $50\%$ cov. (ours) & $31.0\,[28.4,31.0]$ & $\mathbf{27.1}\,[18.8,35.7]$ & $7.7\,[4.9,18.7]$ \\
