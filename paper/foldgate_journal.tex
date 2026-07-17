@@ -163,7 +163,9 @@ model-relative rather than identifiable; we report the axis and the base model w
 calibrated to look marginally compliant, under-controls error on the novel strata for every model:
 realized risk climbs well above the target $\alpha=0.20$ as training-set similarity falls, and
 calibrate-on-familiar / deploy-on-novel drives it to $0.55$ against the $0.20$ target with the
-finite-sample guarantee holding in none of the resampled runs.}
+finite-sample guarantee holding in none of the resampled runs. The break is carried by $S_3$; the
+no-analog stratum $S_4$ ($n\!\approx\!68$ to $76$ per model) is small-sample, so a dip there for some
+models is estimation noise rather than restored safety.}
 \label{fig:break}
 \end{figure}
 
