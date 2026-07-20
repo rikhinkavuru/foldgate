@@ -56,10 +56,33 @@ experiments: features
 	$(PY) -m experiments.e19_shift_decomp
 	$(PY) -m experiments.e20_screening_broad
 	$(PY) -m experiments.e21_affinity_selective
+	$(MAKE) revision
 	$(MAKE) figures
+
+# post-audit revision experiments (JCIM draft); see docs/REVISION_TRIAGE.md
+revision: features
+	$(PY) -m experiments.e25_temporal_permodel
+	$(PY) -m experiments.e26_strata_and_binning
+	$(PY) -m experiments.e27_pb_joint_label
+	$(PY) -m experiments.e28_label_cost_curve
+	$(PY) -m experiments.e29_proxy_stratifier
+	$(PY) -m experiments.e30_decision_curve
+	$(PY) -m experiments.e31_extra_baselines
+	$(PY) -m experiments.e32_rmsd_conditioned_ifp
+	$(PY) -m experiments.e33_pseudo_prospective
+	$(PY) -m experiments.e34_loto_gate_both
+	$(PY) -m experiments.e35_ties_bracket
+	$(PY) -m experiments.e36_ensemble_novelty_corr
+	$(PY) -m experiments.e37_screening_stats
+	$(PY) -m experiments.e38_foldbench_risk
+	$(PY) -m experiments.e40_composition
 
 figures:
 	$(PY) -m experiments.make_figures
+	$(PY) -m experiments.make_consort_figure
+	$(PY) -m experiments.make_break_figure
+	$(PY) -m experiments.make_addition_figures
+	$(PY) -m experiments.make_certificate_cards
 
 paper:
 	$(PY) paper/build_pdf.py paper/moml2026_shortpaper.md
