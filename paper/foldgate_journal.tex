@@ -428,6 +428,23 @@ Drift grid & $0.10$ & Romano-Wolf step-down & $55$ cells & family-wise \\
 \end{tabular}
 \end{table}
 
+\textbf{The deliverable: certificate cards.} We package every repair verdict as a standardized card
+per (model, novelty stratum): $\alpha$, $\delta$, calibration $n$, accepted $n$, realized risk, exact
+Clopper-Pearson risk upper bound, retained coverage, reliability drift $D$, the recommended repair, and a
+FEASIBLE / ABSTAIN verdict (Fig.~\ref{fig:cards}). The pattern is the paper in one glance: familiar strata
+are FEASIBLE with a certified operating point, and the novel tail reads ABSTAIN, the certified action. This
+turns the layer from an audit into a deliverable a practitioner reads before trusting a delivered pose.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{../results/figures/certificate_cards.png}
+\caption{Certificate cards (ligand axis, $\alpha=0.20$), one per (model, stratum). Green FEASIBLE cards
+carry a certified operating point (retained coverage, accepted $n$, realized risk with its
+Clopper-Pearson upper bound, reliability drift $D$); red ABSTAIN cards report that no certified operating
+point exists, which is itself the certified action. The full grid across both novelty axes is in the SI.}
+\label{fig:cards}
+\end{figure}
+
 \section{Utility, priced and leakage-free}\label{sec:utility}
 \textbf{Ranking utility.} Every utility number is target-grouped. Under a nested leave-one-target-out
 protocol (outer GroupKFold on system id; within each training fold a grouped fit/calibration split, so the
