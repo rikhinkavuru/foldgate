@@ -177,8 +177,8 @@ def main() -> None:
         ps = data[m]["per_stratum"]["strata"]
         s3 = ps.get(3, {})
         dn = data[m]["deploy_novel"]
-        print(f"  {m:>9}: S3 risk={s3.get('risk')} (n={s3.get('n_accept')}) "
-              f"deploy→novel={dn.get('risk')}")
+        print(f"  {m:>9}: S3 risk={s3.get('risk')} (n={s3.get('median_n_accept')}) "
+              f"deploy→novel={dn.get('risk')} (n={dn.get('median_n_accept')})")
 
 
 if __name__ == "__main__":

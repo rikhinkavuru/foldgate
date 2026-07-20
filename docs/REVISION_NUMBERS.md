@@ -84,7 +84,29 @@ Nested target-grouped LOTO (GroupKFold outer, grouped 50/50 fit/cal inner). α=0
 - 2,425 systems: MW 76/396/797 (median 396); **fragment <300 = 24%, drug-like 300–500 = 55%, large >500 = 22%**; ~0 ions, 15 peptide/flexible, 2,410 drug-like. Target class (PDB `entry_keywords`, no UniProt/EC shipped): broad, top TRANSFERASE 20.6%, no class >21%; **2,412 distinct receptors, 1,685 distinct CCD ligands** → no monoculture.
 - **Protenix pocket-S3 +0.63 drift is robust, not thin-bin:** every ranking_score quintile has ≥103 novel-pocket targets; top-confidence bin (>0.987) still only 0.544 correct vs 0.947 in S0. AF3 same pattern (high-conf S3 tops at 0.72 vs 0.95). No thin-bin flag fires.
 
+## e30 — decision curve / net-benefit (III.6, retires R3.8) — DONE
+- NB(λ)=(TP−λ·FP)/N, leakage-free (nested LOTO). Conformal gate wins for **λ∈[0.65, 4.55]** (AF3); dominates fixed-ipTM≥0.8 at EVERY λ (TP 1636/FP 356 vs 1500/432). Accept-all best only for λ<0.65; abstain-all best only for λ>~4.6.
+- All 5 models same shape (win ranges: af3 0.65–4.55, boltz1 0.80–3.80, boltz1x 0.85–4.20, chai 0.55–3.65, protenix 0.75–4.60).
+- **Statement:** the layer serves the high-cost regime; no single α to defend (retires R3.8).
+
 ## consort_flow.png — DONE (counts verified live from parquet).
 
-## Pending (agents running)
-e28 combined-score variant · e29 proxy stratifier · e30 decision curve · e31 extra baselines.
+## e28 combined-score variant (III.1) — DONE
+- AF3 combined-score certified coverage: S1 0.217 at n_g=80 → 0.829 at full pool; S2 0.480 at 80 → 0.769; S3 0.332 only at full pool. Native = 0 at every budget on S1–S3.
+- Combined score raises the CEILING (unlocks S1/S2), not the min_accept=20 FLOOR. Design tool: ~80 in-stratum labels certify moderate-novelty S1 with the combined gate; S2/S3 need near the full pool. S1 crosses 0.2 at n_g=80 for boltz1x/chai/protenix too.
+
+## e29 proxy stratifier (R2.2/III.2) — DONE
+- Public proxy = `num_training_systems_with_similar_ccds` (CCD count): Spearman to oracle 0.59, adjacent-agreement 0.83 (af3); recency-date and protein seqsim are at chance.
+- Graceful degradation: proxy matches oracle control on low/mid novelty (S0–S2 within ±0.05) but loosens the novel tail (true S3 risk 0.23→0.37, +0.142).
+- Load-bearing: even the ORACLE group-conditional gate leaves S4 at 0.60 (>α). So **concept shift, not the un-enumerable training set, is the binding limit** on the novel tail — stratification alone can't certify it regardless of proxy vs oracle. Governance line for the abstract.
+
+## e31 extra baselines (R1.10/III.7) — DONE
+- AF3 under shift (risk/cov): fixed-ipTM≥0.8 **0.301** (breaks), naive conformal **0.412** (breaks), accept-all 0.417 — vs group-conditional 0.190/0.18, RLCP-localized 0.187/0.44, per-stratum Venn-Abers 0.166/0.24 (all HOLD by abstaining).
+- Fixed-ipTM across models: erratic (boltz 0.04 cov, protenix 0.93 cov 0.511 risk) — never a controlled field baseline.
+- **Venn-Abers matches the GBM** (0.166/0.24 vs 0.190/0.18) → the shift repair does NOT require the gradient-boosted combiner; a per-stratum Venn-Abers on the native score reaches the same guarantee. Simplification to flag (drops R1.5/R3.7 GBM concerns entirely if adopted).
+
+## Money figure (Fig 2 rebuild, R4.13/R4.4) — DONE
+- Per-stratum realized risk of the global gate (300 grouped resamples, mean + 90% resample interval, median accepted-n), S3-led, S4 greyed. AF3 S3 0.367; chai S3 0.609 (native gate erratic).
+- deploy-to-novel (calibrate S0–S1, deploy S3–S4, CP interval): AF3 **0.549**, boltz1 0.491, boltz1x 0.478, chai 0.500, protenix 0.664. Range ~0.48–0.66; matches E2's 0.547. Cite break_money_numbers.json.
+
+## ALL EXPERIMENTS + FIGURES COMPLETE. Next: paper rewrite → JCIM structure.
