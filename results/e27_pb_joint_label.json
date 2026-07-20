@@ -1,0 +1,248 @@
+{
+  "alpha": 0.2,
+  "delta": 0.1,
+  "n_folds": 5,
+  "cal_frac": 0.5,
+  "protocol": "nested target-grouped LOTO (GroupKFold outer, grouped 50/50 fit/cal inner); combined score = ScoreCombiner P(correct); NaN pb_valid = invalid",
+  "score": "combined",
+  "per_model": {
+    "af3": {
+      "base_rates": {
+        "n": 2709,
+        "n_nan_pb": 0,
+        "pb_valid_rate": 0.7224,
+        "correct_rate": 0.7043,
+        "joint_rate": 0.5367
+      },
+      "gate_rmsd_label": {
+        "accepted": {
+          "n": 1982,
+          "k": 1534,
+          "rate": 0.774,
+          "cp90": [
+            0.758,
+            0.7894
+          ]
+        },
+        "rejected": {
+          "n": 727,
+          "k": 423,
+          "rate": 0.5818,
+          "cp90": [
+            0.5509,
+            0.6123
+          ]
+        },
+        "coverage": 0.7316
+      },
+      "gate_joint_label": {
+        "coverage": 0.0185,
+        "n_accept": 50,
+        "joint_error_risk": 0.22,
+        "risk_cp90": [
+          0.1286,
+          0.3378
+        ],
+        "risk_cp_upper90": 0.3378,
+        "certified_ub_hb": 0.3477,
+        "certified_pass": false,
+        "folds_holding": [
+          0,
+          1
+        ],
+        "vacuous": true
+      },
+      "coverage_cost_joint_vs_rmsd": 0.7131
+    },
+    "boltz1": {
+      "base_rates": {
+        "n": 2384,
+        "n_nan_pb": 0,
+        "pb_valid_rate": 0.6502,
+        "correct_rate": 0.6376,
+        "joint_rate": 0.4513
+      },
+      "gate_rmsd_label": {
+        "accepted": {
+          "n": 1438,
+          "k": 1041,
+          "rate": 0.7239,
+          "cp90": [
+            0.7039,
+            0.7433
+          ]
+        },
+        "rejected": {
+          "n": 946,
+          "k": 509,
+          "rate": 0.5381,
+          "cp90": [
+            0.5108,
+            0.5651
+          ]
+        },
+        "coverage": 0.6032
+      },
+      "gate_joint_label": {
+        "coverage": 0.0,
+        "n_accept": 0,
+        "joint_error_risk": null,
+        "risk_cp90": [
+          null,
+          null
+        ],
+        "certified_ub_hb": null,
+        "folds_holding": [
+          0,
+          0
+        ],
+        "vacuous": true
+      },
+      "coverage_cost_joint_vs_rmsd": 0.6032
+    },
+    "boltz1x": {
+      "base_rates": {
+        "n": 2331,
+        "n_nan_pb": 0,
+        "pb_valid_rate": 0.9949,
+        "correct_rate": 0.6555,
+        "joint_rate": 0.6538
+      },
+      "gate_rmsd_label": {
+        "accepted": {
+          "n": 1129,
+          "k": 1127,
+          "rate": 0.9982,
+          "cp90": [
+            0.9944,
+            0.9997
+          ]
+        },
+        "rejected": {
+          "n": 736,
+          "k": 728,
+          "rate": 0.9891,
+          "cp90": [
+            0.9805,
+            0.9946
+          ]
+        },
+        "coverage": 0.4843
+      },
+      "gate_joint_label": {
+        "coverage": 0.4809,
+        "n_accept": 1121,
+        "joint_error_risk": 0.1811,
+        "risk_cp90": [
+          0.1624,
+          0.2011
+        ],
+        "risk_cp_upper90": 0.2011,
+        "certified_ub_hb": 0.2028,
+        "certified_pass": true,
+        "folds_holding": [
+          3,
+          4
+        ],
+        "vacuous": false
+      },
+      "coverage_cost_joint_vs_rmsd": 0.0034
+    },
+    "chai": {
+      "base_rates": {
+        "n": 2571,
+        "n_nan_pb": 0,
+        "pb_valid_rate": 0.7791,
+        "correct_rate": 0.6488,
+        "joint_rate": 0.5434
+      },
+      "gate_rmsd_label": {
+        "accepted": {
+          "n": 1638,
+          "k": 1390,
+          "rate": 0.8486,
+          "cp90": [
+            0.8333,
+            0.863
+          ]
+        },
+        "rejected": {
+          "n": 933,
+          "k": 613,
+          "rate": 0.657,
+          "cp90": [
+            0.6306,
+            0.6827
+          ]
+        },
+        "coverage": 0.6371
+      },
+      "gate_joint_label": {
+        "coverage": 0.168,
+        "n_accept": 432,
+        "joint_error_risk": 0.1759,
+        "risk_cp90": [
+          0.1464,
+          0.2088
+        ],
+        "risk_cp_upper90": 0.2088,
+        "certified_ub_hb": 0.2117,
+        "certified_pass": true,
+        "folds_holding": [
+          3,
+          4
+        ],
+        "vacuous": false
+      },
+      "coverage_cost_joint_vs_rmsd": 0.4691
+    },
+    "protenix": {
+      "base_rates": {
+        "n": 2607,
+        "n_nan_pb": 0,
+        "pb_valid_rate": 0.7545,
+        "correct_rate": 0.6341,
+        "joint_rate": 0.5113
+      },
+      "gate_rmsd_label": {
+        "accepted": {
+          "n": 1491,
+          "k": 1257,
+          "rate": 0.8431,
+          "cp90": [
+            0.8267,
+            0.8584
+          ]
+        },
+        "rejected": {
+          "n": 1116,
+          "k": 710,
+          "rate": 0.6362,
+          "cp90": [
+            0.6118,
+            0.6601
+          ]
+        },
+        "coverage": 0.5719
+      },
+      "gate_joint_label": {
+        "coverage": 0.1588,
+        "n_accept": 414,
+        "joint_error_risk": 0.2005,
+        "risk_cp90": [
+          0.1686,
+          0.2356
+        ],
+        "risk_cp_upper90": 0.2356,
+        "certified_ub_hb": 0.2387,
+        "certified_pass": false,
+        "folds_holding": [
+          1,
+          3
+        ],
+        "vacuous": false
+      },
+      "coverage_cost_joint_vs_rmsd": 0.4131
+    }
+  }
+}

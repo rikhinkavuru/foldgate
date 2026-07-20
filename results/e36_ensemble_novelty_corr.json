@@ -1,0 +1,548 @@
+{
+  "features": {
+    "combiner": [
+      "ens_ranking_std",
+      "ens_ranking_range",
+      "ens_iptm_std",
+      "xmodel_iptm_mean",
+      "xmodel_iptm_std"
+    ],
+    "native": [
+      "iface_iptm",
+      "ranking_score"
+    ],
+    "physicochemical": [
+      "ligand_molecular_weight",
+      "ligand_num_heavy_atoms",
+      "pb_valid"
+    ]
+  },
+  "substantial_threshold": 0.3,
+  "n_boot": 1000,
+  "models": {
+    "af3": {
+      "n": 2709,
+      "per_feature": {
+        "ens_ranking_std": {
+          "rho": 0.12438480846378988,
+          "abs_rho": 0.12438480846378988,
+          "ci_low": 0.09435622110918289,
+          "ci_high": 0.15632619006756118,
+          "n": 2703
+        },
+        "ens_ranking_range": {
+          "rho": 0.12164965419757255,
+          "abs_rho": 0.12164965419757255,
+          "ci_low": 0.0904472640779921,
+          "ci_high": 0.15282471257776994,
+          "n": 2709
+        },
+        "ens_iptm_std": {
+          "rho": 0.22482281872652818,
+          "abs_rho": 0.22482281872652818,
+          "ci_low": 0.1919503500648953,
+          "ci_high": 0.25556042918214167,
+          "n": 2703
+        },
+        "xmodel_iptm_mean": {
+          "rho": -0.3404634829220804,
+          "abs_rho": 0.3404634829220804,
+          "ci_low": -0.37109991776949813,
+          "ci_high": -0.3081039434494872,
+          "n": 2617
+        },
+        "xmodel_iptm_std": {
+          "rho": 0.3104325290471948,
+          "abs_rho": 0.3104325290471948,
+          "ci_low": 0.2795419525506943,
+          "ci_high": 0.3413478968904092,
+          "n": 2617
+        },
+        "iface_iptm": {
+          "rho": -0.1799921961530211,
+          "abs_rho": 0.1799921961530211,
+          "ci_low": -0.2106991371383814,
+          "ci_high": -0.14517613822962022,
+          "n": 2709
+        },
+        "ranking_score": {
+          "rho": -0.1170221792246924,
+          "abs_rho": 0.1170221792246924,
+          "ci_low": -0.1496425942577217,
+          "ci_high": -0.08579087075702899,
+          "n": 2709
+        },
+        "ligand_molecular_weight": {
+          "rho": -0.2707009894761923,
+          "abs_rho": 0.2707009894761923,
+          "ci_low": -0.3022260201934636,
+          "ci_high": -0.23914218396005657,
+          "n": 2709
+        },
+        "ligand_num_heavy_atoms": {
+          "rho": -0.20737694257758846,
+          "abs_rho": 0.20737694257758846,
+          "ci_low": -0.23856115580760726,
+          "ci_high": -0.17465153747388576,
+          "n": 2709
+        },
+        "pb_valid": {
+          "rho": -0.049023798702411026,
+          "abs_rho": 0.049023798702411026,
+          "ci_low": -0.08034903795649158,
+          "ci_high": -0.018550414631949876,
+          "n": 2709
+        }
+      },
+      "combiner_ranked_abs_rho": [
+        {
+          "feature": "xmodel_iptm_mean",
+          "abs_rho": 0.3404634829220804
+        },
+        {
+          "feature": "xmodel_iptm_std",
+          "abs_rho": 0.3104325290471948
+        },
+        {
+          "feature": "ens_iptm_std",
+          "abs_rho": 0.22482281872652818
+        },
+        {
+          "feature": "ens_ranking_std",
+          "abs_rho": 0.12438480846378988
+        },
+        {
+          "feature": "ens_ranking_range",
+          "abs_rho": 0.12164965419757255
+        }
+      ],
+      "median_abs_rho_combiner": 0.22482281872652818,
+      "median_abs_rho_physicochemical": 0.20737694257758846,
+      "max_abs_rho_combiner": 0.3404634829220804,
+      "argmax_combiner_feature": "xmodel_iptm_mean",
+      "combiner_leaks_novelty": true
+    },
+    "boltz1": {
+      "n": 2384,
+      "per_feature": {
+        "ens_ranking_std": {
+          "rho": 0.1450968693820669,
+          "abs_rho": 0.1450968693820669,
+          "ci_low": 0.11351617094953176,
+          "ci_high": 0.17524329047918366,
+          "n": 2382
+        },
+        "ens_ranking_range": {
+          "rho": 0.1516957103994583,
+          "abs_rho": 0.1516957103994583,
+          "ci_low": 0.12042117936840023,
+          "ci_high": 0.18342542893633226,
+          "n": 2384
+        },
+        "ens_iptm_std": {
+          "rho": 0.22892219454304064,
+          "abs_rho": 0.22892219454304064,
+          "ci_low": 0.19601180805739687,
+          "ci_high": 0.2621856204312279,
+          "n": 2382
+        },
+        "xmodel_iptm_mean": {
+          "rho": -0.3271394004077429,
+          "abs_rho": 0.3271394004077429,
+          "ci_low": -0.35637021979624584,
+          "ci_high": -0.2920614385694613,
+          "n": 2383
+        },
+        "xmodel_iptm_std": {
+          "rho": 0.3042861053533921,
+          "abs_rho": 0.3042861053533921,
+          "ci_low": 0.27372283112665274,
+          "ci_high": 0.3363415396773078,
+          "n": 2383
+        },
+        "iface_iptm": {
+          "rho": -0.40254081163488376,
+          "abs_rho": 0.40254081163488376,
+          "ci_low": -0.432441068720882,
+          "ci_high": -0.3735635695531279,
+          "n": 2384
+        },
+        "ranking_score": {
+          "rho": -0.07506670722010306,
+          "abs_rho": 0.07506670722010306,
+          "ci_low": -0.10824277796255281,
+          "ci_high": -0.04123751769289684,
+          "n": 2384
+        },
+        "ligand_molecular_weight": {
+          "rho": -0.2708996176344827,
+          "abs_rho": 0.2708996176344827,
+          "ci_low": -0.30437733040678155,
+          "ci_high": -0.23895889382180446,
+          "n": 2384
+        },
+        "ligand_num_heavy_atoms": {
+          "rho": -0.21056607055411503,
+          "abs_rho": 0.21056607055411503,
+          "ci_low": -0.24530867354440392,
+          "ci_high": -0.1776685722548479,
+          "n": 2384
+        },
+        "pb_valid": {
+          "rho": -0.049484959534878616,
+          "abs_rho": 0.049484959534878616,
+          "ci_low": -0.0835534591086575,
+          "ci_high": -0.015913964294538556,
+          "n": 2384
+        }
+      },
+      "combiner_ranked_abs_rho": [
+        {
+          "feature": "xmodel_iptm_mean",
+          "abs_rho": 0.3271394004077429
+        },
+        {
+          "feature": "xmodel_iptm_std",
+          "abs_rho": 0.3042861053533921
+        },
+        {
+          "feature": "ens_iptm_std",
+          "abs_rho": 0.22892219454304064
+        },
+        {
+          "feature": "ens_ranking_range",
+          "abs_rho": 0.1516957103994583
+        },
+        {
+          "feature": "ens_ranking_std",
+          "abs_rho": 0.1450968693820669
+        }
+      ],
+      "median_abs_rho_combiner": 0.22892219454304064,
+      "median_abs_rho_physicochemical": 0.21056607055411503,
+      "max_abs_rho_combiner": 0.3271394004077429,
+      "argmax_combiner_feature": "xmodel_iptm_mean",
+      "combiner_leaks_novelty": true
+    },
+    "boltz1x": {
+      "n": 2331,
+      "per_feature": {
+        "ens_ranking_std": {
+          "rho": 0.14496622355481803,
+          "abs_rho": 0.14496622355481803,
+          "ci_low": 0.11196943505866801,
+          "ci_high": 0.18195142864472683,
+          "n": 2322
+        },
+        "ens_ranking_range": {
+          "rho": 0.14914820185835503,
+          "abs_rho": 0.14914820185835503,
+          "ci_low": 0.11805396977865094,
+          "ci_high": 0.18260066536497063,
+          "n": 2331
+        },
+        "ens_iptm_std": {
+          "rho": 0.17421283502039586,
+          "abs_rho": 0.17421283502039586,
+          "ci_low": 0.13922279740039056,
+          "ci_high": 0.2070780085407884,
+          "n": 2322
+        },
+        "xmodel_iptm_mean": {
+          "rho": -0.3419366385477729,
+          "abs_rho": 0.3419366385477729,
+          "ci_low": -0.37617407352172044,
+          "ci_high": -0.3073680605470734,
+          "n": 2330
+        },
+        "xmodel_iptm_std": {
+          "rho": 0.33679846279835124,
+          "abs_rho": 0.33679846279835124,
+          "ci_low": 0.30454317019435456,
+          "ci_high": 0.3684390077519471,
+          "n": 2330
+        },
+        "iface_iptm": {
+          "rho": -0.323882046695451,
+          "abs_rho": 0.323882046695451,
+          "ci_low": -0.356839425042236,
+          "ci_high": -0.2898480177412611,
+          "n": 2331
+        },
+        "ranking_score": {
+          "rho": -0.06234619338429337,
+          "abs_rho": 0.06234619338429337,
+          "ci_low": -0.09506150254025149,
+          "ci_high": -0.027466743731568034,
+          "n": 2331
+        },
+        "ligand_molecular_weight": {
+          "rho": -0.27235727052103076,
+          "abs_rho": 0.27235727052103076,
+          "ci_low": -0.3064765027934062,
+          "ci_high": -0.2407236009455033,
+          "n": 2331
+        },
+        "ligand_num_heavy_atoms": {
+          "rho": -0.21072473395792138,
+          "abs_rho": 0.21072473395792138,
+          "ci_low": -0.24252554962818929,
+          "ci_high": -0.17709625895425452,
+          "n": 2331
+        },
+        "pb_valid": {
+          "rho": -0.021144232993089294,
+          "abs_rho": 0.021144232993089294,
+          "ci_low": -0.058076832882170006,
+          "ci_high": 0.017796694190911604,
+          "n": 2331
+        }
+      },
+      "combiner_ranked_abs_rho": [
+        {
+          "feature": "xmodel_iptm_mean",
+          "abs_rho": 0.3419366385477729
+        },
+        {
+          "feature": "xmodel_iptm_std",
+          "abs_rho": 0.33679846279835124
+        },
+        {
+          "feature": "ens_iptm_std",
+          "abs_rho": 0.17421283502039586
+        },
+        {
+          "feature": "ens_ranking_range",
+          "abs_rho": 0.14914820185835503
+        },
+        {
+          "feature": "ens_ranking_std",
+          "abs_rho": 0.14496622355481803
+        }
+      ],
+      "median_abs_rho_combiner": 0.17421283502039586,
+      "median_abs_rho_physicochemical": 0.21072473395792138,
+      "max_abs_rho_combiner": 0.3419366385477729,
+      "argmax_combiner_feature": "xmodel_iptm_mean",
+      "combiner_leaks_novelty": true
+    },
+    "chai": {
+      "n": 2571,
+      "per_feature": {
+        "ens_ranking_std": {
+          "rho": 0.22045588726393656,
+          "abs_rho": 0.22045588726393656,
+          "ci_low": 0.19161957127963553,
+          "ci_high": 0.24888290041115146,
+          "n": 2567
+        },
+        "ens_ranking_range": {
+          "rho": 0.2183685356716561,
+          "abs_rho": 0.2183685356716561,
+          "ci_low": 0.18781114670067828,
+          "ci_high": 0.24902986317878376,
+          "n": 2571
+        },
+        "ens_iptm_std": {
+          "rho": 0.2650877571061535,
+          "abs_rho": 0.2650877571061535,
+          "ci_low": 0.23478436437355227,
+          "ci_high": 0.2964816037239378,
+          "n": 2567
+        },
+        "xmodel_iptm_mean": {
+          "rho": -0.3258183735177015,
+          "abs_rho": 0.3258183735177015,
+          "ci_low": -0.35735596371794454,
+          "ci_high": -0.29518641914257354,
+          "n": 2562
+        },
+        "xmodel_iptm_std": {
+          "rho": 0.3231245405096378,
+          "abs_rho": 0.3231245405096378,
+          "ci_low": 0.2901037538264509,
+          "ci_high": 0.35420464215293085,
+          "n": 2562
+        },
+        "iface_iptm": {
+          "rho": -0.29828986277635494,
+          "abs_rho": 0.29828986277635494,
+          "ci_low": -0.33199005995618763,
+          "ci_high": -0.267098086802993,
+          "n": 2571
+        },
+        "ranking_score": {
+          "rho": -0.21295088589966862,
+          "abs_rho": 0.21295088589966862,
+          "ci_low": -0.24378293080433455,
+          "ci_high": -0.18318433124005548,
+          "n": 2571
+        },
+        "ligand_molecular_weight": {
+          "rho": -0.2712738594195629,
+          "abs_rho": 0.2712738594195629,
+          "ci_low": -0.3045194539841948,
+          "ci_high": -0.2360865979426287,
+          "n": 2571
+        },
+        "ligand_num_heavy_atoms": {
+          "rho": -0.20522617641163518,
+          "abs_rho": 0.20522617641163518,
+          "ci_low": -0.23905088010404377,
+          "ci_high": -0.17281011898291446,
+          "n": 2571
+        },
+        "pb_valid": {
+          "rho": -0.053599607623526696,
+          "abs_rho": 0.053599607623526696,
+          "ci_low": -0.08380236267038257,
+          "ci_high": -0.021383624903102947,
+          "n": 2571
+        }
+      },
+      "combiner_ranked_abs_rho": [
+        {
+          "feature": "xmodel_iptm_mean",
+          "abs_rho": 0.3258183735177015
+        },
+        {
+          "feature": "xmodel_iptm_std",
+          "abs_rho": 0.3231245405096378
+        },
+        {
+          "feature": "ens_iptm_std",
+          "abs_rho": 0.2650877571061535
+        },
+        {
+          "feature": "ens_ranking_std",
+          "abs_rho": 0.22045588726393656
+        },
+        {
+          "feature": "ens_ranking_range",
+          "abs_rho": 0.2183685356716561
+        }
+      ],
+      "median_abs_rho_combiner": 0.2650877571061535,
+      "median_abs_rho_physicochemical": 0.20522617641163518,
+      "max_abs_rho_combiner": 0.3258183735177015,
+      "argmax_combiner_feature": "xmodel_iptm_mean",
+      "combiner_leaks_novelty": true
+    },
+    "protenix": {
+      "n": 2607,
+      "per_feature": {
+        "ens_ranking_std": {
+          "rho": 0.00367221520904768,
+          "abs_rho": 0.00367221520904768,
+          "ci_low": -0.029824061594783756,
+          "ci_high": 0.03412009960872536,
+          "n": 2607
+        },
+        "ens_ranking_range": {
+          "rho": 0.005479500722104661,
+          "abs_rho": 0.005479500722104661,
+          "ci_low": -0.025017909722500856,
+          "ci_high": 0.04095612785963115,
+          "n": 2607
+        },
+        "ens_iptm_std": {
+          "rho": 0.056672313336666315,
+          "abs_rho": 0.056672313336666315,
+          "ci_low": 0.02339267379358798,
+          "ci_high": 0.08848475285454348,
+          "n": 2607
+        },
+        "xmodel_iptm_mean": {
+          "rho": -0.3448404206703054,
+          "abs_rho": 0.3448404206703054,
+          "ci_low": -0.37613836958878316,
+          "ci_high": -0.31329358925016404,
+          "n": 2607
+        },
+        "xmodel_iptm_std": {
+          "rho": 0.2589068103788224,
+          "abs_rho": 0.2589068103788224,
+          "ci_low": 0.2275675120898584,
+          "ci_high": 0.29019560138886474,
+          "n": 2607
+        },
+        "iface_iptm": {
+          "rho": -0.040641897866545096,
+          "abs_rho": 0.040641897866545096,
+          "ci_low": -0.07482216340609127,
+          "ci_high": -0.007448525532191053,
+          "n": 2607
+        },
+        "ranking_score": {
+          "rho": 0.0021998728631115708,
+          "abs_rho": 0.0021998728631115708,
+          "ci_low": -0.03204822900168731,
+          "ci_high": 0.0350889514788532,
+          "n": 2607
+        },
+        "ligand_molecular_weight": {
+          "rho": -0.26994885736180146,
+          "abs_rho": 0.26994885736180146,
+          "ci_low": -0.3010190252015891,
+          "ci_high": -0.23688632039415844,
+          "n": 2607
+        },
+        "ligand_num_heavy_atoms": {
+          "rho": -0.20713545556415597,
+          "abs_rho": 0.20713545556415597,
+          "ci_low": -0.23991877752980986,
+          "ci_high": -0.175254512113437,
+          "n": 2607
+        },
+        "pb_valid": {
+          "rho": -0.06846249988667101,
+          "abs_rho": 0.06846249988667101,
+          "ci_low": -0.10030905939457106,
+          "ci_high": -0.03754797010050322,
+          "n": 2607
+        }
+      },
+      "combiner_ranked_abs_rho": [
+        {
+          "feature": "xmodel_iptm_mean",
+          "abs_rho": 0.3448404206703054
+        },
+        {
+          "feature": "xmodel_iptm_std",
+          "abs_rho": 0.2589068103788224
+        },
+        {
+          "feature": "ens_iptm_std",
+          "abs_rho": 0.056672313336666315
+        },
+        {
+          "feature": "ens_ranking_range",
+          "abs_rho": 0.005479500722104661
+        },
+        {
+          "feature": "ens_ranking_std",
+          "abs_rho": 0.00367221520904768
+        }
+      ],
+      "median_abs_rho_combiner": 0.056672313336666315,
+      "median_abs_rho_physicochemical": 0.20713545556415597,
+      "max_abs_rho_combiner": 0.3448404206703054,
+      "argmax_combiner_feature": "xmodel_iptm_mean",
+      "combiner_leaks_novelty": true
+    }
+  },
+  "summary": {
+    "max_abs_rho_any_combiner_feature": 0.3448404206703054,
+    "max_location": {
+      "model": "protenix",
+      "feature": "xmodel_iptm_mean",
+      "rho": -0.3448404206703054,
+      "ci_low": -0.37613836958878316,
+      "ci_high": -0.31329358925016404
+    },
+    "combiner_leaks_novelty_substantial": true,
+    "median_abs_rho_combiner_across_models": 0.22482281872652818,
+    "median_abs_rho_physicochemical_across_models": 0.20737694257758846,
+    "regime": "ACHIEVABILITY (score is partly a novelty-aware re-score -- disclose)"
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "alpha": 0.2,
+  "delta": 0.1,
+  "protocol": "target-grouped LOTO gate (GroupKFold outer, grouped fit/cal inner), combined score",
+  "e6b_af3_unconditioned_gap_reference": 0.19,
+  "per_model": {
+    "af3": {
+      "n_total": 2683,
+      "n_evaluated": 2683,
+      "n_correct_evaluated": 1890,
+      "coverage_evaluated": 0.7361162877376072,
+      "accepted_ifp_recall_all": 0.9094324597647658,
+      "rejected_ifp_recall_all": 0.7133959597340273,
+      "unconditioned_gap": 0.19603650003073858,
+      "unconditioned_gap_ci90": [
+        0.1734389656050544,
+        0.21671756262990008
+      ],
+      "within_correct": {
+        "n_correct": 1890,
+        "n_correct_accepted": 1621,
+        "n_correct_rejected": 269,
+        "accepted_ifp_recall": 0.9384845242723077,
+        "rejected_ifp_recall": 0.9100453786424486,
+        "gap": 0.028439145629859053,
+        "gap_ci90": [
+          0.015193343467988979,
+          0.04455915287149442
+        ],
+        "gap_excludes_zero": true,
+        "shrinkage_vs_unconditioned": 0.16759735440087953
+      },
+      "regression": {
+        "model": "ifp_recall ~ 1 + rmsd + accepted",
+        "rmsd_coef": -0.02777459060615496,
+        "accepted_coef": 0.06278601995444766,
+        "accepted_coef_ci90": [
+          0.045551304860733714,
+          0.07718442078456678
+        ],
+        "accepted_coef_sign": 1,
+        "accepted_coef_p_two_sided": 0.0,
+        "accepted_coef_excludes_zero": true
+      }
+    },
+    "boltz1": {
+      "n_total": 2353,
+      "n_evaluated": 2353,
+      "n_correct_evaluated": 1497,
+      "coverage_evaluated": 0.5937101572460689,
+      "accepted_ifp_recall_all": 0.908446990508585,
+      "rejected_ifp_recall_all": 0.7386697702319577,
+      "unconditioned_gap": 0.16977722027662734,
+      "unconditioned_gap_ci90": [
+        0.15185482895871844,
+        0.18710880340245342
+      ],
+      "within_correct": {
+        "n_correct": 1497,
+        "n_correct_accepted": 1145,
+        "n_correct_rejected": 352,
+        "accepted_ifp_recall": 0.9348487511523805,
+        "rejected_ifp_recall": 0.9076208123860527,
+        "gap": 0.027227938766327786,
+        "gap_ci90": [
+          0.014699166370757676,
+          0.04010686133138807
+        ],
+        "gap_excludes_zero": true,
+        "shrinkage_vs_unconditioned": 0.14254928151029955
+      },
+      "regression": {
+        "model": "ifp_recall ~ 1 + rmsd + accepted",
+        "rmsd_coef": -0.028598854501764543,
+        "accepted_coef": 0.05434116038695336,
+        "accepted_coef_ci90": [
+          0.03897394816327529,
+          0.06818812369393012
+        ],
+        "accepted_coef_sign": 1,
+        "accepted_coef_p_two_sided": 0.0,
+        "accepted_coef_excludes_zero": true
+      }
+    },
+    "boltz1x": {
+      "n_total": 2311,
+      "n_evaluated": 2311,
+      "n_correct_evaluated": 1513,
+      "coverage_evaluated": 0.6157507572479446,
+      "accepted_ifp_recall_all": 0.9054313794501119,
+      "rejected_ifp_recall_all": 0.7490926740700357,
+      "unconditioned_gap": 0.15633870538007621,
+      "unconditioned_gap_ci90": [
+        0.13910011968981478,
+        0.17447247208450878
+      ],
+      "within_correct": {
+        "n_correct": 1513,
+        "n_correct_accepted": 1166,
+        "n_correct_rejected": 347,
+        "accepted_ifp_recall": 0.9371177262968284,
+        "rejected_ifp_recall": 0.9141931172621528,
+        "gap": 0.022924609034675636,
+        "gap_ci90": [
+          0.012057468857195757,
+          0.034770556972417495
+        ],
+        "gap_excludes_zero": true,
+        "shrinkage_vs_unconditioned": 0.13341409634540058
+      },
+      "regression": {
+        "model": "ifp_recall ~ 1 + rmsd + accepted",
+        "rmsd_coef": -0.03052487754601248,
+        "accepted_coef": 0.039241599947512355,
+        "accepted_coef_ci90": [
+          0.026570040060314437,
+          0.051513150787063394
+        ],
+        "accepted_coef_sign": 1,
+        "accepted_coef_p_two_sided": 0.0,
+        "accepted_coef_excludes_zero": true
+      }
+    },
+    "chai": {
+      "n_total": 2545,
+      "n_evaluated": 2545,
+      "n_correct_evaluated": 1652,
+      "coverage_evaluated": 0.6514734774066797,
+      "accepted_ifp_recall_all": 0.9111668608774272,
+      "rejected_ifp_recall_all": 0.7007161470406266,
+      "unconditioned_gap": 0.21045071383680058,
+      "unconditioned_gap_ci90": [
+        0.19130661992806486,
+        0.22981922902112867
+      ],
+      "within_correct": {
+        "n_correct": 1652,
+        "n_correct_accepted": 1365,
+        "n_correct_rejected": 287,
+        "accepted_ifp_recall": 0.9390034856174629,
+        "rejected_ifp_recall": 0.9011084132347497,
+        "gap": 0.03789507238271328,
+        "gap_ci90": [
+          0.02197808901035968,
+          0.0542181092790334
+        ],
+        "gap_excludes_zero": true,
+        "shrinkage_vs_unconditioned": 0.1725556414540873
+      },
+      "regression": {
+        "model": "ifp_recall ~ 1 + rmsd + accepted",
+        "rmsd_coef": -0.024856176500080023,
+        "accepted_coef": 0.0722419037534198,
+        "accepted_coef_ci90": [
+          0.05657434595831818,
+          0.08859747870339832
+        ],
+        "accepted_coef_sign": 1,
+        "accepted_coef_p_two_sided": 0.0,
+        "accepted_coef_excludes_zero": true
+      }
+    },
+    "protenix": {
+      "n_total": 2583,
+      "n_evaluated": 2583,
+      "n_correct_evaluated": 1638,
+      "coverage_evaluated": 0.5563298490127758,
+      "accepted_ifp_recall_all": 0.8990344152622833,
+      "rejected_ifp_recall_all": 0.7521659528077107,
+      "unconditioned_gap": 0.14686846245457263,
+      "unconditioned_gap_ci90": [
+        0.13143675504748945,
+        0.16344804129185905
+      ],
+      "within_correct": {
+        "n_correct": 1638,
+        "n_correct_accepted": 1163,
+        "n_correct_rejected": 475,
+        "accepted_ifp_recall": 0.9291861338601508,
+        "rejected_ifp_recall": 0.9093809939059716,
+        "gap": 0.019805139954179207,
+        "gap_ci90": [
+          0.007775137100337196,
+          0.03319354598404296
+        ],
+        "gap_excludes_zero": true,
+        "shrinkage_vs_unconditioned": 0.12706332250039343
+      },
+      "regression": {
+        "model": "ifp_recall ~ 1 + rmsd + accepted",
+        "rmsd_coef": -0.029507223766167677,
+        "accepted_coef": 0.03433471693370302,
+        "accepted_coef_ci90": [
+          0.02315698541287515,
+          0.04612546852260715
+        ],
+        "accepted_coef_sign": 1,
+        "accepted_coef_p_two_sided": 0.0,
+        "accepted_coef_excludes_zero": true
+      }
+    }
+  }
+}
