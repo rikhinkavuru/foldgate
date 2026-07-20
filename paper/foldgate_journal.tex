@@ -1,8 +1,10 @@
 \documentclass[10pt]{article}
 
-% ARCHIVAL PAPER -- target venue J. Chem. Inf. Model. (ACS). Self-contained single-column
-% article (US Letter, Times 10pt) with no external style-file dependency, so it compiles
-% anywhere; swap in the achemso (JCIM) class at submission. Build: tectonic paper/foldgate_journal.tex
+% ARCHIVAL PAPER -- target venue Digital Discovery (RSC): gold OA, ML-for-chemistry + honest-negative
+% friendly, tolerant of the conformal framing. Self-contained single-column article (US Letter, Times 10pt)
+% with no external style-file dependency, so it compiles anywhere; swap in the RSC class at submission.
+% (J. Cheminformatics is the backup; both are more receptive to the statistical core than JCIM.)
+% Build: tectonic paper/foldgate_journal.tex
 % This is the post-audit revision: 3 contributions (break+frontier / decomposition-as-diagnostic /
 % priced repair), leakage-free headlines, notation + certificate-ledger + provenance tables,
 % RMSD-conditioned utility, screening moved to SI as a cost result. See docs/JCIM_OUTLINE.md,
@@ -40,24 +42,29 @@ Protein--Ligand Co-Folding under Novelty Shift}}
 
 \begin{abstract}
 \small
-Protein--ligand co-folding models (AlphaFold3, Boltz, Chai) report confidence scores that correlate
-with pose accuracy, but correlation is not a decision rule, and it is weakest on the novel pockets and
-chemotypes drug discovery cares about. We build \texttt{foldgate}, a training-free layer that turns
-frozen co-folding confidence into a risk-controlled accept/abstain gate, and audit where its guarantee
-fails. Calibrating on familiar targets and deploying on novel ones drives realized selective error to
-$0.55$ (AF3, $90\%$ CI $[0.52,0.58]$; $0.48$ to $0.66$ across five models) against a $0.20$ target. A per-stratum feasibility
-analysis shows this is not a tuning problem: of the $40$ non-reference model-by-stratum cells, $21$ admit
-\emph{no} threshold on the frozen score that reaches the target at any coverage at $\alpha=0.20$, and $14$
-of those survive an exact binomial lower bound, so abstention is the only certified action there. An exact
-decomposition of the realized risk explains why and yields a measurable drift diagnostic that selects the
-repair from a labeled probe. Group-conditional recalibration restores per-stratum control, retaining $73\%$
-of AF3 poses with the finite-sample certificate holding in four of five held-out target folds under
-leakage-free cross-validation, where the native gate certifies almost none, at a price we measure: to
-extend one stratum outward costs on the order of $80$ in-stratum labels, and the novel tail admits no
-repair by stratification alone. A public deployment-computable proxy for the stratifier tracks the
-oracle on low and moderate novelty but loosens control on the novel tail, so for closed-training models
-the repair is deployable one stratum out and the extreme tail remains uncertifiable. The layer runs on
-released predictions on CPU and ships as certificate cards per model and novelty stratum.
+A practitioner who acts on a predicted protein--ligand pose needs to know when to trust it. Co-folding
+models (AlphaFold3, Boltz, Chai) report confidence scores that correlate with pose accuracy, but a
+correlation is not a decision rule, and it is weakest on exactly the novel pockets and chemotypes a
+discovery program pursues. We build \texttt{foldgate}, a training-free layer that turns frozen co-folding
+confidence into an accept/abstain gate with a finite-sample error guarantee, and we ask where that
+guarantee can and cannot be kept. Calibrating on familiar targets and deploying on novel ones drives the
+realized error among accepted poses to $0.55$ (AlphaFold3, $90\%$ CI $[0.52,0.58]$; $0.48$ to $0.66$
+across five models) against a $0.20$ target. A per-stratum feasibility analysis shows this is not a tuning
+problem: of the $40$ non-reference model-by-novelty-stratum cells, $21$ admit \emph{no} score threshold
+that reaches the target at any coverage at $\alpha=0.20$ (per-cell exact tests; $13$ survive a family-wise
+correction), so on structurally novel targets abstention is the only certified action. An exact
+decomposition of the error explains why --- the part that comes from confidence meaning something
+different on novel molecules is invisible to any label-free reweighting --- and turns into a diagnostic
+that picks the repair from a small labeled probe. Group-conditional recalibration restores per-stratum
+control (AlphaFold3 certifies $52\%$ and $39\%$ of the moderately-novel strata, against $8\%$ and $12\%$
+before), and marginally, under leakage-free target-grouped cross-validation, its combined-feature gate
+retains $73\%$ of AlphaFold3 poses with the certificate holding in four of five held-out folds where the
+raw-confidence gate certifies almost none. We price the repair honestly: extending certification one
+novelty stratum outward costs on the order of $80$ in-stratum crystal structures, the raw-confidence gate
+is CPU-only but the combined-feature gate consumes five diffusion samples and cross-model runs, and the
+most novel targets admit no repair by stratification at all. The layer runs on released predictions and
+ships a certificate card per model and novelty stratum that reads FEASIBLE, ABSTAIN-and-abandon, or
+ABSTAIN-and-collect-labels.
 \end{abstract}
 
 \section{Introduction}
@@ -104,18 +111,25 @@ which \emph{compounds} to advance given a labeled calibration set, while this la
 \section{Data and definitions}\label{sec:data}
 \textbf{Unit and loss.} The decision-relevant unit is a delivered top-1 pose per system with a native
 confidence $s$. The loss is $L=\mathbf{1}[\text{symmetry-corrected ligand-RMSD}>2\,\text{\AA}]$ against the
-released BiSyRMSD label, so a certified selective risk is a bound on the accepted-set error rate. We use $L$
-throughout (Table~\ref{tab:notation}). RMSD is the shipped symmetry-corrected BiSyRMSD (receptor
-superposition, ligand-in-place); recomputed geometry is used only where noted (Table~\ref{tab:provenance}).
+released BiSyRMSD label (binding-site-superposed, symmetry-corrected ligand RMSD: superpose on the pocket,
+then measure ligand-atom RMSD up to molecular symmetry), so a certified selective risk is a bound on the
+accepted-set error rate. We use $L$ throughout (Table~\ref{tab:notation}); recomputed geometry is used only
+where noted (Table~\ref{tab:provenance}).
 
 \textbf{Novelty axes.} We stratify by training-set similarity along two structural axes: a ligand axis
-(ECFP4 Morgan Tanimoto to the nearest training ligand) and a pocket axis (SuCOS shape $\times$ pocket
-query-coverage), both released by Runs N' Poses. Each axis is binned into quartiles $S_0$ (familiar) to
-$S_3$, with systems that have no training analog (missing similarity, about $3\%$ of poses, AF3 $n\!\approx\!76$)
-forming a fifth no-analog stratum $S_4$. The quartile edges are fixed a priori from the similarity marginal;
-Table~S1 lists $n$ and the similarity range each bin spans, per model and axis. We treat structural
-similarity, not deposition recency, as the operative shift variable, for a reason the data forces
-(Sec.~\ref{sec:break}).
+(ECFP4 Morgan Tanimoto to the nearest training ligand; a Tanimoto near $1$ means an almost-identical
+training ligand exists) and a pocket axis (SuCOS shape $\times$ pocket query-coverage, a shape-overlap
+score weighted by how much of the query pocket is covered), both released by Runs N' Poses as similarity to
+the public pre-cutoff PDB. Each axis is binned into quartiles $S_0$ (familiar) to $S_3$, with systems that
+have no training analog (missing similarity, about $3\%$ of poses, AlphaFold3 $n\!\approx\!76$) forming a
+fifth no-analog stratum $S_4$. The quartile edges are fixed a priori from the similarity marginal; Table~S1
+lists $n$ and the similarity range each bin spans, per model and axis. One similarity reference stratifies
+all five governed models because they share the same $\sim\!2021$ training cutoff, so a ligand or pocket
+novel to one is novel to the others; the reference year is not incidental (re-keying the pocket similarity
+to a $2023$ PDB snapshot rank-correlates with the $2021$ one at only Spearman $0.14$, since the PDB grows),
+which is precisely why we match the reference to the cohort's cutoff and analyze the single $2023$-cutoff
+model (Boltz-2) separately with its own $2023$ reference. We treat structural similarity, not deposition
+recency, as the operative shift variable, for a reason the data forces (Sec.~\ref{sec:break}).
 
 \textbf{Cohort.} We evaluate five models
 (AF3~\citep{af3}, Boltz-1~\citep{boltz1}, Boltz-1x~\citep{boltz1x}, Chai-1~\citep{chai}, Protenix~\citep{protenix}) on Runs
@@ -248,11 +262,13 @@ AF3 on the ligand axis $c^\star$ runs $1.00,0.85,0.75,0.20,0.00$ across $S_0$ to
 and $0.65,0.40,0.10,0.00,0.00$ at $\alpha=0.10$. Of the $50$ model-by-stratum cells (two axes $\times$ five
 models $\times$ five strata), the ten $S_0$ reference cells are feasible by construction, leaving $40$
 non-reference cells. Requiring at least $20$ accepted targets to call a stratum feasible, $\mathbf{21}$ of
-those $40$ admit no operating point at any coverage at $\alpha=0.20$, of which $\mathbf{14}$ survive an
-exact binomial (Clopper-Pearson) lower bound on $R_{Q,g}>\alpha$ at every measurable coverage; at
-$\alpha=0.10$ the counts are $26$ of $40$ zero-frontier and $21$ robust. Pooling the two $\alpha$ levels
-($47$ zero-frontier cell-tests) leaves $\mathbf{35}$ robust across both levels. These are per-cell exact
-lower bounds; we report them as a per-test robustness check rather than a family-wise-corrected
+those $40$ admit no operating point at any coverage at $\alpha=0.20$, of which $\mathbf{14}$ survive a
+per-cell exact binomial (Clopper-Pearson) lower bound on $R_{Q,g}>\alpha$ at every measurable coverage and
+$\mathbf{13}$ survive a family-wise (Holm, or Benjamini-Yekutieli FDR) correction across the $40$-cell
+family ($15$ under Benjamini-Hochberg), so the multiplicity-corrected infeasible count is essentially the
+same as the per-cell one; at $\alpha=0.10$ the counts are $26$ of $40$ zero-frontier, $21$ per-cell robust,
+$19$ family-wise robust. Pooling the two $\alpha$ levels ($47$ zero-frontier cell-tests) leaves
+$\mathbf{35}$ per-cell robust across both levels. We report both the per-cell test and the family-wise
 simultaneous statement, and the frontier is listed as such in the certificate ledger
 (Table~\ref{tab:ledger}). A zero frontier is strictly stronger than the
 coverage-pinned theorem of Sec.~\ref{sec:decomp}, which speaks only at the deployed coverage, and it is an
@@ -271,6 +287,10 @@ against $0.698$ on the diverse remainder, and the hidden error grows from $0.058
 $S_3$ even as consensus mass shrinks. The construction and its single-chain provenance are in the SI.
 
 \section{An exact decomposition, and what a training-free reweighting cannot fix}\label{sec:decomp}
+The contribution of this section is a \emph{diagnostic}: a single quantity, measurable from a small labeled
+probe, that tells a practitioner in advance whether a label-free repair (weighted conformal) will work or
+whether only in-stratum recalibration will. The supporting fact is an exact identity, a one-line
+tower-property lemma; we state it first and then show it is the diagnostic.
 Fix the frozen score $s$ and the accept rule $\{s\ge\tau\}$; write $Y=L$ for the error label. Let
 $\eta_P(x)=P(Y{=}1\mid X{=}x)$ and $\eta_Q$ be the error conditionals on the calibration law $P$ and the
 deployment law $Q$, and call a reweighting \emph{training-free} if its weights are covariate-measurable and
@@ -279,7 +299,7 @@ conformal). Write $R_{\mathrm{ref}}(\tau_c)=\mathbb{E}_Q[\eta_P\mid s\ge\tau_c]$
 $\bar\Delta_c=\mathbb{E}_Q[\eta_Q-\eta_P\mid s\ge\tau_c]$.
 
 \begin{quote}\small
-\textbf{Proposition (exact decomposition; App.~\ref{app:proof}).} At fixed coverage $c$ the realized target
+\textbf{Lemma (exact decomposition; App.~\ref{app:proof}).} At fixed coverage $c$ the realized target
 selective risk is $R_Q(\tau_c)=R_{\mathrm{ref}}(\tau_c)+\bar\Delta_c$, and $\bar\Delta_c$ is invariant to
 the choice of training-free weights. Hence the oracle-weighted plug-in certificate reports
 $R_{\mathrm{ref}}$ and under-states the realized risk by exactly $\bar\Delta_c$, and level $\alpha$ is
@@ -460,17 +480,24 @@ Feasibility frontier (CP) & $0.10$ & per-cell exact, uncorrected & $40$ cells & 
 \textbf{The deliverable: certificate cards.} We package every repair verdict as a standardized card
 per (model, novelty stratum): $\alpha$, $\delta$, calibration $n$, accepted $n$, realized risk, exact
 Clopper-Pearson risk upper bound, retained coverage, reliability drift $D$, the recommended repair, and a
-FEASIBLE / ABSTAIN verdict (Fig.~\ref{fig:cards}). The pattern is the paper in one glance: familiar strata
-are FEASIBLE with a certified operating point, and the novel tail reads ABSTAIN, the certified action. This
-turns the layer from an audit into a deliverable a practitioner reads before trusting a delivered pose.
+three-way verdict (Fig.~\ref{fig:cards}). The verdict distinguishes the two actions a practitioner must not
+confuse: a FEASIBLE card carries a certified operating point; an ABSTAIN-infeasible card means the rule
+provably fails (the Clopper-Pearson lower bound exceeds $\alpha$ at every coverage), so the target should be
+abandoned for this model; an ABSTAIN-underpowered card means the stratum is undecided for lack of labels, so
+the action is to collect them. The cards are the native-score view (the score a user has for free); the
+combined-feature group-conditional gate of Fig.~\ref{fig:repair} recovers usable coverage on some
+ABSTAIN-underpowered strata, which is why the two figures differ on, e.g., AF3 $S_3$ (native ABSTAIN,
+combined $5\%$ certified).
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.98\textwidth]{../results/figures/certificate_cards.png}
-\caption{Certificate cards (ligand axis, $\alpha=0.20$), one per (model, stratum). Green FEASIBLE cards
-carry a certified operating point (retained coverage, accepted $n$, realized risk with its
-Clopper-Pearson upper bound, reliability drift $D$); red ABSTAIN cards report that no certified operating
-point exists, which is itself the certified action. The full grid across both novelty axes is in the SI.}
+\caption{Certificate cards, native \texttt{ranking\_score}, ligand axis, $\alpha=0.20$, one per (model,
+stratum). Green FEASIBLE cards carry a certified operating point (retained coverage, accepted $n$, realized
+risk with its Clopper-Pearson upper bound, drift $D$); red ABSTAIN-infeasible cards mean the rule provably
+fails (abandon); amber ABSTAIN-underpowered cards mean undecided (collect labels). The combined-feature
+group-conditional gate (Fig.~\ref{fig:repair}) is a different, higher-coverage protocol; the full grid
+across both novelty axes and both scores is in the SI.}
 \label{fig:cards}
 \end{figure}
 
@@ -486,17 +513,22 @@ $1$ of $2$ non-empty folds holds and the pooled upper bound is $0.223>\alpha$, a
 native gates abstain outright (Table~\ref{tab:loto}). So the honest leakage-free story is that the combined
 score is what makes the gate certifiable at usable coverage, not that it beats an equally-certified native
 gate; the earlier held-out pair ($71\%$ vs.\ $22\%$) is discarded because a pooled split leaks $95\%$ of
-test targets into calibration where the grouped protocol shares zero. At the stringent $\alpha=0.10$ the
-combined gate certifies $13\%$ of AF3 poses at realized risk $0.066$ (pooled upper bound $0.094$).
+test targets into calibration where the grouped protocol shares zero. Grouping on system id still permits a
+homologous receptor in both folds, so we re-run the whole gate grouped on Runs N' Poses sequence cluster
+($1005$ clusters): the AF3 headline is stable ($0.72$ combined coverage, still certified, HB upper bound
+$0.192$), while two models lose coverage under the stricter grouping (Boltz-1 $0.60\!\to\!0.24$, Protenix
+$0.57\!\to\!0.41$), which we report rather than hide. At the stringent $\alpha=0.10$ the combined gate
+certifies $13\%$ of AF3 poses at realized risk $0.066$ (pooled upper bound $0.094$).
 
 \begin{table}[t]
 \centering\small
 \caption{Leakage-free nested-LOTO gate, native vs.\ combined score ($\alpha=0.20$, $\delta=0.10$). The
 certificate is the per-fold Learn-then-Test guarantee; ``folds'' is the number of non-empty held-out folds
 whose realized risk landed $\le\alpha$ (its validation), and HB$^{\uparrow}$ is the more conservative pooled
-Hoeffding-Bentkus upper bound. A pooled HB$^{\uparrow}\le\alpha$ (\checkmark) is a sufficient aggregate
-certificate; a value $>\alpha$ means the pooled bound does not clear $\alpha$ even where most folds hold.
-Chai/Protenix native gates abstain outright.}
+Hoeffding-Bentkus upper bound. The \checkmark\ marks a pooled HB$^{\uparrow}\le\alpha$: it is a property of
+the aggregate bound alone, independent of the fold count, so a gate can hold in $4/5$ folds yet miss the
+\checkmark\ (Boltz-1 native, HB $0.222$) or hold in fewer folds and earn it (Boltz-1x native, $4/5$, HB
+$0.197$). Chai/Protenix native gates abstain outright.}
 \label{tab:loto}
 \begin{tabular}{llcccc}
 \toprule
@@ -598,11 +630,25 @@ self-consistent within the one run. A third dataset would need a benchmark that 
 PoseBusters per pose; where none is available we state that concrete community ask rather than overclaim
 generality.
 
-\textbf{Limitations.} The no-analog tail is uncertifiable by every method, where abstention is the only
-action. The best ranker in our screening analysis (SI), a Boltz-2 affinity head, carries no coverage
-guarantee: extending the framework to certify an affinity ranker (which needs an affinity-error label) is
-the top open problem. All evaluation is retrospective; a prospective screen with wet-lab confirmation is the
-natural next step.
+\textbf{Limitations.} The label is a $2$\,\AA\ BiSyRMSD against a single deposited crystal pose, which
+inherits the field's pose-correctness convention~\citep{posebusters} but ignores crystallographic
+resolution and alternate conformations; the graded-loss betting bound (Sec.~\ref{sec:repair}, a certified
+$1$\,\AA\ mean-RMSD operating point) is the partial answer that removes the hard cutoff, and a
+resolution-stratified sensitivity check is deferred pending per-entry resolution metadata. The no-analog
+tail is uncertifiable by every method, where abstention is the only action. The best ranker in our
+screening analysis (SI), a Boltz-2 affinity head, carries no coverage guarantee: extending the framework to
+certify an affinity ranker (which needs an affinity-error label) is the top open problem. All evaluation is
+retrospective; a prospective screen with wet-lab confirmation is the natural next step.
+
+\textbf{What to do with this, concretely.} The layer is not only an abstention rule; the label-cost curve
+is a plan. A worked example: a team running AlphaFold3 on a congeneric series whose scaffold is one novelty
+stratum out from the training set (an $S_1$--$S_2$ regime) should not trust the raw ranking score --- it
+certifies almost nothing there leakage-free --- but can recover a certified $\sim\!50\%$ acceptance rate by
+building a group-conditional gate, which costs on the order of $80$ solved structures of in-series analogs to
+calibrate. If the series is genuinely novel ($S_3$--$S_4$, no close training analog), the certificate card
+reads ABSTAIN-infeasible and the honest recommendation is to treat every delivered pose as unverified and
+fall back to experiment. The deliverable is the card that tells the team which of these three situations it
+is in, before it commits medicinal-chemistry effort to a wrong pose.
 
 \section{Conclusion}
 Co-folding confidence becomes a risk-controlled decision only when the guarantee is audited where it fails.
@@ -694,6 +740,8 @@ Docking in a Virtual Screening Context. J. Chem. Inf. Model. 53(2), 2013.
 Betting. J. R. Stat. Soc. B, 2024 (arXiv:2010.09686).
 \bibitem{romanowolf2005} J. Romano, M. Wolf. Stepwise Multiple Testing as Formalized Data Snooping.
 Econometrica 73, 2005.
+\bibitem{posebusters} M. Buttenschoen, G. M. Morris, C. M. Deane. PoseBusters: AI-based docking methods
+fail to generate physically valid poses or generalise to novel sequences. Chemical Science 15, 2024.
 \end{thebibliography}
 
 \appendix
@@ -725,8 +773,10 @@ $\tau_c$ from $c$; realized risk is a functional of $(Q,\tau_c)$ alone. (c) Lemm
 gives $Q_{w^\star}=Q$. (d) is (a)+(b). $\square$ The statement is coverage-pinned and binds only scalar
 thresholds of a fixed score with covariate-measurable weights; re-scoring on $\nu$ or a per-stratum
 threshold escapes it (the achievability side), and in-stratum split calibration~\citep{vovk2005} gives
-stratum-conditional miscoverage $\le 1/(n_g{+}1)$ regardless of drift, with the ratio functional controlled
-by Learn-then-Test at the finite-sample cost the label-cost curve measures.
+stratum-conditional miscoverage $\le 1/(n_g{+}1)$ regardless of drift; conformal risk
+control~\citep{angelopoulos2024crc} gives the same slack for the joint accept-and-err rate, and the ratio
+functional (a random-denominator selective risk) is controlled by Learn-then-Test at the finite-sample cost
+the label-cost curve measures.
 
 \section{Benchmark and validation details}\label{app:bench}
 \small The synthetic generator draws a stratum from a tilted $\nu$-marginal, a score logit

@@ -121,3 +121,18 @@ Nested target-grouped LOTO (GroupKFold outer, grouped 50/50 fit/cal inner). α=0
 - **M4:** median 38 labels is over the **23 feasible cells** (d2_certify); the ~80-label figure is the one-stratum-out design-curve budget — conclusion should use ~80.
 - **M6 pseudo-prospective failures:** native — boltz1 CP-UB 0.207 (overshoots), chai abstains; combined — chai CP-UB 0.202 (overshoots), boltz1x + protenix abstain (LTT non-certification). abstain = holds vacuously.
 - **M1 RLCP:** dominates on coverage (0.44 vs 0.18) but its guarantee is randomized + marginal-over-localization, not stratum-conditional finite-sample — state the guarantee difference in the table caption.
+
+## ROUND-3 FIXES (2026-07-20)
+- **Venue → Digital Discovery** (RSC, gold OA, ML-for-chem + honest-negative friendly; J.Cheminformatics backup). Best chance for the statistical framing; avoids JCIM's full ACS chemist-rewrite.
+- **#5 cluster-grouped LOTO (e41):** AF3 combined headline robust 0.72 (vs 0.73 system-grouped), still certified HB-UB 0.192. Boltz-1 0.60→0.24, Protenix 0.57→0.41 drop under stricter homolog grouping (reported).
+- **#7 frontier multiplicity (e42):** 21 zero-frontier at α=0.20 → 13 survive Holm/BY, 15 BH; α=0.10 → 19 family-wise. Corrected count ≈ per-cell (14). Abstract now says "per-cell tests; 13 survive family-wise correction".
+- **#4 stratifier (e44):** 2021 vs 2023 pocket similarity Spearman **0.14** (2023 mean 87 vs 2021 64) → reference year matters → JUSTIFIES cutoff-matching (5 governed share ~2021; Boltz-2 re-keyed to 2023). Turned the objection into a handled point.
+- **#8 cards:** 3-way verdict FEASIBLE / ABSTAIN-infeasible (abandon) / ABSTAIN-underpowered (collect labels); native-score-labeled. AF3: S3 underpowered, S4 infeasible.
+- **#2 abstract:** 73% now attributed to the marginal combined-feature LOTO gate, separate from group-conditional 52/39%.
+- **#3 abstract:** CPU caveat — raw-confidence gate CPU-only; combined-feature consumes 5 samples + cross-model runs.
+- **#1 cards figure:** native-score labeled + protocol reconciled with the combined-score repair figure (AF3 S3 native ABSTAIN vs combined 5%).
+- **#6:** proposition → lemma; §5 leads with the diagnostic contribution.
+- **#12:** label-ground-truth limitation + graded-loss pointer + PoseBusters citation; resolution check deferred (no per-entry resolution in RNP annotations).
+- **V2:** chemist-facing abstract + positive practitioner recommendation with the ~80-label congeneric-series worked example.
+- **Minors:** Table 5 ✓ caption (pooled-bound property, fold-count-independent), CRC orphan cited, BiSyRMSD/SuCOS/qcov defined, foldgate capitalization consistent.
+- Compiles clean, 14pp.
