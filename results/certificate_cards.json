@@ -3,7 +3,8 @@
     "alpha": 0.2,
     "delta": 0.1,
     "axis": "ligand",
-    "note": "One card per (model, ligand novelty stratum). FEASIBLE = a certified operating point at retained coverage >= 0.10; ABSTAIN otherwise."
+    "score": "native ranking_score",
+    "note": "One card per (model, ligand novelty stratum), on the NATIVE score / d2 feasibility protocol. FEASIBLE = a certified operating point at retained coverage >= 0.10; ABSTAIN-infeasible = the rule provably fails (CP lower bound > alpha everywhere), abandon; ABSTAIN-underpowered = undecided, collect labels. The combined-score group-conditional gate (Fig. repair) recovers usable coverage on some ABSTAIN-underpowered strata; these cards are the native-score view."
   },
   "cards": {
     "af3": {
@@ -50,27 +51,27 @@
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 280,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-underpowered",
         "accepted_n_targets": 83,
         "retained_coverage": 0.14,
         "realized_risk": 0.193,
         "risk_cp_upper90": 0.278,
         "certified": false,
         "drift_D": 0.422,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "collect in-stratum labels: undecided, not yet certifiably infeasible"
       },
       "4": {
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 280,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-infeasible",
         "accepted_n_targets": null,
         "retained_coverage": null,
         "realized_risk": null,
         "risk_cp_upper90": null,
         "certified": false,
         "drift_D": 0.288,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "abandon: the rule provably fails on this stratum (abstention is certified)"
       }
     },
     "boltz1": {
@@ -104,40 +105,40 @@
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 230,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-underpowered",
         "accepted_n_targets": 53,
         "retained_coverage": 0.098,
         "realized_risk": 0.038,
         "risk_cp_upper90": 0.114,
         "certified": true,
         "drift_D": 0.208,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "collect in-stratum labels: undecided, not yet certifiably infeasible"
       },
       "3": {
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 230,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-underpowered",
         "accepted_n_targets": null,
         "retained_coverage": null,
         "realized_risk": null,
         "risk_cp_upper90": null,
         "certified": false,
         "drift_D": 0.392,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "collect in-stratum labels: undecided, not yet certifiably infeasible"
       },
       "4": {
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 230,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-infeasible",
         "accepted_n_targets": null,
         "retained_coverage": null,
         "realized_risk": null,
         "risk_cp_upper90": null,
         "certified": false,
         "drift_D": 0.306,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "abandon: the rule provably fails on this stratum (abstention is certified)"
       }
     },
     "boltz1x": {
@@ -184,27 +185,27 @@
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 222,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-underpowered",
         "accepted_n_targets": null,
         "retained_coverage": null,
         "realized_risk": null,
         "risk_cp_upper90": null,
         "certified": false,
         "drift_D": 0.399,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "collect in-stratum labels: undecided, not yet certifiably infeasible"
       },
       "4": {
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 222,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-infeasible",
         "accepted_n_targets": null,
         "retained_coverage": null,
         "realized_risk": null,
         "risk_cp_upper90": null,
         "certified": false,
         "drift_D": 0.335,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "abandon: the rule provably fails on this stratum (abstention is certified)"
       }
     },
     "chai": {
@@ -238,40 +239,40 @@
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 257,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-underpowered",
         "accepted_n_targets": null,
         "retained_coverage": null,
         "realized_risk": null,
         "risk_cp_upper90": null,
         "certified": false,
         "drift_D": 0.15,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "collect in-stratum labels: undecided, not yet certifiably infeasible"
       },
       "3": {
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 257,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-infeasible",
         "accepted_n_targets": null,
         "retained_coverage": null,
         "realized_risk": null,
         "risk_cp_upper90": null,
         "certified": false,
         "drift_D": 0.407,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "abandon: the rule provably fails on this stratum (abstention is certified)"
       },
       "4": {
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 257,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-infeasible",
         "accepted_n_targets": null,
         "retained_coverage": null,
         "realized_risk": null,
         "risk_cp_upper90": null,
         "certified": false,
         "drift_D": 0.364,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "abandon: the rule provably fails on this stratum (abstention is certified)"
       }
     },
     "protenix": {
@@ -305,40 +306,40 @@
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 259,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-underpowered",
         "accepted_n_targets": 129,
         "retained_coverage": 0.222,
         "realized_risk": 0.186,
         "risk_cp_upper90": 0.252,
         "certified": false,
         "drift_D": 0.245,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "collect in-stratum labels: undecided, not yet certifiably infeasible"
       },
       "3": {
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 259,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-underpowered",
         "accepted_n_targets": null,
         "retained_coverage": null,
         "realized_risk": null,
         "risk_cp_upper90": null,
         "certified": false,
         "drift_D": 0.52,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "collect in-stratum labels: undecided, not yet certifiably infeasible"
       },
       "4": {
         "alpha": 0.2,
         "delta": 0.1,
         "calibration_n_targets": 259,
-        "verdict": "ABSTAIN",
+        "verdict": "ABSTAIN-infeasible",
         "accepted_n_targets": null,
         "retained_coverage": null,
         "realized_risk": null,
         "risk_cp_upper90": null,
         "certified": false,
         "drift_D": 0.437,
-        "recommended_repair": "abstain (no certified operating point)"
+        "recommended_repair": "abandon: the rule provably fails on this stratum (abstention is certified)"
       }
     }
   }

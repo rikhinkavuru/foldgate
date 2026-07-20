@@ -1,0 +1,40 @@
+{
+  "min_accept": 20,
+  "axes": {
+    "ligand_alpha0.2": {
+      "n_nonreference_cells": 20,
+      "zero_frontier_uncorrected": 10,
+      "certifiably_infeasible_BH_fdr10": 7,
+      "certifiably_infeasible_BY_fdr10": 7,
+      "certifiably_infeasible_Holm_fwer10": 7
+    },
+    "pocket_alpha0.2": {
+      "n_nonreference_cells": 20,
+      "zero_frontier_uncorrected": 11,
+      "certifiably_infeasible_BH_fdr10": 8,
+      "certifiably_infeasible_BY_fdr10": 6,
+      "certifiably_infeasible_Holm_fwer10": 6
+    },
+    "ligand_alpha0.1": {
+      "n_nonreference_cells": 20,
+      "zero_frontier_uncorrected": 12,
+      "certifiably_infeasible_BH_fdr10": 10,
+      "certifiably_infeasible_BY_fdr10": 9,
+      "certifiably_infeasible_Holm_fwer10": 9
+    },
+    "pocket_alpha0.1": {
+      "n_nonreference_cells": 20,
+      "zero_frontier_uncorrected": 14,
+      "certifiably_infeasible_BH_fdr10": 13,
+      "certifiably_infeasible_BY_fdr10": 10,
+      "certifiably_infeasible_Holm_fwer10": 10
+    }
+  },
+  "headline_alpha0.20": {
+    "n_nonreference_cells": 40,
+    "zero_frontier_uncorrected": 21,
+    "certifiably_infeasible_BH_fdr10": 15,
+    "certifiably_infeasible_BY_fdr10": 13,
+    "certifiably_infeasible_Holm_fwer10": 13
+  }
+}

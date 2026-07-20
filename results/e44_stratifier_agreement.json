@@ -1,0 +1,32 @@
+{
+  "axis": "pocket (sucos_shape_pocket_qcov 2021 vs 2023 reference)",
+  "n_systems": 2579,
+  "exact_stratum_agreement": 0.266,
+  "adjacent_agreement": 0.471,
+  "spearman": 0.293,
+  "confusion_2021_rows_2023_cols": {
+    "0.0": {
+      "0.0": 493,
+      "1.0": 316,
+      "2.0": 312,
+      "3.0": 331,
+      "4.0": 309
+    },
+    "1.0": {
+      "0.0": 16,
+      "1.0": 193,
+      "2.0": 197,
+      "3.0": 179,
+      "4.0": 3
+    },
+    "2.0": {
+      "0.0": 0,
+      "1.0": 0,
+      "2.0": 0,
+      "3.0": 0,
+      "4.0": 230
+    }
+  },
+  "raw_similarity_spearman_2021_vs_2023": 0.137,
+  "note": "The 2021 and 2023 references DISAGREE substantially (exact-stratum agreement 27%, raw-similarity Spearman 0.14; 2023 mean similarity 87 vs 2021 64, since the PDB grows), so the reference cutoff materially changes the novelty stratum. This JUSTIFIES cutoff-matching rather than undermining it: the five governed models (AF3, Boltz-1/1x, Chai, Protenix) all share the ~2021 training cutoff, so the 2021 reference is the correct shared stratifier for the governed cohort, while Boltz-2 (2023 cutoff) is re-keyed to the 2023 reference and analyzed separately. A ligand novel to one 2021-era model is novel to the others; only the 2023-cutoff model differs, and it is handled."
+}

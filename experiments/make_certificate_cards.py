@@ -50,9 +50,26 @@ def _drift_for(drift, model, stratum):
         return None
 
 
+def _abstain_kind(strat_cells: dict, alpha: float) -> str:
+    """Distinguish provably-infeasible from underpowered (reviewer R3.8).
+
+    ABSTAIN-infeasible: every measurable coverage (n>=20) has an exact binomial (CP)
+    lower bound on the risk strictly above alpha, i.e. the RULE provably fails -> abandon.
+    ABSTAIN-underpowered: no such certificate of infeasibility (too few labels to decide)
+    -> collect labels.
+    """
+    meas = [v for v in strat_cells.get("cells", {}).values()
+            if v.get("n_accepted_targets", 0) >= 20]
+    if meas and all(v["R_Q_ci"][0] > alpha for v in meas):
+        return "ABSTAIN-infeasible"
+    return "ABSTAIN-underpowered"
+
+
 def _recommend(verdict, D):
-    if verdict == "ABSTAIN":
-        return "abstain (no certified operating point)"
+    if verdict == "ABSTAIN-infeasible":
+        return "abandon: the rule provably fails on this stratum (abstention is certified)"
+    if verdict == "ABSTAIN-underpowered":
+        return "collect in-stratum labels: undecided, not yet certifiably infeasible"
     if D is None:
         return "group-conditional calibration"
     if abs(D) < SMALL_DRIFT:
@@ -74,12 +91,13 @@ def build_cards():
             sc = strata.get(k)
             D = _drift_for(drift, model, k)
             if sc is None:
-                cards[model][k] = {"verdict": "ABSTAIN", "reason": "stratum absent",
-                                   "drift_D": D, "recommended_repair": "abstain"}
+                cards[model][k] = {"verdict": "ABSTAIN-underpowered", "reason": "stratum absent",
+                                   "drift_D": D,
+                                   "recommended_repair": "collect in-stratum labels"}
                 continue
             cell, certified = _best_operating_point(sc)
             if cell is None or cell.get("coverage", 0) < MIN_USABLE_COV or not certified:
-                verdict = "ABSTAIN"
+                verdict = _abstain_kind(sc, ALPHA)
                 card = {
                     "alpha": ALPHA, "delta": DELTA,
                     "calibration_n_targets": n_cal,
@@ -106,9 +124,14 @@ def build_cards():
                 }
             card["recommended_repair"] = _recommend(verdict, D)
             cards[model][k] = card
-    meta = {"alpha": ALPHA, "delta": DELTA, "axis": AXIS,
-            "note": "One card per (model, ligand novelty stratum). FEASIBLE = a certified "
-                    "operating point at retained coverage >= 0.10; ABSTAIN otherwise."}
+    meta = {"alpha": ALPHA, "delta": DELTA, "axis": AXIS, "score": "native ranking_score",
+            "note": "One card per (model, ligand novelty stratum), on the NATIVE score / "
+                    "d2 feasibility protocol. FEASIBLE = a certified operating point at "
+                    "retained coverage >= 0.10; ABSTAIN-infeasible = the rule provably "
+                    "fails (CP lower bound > alpha everywhere), abandon; ABSTAIN-"
+                    "underpowered = undecided, collect labels. The combined-score "
+                    "group-conditional gate (Fig. repair) recovers usable coverage on "
+                    "some ABSTAIN-underpowered strata; these cards are the native-score view."}
     return {"meta": meta, "cards": cards}
 
 
@@ -126,24 +149,27 @@ def render(cards_obj):
             ax = axes[i][j]
             ax.axis("off")
             c = cards[m][k]
-            feasible = c["verdict"] == "FEASIBLE"
-            fc = "#e4f3e4" if feasible else "#f6e4e4"
+            v = c["verdict"]
+            fc = {"FEASIBLE": "#e0f0e0", "ABSTAIN-infeasible": "#f3dede",
+                  "ABSTAIN-underpowered": "#fbf1d8"}.get(v, "#eeeeee")
             ax.add_patch(plt.Rectangle((0, 0), 1, 1, transform=ax.transAxes,
                                        facecolor=fc, edgecolor="#999", lw=0.8))
             head = f"{m}  S{k}"
-            if feasible:
-                body = (f"{c['verdict']}\ncov {c['retained_coverage']:.2f} "
+            if v == "FEASIBLE":
+                body = (f"FEASIBLE\ncov {c['retained_coverage']:.2f} "
                         f"(n={c['accepted_n_targets']})\nrisk {c['realized_risk']:.2f} "
                         f"(UB {c['risk_cp_upper90']:.2f})\nD={c['drift_D']}")
+            elif v == "ABSTAIN-infeasible":
+                body = f"ABSTAIN\n(infeasible)\nrule fails:\nabandon\nD={c.get('drift_D')}"
             else:
-                dd = c.get("drift_D")
-                body = f"{c['verdict']}\nno certified\noperating point\nD={dd}"
-            ax.text(0.5, 0.80, head, ha="center", va="top", fontsize=7.2,
+                body = f"ABSTAIN\n(underpowered)\ncollect\nlabels\nD={c.get('drift_D')}"
+            ax.text(0.5, 0.82, head, ha="center", va="top", fontsize=7.2,
                     fontweight="bold", transform=ax.transAxes)
-            ax.text(0.5, 0.58, body, ha="center", va="top", fontsize=6.0,
+            ax.text(0.5, 0.62, body, ha="center", va="top", fontsize=5.8,
                     transform=ax.transAxes, linespacing=1.25)
-    fig.suptitle("Certificate cards (ligand axis, α=0.20): FEASIBLE = certified operating point; "
-                 "ABSTAIN = the certified action", fontsize=9)
+    fig.suptitle("Certificate cards (native score, ligand axis, α=0.20): green FEASIBLE = certified "
+                 "operating point; red ABSTAIN-infeasible = abandon; amber ABSTAIN-underpowered = collect labels",
+                 fontsize=8.2)
     fig.tight_layout(rect=(0, 0, 1, 0.97))
     FIGDIR.mkdir(parents=True, exist_ok=True)
     for ext in ("png", "pdf"):
