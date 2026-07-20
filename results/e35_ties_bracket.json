@@ -1,0 +1,112 @@
+{
+  "alpha": 0.2,
+  "delta": 0.1,
+  "per_model": {
+    "af3": {
+      "ranking_score": {
+        "n": 2709,
+        "n_distinct": 2412,
+        "max_atom_mass": 0.00111,
+        "frac_distinct": 0.8904,
+        "tau": 0.940967,
+        "coverage_at_tau": 0.5401,
+        "ties_at_tau": 0.0
+      },
+      "iface_iptm": {
+        "n": 2709,
+        "n_distinct": 327,
+        "max_atom_mass": 0.079,
+        "frac_distinct": 0.1207,
+        "tau": 0.875,
+        "coverage_at_tau": 0.5718,
+        "ties_at_tau": 0.00701
+      }
+    },
+    "boltz1": {
+      "ranking_score": {
+        "n": 2384,
+        "n_distinct": 2158,
+        "max_atom_mass": 0.00126,
+        "frac_distinct": 0.9052,
+        "tau": 0.965592,
+        "coverage_at_tau": 0.1602,
+        "ties_at_tau": 0.0
+      },
+      "iface_iptm": {
+        "n": 2384,
+        "n_distinct": 2372,
+        "max_atom_mass": 0.00084,
+        "frac_distinct": 0.995,
+        "tau": 0.601619,
+        "coverage_at_tau": 0.5201,
+        "ties_at_tau": 0.0
+      }
+    },
+    "boltz1x": {
+      "ranking_score": {
+        "n": 2331,
+        "n_distinct": 2104,
+        "max_atom_mass": 0.00129,
+        "frac_distinct": 0.9026,
+        "tau": 0.955865,
+        "coverage_at_tau": 0.2801,
+        "ties_at_tau": 0.0
+      },
+      "iface_iptm": {
+        "n": 2331,
+        "n_distinct": 2260,
+        "max_atom_mass": 0.02531,
+        "frac_distinct": 0.9695,
+        "tau": 0.581307,
+        "coverage_at_tau": 0.5199,
+        "ties_at_tau": 0.0
+      }
+    },
+    "chai": {
+      "ranking_score": {
+        "n": 2571,
+        "n_distinct": 2293,
+        "max_atom_mass": 0.00117,
+        "frac_distinct": 0.8919,
+        "tau": null,
+        "coverage_at_tau": null,
+        "ties_at_tau": null
+      },
+      "iface_iptm": {
+        "n": 2571,
+        "n_distinct": 2555,
+        "max_atom_mass": 0.00117,
+        "frac_distinct": 0.9938,
+        "tau": 0.66266,
+        "coverage_at_tau": 0.3901,
+        "ties_at_tau": 0.0
+      }
+    },
+    "protenix": {
+      "ranking_score": {
+        "n": 2607,
+        "n_distinct": 2317,
+        "max_atom_mass": 0.00115,
+        "frac_distinct": 0.8888,
+        "tau": 0.987446,
+        "coverage_at_tau": 0.2002,
+        "ties_at_tau": 0.0
+      },
+      "iface_iptm": {
+        "n": 2607,
+        "n_distinct": 2590,
+        "max_atom_mass": 0.00077,
+        "frac_distinct": 0.9935,
+        "tau": 0.988777,
+        "coverage_at_tau": 0.2601,
+        "ties_at_tau": 0.0
+      }
+    }
+  },
+  "_summary": {
+    "worst_ties_at_tau_over_models": 0.00701,
+    "worst_atom_mass_anywhere": 0.079,
+    "exact_language_survives": false,
+    "note": "ties_at_tau is the bracket width in coverage points at the deployed threshold; worst over models is the number to quote. If < 0.005 (0.5% coverage) the exact-identity language survives with a footnote."
+  }
+}

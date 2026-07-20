@@ -1,0 +1,361 @@
+{
+  "protocol": "nested target-grouped LOTO (GroupKFold outer, grouped fit/cal inner)",
+  "delta": 0.1,
+  "cal_frac": 0.5,
+  "per_alpha": {
+    "0.2": {
+      "af3": {
+        "n": 2709,
+        "n_targets": 2409,
+        "native": {
+          "coverage": 0.2034,
+          "n_accept": 551,
+          "realized_risk": 0.1887,
+          "realized_risk_cp90": [
+            0.1617,
+            0.2183
+          ],
+          "risk_cp_upper90": 0.2183,
+          "certified_ub_hb": 0.2228,
+          "certified_pass": true,
+          "folds_holding": [
+            1,
+            2
+          ],
+          "vacuous": false
+        },
+        "combined": {
+          "coverage": 0.7316,
+          "n_accept": 1982,
+          "realized_risk": 0.1756,
+          "realized_risk_cp90": [
+            0.1616,
+            0.1902
+          ],
+          "risk_cp_upper90": 0.1902,
+          "certified_ub_hb": 0.1915,
+          "certified_pass": true,
+          "folds_holding": [
+            4,
+            5
+          ],
+          "vacuous": false
+        }
+      },
+      "boltz1": {
+        "n": 2384,
+        "n_targets": 2139,
+        "native": {
+          "coverage": 0.2076,
+          "n_accept": 495,
+          "realized_risk": 0.1879,
+          "realized_risk_cp90": [
+            0.1594,
+            0.2191
+          ],
+          "risk_cp_upper90": 0.2191,
+          "certified_ub_hb": 0.2219,
+          "certified_pass": true,
+          "folds_holding": [
+            4,
+            5
+          ],
+          "vacuous": false
+        },
+        "combined": {
+          "coverage": 0.6032,
+          "n_accept": 1438,
+          "realized_risk": 0.1815,
+          "realized_risk_cp90": [
+            0.1649,
+            0.199
+          ],
+          "risk_cp_upper90": 0.199,
+          "certified_ub_hb": 0.2006,
+          "certified_pass": true,
+          "folds_holding": [
+            4,
+            5
+          ],
+          "vacuous": false
+        }
+      },
+      "boltz1x": {
+        "n": 2331,
+        "n_targets": 2091,
+        "native": {
+          "coverage": 0.2021,
+          "n_accept": 471,
+          "realized_risk": 0.1635,
+          "realized_risk_cp90": [
+            0.136,
+            0.1941
+          ],
+          "risk_cp_upper90": 0.1941,
+          "certified_ub_hb": 0.1968,
+          "certified_pass": true,
+          "folds_holding": [
+            4,
+            5
+          ],
+          "vacuous": false
+        },
+        "combined": {
+          "coverage": 0.4843,
+          "n_accept": 1129,
+          "realized_risk": 0.1816,
+          "realized_risk_cp90": [
+            0.1629,
+            0.2015
+          ],
+          "risk_cp_upper90": 0.2015,
+          "certified_ub_hb": 0.2032,
+          "certified_pass": true,
+          "folds_holding": [
+            3,
+            4
+          ],
+          "vacuous": false
+        }
+      },
+      "chai": {
+        "n": 2571,
+        "n_targets": 2292,
+        "native": {
+          "coverage": 0.0,
+          "n_accept": 0,
+          "realized_risk": null,
+          "risk_cp_upper90": null,
+          "certified_ub_hb": null,
+          "folds_holding": [
+            0,
+            0
+          ],
+          "vacuous": true
+        },
+        "combined": {
+          "coverage": 0.6371,
+          "n_accept": 1638,
+          "realized_risk": 0.1783,
+          "realized_risk_cp90": [
+            0.1628,
+            0.1946
+          ],
+          "risk_cp_upper90": 0.1946,
+          "certified_ub_hb": 0.196,
+          "certified_pass": true,
+          "folds_holding": [
+            4,
+            5
+          ],
+          "vacuous": false
+        }
+      },
+      "protenix": {
+        "n": 2607,
+        "n_targets": 2323,
+        "native": {
+          "coverage": 0.0,
+          "n_accept": 0,
+          "realized_risk": null,
+          "risk_cp_upper90": null,
+          "certified_ub_hb": null,
+          "folds_holding": [
+            0,
+            0
+          ],
+          "vacuous": true
+        },
+        "combined": {
+          "coverage": 0.5719,
+          "n_accept": 1491,
+          "realized_risk": 0.1818,
+          "realized_risk_cp90": [
+            0.1655,
+            0.199
+          ],
+          "risk_cp_upper90": 0.199,
+          "certified_ub_hb": 0.2005,
+          "certified_pass": true,
+          "folds_holding": [
+            4,
+            5
+          ],
+          "vacuous": false
+        }
+      }
+    },
+    "0.1": {
+      "af3": {
+        "n": 2709,
+        "n_targets": 2409,
+        "native": {
+          "coverage": 0.0,
+          "n_accept": 0,
+          "realized_risk": null,
+          "risk_cp_upper90": null,
+          "certified_ub_hb": null,
+          "folds_holding": [
+            0,
+            0
+          ],
+          "vacuous": true
+        },
+        "combined": {
+          "coverage": 0.1296,
+          "n_accept": 351,
+          "realized_risk": 0.0655,
+          "realized_risk_cp90": [
+            0.0452,
+            0.0916
+          ],
+          "risk_cp_upper90": 0.0916,
+          "certified_ub_hb": 0.0939,
+          "certified_pass": true,
+          "folds_holding": [
+            4,
+            4
+          ],
+          "vacuous": false
+        }
+      },
+      "boltz1": {
+        "n": 2384,
+        "n_targets": 2139,
+        "native": {
+          "coverage": 0.0159,
+          "n_accept": 38,
+          "realized_risk": 0.1053,
+          "realized_risk_cp90": [
+            0.0368,
+            0.2249
+          ],
+          "risk_cp_upper90": 0.2249,
+          "certified_ub_hb": 0.2354,
+          "certified_pass": false,
+          "folds_holding": [
+            0,
+            1
+          ],
+          "vacuous": true
+        },
+        "combined": {
+          "coverage": 0.0,
+          "n_accept": 0,
+          "realized_risk": null,
+          "risk_cp_upper90": null,
+          "certified_ub_hb": null,
+          "folds_holding": [
+            0,
+            0
+          ],
+          "vacuous": true
+        }
+      },
+      "boltz1x": {
+        "n": 2331,
+        "n_targets": 2091,
+        "native": {
+          "coverage": 0.0137,
+          "n_accept": 32,
+          "realized_risk": 0.0625,
+          "realized_risk_cp90": [
+            0.0112,
+            0.1839
+          ],
+          "risk_cp_upper90": 0.1839,
+          "certified_ub_hb": 0.1948,
+          "certified_pass": true,
+          "folds_holding": [
+            1,
+            1
+          ],
+          "vacuous": true
+        },
+        "combined": {
+          "coverage": 0.0545,
+          "n_accept": 127,
+          "realized_risk": 0.1575,
+          "realized_risk_cp90": [
+            0.1069,
+            0.2206
+          ],
+          "risk_cp_upper90": 0.2206,
+          "certified_ub_hb": 0.2261,
+          "certified_pass": false,
+          "folds_holding": [
+            0,
+            1
+          ],
+          "vacuous": false
+        }
+      },
+      "chai": {
+        "n": 2571,
+        "n_targets": 2292,
+        "native": {
+          "coverage": 0.0,
+          "n_accept": 0,
+          "realized_risk": null,
+          "risk_cp_upper90": null,
+          "certified_ub_hb": null,
+          "folds_holding": [
+            0,
+            0
+          ],
+          "vacuous": true
+        },
+        "combined": {
+          "coverage": 0.2166,
+          "n_accept": 557,
+          "realized_risk": 0.088,
+          "realized_risk_cp90": [
+            0.069,
+            0.1103
+          ],
+          "risk_cp_upper90": 0.1103,
+          "certified_ub_hb": 0.1123,
+          "certified_pass": true,
+          "folds_holding": [
+            2,
+            4
+          ],
+          "vacuous": false
+        }
+      },
+      "protenix": {
+        "n": 2607,
+        "n_targets": 2323,
+        "native": {
+          "coverage": 0.0,
+          "n_accept": 0,
+          "realized_risk": null,
+          "risk_cp_upper90": null,
+          "certified_ub_hb": null,
+          "folds_holding": [
+            0,
+            0
+          ],
+          "vacuous": true
+        },
+        "combined": {
+          "coverage": 0.0771,
+          "n_accept": 201,
+          "realized_risk": 0.0498,
+          "realized_risk_cp90": [
+            0.0272,
+            0.0829
+          ],
+          "risk_cp_upper90": 0.0829,
+          "certified_ub_hb": 0.0859,
+          "certified_pass": true,
+          "folds_holding": [
+            5,
+            5
+          ],
+          "vacuous": false
+        }
+      }
+    }
+  }
+}
