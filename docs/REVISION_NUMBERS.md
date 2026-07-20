@@ -110,3 +110,14 @@ Nested target-grouped LOTO (GroupKFold outer, grouped 50/50 fit/cal inner). α=0
 - deploy-to-novel (calibrate S0–S1, deploy S3–S4, CP interval): AF3 **0.549**, boltz1 0.491, boltz1x 0.478, chai 0.500, protenix 0.664. Range ~0.48–0.66; matches E2's 0.547. Cite break_money_numbers.json.
 
 ## ALL EXPERIMENTS + FIGURES COMPLETE. Next: paper rewrite → JCIM structure.
+
+## RE-AUDIT FIXES (2026-07-20, second pass)
+- **B1 frontier:** 50 cells include 10 S0-reference (trivially feasible). Over the **40 non-reference cells**: α=0.20 → **21 zero-frontier, 14 CP-robust**; α=0.10 → 26 zero-frontier, 21 CP-robust; pooled both α → 47 zero-frontier, **35 CP-robust**. Abstract "35 of 50" was wrong; headline 21/40 (14 CP-robust) at α=0.20.
+- **B2 S4 size:** no-analog S4 = **2.8% of poses** (af3 76, pooled 359/12,602), NOT 30-34%. "small-sample, greyed" correct; fix the percentage.
+- **B3:** the 0.60 is base/point-threshold error on S4, NOT the folding LTT gate (which abstains at 0 coverage). Reframe.
+- **B4:** valid certificate = per-fold LTT + folds_holding, not pooled CP-UB. Leakage-free α=0.20: combined af3 73% cov, folds 4/5, HBub 0.192 (certified); native af3 20% cov, folds 1/2, HBub 0.223 (NOT certified); chai/protenix native abstain. Fixed-cap certified-native scan is post-hoc/invalid — not cited. Use folds_holding column + LTT framing; drop pooled-CP-as-certificate.
+- **B5:** IFP n = **12,475** (not 11,711). Per-structure contact set-comparison keyed on (seqid,resname), no cross-frame superposition → not subject to the protomer trap; homodimer copies share numbering. Verified: single-chain-subset gate coef +0.041 to +0.056 (vs full +0.034 to +0.072) — survives for all 5 models.
+- **M5 receptor diversity:** RNP `cluster` column → **954 receptor clusters** (largest 170 = 7%), not 2,412 per-PDB. Top PDB class ~17%.
+- **M4:** median 38 labels is over the **23 feasible cells** (d2_certify); the ~80-label figure is the one-stratum-out design-curve budget — conclusion should use ~80.
+- **M6 pseudo-prospective failures:** native — boltz1 CP-UB 0.207 (overshoots), chai abstains; combined — chai CP-UB 0.202 (overshoots), boltz1x + protenix abstain (LTT non-certification). abstain = holds vacuously.
+- **M1 RLCP:** dominates on coverage (0.44 vs 0.18) but its guarantee is randomized + marginal-over-localization, not stratum-conditional finite-sample — state the guarantee difference in the table caption.

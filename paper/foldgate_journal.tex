@@ -45,15 +45,16 @@ with pose accuracy, but correlation is not a decision rule, and it is weakest on
 chemotypes drug discovery cares about. We build \texttt{foldgate}, a training-free layer that turns
 frozen co-folding confidence into a risk-controlled accept/abstain gate, and audit where its guarantee
 fails. Calibrating on familiar targets and deploying on novel ones drives realized selective error to
-$0.55$ against a $0.20$ target (AF3; $0.48$ to $0.66$ across five models). A per-stratum feasibility
-analysis shows this is not a tuning problem: of $50$ model-by-stratum cells, $35$ admit \emph{no}
-threshold on the frozen score that reaches the target at any coverage, robust to an exact binomial lower
-bound, so abstention is the only certified action there. An exact decomposition of the realized risk
-explains why and yields a measurable drift diagnostic that selects the repair from a labeled probe.
-Group-conditional recalibration restores per-stratum control, retaining $73\%$ of AF3 poses at certified
-risk $\le 0.20$ under leakage-free target-grouped cross-validation where the native gate retains $20\%$,
-at a price we measure: a median of $38$ in-stratum labels on the familiar strata, and, on the novel tail,
-no repair by stratification alone. A public deployment-computable proxy for the stratifier tracks the
+$0.55$ (AF3, $90\%$ CI $[0.52,0.58]$; $0.48$ to $0.66$ across five models) against a $0.20$ target. A per-stratum feasibility
+analysis shows this is not a tuning problem: of the $40$ non-reference model-by-stratum cells, $21$ admit
+\emph{no} threshold on the frozen score that reaches the target at any coverage at $\alpha=0.20$, and $14$
+of those survive an exact binomial lower bound, so abstention is the only certified action there. An exact
+decomposition of the realized risk explains why and yields a measurable drift diagnostic that selects the
+repair from a labeled probe. Group-conditional recalibration restores per-stratum control, retaining $73\%$
+of AF3 poses with the finite-sample certificate holding in four of five held-out target folds under
+leakage-free cross-validation, where the native gate certifies almost none, at a price we measure: to
+extend one stratum outward costs on the order of $80$ in-stratum labels, and the novel tail admits no
+repair by stratification alone. A public deployment-computable proxy for the stratifier tracks the
 oracle on low and moderate novelty but loosens control on the novel tail, so for closed-training models
 the repair is deployable one stratum out and the extreme tail remains uncertifiable. The layer runs on
 released predictions on CPU and ships as certificate cards per model and novelty stratum.
@@ -110,22 +111,23 @@ superposition, ligand-in-place); recomputed geometry is used only where noted (T
 \textbf{Novelty axes.} We stratify by training-set similarity along two structural axes: a ligand axis
 (ECFP4 Morgan Tanimoto to the nearest training ligand) and a pocket axis (SuCOS shape $\times$ pocket
 query-coverage), both released by Runs N' Poses. Each axis is binned into quartiles $S_0$ (familiar) to
-$S_3$, with systems that have no training analog (missing similarity, $30$--$34\%$ of poses) forming a
-fifth no-analog stratum $S_4$. The quartile edges are fixed a priori from the similarity marginal;
+$S_3$, with systems that have no training analog (missing similarity, about $3\%$ of poses, AF3 $n\!\approx\!76$)
+forming a fifth no-analog stratum $S_4$. The quartile edges are fixed a priori from the similarity marginal;
 Table~S1 lists $n$ and the similarity range each bin spans, per model and axis. We treat structural
 similarity, not deposition recency, as the operative shift variable, for a reason the data forces
 (Sec.~\ref{sec:break}).
 
 \textbf{Cohort.} We evaluate five models
-(AF3~\citep{af3}, Boltz-1, Boltz-1x~\citep{boltz}, Chai-1~\citep{chai}, Protenix~\citep{protenix}) on Runs
+(AF3~\citep{af3}, Boltz-1~\citep{boltz1}, Boltz-1x~\citep{boltz1x}, Chai-1~\citep{chai}, Protenix~\citep{protenix}) on Runs
 N' Poses~\citep{rnp}. Figure~\ref{fig:consort} is the reduction chain: $13{,}535$ raw delivered poses
-(six models) minus the $933$ Boltz-2 poses used only as an ungoverned affinity comparator
+(six models) minus the $933$ Boltz-2~\citep{boltz2} poses used only as an ungoverned affinity comparator
 (Sec.~\ref{sec:utility}) give $12{,}602$ governed poses over $2{,}425$ systems; deduplicating to one pose
 per (system, model) gives $11{,}254$ independent target-labels for the five governed models. Certificates
 that must be per deployed model use the target-label unit, since several ligand instances of one system
 fail together and pooling them as independent draws is anti-conservative. The cohort is chemically diverse
 and not a single-family monoculture: $55\%$ drug-like ($300$--$500$\,Da) with a $24\%$ fragment tail,
-$2{,}412$ distinct receptors, and no PDB header class above $21\%$.
+$954$ receptor sequence clusters (the largest covering $7\%$ of systems), and no PDB header class above
+$17\%$.
 
 \textbf{Deployment cost.} The native-score gate is CPU-only and consumes one released prediction per
 target. An optional combined score (a calibration-only gradient-boosted map from cheap per-prediction
@@ -155,9 +157,12 @@ $\rho^\star$ & DRO robustness radius & $n_g$ & in-stratum labels \\
 
 \begin{table}[t]
 \centering\small
-\caption{Label provenance. The primary selective-risk results use the shipped BiSyRMSD label; only the
-label-free danger-floor / cross-model consensus analysis (SI) uses recomputed pose geometry, on the
-single-chain subset that App.~\ref{app:integrity} shows is the only frame that is trustworthy.}
+\caption{Label provenance. The primary selective-risk results use the shipped BiSyRMSD label. The
+protomer trap of App.~\ref{app:integrity} afflicts only cross-frame \emph{superposition}, so the
+cross-model danger floor is restricted to the single-chain subset; interaction-fingerprint recovery
+enumerates contacts \emph{within} each structure and matches them by residue identity (seqid, resname),
+which is invariant to a protomer swap (homodimer copies share numbering), and its result is unchanged on
+the single-chain subset (gate coefficient $+0.04$--$+0.06$ there vs.\ $+0.03$--$+0.07$ on the full set).}
 \label{tab:provenance}
 \begin{tabular}{lll}
 \toprule
@@ -165,7 +170,7 @@ Result & Label / geometry & $n$ \\
 \midrule
 Break, frontier, repair, utility (Secs.~\ref{sec:break}--\ref{sec:utility}) & shipped BiSyRMSD & $11{,}254$ target-labels \\
 Cross-model danger floor / consensus (SI) & recomputed, single-chain receptors & $6{,}163$ instances \\
-Interaction-fingerprint recovery (Sec.~\ref{sec:utility}) & recomputed contacts vs.\ crystal & $11{,}711$ poses \\
+Interaction-fingerprint recovery (Sec.~\ref{sec:utility}) & per-structure contacts vs.\ crystal & $12{,}475$ poses \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -190,7 +195,8 @@ finite-sample and distribution-free.
 realized risk $R_{\mathrm{marg}}=0.177$ masks $R_{\mathrm{marg},S_3}=0.375$ on the novel ligand stratum
 (Fig.~\ref{fig:break}, with Clopper-Pearson intervals and accepted $n$ per point). The operational failure
 is starker: calibrating the gate on the familiar strata ($S_0,S_1$) and deploying on the novel tail
-($S_3,S_4$) drives the realized error to $R_{\mathrm{transfer}}=0.55$ (AF3; $0.48$--$0.66$ across the five
+($S_3,S_4$) drives the realized error to $R_{\mathrm{transfer}}=0.55$ (AF3, $90\%$ CI $[0.52,0.58]$,
+$n\!=\!734$; $0.48$--$0.66$ across the five
 models) against the $0.20$ target, so the certificate is inverted, not merely loose. We lead the break on
 $S_3$; the no-analog $S_4$ (AF3 $n\!\approx\!76$, greyed in the figure) is small-sample and enters only in
 the feasibility frontier, where zero coverage is the point.
@@ -224,10 +230,14 @@ structural drift with a near-zero temporal drift. That contrast is real but must
 Runs N' Poses structure is deposited after the $2021$-era models' training cutoff, so the temporal axis
 ranks recency \emph{among already-out-of-training structures} rather than in- versus out-of-training, and a
 flat drift there is a property of the benchmark, not evidence of temporal robustness. The one model with a
-genuine within-benchmark cutoff boundary is Boltz-2 ($2023$-06-30); across it the reliability drift is
-$+0.005$ ($90\%$ CI $[-0.075,0.079]$), and its structural $S_3$ break is unchanged whether keyed on the
-$2021$- or the correctly-referenced $2023$-training similarity ($0.364$ vs.\ $0.367$ correct). Structural
-similarity is therefore the operative shift variable, and we do not claim a temporal-generalization result.
+genuine within-benchmark cutoff boundary is Boltz-2 ($2023$-06-30), which is outside the governed five-model
+cohort and enters only here: of its $933$ poses, $77$ predate the cutoff and $856$ follow it, and the
+reliability drift across that boundary (on its \emph{pose} ranking confidence, not the affinity head) is
+$+0.005$ ($90\%$ CI $[-0.075,0.079]$), while its structural $S_3$ break is unchanged whether keyed on the
+$2021$- or the correctly-referenced $2023$-training similarity ($0.364$ vs.\ $0.367$ correct). This is a
+single-model observation with $77$ in-cutoff targets, not a cohort result; we report it as the one available
+genuine temporal test and do not claim a temporal-generalization result. Structural similarity is the
+operative shift variable throughout.
 
 \section{The feasibility frontier}\label{sec:frontier}
 The break is a fixed-coverage statement; it leaves open whether $\alpha$ is reachable by lowering coverage,
@@ -235,11 +245,16 @@ so we measure that directly. We fix the deployed rule on the familiar stratum an
 report the largest source coverage $c^\star_g=\max\{c:R_{Q,g}(\tau(c))\le\alpha\}$ at which it still holds
 $\alpha$, one delivered pose per (system, model). The frontier decays with novelty and then vanishes: for
 AF3 on the ligand axis $c^\star$ runs $1.00,0.85,0.75,0.20,0.00$ across $S_0$ to $S_4$ at $\alpha=0.20$,
-and $0.65,0.40,0.10,0.00,0.00$ at $\alpha=0.10$. Requiring at least $20$ accepted targets to call a
-stratum feasible, $21$ of $50$ model-by-stratum cells (two axes $\times$ five models $\times$ five strata)
-admit no operating point at any coverage at $\alpha=0.20$, and $26$ of $50$ at $\alpha=0.10$; pooling the
-two levels gives $47$ zero-frontier cells, of which $\mathbf{35}$ survive an exact Clopper-Pearson lower
-bound on $R_{Q,g}$ at every measurable coverage. A zero frontier is strictly stronger than the
+and $0.65,0.40,0.10,0.00,0.00$ at $\alpha=0.10$. Of the $50$ model-by-stratum cells (two axes $\times$ five
+models $\times$ five strata), the ten $S_0$ reference cells are feasible by construction, leaving $40$
+non-reference cells. Requiring at least $20$ accepted targets to call a stratum feasible, $\mathbf{21}$ of
+those $40$ admit no operating point at any coverage at $\alpha=0.20$, of which $\mathbf{14}$ survive an
+exact binomial (Clopper-Pearson) lower bound on $R_{Q,g}>\alpha$ at every measurable coverage; at
+$\alpha=0.10$ the counts are $26$ of $40$ zero-frontier and $21$ robust. Pooling the two $\alpha$ levels
+($47$ zero-frontier cell-tests) leaves $\mathbf{35}$ robust across both levels. These are per-cell exact
+lower bounds; we report them as a per-test robustness check rather than a family-wise-corrected
+simultaneous statement, and the frontier is listed as such in the certificate ledger
+(Table~\ref{tab:ledger}). A zero frontier is strictly stronger than the
 coverage-pinned theorem of Sec.~\ref{sec:decomp}, which speaks only at the deployed coverage, and it is an
 empirical finding rather than a corollary. The infeasibility is not an artifact of the quartile binning:
 the zero-frontier fraction stays near $0.4$ whether we use $3$, $5$, or $7$ strata or fixed-similarity
@@ -299,8 +314,7 @@ sweeping the target drift locates the coverage at which no reweighting reaches $
 non-co-folding benchmarks elec2 (worst-block concept gap $0.36$) and ACS~Income (gap $0.05$), a
 single-threshold gate under-controls the worst block, weighted conformal issues a certificate its realized
 risk then violates on elec2 but repairs on ACS, and group-conditional calibration certifies control by
-abstaining (App.~\ref{app:bench}). Details, including the elec2/ACS realized worst-block risks, are in the
-SI.
+abstaining, with the elec2/ACS realized worst-block risks in App.~\ref{app:bench}.
 
 \textbf{Drift selects the repair.} Reliability drift $D(\nu)$ is a label-based diagnostic that tracks
 $\bar\Delta_c$, so it decides, from a labeled probe rather than after a failed deployment, which repair a
@@ -318,10 +332,14 @@ $S_1$ and $39\%$ of $S_2$ at risk $\le\alpha$, against $8\%$ and $12\%$ natively
 Where the marginal gate over-shoots $\alpha$ on the novel strata the per-stratum gate holds risk at or
 below it and, on the no-analog tail where no certified slice remains, folds to zero coverage rather than
 issue a false certificate. The repair does not require the gradient-boosted combiner: a per-stratum
-Venn--Abers recalibration of the native score reaches the same guarantee (AF3 realized risk $0.166$ at
-$24\%$ coverage vs.\ $0.190$ at $18\%$ for the group-conditional combiner), while the field baselines break
-under the same shift, a fixed ipTM$\,\ge0.8$ gate at realized risk $0.30$ and naive-transfer conformal at
-$0.41$ (Table~\ref{tab:baselines}).
+Venn--Abers recalibration of the native score reaches the same stratum-conditional guarantee (AF3 realized
+risk $0.166$ at $24\%$ coverage vs.\ $0.190$ at $18\%$ for the group-conditional combiner), while the field
+baselines break under the same shift, a fixed ipTM$\,\ge0.8$ gate at realized risk $0.30$ and
+naive-transfer conformal at $0.41$ (Table~\ref{tab:baselines}). A randomized localized conformal gate
+(RLCP) reaches lower risk at higher coverage still ($0.187$ at $44\%$), but under a weaker, randomized
+marginal-over-localization guarantee rather than the stratum-conditional finite-sample one we require, so we
+keep group-conditional as the operative repair and report RLCP as the higher-coverage option a practitioner
+may prefer when a randomized guarantee suffices.
 
 \begin{figure}[t]
 \centering
@@ -336,7 +354,11 @@ than issuing a false certificate. Coverage labels are direct; the coverage cost 
 \centering\small
 \caption{Baselines under the novelty shift (AF3, calibrate on familiar, deploy on novel; realized risk /
 coverage at $\alpha=0.20$). The field baselines break; every gate that keys calibration on novelty holds by
-abstaining. Venn--Abers matches the combiner, so the shift repair does not require it.}
+abstaining. RLCP reaches lower risk at higher coverage, but its guarantee is randomized and
+marginal-over-localization, not the stratum-conditional finite-sample guarantee this paper certifies, so
+group-conditional remains the operative repair and RLCP is the higher-coverage option under a weaker
+guarantee. Venn--Abers matches the combiner at a stratum-conditional guarantee, so the repair does not
+require the gradient-boosted combiner.}
 \label{tab:baselines}
 \begin{tabular}{lcc}
 \toprule
@@ -348,16 +370,17 @@ Accept-all & $0.417$ & $1.00$ \\
 \midrule
 Group-conditional (combiner) & $\mathbf{0.190}$ & $0.18$ \\
 Localized / continuous novelty (RLCP)~\citep{hore2024rlcp} & $\mathbf{0.187}$ & $0.44$ \\
-Per-stratum Venn--Abers~\citep{vovk2013vennabers} & $\mathbf{0.166}$ & $0.24$ \\
+Per-stratum Venn--Abers~\citep{vovk2014vennabers} & $\mathbf{0.166}$ & $0.24$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \textbf{The label cost, as a design curve.} Group-conditional repair spends target labels, and how many
 depends on what is being certified. For the binary pose label the count is a sufficient statistic and the
-exact binomial tail is its exact inversion, so on the feasible strata it certifies at a median of $38$
-independent target-labels against $60$ for a Hoeffding-Bentkus bound and $102$ for pure Hoeffding. But $38$
-is a \emph{familiar}-stratum price. Figure~\ref{fig:labelcost} turns the cost into a design tool: certified
+exact binomial tail is its exact inversion, so across the $23$ feasible cells it certifies at a median of
+$38$ independent target-labels against $60$ for a Hoeffding-Bentkus bound and $102$ for pure Hoeffding. But
+that $38$ is a \emph{certification} sample size on already-feasible (familiar) strata, not the budget to
+push coverage one stratum outward. Figure~\ref{fig:labelcost} turns the latter into a design tool: certified
 coverage as a function of the label budget $n_g$, per stratum. With the native score, no budget buys usable
 coverage on the novel strata, because there the rule fails, not the estimate of it, the impossibility made
 empirical. The combined score, a partly novelty-aware re-score and so on the achievability side, unlocks the
@@ -379,11 +402,14 @@ oracle similarity is computed against the model's training set, which for a clos
 cannot enumerate. A public proxy built from the count of pre-cutoff PDB analogs (deposition recency and
 protein sequence identity are at chance) recovers the oracle stratification with rank correlation $0.59$
 and $83\%$ adjacent agreement, and matches oracle per-stratum control on the low and moderate strata, but
-loosens control on the near-novel tail (true-$S_3$ risk $0.23\!\to\!0.37$). The binding limit, however, is
-not the proxy: even the \emph{oracle} group-conditional gate leaves the no-analog stratum above $\alpha$
-(risk $0.60$). So for closed-training models the repair is deployable one stratum out with a public proxy,
-and the extreme novel tail is uncertifiable by stratification alone, whether the stratifier is proxy or
-oracle. That, not a missing training set, is the honest ceiling.
+loosens control on the near-novel tail (true-$S_3$ risk $0.23\!\to\!0.37$; adjacent-stratum agreement over
+five bins is a lenient criterion, so this is the honest degradation). The binding limit, however, is not
+the proxy: the no-analog tail cannot be held even with the oracle stratifier, because its base error there
+is about $0.55$--$0.60$, so a point-threshold gate keyed on the \emph{true} stratum still realizes risk
+$\approx\!0.60$ and the certified Learn-then-Test group-conditional gate abstains outright (zero coverage)
+rather than issue a false certificate. So for closed-training models the repair is deployable one stratum
+out with a public proxy, and the extreme novel tail is uncertifiable by stratification alone, whether the
+stratifier is proxy or oracle. That, not a missing training set, is the honest ceiling.
 
 \textbf{A label-free worst-subpopulation certificate.} When the novel subpopulation is unnamed we control
 the conditional value-at-risk of the accepted loss, the mean error of its worst $(1-\beta)$-fraction. For
@@ -401,7 +427,9 @@ cannot rescue the novel tail either.
 variance-adaptive betting bound~\citep{waudbysmith2024betting} certifies a usable operating point where a
 distribution-free bound certifies none: AF3 certifies $43\%$ coverage at a $1$\,\AA\ mean-RMSD target with
 realized capped-mean RMSD $0.90$\,\AA, against essentially zero ($0.04\%$) for a worst-case Hoeffding bound;
-the empirical guarantee coverage over $120$ resamples is $0.90$. The reliability layer is therefore not tied
+the empirical guarantee coverage is $0.90$ ($46$ of the $51$ non-empty gates over $120$ pose-level
+resamples met the target; at this resample count the estimate is consistent with the nominal $1-\delta=0.90$
+to within its Monte-Carlo error). The reliability layer is therefore not tied
 to the $2$\,\AA\ convention, and ``$1$\,\AA'' is an actionable operating point where ``$\alpha=0.20$'' is not.
 
 \textbf{Certificate ledger.} Table~\ref{tab:ledger} states, per claim, the $\delta$, the multiplicity
@@ -423,6 +451,7 @@ Joint LOTO gate & $0.02$ & Bonferroni $\delta/K$ & target-labels & joint (5 mode
 CVaR / DRO bound & $0.02$ & Bonferroni $\delta/K$ & accepted poses & joint (5 models) \\
 Betting bound (graded) & $0.10$ & anytime-valid (Ville) & accepted poses & per-model \\
 Drift grid & $0.10$ & Romano-Wolf step-down & $55$ cells & family-wise \\
+Feasibility frontier (CP) & $0.10$ & per-cell exact, uncorrected & $40$ cells & per-test \\
 ``For every model'' effects & $0.10$ & intersection-union & per-model $p$ & no penalty \\
 \bottomrule
 \end{tabular}
@@ -448,31 +477,64 @@ point exists, which is itself the certified action. The full grid across both no
 \section{Utility, priced and leakage-free}\label{sec:utility}
 \textbf{Ranking utility.} Every utility number is target-grouped. Under a nested leave-one-target-out
 protocol (outer GroupKFold on system id; within each training fold a grouped fit/calibration split, so the
-combiner, the threshold, and the test target are mutually disjoint), the combined-score gate keeps
-$\mathbf{73\%}$ of AF3 poses at certified risk $\le\alpha$ (realized $0.176$, Hoeffding-Bentkus upper bound
-$0.192$), where the native gate keeps $\mathbf{20\%}$; at the stringent $\alpha=0.10$ the combined gate
-keeps $13\%$ at realized risk $0.066$. Chai and Protenix native gates abstain entirely under this
-leakage-free protocol, the honest native limit the combined score recovers ($64\%$ and $57\%$ coverage).
-These replace an earlier held-out-split pair ($71\%$ vs.\ $22\%$) that a pooled split would have leaked; the
-grouped protocol shares zero targets between calibration and test, where a random row split leaks $95\%$.
-The leave-one-target-out risks come with certified upper bounds and pass/fail per model
-(Table~\ref{tab:loto}).
+combiner, the threshold, and the test target are mutually disjoint), the certificate is the per-fold
+Learn-then-Test guarantee and its held-out validation is the number of folds whose realized risk lands
+$\le\alpha$. On that standard the combined-score gate keeps $\mathbf{73\%}$ of AF3 poses with the
+certificate holding in $4$ of $5$ folds and a pooled Hoeffding-Bentkus upper bound of $0.192\le\alpha$,
+whereas the native gate does \emph{not} certify usable coverage leakage-free: at its $20\%$ coverage only
+$1$ of $2$ non-empty folds holds and the pooled upper bound is $0.223>\alpha$, and the Chai and Protenix
+native gates abstain outright (Table~\ref{tab:loto}). So the honest leakage-free story is that the combined
+score is what makes the gate certifiable at usable coverage, not that it beats an equally-certified native
+gate; the earlier held-out pair ($71\%$ vs.\ $22\%$) is discarded because a pooled split leaks $95\%$ of
+test targets into calibration where the grouped protocol shares zero. At the stringent $\alpha=0.10$ the
+combined gate certifies $13\%$ of AF3 poses at realized risk $0.066$ (pooled upper bound $0.094$).
 
 \begin{table}[t]
 \centering\small
-\caption{Leakage-free nested-LOTO gate, native vs.\ combined score ($\alpha=0.20$, $\delta=0.10$): coverage,
-realized risk, exact Clopper-Pearson upper bound, and folds holding. Chai/Protenix native gates abstain.}
+\caption{Leakage-free nested-LOTO gate, native vs.\ combined score ($\alpha=0.20$, $\delta=0.10$). The
+certificate is the per-fold Learn-then-Test guarantee; ``folds'' is the number of non-empty held-out folds
+whose realized risk landed $\le\alpha$ (its validation), and HB$^{\uparrow}$ is the more conservative pooled
+Hoeffding-Bentkus upper bound. A pooled HB$^{\uparrow}\le\alpha$ (\checkmark) is a sufficient aggregate
+certificate; a value $>\alpha$ means the pooled bound does not clear $\alpha$ even where most folds hold.
+Chai/Protenix native gates abstain outright.}
 \label{tab:loto}
-\begin{tabular}{lcccccc}
+\begin{tabular}{llcccc}
 \toprule
- & \multicolumn{3}{c}{native} & \multicolumn{3}{c}{combined} \\
- & cov & risk & CP$_{90}^{\uparrow}$ & cov & risk & CP$_{90}^{\uparrow}$ \\
+model & score & cov & risk & HB$_{90}^{\uparrow}$ & folds \\
 \midrule
-AF3 & $0.20$ & $0.189$ & $0.218$ & $0.73$ & $0.176$ & $0.190$ \\
-Boltz-1 & $0.21$ & $0.188$ & $0.219$ & $0.60$ & $0.181$ & $0.199$ \\
-Boltz-1x & $0.20$ & $0.164$ & $0.194$ & $0.48$ & $0.182$ & $0.202$ \\
-Chai-1 & \multicolumn{3}{c}{abstains} & $0.64$ & $0.178$ & $0.195$ \\
-Protenix & \multicolumn{3}{c}{abstains} & $0.57$ & $0.182$ & $0.199$ \\
+AF3 & native & $0.20$ & $0.189$ & $0.223$ & $1/2$ \\
+ & combined & $\mathbf{0.73}$ & $0.176$ & $0.192$\,\checkmark & $4/5$ \\
+Boltz-1 & native & $0.21$ & $0.188$ & $0.222$ & $4/5$ \\
+ & combined & $0.60$ & $0.181$ & $0.201$ & $4/5$ \\
+Boltz-1x & native & $0.20$ & $0.164$ & $0.197$\,\checkmark & $4/5$ \\
+ & combined & $0.48$ & $0.182$ & $0.203$ & $3/4$ \\
+Chai-1 & native & \multicolumn{4}{c}{abstains} \\
+ & combined & $0.64$ & $0.178$ & $0.196$\,\checkmark & $4/5$ \\
+Protenix & native & \multicolumn{4}{c}{abstains} \\
+ & combined & $0.57$ & $0.182$ & $0.201$ & $4/5$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{One map for every AF3 coverage number.} Because the paper reports AF3 coverage under several
+protocols, Table~\ref{tab:covmap} lists each with the experiment that produced it, so no two figures are
+mistaken for the same quantity. The $0.52$-on-$S_1$ and $0.83$-on-$S_1$ pair is the sharpest: the first is
+the coverage of a single $\alpha$-certified per-stratum gate, the second is the maximum coverage the full
+in-stratum label pool certifies (the label-cost-curve endpoint) --- different questions, same stratum.
+
+\begin{table}[t]
+\centering\small
+\caption{Every headline AF3 coverage figure, mapped to its protocol ($\alpha=0.20$).}
+\label{tab:covmap}
+\begin{tabular}{lllcc}
+\toprule
+Quantity & Protocol & Scope & coverage & risk \\
+\midrule
+Combined gate, marginal & nested target-grouped LOTO & all strata & $0.73$ & $0.176$ \\
+Native gate, marginal & nested target-grouped LOTO & all strata & $0.20$ & $0.189$ \\
+Group-conditional (combined) & per-stratum $\alpha$-certified gate & $S_1$ / $S_2$ & $0.52$ / $0.39$ & $\le\alpha$ \\
+Deploy-to-novel (combined) & calibrate familiar, deploy novel & $S_2,S_3$ & $0.18$ & $0.190$ \\
+Label-cost maximum (combined) & full in-stratum label pool & $S_1$ / $S_2$ & $0.83$ / $0.77$ & $\le\alpha$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -481,8 +543,10 @@ Protenix & \multicolumn{3}{c}{abstains} & $0.57$ & $0.182$ & $0.199$ \\
 ratio $\lambda=\text{cost(act on a wrong pose)}/\text{cost(abstain on a right pose)}$ and plot net benefit
 (Fig.~\ref{fig:decision}). The conformal gate is best for $\lambda\in[0.65,4.55]$ (AF3; every model shows
 the same window), dominating a fixed-ipTM threshold at \emph{every} $\lambda$ and beating accept-all once
-wrong poses are more than $\sim\!0.65\times$ as costly as a missed right one. The layer's job is the
-high-cost regime, which is where a delivered pose that must be trusted lives.
+wrong poses are more than $\sim\!0.65\times$ as costly as a missed right one. Below $\lambda\!=\!0.65$
+accept-all wins (abstention only forfeits benefit when wrong poses are cheap), and above $\lambda\!=\!4.55$
+abstain-all wins (no accepted set is worth its false positives), so the gate occupies the intermediate,
+high-but-finite-cost regime, which is where a delivered pose that must be trusted lives.
 
 \begin{figure}[t]
 \centering
@@ -494,14 +558,18 @@ everywhere and serves the high-cost regime, so there is no single $\alpha$ to de
 \end{figure}
 
 \textbf{A non-circular quality, honestly conditioned.} Accepted-pose purity is $1-$ selective risk by
-construction, so it cannot show the gate buys anything past the guarantee. Interaction-fingerprint recovery,
-the fraction of the crystal's protein-ligand contacts a pose reproduces, is a different quantity a
-medicinal chemist reads. Pooling all accepted against all rejected poses shows a large gap ($0.19$ for
-AF3), but most of that is the accepted set being enriched for low-RMSD poses. Conditioning removes the
-confound: \emph{within} the sub-$2$\,\AA\ set the accepted-minus-rejected recovery gap is $+0.02$ to
-$+0.04$, and a regression of recovery on RMSD with the gate as a covariate leaves a gate coefficient of
-$+0.03$ to $+0.07$ (all five $90\%$ intervals excluding zero). So the gate buys a small but robust
-non-circular interaction-recovery lift, once the RMSD confound is removed. Separately, the accepted set is
+construction, so it cannot show the gate buys anything past the guarantee. Interaction-fingerprint recovery
+is a different quantity a medicinal chemist reads: the fraction of the crystal's protein-ligand contacts a
+pose reproduces, where a contact is any receptor residue with a heavy atom within $4.5$\,\AA\ of a ligand
+heavy atom, enumerated within each structure and matched to the crystal contact set by residue identity
+(no interaction typing or protonation modeling). Pooling all accepted against all rejected poses shows a
+large recall gap ($0.19$ for AF3), but most of that is the accepted set being enriched for low-RMSD poses.
+Conditioning removes the confound: \emph{within} the sub-$2$\,\AA\ set (AF3 $8{,}277$ correct poses across
+models) the accepted-minus-rejected recall gap is $+0.02$ to $+0.04$, and a regression of recall (a
+$[0,1]$ fraction) on RMSD with the gate as a $0/1$ covariate leaves a gate coefficient of $+0.03$ to
+$+0.07$ recall units (all five $90\%$ intervals excluding zero), stable at $+0.04$ to $+0.06$ on the
+single-chain subset. So the gate buys a small but robust non-circular interaction-recovery lift, once the
+RMSD confound is removed. Separately, the accepted set is
 PoseBusters-valid at a higher rate than the rejected set for every model (AF3 $0.77$ vs.\ $0.58$), a free
 strengthening; certifying the joint label (RMSD $\le2$\,\AA\ \emph{and} physically valid) directly is
 expensive because the confidence ranks for correctness, not validity, and we report that cost rather than
@@ -509,18 +577,21 @@ hide it.
 
 \section{Generality and limitations}\label{sec:general}
 \textbf{Pseudo-prospective.} Freezing calibration on everything deposited before $2023$-05-31 and deploying
-on everything after, with no stratum information at calibration, the native gate holds realized post-cutoff
-risk $\le\alpha$ (or its Clopper-Pearson upper bound does) for four of five models and the combined gate
-for three, with realized-minus-expected risk in $[-0.04,+0.00]$; the abstentions are honest
-non-certifications, not violations. This is a recency transfer, complementary to the structural story, and
-inherits the caveat that Runs N' Poses is entirely post-cutoff.
+on everything after (per model $\sim\!1300$ pre- and $\sim\!900$ post-cutoff targets), with no stratum
+information at calibration: on the native gate, AF3, Boltz-1x, and Protenix hold the post-cutoff certificate
+(realized-risk upper bound $\le\alpha$), Boltz-1 overshoots by its upper bound ($0.207$), and Chai abstains;
+on the combined gate, AF3 and Boltz-1 hold, Chai overshoots ($0.202$), and Boltz-1x and Protenix abstain.
+Abstention is a non-certification, not a violation, and no held gate's realized risk exceeds its expected
+(pre-cutoff) risk by more than $0.00$, so temporal deployment does not silently break control. This is a
+recency transfer, complementary to the structural story, and inherits the caveat that Runs N' Poses is
+entirely post-cutoff.
 
 \textbf{Cross-dataset.} Recast as risk control rather than ranking, a threshold frozen on Runs N' Poses and
-deployed on regenerated FoldBench~\citep{foldbench} Protenix predictions does not overshoot $\alpha$ on
-either subset, but it certifies almost nothing on the $52$ low-homology targets (accepts $3$, coverage
-$6\%$, Clopper-Pearson risk upper bound $0.63$), so the failure mode of cross-dataset transfer is coverage
-starvation, not risk violation, the coverage collapse of Sec.~\ref{sec:break} reproduced on a second
-dataset. The interface-ipTM gate out-ranks a \texttt{ranking\_score} control (AURC $0.380$ vs.\ $0.454$) but
+deployed on regenerated FoldBench~\citep{foldbench} Protenix predictions accepts only $3$ of the $52$
+low-homology targets (coverage $6\%$, Clopper-Pearson risk upper bound $0.63$), so the low-homology arm is
+uninformative about risk and informative only about coverage \emph{starvation}, the coverage collapse of
+Sec.~\ref{sec:break} reproduced on a second dataset; on the $384$ train-similar targets the frozen gate
+accepts $18$ at realized risk $0.11$. The interface-ipTM gate out-ranks a \texttt{ranking\_score} control (AURC $0.380$ vs.\ $0.454$) but
 their $90\%$ bootstrap intervals overlap, and the regenerated model's self-scored top-1 success ($0.40$)
 differs from the released $0.57$, so this stays a directional transfer check, feature and label
 self-consistent within the one run. A third dataset would need a benchmark that releases ipTM and
@@ -535,14 +606,16 @@ natural next step.
 
 \section{Conclusion}
 Co-folding confidence becomes a risk-controlled decision only when the guarantee is audited where it fails.
-On structural novelty a marginally valid gate under-controls error more than twofold, and on $35$ of $47$
-zero-frontier cells no threshold on the frozen score is certifiable at any coverage. An exact decomposition
-explains why: the concept gap that opens there closes under in-stratum recalibration but under no
-training-free reweighting. Three honest bottom lines follow. Co-folding confidence is certifiable on the
-familiar strata. It is extendable one stratum outward at a measured price, a median of $38$ in-stratum
-target structures, and with a public proxy stratifier for closed-training models. And on the extreme novel
-tail, exactly where a program most needs a guarantee, neither stratification nor a label-free certificate
-can supply one, so abstention is the certified action. The layer runs on frozen models' released
+On structural novelty a marginally valid gate that calibrates on familiar targets and deploys on novel ones
+realizes error $0.55$ against a $0.20$ target (about $2.7\times$), and across both $\alpha$ levels $35$ of
+$47$ zero-frontier cell-tests admit no threshold on the frozen score that is certifiable at any coverage. An
+exact decomposition explains why: the concept gap that opens there closes under in-stratum recalibration but
+under no training-free reweighting. Three honest bottom lines follow. Co-folding confidence is certifiable on
+the familiar strata (where the exact binomial certifies from a median of $38$ labels over the $23$ feasible
+cells, against $102$ for Hoeffding). It is extendable one stratum outward at a measured price, on the order
+of $80$ in-stratum target structures for usable certified coverage, and with a public proxy stratifier for
+closed-training models. And on the extreme novel tail, exactly where a program most needs a guarantee,
+neither stratification nor a label-free certificate can supply one, so abstention is the certified action. The layer runs on frozen models' released
 predictions on CPU and ships as certificate cards per model and novelty stratum.
 
 \textbf{Data and code availability.} Code and calibration tables are at
@@ -594,13 +667,16 @@ under Covariate Shift. NeurIPS, 2023.
 arXiv:2603.24704 (preprint), 2026.
 \bibitem{mondrian} V. Vovk. Conditional Validity of Inductive Conformal Predictors. Machine Learning 92, 2013
 (Mondrian / group-conditional conformal).
-\bibitem{vovk2013vennabers} V. Vovk, I. Petej. Venn-Abers Predictors. UAI, 2014.
+\bibitem{vovk2014vennabers} V. Vovk, I. Petej. Venn-Abers Predictors. UAI, 2014.
 \bibitem{crcgupta} V. Kotte. When Can Conformal Risk Control Certify LLM Outputs? Bounds, Impossibility, and
 Adaptation for Structured Generation. arXiv:2606.29054 (preprint), 2026 (concurrent, independent
 reweighting-invariant selective-risk floor, LLM domain).
-\bibitem{boltz} J. Wohlwend, et al. Boltz-1: Democratizing Biomolecular Interaction Modeling. bioRxiv
-(preprint), 2024. Boltz-1x (confidence-refined) and Boltz-2 (affinity), 2025; versions used are recorded in
-the repository.
+\bibitem{boltz1} J. Wohlwend, et al. Boltz-1: Democratizing Biomolecular Interaction Modeling. bioRxiv
+(preprint), 2024.
+\bibitem{boltz1x} J. Wohlwend, et al. Boltz-1x: confidence-refined structure prediction. Model release,
+2025; exact version recorded in the repository.
+\bibitem{boltz2} S. Passaro, et al. Boltz-2: Towards Accurate and Efficient Binding Affinity Prediction.
+bioRxiv (preprint), 2025; used only as an ungoverned affinity comparator.
 \bibitem{vovk2005} V. Vovk, A. Gammerman, G. Shafer. Algorithmic Learning in a Random World. Springer, 2005.
 \bibitem{cauchois2024} M. Cauchois, S. Gupta, A. Ali, J. Duchi. Robust Validation: Confident Predictions
 Even When Distributions Shift. JASA, 2024.

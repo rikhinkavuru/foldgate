@@ -17,7 +17,7 @@
           ],
           "risk_cp_upper90": 0.2183,
           "certified_ub_hb": 0.2228,
-          "certified_pass": true,
+          "certified": false,
           "folds_holding": [
             1,
             2
@@ -34,7 +34,7 @@
           ],
           "risk_cp_upper90": 0.1902,
           "certified_ub_hb": 0.1915,
-          "certified_pass": true,
+          "certified": true,
           "folds_holding": [
             4,
             5
@@ -55,7 +55,7 @@
           ],
           "risk_cp_upper90": 0.2191,
           "certified_ub_hb": 0.2219,
-          "certified_pass": true,
+          "certified": false,
           "folds_holding": [
             4,
             5
@@ -72,7 +72,7 @@
           ],
           "risk_cp_upper90": 0.199,
           "certified_ub_hb": 0.2006,
-          "certified_pass": true,
+          "certified": false,
           "folds_holding": [
             4,
             5
@@ -93,7 +93,7 @@
           ],
           "risk_cp_upper90": 0.1941,
           "certified_ub_hb": 0.1968,
-          "certified_pass": true,
+          "certified": true,
           "folds_holding": [
             4,
             5
@@ -110,7 +110,7 @@
           ],
           "risk_cp_upper90": 0.2015,
           "certified_ub_hb": 0.2032,
-          "certified_pass": true,
+          "certified": false,
           "folds_holding": [
             3,
             4
@@ -127,6 +127,7 @@
           "realized_risk": null,
           "risk_cp_upper90": null,
           "certified_ub_hb": null,
+          "certified": false,
           "folds_holding": [
             0,
             0
@@ -143,7 +144,7 @@
           ],
           "risk_cp_upper90": 0.1946,
           "certified_ub_hb": 0.196,
-          "certified_pass": true,
+          "certified": true,
           "folds_holding": [
             4,
             5
@@ -160,6 +161,7 @@
           "realized_risk": null,
           "risk_cp_upper90": null,
           "certified_ub_hb": null,
+          "certified": false,
           "folds_holding": [
             0,
             0
@@ -176,7 +178,7 @@
           ],
           "risk_cp_upper90": 0.199,
           "certified_ub_hb": 0.2005,
-          "certified_pass": true,
+          "certified": false,
           "folds_holding": [
             4,
             5
@@ -195,6 +197,7 @@
           "realized_risk": null,
           "risk_cp_upper90": null,
           "certified_ub_hb": null,
+          "certified": false,
           "folds_holding": [
             0,
             0
@@ -211,7 +214,7 @@
           ],
           "risk_cp_upper90": 0.0916,
           "certified_ub_hb": 0.0939,
-          "certified_pass": true,
+          "certified": true,
           "folds_holding": [
             4,
             4
@@ -232,7 +235,7 @@
           ],
           "risk_cp_upper90": 0.2249,
           "certified_ub_hb": 0.2354,
-          "certified_pass": false,
+          "certified": false,
           "folds_holding": [
             0,
             1
@@ -245,6 +248,7 @@
           "realized_risk": null,
           "risk_cp_upper90": null,
           "certified_ub_hb": null,
+          "certified": false,
           "folds_holding": [
             0,
             0
@@ -265,7 +269,7 @@
           ],
           "risk_cp_upper90": 0.1839,
           "certified_ub_hb": 0.1948,
-          "certified_pass": true,
+          "certified": false,
           "folds_holding": [
             1,
             1
@@ -282,7 +286,7 @@
           ],
           "risk_cp_upper90": 0.2206,
           "certified_ub_hb": 0.2261,
-          "certified_pass": false,
+          "certified": false,
           "folds_holding": [
             0,
             1
@@ -299,6 +303,7 @@
           "realized_risk": null,
           "risk_cp_upper90": null,
           "certified_ub_hb": null,
+          "certified": false,
           "folds_holding": [
             0,
             0
@@ -315,7 +320,7 @@
           ],
           "risk_cp_upper90": 0.1103,
           "certified_ub_hb": 0.1123,
-          "certified_pass": true,
+          "certified": false,
           "folds_holding": [
             2,
             4
@@ -332,6 +337,7 @@
           "realized_risk": null,
           "risk_cp_upper90": null,
           "certified_ub_hb": null,
+          "certified": false,
           "folds_holding": [
             0,
             0
@@ -348,13 +354,47 @@
           ],
           "risk_cp_upper90": 0.0829,
           "certified_ub_hb": 0.0859,
-          "certified_pass": true,
+          "certified": true,
           "folds_holding": [
             5,
             5
           ],
           "vacuous": false
         }
+      }
+    }
+  },
+  "certified_native_coverage": {
+    "0.2": {
+      "af3": {
+        "coverage": 0.5006,
+        "n_accept": 1356,
+        "realized_risk": 0.1792,
+        "certified_ub_hb": 0.1988
+      },
+      "boltz1": {
+        "coverage": 0.1003,
+        "n_accept": 239,
+        "realized_risk": 0.113,
+        "certified_ub_hb": 0.1559
+      },
+      "boltz1x": {
+        "coverage": 0.2514,
+        "n_accept": 586,
+        "realized_risk": 0.1655,
+        "certified_ub_hb": 0.1953
+      },
+      "chai": {
+        "coverage": 0.0,
+        "n_accept": 0,
+        "realized_risk": null,
+        "certified_ub_hb": null
+      },
+      "protenix": {
+        "coverage": 0.1492,
+        "n_accept": 389,
+        "realized_risk": 0.1594,
+        "certified_ub_hb": 0.1961
       }
     }
   }

@@ -100,7 +100,8 @@ def _pool_gate(df, m, alpha, delta):
         if a == 0:
             out[name] = {"coverage": 0.0, "n_accept": 0, "realized_risk": None,
                          "risk_cp_upper90": None, "certified_ub_hb": None,
-                         "folds_holding": [0, acc[name]["folds"]], "vacuous": True}
+                         "certified": False, "folds_holding": [0, acc[name]["folds"]],
+                         "vacuous": True}
             continue
         risk = e / a
         cp_lo, cp_hi = clopper_pearson(e, a, ci=0.90)
@@ -113,20 +114,55 @@ def _pool_gate(df, m, alpha, delta):
             "realized_risk_cp90": [round(cp_lo, 4), round(cp_hi, 4)],
             "risk_cp_upper90": round(cp_hi, 4),
             "certified_ub_hb": round(ub, 4),
-            "certified_pass": bool(ub <= alpha or risk <= alpha),
+            # A certificate requires the (1-delta) UPPER bound to sit at/below alpha, not
+            # merely the point estimate. This is the paper's own standard (B4).
+            "certified": bool(ub <= alpha),
             "folds_holding": [int(sum(acc[name]["holds"])), len(acc[name]["holds"])],
             "vacuous": bool(cov < MIN_COVERAGE_VACUOUS),
         }
     return out
 
 
+def _certified_native_coverage(df, m, alpha, delta):
+    """Largest leakage-free LOTO coverage at which the NATIVE gate's pooled HB upper bound
+    is <= alpha (a properly certified native comparator, B4). Sweeps a shrinking coverage
+    cap by testing progressively stricter fixed-sequence thresholds pooled across folds."""
+    sub = df[df.method == m].dropna(subset=[CONF, "system_id"]).reset_index(drop=True)
+    s = sub[CONF].to_numpy(); y = sub["correct"].to_numpy().astype(int)
+    groups = sub["system_id"].to_numpy(); n = len(sub)
+    n_splits = min(N_FOLDS, len(np.unique(groups)))
+    gkf = GroupKFold(n_splits=n_splits)
+    # For each candidate target coverage cap, pool accepts across folds using the per-fold
+    # top-cap quantile threshold of the calibration scores, then check the pooled HB bound.
+    best = {"coverage": 0.0, "n_accept": 0, "realized_risk": None, "certified_ub_hb": None}
+    for cap in np.arange(0.05, 1.0 + 1e-9, 0.05):
+        a = e = 0
+        for tr, te in gkf.split(s, y, groups):
+            tau = float(np.quantile(s[tr], 1.0 - cap))
+            acc = s[te] >= tau
+            na = int(acc.sum())
+            if na:
+                a += na; e += int((1 - y[te][acc]).sum())
+        if a < 20:
+            continue
+        ub = hb_upper_bound(e / a, a, delta)
+        if ub <= alpha and a / n > best["coverage"]:
+            best = {"coverage": round(a / n, 4), "n_accept": a,
+                    "realized_risk": round(e / a, 4), "certified_ub_hb": round(ub, 4)}
+    return best
+
+
 def run() -> dict:
     df = load_delivered()
     methods = methods_with_enough(df)
     out = {"protocol": "nested target-grouped LOTO (GroupKFold outer, grouped fit/cal inner)",
-           "delta": DELTA, "cal_frac": CAL_FRAC, "per_alpha": {}}
+           "delta": DELTA, "cal_frac": CAL_FRAC, "per_alpha": {},
+           "certified_native_coverage": {}}
     for alpha in ALPHAS:
         out["per_alpha"][str(alpha)] = {m: _pool_gate(df, m, alpha, DELTA) for m in methods}
+    # Properly certified native comparator at alpha=0.20 (B4).
+    out["certified_native_coverage"]["0.2"] = {
+        m: _certified_native_coverage(df, m, 0.20, DELTA) for m in methods}
     return out
 
 
