@@ -1,0 +1,308 @@
+{
+  "part_a_composition": {
+    "n_systems": 2425,
+    "ligand_properties": {
+      "molecular_weight": {
+        "n": 2425,
+        "min": 76.01604398799999,
+        "q25": 306.06168745,
+        "median": 396.16985926000007,
+        "mean": 403.96069288006623,
+        "q75": 480.2332473639999,
+        "max": 797.02288263609
+      },
+      "num_rot_bonds": {
+        "n": 2425,
+        "min": 0.0,
+        "q25": 3.0,
+        "median": 5.0,
+        "mean": 5.529072164948453,
+        "q75": 7.0,
+        "max": 30.0
+      },
+      "num_heavy_atoms": {
+        "n": 2425,
+        "min": 5.0,
+        "q25": 21.0,
+        "median": 27.0,
+        "mean": 27.730309278350514,
+        "q75": 32.0,
+        "max": 57.0
+      }
+    },
+    "mw_size_decomposition": {
+      "definition": {
+        "fragment": "MW < 300",
+        "drug_like": "300 <= MW <= 500",
+        "large": "MW > 500"
+      },
+      "n_with_mw": 2425,
+      "fragment": {
+        "n": 570,
+        "frac": 0.2351
+      },
+      "drug_like": {
+        "n": 1328,
+        "frac": 0.5476
+      },
+      "large": {
+        "n": 527,
+        "frac": 0.2173
+      }
+    },
+    "ligand_type_decomposition": {
+      "heuristic": "ion/tiny-cofactor = num_heavy_atoms <= 3; peptide/flexible = num_rot_bonds >= 15 (and not an ion); drug-like small molecule = everything else. Rough, size-only; no explicit ion/cofactor/peptide column exists in the annotations.",
+      "ion_or_tiny_cofactor": {
+        "n": 0,
+        "frac": 0.0
+      },
+      "peptide_or_flexible": {
+        "n": 15,
+        "frac": 0.0062
+      },
+      "drug_like_small_molecule": {
+        "n": 2410,
+        "frac": 0.9938
+      }
+    },
+    "target_class": {
+      "source_column": "entry_keywords (PDB header classification, from annotations.csv)",
+      "note": "This is the only class-like column shipped; primary token taken as the text before the first '/'. It is a coarse PDB header keyword, not a curated enzyme/receptor family.",
+      "n_class_missing": 0,
+      "n_distinct_classes": 78,
+      "top_classes": [
+        {
+          "class": "TRANSFERASE",
+          "n": 500,
+          "frac": 0.2062
+        },
+        {
+          "class": "HYDROLASE",
+          "n": 489,
+          "frac": 0.2016
+        },
+        {
+          "class": "VIRAL PROTEIN",
+          "n": 315,
+          "frac": 0.1299
+        },
+        {
+          "class": "OXIDOREDUCTASE",
+          "n": 213,
+          "frac": 0.0878
+        },
+        {
+          "class": "TRANSCRIPTION",
+          "n": 113,
+          "frac": 0.0466
+        },
+        {
+          "class": "LIGASE",
+          "n": 89,
+          "frac": 0.0367
+        },
+        {
+          "class": "LYASE",
+          "n": 69,
+          "frac": 0.0285
+        },
+        {
+          "class": "SIGNALING PROTEIN",
+          "n": 56,
+          "frac": 0.0231
+        },
+        {
+          "class": "BIOSYNTHETIC PROTEIN",
+          "n": 49,
+          "frac": 0.0202
+        },
+        {
+          "class": "MEMBRANE PROTEIN",
+          "n": 41,
+          "frac": 0.0169
+        },
+        {
+          "class": "LIPID BINDING PROTEIN",
+          "n": 39,
+          "frac": 0.0161
+        },
+        {
+          "class": "FLAVOPROTEIN",
+          "n": 27,
+          "frac": 0.0111
+        },
+        {
+          "class": "CELL CYCLE",
+          "n": 26,
+          "frac": 0.0107
+        },
+        {
+          "class": "DNA BINDING PROTEIN",
+          "n": 23,
+          "frac": 0.0095
+        },
+        {
+          "class": "PROTEIN BINDING",
+          "n": 23,
+          "frac": 0.0095
+        }
+      ],
+      "most_common_class": "TRANSFERASE",
+      "most_common_class_frac": 0.2062,
+      "dominated_by_single_class": false
+    },
+    "diversity_proxy": {
+      "n_distinct_receptors_pdb_entry": 2412,
+      "n_distinct_ligand_ccd_codes": 1685,
+      "note": "distinct PDB entries and distinct ligand CCD codes as diversity proxies; no UniProt column is shipped in annotations.csv."
+    }
+  },
+  "part_b_pocket_drift_bins": {
+    "config": {
+      "axis": "pocket",
+      "familiar_stratum": 0,
+      "novel_stratum": 3,
+      "n_bins": 5,
+      "binning": "5 quantile bins of ranking_score shared (pooled) between S0 and S3",
+      "thin_bin_flag": "< 10 targets in either stratum"
+    },
+    "methods": {
+      "protenix": {
+        "n_S0": 632,
+        "n_S3": 643,
+        "p_correct_S0_overall": 0.9146,
+        "p_correct_S3_overall": 0.283,
+        "shared_edges": [
+          null,
+          0.9479,
+          0.9684,
+          0.9801,
+          0.9865,
+          null
+        ],
+        "bins": [
+          {
+            "bin": 0,
+            "conf_lo": null,
+            "conf_hi": 0.9479,
+            "n_S0": 111,
+            "n_S3": 144,
+            "p_correct_S0": 0.8829,
+            "p_correct_S3": 0.2292,
+            "thin_bin": false
+          },
+          {
+            "bin": 1,
+            "conf_lo": 0.9479,
+            "conf_hi": 0.9684,
+            "n_S0": 120,
+            "n_S3": 135,
+            "p_correct_S0": 0.8583,
+            "p_correct_S3": 0.2148,
+            "thin_bin": false
+          },
+          {
+            "bin": 2,
+            "conf_lo": 0.9684,
+            "conf_hi": 0.9801,
+            "n_S0": 138,
+            "n_S3": 117,
+            "p_correct_S0": 0.942,
+            "p_correct_S3": 0.1966,
+            "thin_bin": false
+          },
+          {
+            "bin": 3,
+            "conf_lo": 0.9801,
+            "conf_hi": 0.9865,
+            "n_S0": 111,
+            "n_S3": 144,
+            "p_correct_S0": 0.9279,
+            "p_correct_S3": 0.2847,
+            "thin_bin": false
+          },
+          {
+            "bin": 4,
+            "conf_lo": 0.9865,
+            "conf_hi": null,
+            "n_S0": 152,
+            "n_S3": 103,
+            "p_correct_S0": 0.9474,
+            "p_correct_S3": 0.5437,
+            "thin_bin": false
+          }
+        ],
+        "any_thin_bin": false,
+        "n_thin_bins": 0
+      },
+      "af3": {
+        "n_S0": 667,
+        "n_S3": 675,
+        "p_correct_S0_overall": 0.916,
+        "p_correct_S3_overall": 0.4163,
+        "shared_edges": [
+          null,
+          0.8845,
+          0.9303,
+          0.9516,
+          0.9711,
+          null
+        ],
+        "bins": [
+          {
+            "bin": 0,
+            "conf_lo": null,
+            "conf_hi": 0.8845,
+            "n_S0": 70,
+            "n_S3": 199,
+            "p_correct_S0": 0.7857,
+            "p_correct_S3": 0.2563,
+            "thin_bin": false
+          },
+          {
+            "bin": 1,
+            "conf_lo": 0.8845,
+            "conf_hi": 0.9303,
+            "n_S0": 107,
+            "n_S3": 161,
+            "p_correct_S0": 0.9346,
+            "p_correct_S3": 0.323,
+            "thin_bin": false
+          },
+          {
+            "bin": 2,
+            "conf_lo": 0.9303,
+            "conf_hi": 0.9516,
+            "n_S0": 145,
+            "n_S3": 123,
+            "p_correct_S0": 0.9172,
+            "p_correct_S3": 0.4309,
+            "thin_bin": false
+          },
+          {
+            "bin": 3,
+            "conf_lo": 0.9516,
+            "conf_hi": 0.9711,
+            "n_S0": 175,
+            "n_S3": 93,
+            "p_correct_S0": 0.9257,
+            "p_correct_S3": 0.5806,
+            "thin_bin": false
+          },
+          {
+            "bin": 4,
+            "conf_lo": 0.9711,
+            "conf_hi": null,
+            "n_S0": 170,
+            "n_S3": 99,
+            "p_correct_S0": 0.9471,
+            "p_correct_S3": 0.7172,
+            "thin_bin": false
+          }
+        ],
+        "any_thin_bin": false,
+        "n_thin_bins": 0
+      }
+    }
+  }
+}

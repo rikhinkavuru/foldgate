@@ -1,0 +1,247 @@
+{
+  "config": {
+    "alpha": 0.2,
+    "delta": 0.1,
+    "T_quantile": 0.6,
+    "T_cutoff": "2023-05-31",
+    "min_post_targets_floor": 200,
+    "cal_frac_preT": 0.5,
+    "one_pose_per_target": "top ranking_score per (system_id, method)",
+    "release_date_span": {
+      "release_date_min": "2021-10-06",
+      "release_date_max": "2024-06-05"
+    },
+    "post_floor_met": true
+  },
+  "pre_post_counts": {
+    "af3": {
+      "pre": 1421,
+      "post": 988
+    },
+    "boltz1": {
+      "pre": 1279,
+      "post": 860
+    },
+    "boltz1x": {
+      "pre": 1236,
+      "post": 855
+    },
+    "chai": {
+      "pre": 1368,
+      "post": 924
+    },
+    "protenix": {
+      "pre": 1385,
+      "post": 938
+    }
+  },
+  "per_model": {
+    "af3": {
+      "n_pre": 1421,
+      "n_post": 988,
+      "base_correct_pre": 0.6812,
+      "base_correct_post": 0.7237,
+      "native": {
+        "tau": 0.9552,
+        "coverage": 0.3107,
+        "n_accept": 307,
+        "n_post": 988,
+        "realized_risk": 0.1107,
+        "realized_risk_cp90": [
+          0.0826,
+          0.1447
+        ],
+        "risk_cp_upper90": 0.1447,
+        "certified_ub_hb": 0.1477,
+        "risk_controlled": true,
+        "cp_upper_controlled": true,
+        "expected_risk_preT": 0.1751,
+        "expected_accept_n_preT": 554,
+        "risk_inflation_post_minus_pre": -0.0644,
+        "vacuous": false
+      },
+      "combined": {
+        "tau": 0.7291,
+        "coverage": 0.5354,
+        "n_accept": 529,
+        "n_post": 988,
+        "realized_risk": 0.1304,
+        "realized_risk_cp90": [
+          0.107,
+          0.157
+        ],
+        "risk_cp_upper90": 0.157,
+        "certified_ub_hb": 0.1594,
+        "risk_controlled": true,
+        "cp_upper_controlled": true,
+        "expected_risk_preT": 0.1723,
+        "expected_accept_n_preT": 412,
+        "risk_inflation_post_minus_pre": -0.0419,
+        "vacuous": false,
+        "n_fit_preT": 711,
+        "n_cal_preT": 710
+      }
+    },
+    "boltz1": {
+      "n_pre": 1279,
+      "n_post": 860,
+      "base_correct_pre": 0.6231,
+      "base_correct_post": 0.6558,
+      "native": {
+        "tau": 0.9668,
+        "coverage": 0.2919,
+        "n_accept": 251,
+        "n_post": 860,
+        "realized_risk": 0.1633,
+        "realized_risk_cp90": [
+          0.1261,
+          0.2067
+        ],
+        "risk_cp_upper90": 0.2067,
+        "certified_ub_hb": 0.2105,
+        "risk_controlled": true,
+        "cp_upper_controlled": false,
+        "expected_risk_preT": 0.1333,
+        "expected_accept_n_preT": 90,
+        "risk_inflation_post_minus_pre": 0.03,
+        "vacuous": false
+      },
+      "combined": {
+        "tau": 0.7453,
+        "coverage": 0.4547,
+        "n_accept": 391,
+        "n_post": 860,
+        "realized_risk": 0.1509,
+        "realized_risk_cp90": [
+          0.1219,
+          0.1839
+        ],
+        "risk_cp_upper90": 0.1839,
+        "certified_ub_hb": 0.1868,
+        "risk_controlled": true,
+        "cp_upper_controlled": true,
+        "expected_risk_preT": 0.1565,
+        "expected_accept_n_preT": 262,
+        "risk_inflation_post_minus_pre": -0.0056,
+        "vacuous": false,
+        "n_fit_preT": 639,
+        "n_cal_preT": 640
+      }
+    },
+    "boltz1x": {
+      "n_pre": 1236,
+      "n_post": 855,
+      "base_correct_pre": 0.6303,
+      "base_correct_post": 0.6912,
+      "native": {
+        "tau": 0.9659,
+        "coverage": 0.3064,
+        "n_accept": 262,
+        "n_post": 855,
+        "realized_risk": 0.1412,
+        "realized_risk_cp90": [
+          0.1071,
+          0.1816
+        ],
+        "risk_cp_upper90": 0.1816,
+        "certified_ub_hb": 0.1851,
+        "risk_controlled": true,
+        "cp_upper_controlled": true,
+        "expected_risk_preT": 0.1313,
+        "expected_accept_n_preT": 99,
+        "risk_inflation_post_minus_pre": 0.0099,
+        "vacuous": false
+      },
+      "combined": {
+        "tau": null,
+        "coverage": 0.0,
+        "n_accept": 0,
+        "n_post": 855,
+        "realized_risk": null,
+        "vacuous": true,
+        "note": "LTT certified nothing on pre-T calibration",
+        "n_fit_preT": 618,
+        "n_cal_preT": 618
+      }
+    },
+    "chai": {
+      "n_pre": 1368,
+      "n_post": 924,
+      "base_correct_pre": 0.6308,
+      "base_correct_post": 0.6764,
+      "native": {
+        "tau": null,
+        "coverage": 0.0,
+        "n_accept": 0,
+        "n_post": 924,
+        "realized_risk": null,
+        "vacuous": true,
+        "note": "LTT certified nothing on pre-T calibration"
+      },
+      "combined": {
+        "tau": 0.5524,
+        "coverage": 0.6688,
+        "n_accept": 618,
+        "n_post": 924,
+        "realized_risk": 0.1748,
+        "realized_risk_cp90": [
+          0.15,
+          0.2018
+        ],
+        "risk_cp_upper90": 0.2018,
+        "certified_ub_hb": 0.2042,
+        "risk_controlled": true,
+        "cp_upper_controlled": false,
+        "expected_risk_preT": 0.1722,
+        "expected_accept_n_preT": 424,
+        "risk_inflation_post_minus_pre": 0.0026,
+        "vacuous": false,
+        "n_fit_preT": 684,
+        "n_cal_preT": 684
+      }
+    },
+    "protenix": {
+      "n_pre": 1385,
+      "n_post": 938,
+      "base_correct_pre": 0.6231,
+      "base_correct_post": 0.6407,
+      "native": {
+        "tau": 0.9887,
+        "coverage": 0.1077,
+        "n_accept": 101,
+        "n_post": 938,
+        "realized_risk": 0.1089,
+        "realized_risk_cp90": [
+          0.0623,
+          0.1738
+        ],
+        "risk_cp_upper90": 0.1738,
+        "certified_ub_hb": 0.1796,
+        "risk_controlled": true,
+        "cp_upper_controlled": true,
+        "expected_risk_preT": 0.1622,
+        "expected_accept_n_preT": 222,
+        "risk_inflation_post_minus_pre": -0.0533,
+        "vacuous": false
+      },
+      "combined": {
+        "tau": null,
+        "coverage": 0.0,
+        "n_accept": 0,
+        "n_post": 938,
+        "realized_risk": null,
+        "vacuous": true,
+        "note": "LTT certified nothing on pre-T calibration",
+        "n_fit_preT": 693,
+        "n_cal_preT": 692
+      }
+    }
+  },
+  "_summary": {
+    "takeaway": [
+      "Time split at T=2023-05-31 (60th pct of release_date): calibrate on pre-T depositions, deploy frozen on post-T, no stratum info used. Post-T clears the 200-target floor for every model: True.",
+      "Native gate holds post-T risk <= alpha=0.2 (realized or CP-upper) for 4/5 models; combined gate for 3/5. Where it holds, the certificate calibrated on the past transfers forward in time.",
+      "Realized-minus-expected risk (combined) spans -0.042..+0.003 across models: small gaps mean temporal deployment does not silently break control; a large positive gap on any model is an honest recency-transfer limit."
+    ]
+  }
+}

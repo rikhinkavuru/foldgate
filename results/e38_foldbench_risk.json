@@ -1,0 +1,115 @@
+{
+  "reviewer": "R2.10",
+  "alpha": 0.2,
+  "delta": 0.1,
+  "ci": 0.9,
+  "novelty_axis": "is_unseen_protein (1 = low-homology unseen protein)",
+  "model": "protenix (regenerated on FoldBench, self-scored ligand-RMSD)",
+  "n_targets_scored": 436,
+  "n_low_homology": 52,
+  "n_train_similar": 384,
+  "frozen_threshold_risk": {
+    "gate": "RNP Protenix interface-ipTM LTT (alpha=0.20, delta=0.10)",
+    "tau": 0.9887774348258972,
+    "rnp_n_calib": 2607,
+    "rnp_home": {
+      "n": 2607,
+      "n_accept": 678,
+      "n_errors": 119,
+      "base_success_rate": 0.6340621403912543,
+      "coverage": 0.2600690448791715,
+      "coverage_ci90": [
+        0.24594976915770372,
+        0.2745882367172726
+      ],
+      "selective_risk": 0.17551622418879054,
+      "selective_risk_ci90": [
+        0.15183037263118349,
+        0.20132279132398612
+      ],
+      "risk_point_over_alpha": false,
+      "risk_ci_hi_over_alpha": true
+    },
+    "low_homology": {
+      "n": 52,
+      "n_accept": 3,
+      "n_errors": 0,
+      "base_success_rate": 0.4230769230769231,
+      "coverage": 0.057692307692307696,
+      "coverage_ci90": [
+        0.01590775471357961,
+        0.142414005203974
+      ],
+      "selective_risk": 0.0,
+      "selective_risk_ci90": [
+        0.0,
+        0.6315968501359612
+      ],
+      "risk_point_over_alpha": false,
+      "risk_ci_hi_over_alpha": true
+    },
+    "train_similar": {
+      "n": 384,
+      "n_accept": 18,
+      "n_errors": 2,
+      "base_success_rate": 0.3984375,
+      "coverage": 0.046875,
+      "coverage_ci90": [
+        0.030513055198644515,
+        0.06872045782020213
+      ],
+      "selective_risk": 0.11111111111111116,
+      "selective_risk_ci90": [
+        0.020110675876131672,
+        0.31026273969821105
+      ],
+      "risk_point_over_alpha": false,
+      "risk_ci_hi_over_alpha": true
+    },
+    "pooled": {
+      "n": 436,
+      "n_accept": 21,
+      "n_errors": 2,
+      "base_success_rate": 0.4013761467889908,
+      "coverage": 0.0481651376146789,
+      "coverage_ci90": [
+        0.03249858861827781,
+        0.06862069408199051
+      ],
+      "selective_risk": 0.09523809523809523,
+      "selective_risk_ci90": [
+        0.01719099663247961,
+        0.2705516993045313
+      ],
+      "risk_point_over_alpha": false,
+      "risk_ci_hi_over_alpha": true
+    }
+  },
+  "aurc_with_ci": {
+    "note": "pooled over all scored FoldBench Protenix targets; bootstrap resamples targets.",
+    "n_boot": 5000,
+    "interface_iptm": {
+      "aurc": 0.37997672010226863,
+      "aurc_ci90": [
+        0.33124537605708354,
+        0.4324793219477806
+      ],
+      "n": 436
+    },
+    "ranking_score": {
+      "aurc": 0.4537586811891281,
+      "aurc_ci90": [
+        0.40317720099120763,
+        0.5047645684770469
+      ],
+      "n": 436
+    },
+    "ci_intervals_overlap": true,
+    "aurc_gap": 0.07378196108685947
+  },
+  "top1_caveat": {
+    "self_scored_top1_success": 0.4013761467889908,
+    "foldbench_released_top1_success": 0.567,
+    "statement": "Self-scored top-1 success is 0.401 vs FoldBench-released 0.567. The feature (interface-ipTM) and the label (self-scored ligand-RMSD <= 2 A) come from the SAME regenerated Protenix run, so they are self-consistent within that run and the gate comparison is valid; the absolute-success gap means this arm is a DIRECTIONAL transfer check, not an absolute-accuracy claim."
+  }
+}

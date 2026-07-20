@@ -1,0 +1,1163 @@
+{
+  "config": {
+    "score": "ranking_score",
+    "alpha": 0.2,
+    "delta": 0.1,
+    "seed": 20260715,
+    "methods": [
+      "af3",
+      "boltz1",
+      "boltz1x",
+      "chai",
+      "protenix"
+    ],
+    "n_pose_rows": 13535,
+    "n_target_rows": 12125,
+    "n_systems": 2425
+  },
+  "part_a_stratum_definitions": {
+    "ligand": {
+      "af3": {
+        "0": {
+          "n_poses": 692,
+          "n_targets": 560,
+          "sim_min": 0.7818181818181819,
+          "sim_max": 1.0,
+          "base_correct_poses": 0.880057803468208,
+          "base_correct_targets": 0.8696428571428572,
+          "is_no_analog": false
+        },
+        "1": {
+          "n_poses": 654,
+          "n_targets": 600,
+          "sim_min": 0.3838383838383838,
+          "sim_max": 0.7794117647058824,
+          "base_correct_poses": 0.7767584097859327,
+          "base_correct_targets": 0.7716666666666666,
+          "is_no_analog": false
+        },
+        "2": {
+          "n_poses": 629,
+          "n_targets": 590,
+          "sim_min": 0.17272727272727273,
+          "sim_max": 0.38372093023255816,
+          "base_correct_poses": 0.7313195548489666,
+          "base_correct_targets": 0.7254237288135593,
+          "is_no_analog": false
+        },
+        "3": {
+          "n_poses": 658,
+          "n_targets": 593,
+          "sim_min": 0.0,
+          "sim_max": 0.1724137931034483,
+          "base_correct_poses": 0.439209726443769,
+          "base_correct_targets": 0.4620573355817875,
+          "is_no_analog": false
+        },
+        "4": {
+          "n_poses": 76,
+          "n_targets": 66,
+          "sim_min": null,
+          "sim_max": null,
+          "base_correct_poses": 0.5526315789473685,
+          "base_correct_targets": 0.5454545454545454,
+          "is_no_analog": true
+        }
+      },
+      "boltz1": {
+        "0": {
+          "n_poses": 563,
+          "n_targets": 460,
+          "sim_min": 0.7818181818181819,
+          "sim_max": 1.0,
+          "base_correct_poses": 0.8152753108348135,
+          "base_correct_targets": 0.8,
+          "is_no_analog": false
+        },
+        "1": {
+          "n_poses": 581,
+          "n_targets": 540,
+          "sim_min": 0.3838383838383838,
+          "sim_max": 0.7794117647058824,
+          "base_correct_poses": 0.7246127366609294,
+          "base_correct_targets": 0.7277777777777777,
+          "is_no_analog": false
+        },
+        "2": {
+          "n_poses": 577,
+          "n_targets": 542,
+          "sim_min": 0.17272727272727273,
+          "sim_max": 0.38372093023255816,
+          "base_correct_poses": 0.6360485268630849,
+          "base_correct_targets": 0.6383763837638377,
+          "is_no_analog": false
+        },
+        "3": {
+          "n_poses": 592,
+          "n_targets": 535,
+          "sim_min": 0.0,
+          "sim_max": 0.1724137931034483,
+          "base_correct_poses": 0.41047297297297297,
+          "base_correct_targets": 0.4280373831775701,
+          "is_no_analog": false
+        },
+        "4": {
+          "n_poses": 71,
+          "n_targets": 62,
+          "sim_min": null,
+          "sim_max": null,
+          "base_correct_poses": 0.4225352112676056,
+          "base_correct_targets": 0.41935483870967744,
+          "is_no_analog": true
+        }
+      },
+      "boltz1x": {
+        "0": {
+          "n_poses": 552,
+          "n_targets": 445,
+          "sim_min": 0.7818181818181819,
+          "sim_max": 1.0,
+          "base_correct_poses": 0.8242753623188406,
+          "base_correct_targets": 0.8134831460674158,
+          "is_no_analog": false
+        },
+        "1": {
+          "n_poses": 566,
+          "n_targets": 530,
+          "sim_min": 0.3838383838383838,
+          "sim_max": 0.7794117647058824,
+          "base_correct_poses": 0.7243816254416962,
+          "base_correct_targets": 0.7245283018867924,
+          "is_no_analog": false
+        },
+        "2": {
+          "n_poses": 568,
+          "n_targets": 534,
+          "sim_min": 0.17272727272727273,
+          "sim_max": 0.38372093023255816,
+          "base_correct_poses": 0.6813380281690141,
+          "base_correct_targets": 0.6816479400749064,
+          "is_no_analog": false
+        },
+        "3": {
+          "n_poses": 577,
+          "n_targets": 523,
+          "sim_min": 0.0,
+          "sim_max": 0.1724137931034483,
+          "base_correct_poses": 0.42634315424610053,
+          "base_correct_targets": 0.4416826003824092,
+          "is_no_analog": false
+        },
+        "4": {
+          "n_poses": 68,
+          "n_targets": 59,
+          "sim_min": null,
+          "sim_max": null,
+          "base_correct_poses": 0.4411764705882353,
+          "base_correct_targets": 0.4406779661016949,
+          "is_no_analog": true
+        }
+      },
+      "chai": {
+        "0": {
+          "n_poses": 636,
+          "n_targets": 514,
+          "sim_min": 0.7818181818181819,
+          "sim_max": 1.0,
+          "base_correct_poses": 0.8286163522012578,
+          "base_correct_targets": 0.8190661478599222,
+          "is_no_analog": false
+        },
+        "1": {
+          "n_poses": 625,
+          "n_targets": 570,
+          "sim_min": 0.3838383838383838,
+          "sim_max": 0.7794117647058824,
+          "base_correct_poses": 0.7488,
+          "base_correct_targets": 0.7350877192982456,
+          "is_no_analog": false
+        },
+        "2": {
+          "n_poses": 614,
+          "n_targets": 584,
+          "sim_min": 0.17272727272727273,
+          "sim_max": 0.38372093023255816,
+          "base_correct_poses": 0.6758957654723127,
+          "base_correct_targets": 0.6763698630136986,
+          "is_no_analog": false
+        },
+        "3": {
+          "n_poses": 624,
+          "n_targets": 561,
+          "sim_min": 0.0,
+          "sim_max": 0.1724137931034483,
+          "base_correct_poses": 0.3717948717948718,
+          "base_correct_targets": 0.3939393939393939,
+          "is_no_analog": false
+        },
+        "4": {
+          "n_poses": 72,
+          "n_targets": 63,
+          "sim_min": null,
+          "sim_max": null,
+          "base_correct_poses": 0.3611111111111111,
+          "base_correct_targets": 0.31746031746031744,
+          "is_no_analog": true
+        }
+      },
+      "protenix": {
+        "0": {
+          "n_poses": 649,
+          "n_targets": 518,
+          "sim_min": 0.7818181818181819,
+          "sim_max": 1.0,
+          "base_correct_poses": 0.8536209553158706,
+          "base_correct_targets": 0.833976833976834,
+          "is_no_analog": false
+        },
+        "1": {
+          "n_poses": 633,
+          "n_targets": 586,
+          "sim_min": 0.3838383838383838,
+          "sim_max": 0.7794117647058824,
+          "base_correct_poses": 0.7472353870458136,
+          "base_correct_targets": 0.7440273037542662,
+          "is_no_analog": false
+        },
+        "2": {
+          "n_poses": 618,
+          "n_targets": 581,
+          "sim_min": 0.17272727272727273,
+          "sim_max": 0.38372093023255816,
+          "base_correct_poses": 0.6213592233009708,
+          "base_correct_targets": 0.6196213425129088,
+          "is_no_analog": false
+        },
+        "3": {
+          "n_poses": 635,
+          "n_targets": 575,
+          "sim_min": 0.0,
+          "sim_max": 0.1724137931034483,
+          "base_correct_poses": 0.33700787401574805,
+          "base_correct_targets": 0.3582608695652174,
+          "is_no_analog": false
+        },
+        "4": {
+          "n_poses": 72,
+          "n_targets": 63,
+          "sim_min": null,
+          "sim_max": null,
+          "base_correct_poses": 0.3888888888888889,
+          "base_correct_targets": 0.3968253968253968,
+          "is_no_analog": true
+        }
+      }
+    },
+    "pocket": {
+      "af3": {
+        "0": {
+          "n_poses": 667,
+          "n_targets": 567,
+          "sim_min": 0.8310973740359289,
+          "sim_max": 1.0,
+          "base_correct_poses": 0.9160419790104948,
+          "base_correct_targets": 0.9153439153439153,
+          "is_no_analog": false
+        },
+        "1": {
+          "n_poses": 646,
+          "n_targets": 575,
+          "sim_min": 0.6769340058555052,
+          "sim_max": 0.8310587784148575,
+          "base_correct_poses": 0.8250773993808049,
+          "base_correct_targets": 0.8139130434782609,
+          "is_no_analog": false
+        },
+        "2": {
+          "n_poses": 642,
+          "n_targets": 589,
+          "sim_min": 0.5039344262295082,
+          "sim_max": 0.6766436587084093,
+          "base_correct_poses": 0.6853582554517134,
+          "base_correct_targets": 0.6876061120543294,
+          "is_no_analog": false
+        },
+        "3": {
+          "n_poses": 675,
+          "n_targets": 609,
+          "sim_min": 0.0,
+          "sim_max": 0.5038773934694947,
+          "base_correct_poses": 0.4162962962962963,
+          "base_correct_targets": 0.4236453201970443,
+          "is_no_analog": false
+        },
+        "4": {
+          "n_poses": 79,
+          "n_targets": 69,
+          "sim_min": null,
+          "sim_max": null,
+          "base_correct_poses": 0.5443037974683544,
+          "base_correct_targets": 0.5507246376811594,
+          "is_no_analog": true
+        }
+      },
+      "boltz1": {
+        "0": {
+          "n_poses": 566,
+          "n_targets": 489,
+          "sim_min": 0.8310973740359289,
+          "sim_max": 1.0,
+          "base_correct_poses": 0.8692579505300353,
+          "base_correct_targets": 0.8650306748466258,
+          "is_no_analog": false
+        },
+        "1": {
+          "n_poses": 572,
+          "n_targets": 521,
+          "sim_min": 0.6769340058555052,
+          "sim_max": 0.8310587784148575,
+          "base_correct_poses": 0.7534965034965035,
+          "base_correct_targets": 0.7562380038387716,
+          "is_no_analog": false
+        },
+        "2": {
+          "n_poses": 589,
+          "n_targets": 539,
+          "sim_min": 0.5039344262295082,
+          "sim_max": 0.6766436587084093,
+          "base_correct_poses": 0.6129032258064516,
+          "base_correct_targets": 0.608534322820037,
+          "is_no_analog": false
+        },
+        "3": {
+          "n_poses": 584,
+          "n_targets": 526,
+          "sim_min": 0.0,
+          "sim_max": 0.5038773934694947,
+          "base_correct_poses": 0.351027397260274,
+          "base_correct_targets": 0.3612167300380228,
+          "is_no_analog": false
+        },
+        "4": {
+          "n_poses": 73,
+          "n_targets": 64,
+          "sim_min": null,
+          "sim_max": null,
+          "base_correct_poses": 0.4246575342465753,
+          "base_correct_targets": 0.421875,
+          "is_no_analog": true
+        }
+      },
+      "boltz1x": {
+        "0": {
+          "n_poses": 559,
+          "n_targets": 479,
+          "sim_min": 0.8310973740359289,
+          "sim_max": 1.0,
+          "base_correct_poses": 0.8676207513416816,
+          "base_correct_targets": 0.8622129436325678,
+          "is_no_analog": false
+        },
+        "1": {
+          "n_poses": 569,
+          "n_targets": 528,
+          "sim_min": 0.6769340058555052,
+          "sim_max": 0.8310587784148575,
+          "base_correct_poses": 0.7644991212653779,
+          "base_correct_targets": 0.7708333333333334,
+          "is_no_analog": false
+        },
+        "2": {
+          "n_poses": 564,
+          "n_targets": 506,
+          "sim_min": 0.5039344262295082,
+          "sim_max": 0.6766436587084093,
+          "base_correct_poses": 0.650709219858156,
+          "base_correct_targets": 0.6521739130434783,
+          "is_no_analog": false
+        },
+        "3": {
+          "n_poses": 570,
+          "n_targets": 518,
+          "sim_min": 0.0,
+          "sim_max": 0.5038773934694947,
+          "base_correct_poses": 0.3719298245614035,
+          "base_correct_targets": 0.3687258687258687,
+          "is_no_analog": false
+        },
+        "4": {
+          "n_poses": 69,
+          "n_targets": 60,
+          "sim_min": null,
+          "sim_max": null,
+          "base_correct_poses": 0.42028985507246375,
+          "base_correct_targets": 0.43333333333333335,
+          "is_no_analog": true
+        }
+      },
+      "chai": {
+        "0": {
+          "n_poses": 621,
+          "n_targets": 530,
+          "sim_min": 0.8310973740359289,
+          "sim_max": 1.0,
+          "base_correct_poses": 0.8969404186795491,
+          "base_correct_targets": 0.9,
+          "is_no_analog": false
+        },
+        "1": {
+          "n_poses": 624,
+          "n_targets": 561,
+          "sim_min": 0.6769340058555052,
+          "sim_max": 0.8310587784148575,
+          "base_correct_poses": 0.7884615384615384,
+          "base_correct_targets": 0.7718360071301248,
+          "is_no_analog": false
+        },
+        "2": {
+          "n_poses": 628,
+          "n_targets": 574,
+          "sim_min": 0.5039344262295082,
+          "sim_max": 0.6766436587084093,
+          "base_correct_poses": 0.6257961783439491,
+          "base_correct_targets": 0.632404181184669,
+          "is_no_analog": false
+        },
+        "3": {
+          "n_poses": 625,
+          "n_targets": 563,
+          "sim_min": 0.0,
+          "sim_max": 0.5038773934694947,
+          "base_correct_poses": 0.3168,
+          "base_correct_targets": 0.32149200710479575,
+          "is_no_analog": false
+        },
+        "4": {
+          "n_poses": 73,
+          "n_targets": 64,
+          "sim_min": null,
+          "sim_max": null,
+          "base_correct_poses": 0.3835616438356164,
+          "base_correct_targets": 0.34375,
+          "is_no_analog": true
+        }
+      },
+      "protenix": {
+        "0": {
+          "n_poses": 632,
+          "n_targets": 532,
+          "sim_min": 0.8310973740359289,
+          "sim_max": 1.0,
+          "base_correct_poses": 0.9145569620253164,
+          "base_correct_targets": 0.9154135338345865,
+          "is_no_analog": false
+        },
+        "1": {
+          "n_poses": 629,
+          "n_targets": 574,
+          "sim_min": 0.6769340058555052,
+          "sim_max": 0.8310587784148575,
+          "base_correct_poses": 0.7742448330683624,
+          "base_correct_targets": 0.7630662020905923,
+          "is_no_analog": false
+        },
+        "2": {
+          "n_poses": 630,
+          "n_targets": 575,
+          "sim_min": 0.5039344262295082,
+          "sim_max": 0.6766436587084093,
+          "base_correct_poses": 0.5968253968253968,
+          "base_correct_targets": 0.5965217391304348,
+          "is_no_analog": false
+        },
+        "3": {
+          "n_poses": 643,
+          "n_targets": 578,
+          "sim_min": 0.0,
+          "sim_max": 0.5038773934694947,
+          "base_correct_poses": 0.28304821150855364,
+          "base_correct_targets": 0.28546712802768165,
+          "is_no_analog": false
+        },
+        "4": {
+          "n_poses": 73,
+          "n_targets": 64,
+          "sim_min": null,
+          "sim_max": null,
+          "base_correct_poses": 0.410958904109589,
+          "base_correct_targets": 0.40625,
+          "is_no_analog": true
+        }
+      }
+    }
+  },
+  "part_b_binning_sensitivity": {
+    "coverage_grid": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "alpha": 0.2,
+    "min_accept": 20,
+    "binnings": {
+      "nbins2_quantile": {
+        "n_strata_incl_no_analog": 3,
+        "per_model": {
+          "af3": {
+            "n_strata": 3,
+            "zero_frontier_strata": [
+              2
+            ],
+            "feasible_strata": [
+              0,
+              1
+            ],
+            "c_star_by_stratum": {
+              "0": 1.0,
+              "1": 0.3,
+              "2": 0.0
+            }
+          },
+          "boltz1": {
+            "n_strata": 3,
+            "zero_frontier_strata": [
+              2
+            ],
+            "feasible_strata": [
+              0,
+              1
+            ],
+            "c_star_by_stratum": {
+              "0": 0.8,
+              "1": 0.1,
+              "2": 0.0
+            }
+          },
+          "boltz1x": {
+            "n_strata": 3,
+            "zero_frontier_strata": [
+              2
+            ],
+            "feasible_strata": [
+              0,
+              1
+            ],
+            "c_star_by_stratum": {
+              "0": 0.7,
+              "1": 0.1,
+              "2": 0.0
+            }
+          },
+          "chai": {
+            "n_strata": 3,
+            "zero_frontier_strata": [
+              1,
+              2
+            ],
+            "feasible_strata": [
+              0
+            ],
+            "c_star_by_stratum": {
+              "0": 0.9,
+              "1": 0.0,
+              "2": 0.0
+            }
+          },
+          "protenix": {
+            "n_strata": 3,
+            "zero_frontier_strata": [
+              1,
+              2
+            ],
+            "feasible_strata": [
+              0
+            ],
+            "c_star_by_stratum": {
+              "0": 0.7,
+              "1": 0.0,
+              "2": 0.0
+            }
+          }
+        },
+        "n_zero_frontier_cells": 7,
+        "n_cells": 15,
+        "frac_zero_frontier": 0.4666666666666667
+      },
+      "nbins4_quantile": {
+        "n_strata_incl_no_analog": 5,
+        "per_model": {
+          "af3": {
+            "n_strata": 5,
+            "zero_frontier_strata": [
+              4
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "c_star_by_stratum": {
+              "0": 1.0,
+              "1": 0.8,
+              "2": 0.7,
+              "3": 0.2,
+              "4": 0.0
+            }
+          },
+          "boltz1": {
+            "n_strata": 5,
+            "zero_frontier_strata": [
+              2,
+              3,
+              4
+            ],
+            "feasible_strata": [
+              0,
+              1
+            ],
+            "c_star_by_stratum": {
+              "0": 0.9,
+              "1": 0.6,
+              "2": 0.0,
+              "3": 0.0,
+              "4": 0.0
+            }
+          },
+          "boltz1x": {
+            "n_strata": 5,
+            "zero_frontier_strata": [
+              3,
+              4
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              2
+            ],
+            "c_star_by_stratum": {
+              "0": 0.9,
+              "1": 0.7,
+              "2": 0.1,
+              "3": 0.0,
+              "4": 0.0
+            }
+          },
+          "chai": {
+            "n_strata": 5,
+            "zero_frontier_strata": [
+              2,
+              3,
+              4
+            ],
+            "feasible_strata": [
+              0,
+              1
+            ],
+            "c_star_by_stratum": {
+              "0": 1.0,
+              "1": 0.8,
+              "2": 0.0,
+              "3": 0.0,
+              "4": 0.0
+            }
+          },
+          "protenix": {
+            "n_strata": 5,
+            "zero_frontier_strata": [
+              3,
+              4
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              2
+            ],
+            "c_star_by_stratum": {
+              "0": 1.0,
+              "1": 0.3,
+              "2": 0.2,
+              "3": 0.0,
+              "4": 0.0
+            }
+          }
+        },
+        "n_zero_frontier_cells": 11,
+        "n_cells": 25,
+        "frac_zero_frontier": 0.44
+      },
+      "nbins6_quantile": {
+        "n_strata_incl_no_analog": 6,
+        "per_model": {
+          "af3": {
+            "n_strata": 6,
+            "zero_frontier_strata": [
+              5
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "c_star_by_stratum": {
+              "0": 1.0,
+              "1": 0.9,
+              "2": 0.8,
+              "3": 0.1,
+              "4": 0.1,
+              "5": 0.0
+            }
+          },
+          "boltz1": {
+            "n_strata": 6,
+            "zero_frontier_strata": [
+              2,
+              4,
+              5
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              3
+            ],
+            "c_star_by_stratum": {
+              "0": 0.8,
+              "1": 0.7,
+              "2": 0.0,
+              "3": 0.1,
+              "4": 0.0,
+              "5": 0.0
+            }
+          },
+          "boltz1x": {
+            "n_strata": 6,
+            "zero_frontier_strata": [
+              2,
+              4,
+              5
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              3
+            ],
+            "c_star_by_stratum": {
+              "0": 1.0,
+              "1": 0.6,
+              "2": 0.0,
+              "3": 0.1,
+              "4": 0.0,
+              "5": 0.0
+            }
+          },
+          "chai": {
+            "n_strata": 6,
+            "zero_frontier_strata": [
+              2,
+              4,
+              5
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              3
+            ],
+            "c_star_by_stratum": {
+              "0": 0.9,
+              "1": 0.8,
+              "2": 0.0,
+              "3": 0.1,
+              "4": 0.0,
+              "5": 0.0
+            }
+          },
+          "protenix": {
+            "n_strata": 6,
+            "zero_frontier_strata": [
+              4,
+              5
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "c_star_by_stratum": {
+              "0": 1.0,
+              "1": 0.2,
+              "2": 0.2,
+              "3": 0.1,
+              "4": 0.0,
+              "5": 0.0
+            }
+          }
+        },
+        "n_zero_frontier_cells": 12,
+        "n_cells": 30,
+        "frac_zero_frontier": 0.4
+      },
+      "fixed_edge_02_04_06_08": {
+        "n_strata_incl_no_analog": 6,
+        "per_model": {
+          "af3": {
+            "n_strata": 6,
+            "zero_frontier_strata": [
+              5
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "c_star_by_stratum": {
+              "0": 1.0,
+              "1": 0.7,
+              "2": 1.0,
+              "3": 0.7,
+              "4": 0.1,
+              "5": 0.0
+            }
+          },
+          "boltz1": {
+            "n_strata": 6,
+            "zero_frontier_strata": [
+              3,
+              4,
+              5
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              2
+            ],
+            "c_star_by_stratum": {
+              "0": 0.9,
+              "1": 0.6,
+              "2": 0.7,
+              "3": 0.0,
+              "4": 0.0,
+              "5": 0.0
+            }
+          },
+          "boltz1x": {
+            "n_strata": 6,
+            "zero_frontier_strata": [
+              4,
+              5
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "c_star_by_stratum": {
+              "0": 0.9,
+              "1": 0.6,
+              "2": 0.7,
+              "3": 0.3,
+              "4": 0.0,
+              "5": 0.0
+            }
+          },
+          "chai": {
+            "n_strata": 6,
+            "zero_frontier_strata": [
+              4,
+              5
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "c_star_by_stratum": {
+              "0": 1.0,
+              "1": 0.6,
+              "2": 0.8,
+              "3": 0.3,
+              "4": 0.0,
+              "5": 0.0
+            }
+          },
+          "protenix": {
+            "n_strata": 6,
+            "zero_frontier_strata": [
+              4,
+              5
+            ],
+            "feasible_strata": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "c_star_by_stratum": {
+              "0": 1.0,
+              "1": 0.6,
+              "2": 0.2,
+              "3": 0.2,
+              "4": 0.0,
+              "5": 0.0
+            }
+          }
+        },
+        "n_zero_frontier_cells": 10,
+        "n_cells": 30,
+        "frac_zero_frontier": 0.3333333333333333
+      }
+    },
+    "summary": {
+      "nbins2_quantile": {
+        "n_zero_frontier_cells": 7,
+        "n_cells": 15,
+        "frac_zero_frontier": 0.4666666666666667
+      },
+      "nbins4_quantile": {
+        "n_zero_frontier_cells": 11,
+        "n_cells": 25,
+        "frac_zero_frontier": 0.44
+      },
+      "nbins6_quantile": {
+        "n_zero_frontier_cells": 12,
+        "n_cells": 30,
+        "frac_zero_frontier": 0.4
+      },
+      "fixed_edge_02_04_06_08": {
+        "n_zero_frontier_cells": 10,
+        "n_cells": 30,
+        "frac_zero_frontier": 0.3333333333333333
+      }
+    }
+  },
+  "part_c_within_stratum_drift": {
+    "af3": {
+      "0": {
+        "n_low_pocketsim": 280,
+        "n_high_pocketsim": 280,
+        "pocket_median": 0.8524387387546511,
+        "corr_low_pocketsim": 0.8357142857142857,
+        "corr_high_pocketsim": 0.9035714285714286,
+        "gap_signed": 0.06785714285714284,
+        "gap_abs": 0.06785714285714284
+      },
+      "1": {
+        "n_low_pocketsim": 299,
+        "n_high_pocketsim": 299,
+        "pocket_median": 0.761442298194281,
+        "corr_low_pocketsim": 0.6655518394648829,
+        "corr_high_pocketsim": 0.8795986622073578,
+        "gap_signed": 0.21404682274247488,
+        "gap_abs": 0.21404682274247488
+      },
+      "2": {
+        "n_low_pocketsim": 295,
+        "n_high_pocketsim": 295,
+        "pocket_median": 0.6439402059366146,
+        "corr_low_pocketsim": 0.6101694915254238,
+        "corr_high_pocketsim": 0.8406779661016949,
+        "gap_signed": 0.2305084745762711,
+        "gap_abs": 0.2305084745762711
+      },
+      "3": {
+        "n_low_pocketsim": 296,
+        "n_high_pocketsim": 295,
+        "pocket_median": 0.4397391772740034,
+        "corr_low_pocketsim": 0.32094594594594594,
+        "corr_high_pocketsim": 0.6033898305084746,
+        "gap_signed": 0.28244388456252867,
+        "gap_abs": 0.28244388456252867
+      },
+      "4": {
+        "note": "too few targets with pocket similarity to split",
+        "n_splittable": 1
+      }
+    },
+    "boltz1": {
+      "0": {
+        "n_low_pocketsim": 230,
+        "n_high_pocketsim": 230,
+        "pocket_median": 0.8446432531231878,
+        "corr_low_pocketsim": 0.7434782608695653,
+        "corr_high_pocketsim": 0.8565217391304348,
+        "gap_signed": 0.11304347826086958,
+        "gap_abs": 0.11304347826086958
+      },
+      "1": {
+        "n_low_pocketsim": 270,
+        "n_high_pocketsim": 269,
+        "pocket_median": 0.7670095705275678,
+        "corr_low_pocketsim": 0.6222222222222222,
+        "corr_high_pocketsim": 0.8364312267657993,
+        "gap_signed": 0.21420900454357705,
+        "gap_abs": 0.21420900454357705
+      },
+      "2": {
+        "n_low_pocketsim": 271,
+        "n_high_pocketsim": 271,
+        "pocket_median": 0.6478648530065914,
+        "corr_low_pocketsim": 0.5018450184501845,
+        "corr_high_pocketsim": 0.7749077490774908,
+        "gap_signed": 0.27306273062730635,
+        "gap_abs": 0.27306273062730635
+      },
+      "3": {
+        "n_low_pocketsim": 267,
+        "n_high_pocketsim": 266,
+        "pocket_median": 0.46097742792281116,
+        "corr_low_pocketsim": 0.2883895131086142,
+        "corr_high_pocketsim": 0.5676691729323309,
+        "gap_signed": 0.27927965982371666,
+        "gap_abs": 0.27927965982371666
+      },
+      "4": {
+        "note": "too few targets with pocket similarity to split",
+        "n_splittable": 1
+      }
+    },
+    "boltz1x": {
+      "0": {
+        "n_low_pocketsim": 223,
+        "n_high_pocketsim": 222,
+        "pocket_median": 0.845470568529352,
+        "corr_low_pocketsim": 0.7802690582959642,
+        "corr_high_pocketsim": 0.8468468468468469,
+        "gap_signed": 0.0665777885508827,
+        "gap_abs": 0.0665777885508827
+      },
+      "1": {
+        "n_low_pocketsim": 265,
+        "n_high_pocketsim": 264,
+        "pocket_median": 0.7668322248082233,
+        "corr_low_pocketsim": 0.6037735849056604,
+        "corr_high_pocketsim": 0.8484848484848485,
+        "gap_signed": 0.24471126357918815,
+        "gap_abs": 0.24471126357918815
+      },
+      "2": {
+        "n_low_pocketsim": 267,
+        "n_high_pocketsim": 267,
+        "pocket_median": 0.6549961035126189,
+        "corr_low_pocketsim": 0.5617977528089888,
+        "corr_high_pocketsim": 0.8014981273408239,
+        "gap_signed": 0.23970037453183513,
+        "gap_abs": 0.23970037453183513
+      },
+      "3": {
+        "n_low_pocketsim": 261,
+        "n_high_pocketsim": 261,
+        "pocket_median": 0.4527587909614631,
+        "corr_low_pocketsim": 0.28735632183908044,
+        "corr_high_pocketsim": 0.5977011494252874,
+        "gap_signed": 0.31034482758620696,
+        "gap_abs": 0.31034482758620696
+      },
+      "4": {
+        "note": "too few targets with pocket similarity to split",
+        "n_splittable": 1
+      }
+    },
+    "chai": {
+      "0": {
+        "n_low_pocketsim": 257,
+        "n_high_pocketsim": 257,
+        "pocket_median": 0.8477157906909252,
+        "corr_low_pocketsim": 0.7587548638132295,
+        "corr_high_pocketsim": 0.8793774319066148,
+        "gap_signed": 0.12062256809338523,
+        "gap_abs": 0.12062256809338523
+      },
+      "1": {
+        "n_low_pocketsim": 285,
+        "n_high_pocketsim": 284,
+        "pocket_median": 0.7614809445346666,
+        "corr_low_pocketsim": 0.5964912280701754,
+        "corr_high_pocketsim": 0.8732394366197183,
+        "gap_signed": 0.27674820854954285,
+        "gap_abs": 0.27674820854954285
+      },
+      "2": {
+        "n_low_pocketsim": 292,
+        "n_high_pocketsim": 292,
+        "pocket_median": 0.6472899731579245,
+        "corr_low_pocketsim": 0.541095890410959,
+        "corr_high_pocketsim": 0.8116438356164384,
+        "gap_signed": 0.2705479452054794,
+        "gap_abs": 0.2705479452054794
+      },
+      "3": {
+        "n_low_pocketsim": 280,
+        "n_high_pocketsim": 280,
+        "pocket_median": 0.44636991130916387,
+        "corr_low_pocketsim": 0.23214285714285715,
+        "corr_high_pocketsim": 0.5535714285714286,
+        "gap_signed": 0.32142857142857145,
+        "gap_abs": 0.32142857142857145
+      },
+      "4": {
+        "note": "too few targets with pocket similarity to split",
+        "n_splittable": 1
+      }
+    },
+    "protenix": {
+      "0": {
+        "n_low_pocketsim": 259,
+        "n_high_pocketsim": 259,
+        "pocket_median": 0.8465625935364044,
+        "corr_low_pocketsim": 0.7606177606177607,
+        "corr_high_pocketsim": 0.9073359073359073,
+        "gap_signed": 0.14671814671814665,
+        "gap_abs": 0.14671814671814665
+      },
+      "1": {
+        "n_low_pocketsim": 293,
+        "n_high_pocketsim": 292,
+        "pocket_median": 0.7648072061125181,
+        "corr_low_pocketsim": 0.5836177474402731,
+        "corr_high_pocketsim": 0.9041095890410958,
+        "gap_signed": 0.3204918416008228,
+        "gap_abs": 0.3204918416008228
+      },
+      "2": {
+        "n_low_pocketsim": 291,
+        "n_high_pocketsim": 290,
+        "pocket_median": 0.6473626105481578,
+        "corr_low_pocketsim": 0.4639175257731959,
+        "corr_high_pocketsim": 0.7758620689655172,
+        "gap_signed": 0.31194454319232134,
+        "gap_abs": 0.31194454319232134
+      },
+      "3": {
+        "n_low_pocketsim": 287,
+        "n_high_pocketsim": 287,
+        "pocket_median": 0.4440481042998837,
+        "corr_low_pocketsim": 0.23693379790940766,
+        "corr_high_pocketsim": 0.47735191637630664,
+        "gap_signed": 0.24041811846689898,
+        "gap_abs": 0.24041811846689898
+      },
+      "4": {
+        "note": "too few targets with pocket similarity to split",
+        "n_splittable": 1
+      }
+    }
+  },
+  "takeaway": [
+    "Part A documents 5 models x 2 axes of default quartile+no-analog strata; stratum labels rise from most-similar (S0) to the NaN no-analog top bin, and base correctness falls monotonically with novelty on every model.",
+    "Part B: zero-frontier cell counts are {'nbins2_quantile': 7, 'nbins4_quantile': 11, 'nbins6_quantile': 12, 'fixed_edge_02_04_06_08': 10} across binnings (fractions {'nbins2_quantile': 0.467, 'nbins4_quantile': 0.44, 'nbins6_quantile': 0.4, 'fixed_edge_02_04_06_08': 0.333}, all near 0.4); the novel-tail infeasibility frontier survives every quantile and fixed-edge binning choice, so it is not a bin artifact.",
+    "Part C: within-ligand-stratum pocket-median splits show a consistent residual gap (median 0.243, 20/20 cells with the familiar-pocket half more correct) -- ligand bins do not absorb pocket novelty, which is why two-axis stratification is warranted."
+  ]
+}

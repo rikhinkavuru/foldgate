@@ -57,5 +57,34 @@ Nested target-grouped LOTO (GroupKFold outer, grouped 50/50 fit/cal inner). α=0
 - Combined score DOES leak novelty: `xmodel_iptm_mean` vs `ligand_novelty` |ρ| 0.31–0.35 in all 5 models (max 0.345 protenix), above the 0.30 substantial bar; intra-model ensemble spread weak (|ρ| 0.00–0.22).
 - **Statement:** soften "novelty excluded from the score" → "novelty is not a direct input, but ensemble/cross-model features are moderately correlated with it (|ρ| up to 0.35), placing the COMBINED score in the achievability regime". The impossibility theorem is unaffected (it governs the frozen native score); the combined score is the operating-point improver and may legitimately re-score on ν.
 
+## e26 — strata table + binning sensitivity (R2.1, III.3, within-stratum drift) — DONE
+- AF3 ligand stratum sim-ranges: S0 0.782–1.000 (corr 0.880), S1 0.384–0.779 (0.777), S2 0.173–0.384 (0.731), S3 0.000–0.172 (0.439), S4 NaN (0.553). Base correctness monotone S0→S3.
+- **Zero-frontier FRACTION stable across binnings**: n_bins=2 → 7/15 (0.467), n_bins=4 → 11/25 (0.440), n_bins=6 → 12/30 (0.400), fixed-edge [.2,.4,.6,.8] → 10/30 (0.333). Novel-tail infeasibility is not a quartile artifact.
+- Within-ligand-stratum residual drift (pocket-median split) is SUBSTANTIAL: signed gap +0.07 to +0.32 (median 0.243), all 20 cells familiar-pocket-half more correct → ligand bins do NOT absorb pocket novelty → motivates the two-axis stratification. (Honest: gaps are large, not small.)
+
+## e28 — label-cost curve (III.1, R1.8, R3.5) — DONE (native; combined variant pending)
+- Native score: labels buy usable certified coverage ONLY on familiar S0 (AF3 ~40 labels → 0.56, all → 1.00); S1/S2/S3 stay ~0 at ANY budget (S2 0.092 at all, S1/S3 0.00). Coverage rises ~1−c/√n_g (S0 corr −0.57) but the asymptote is near zero on novel chemotypes because the RULE fails there, not the estimate.
+- **Reframe:** "38 labels certifies the repair" is a familiar-stratum number; the native-score design curve shows novel strata are label-starved regardless of budget (impossibility made empirical). The combined-score variant (pending) is what unlocks S1/S2 — the achievability escape (cf. e36).
+
+## e33 — pseudo-prospective time split (III.4) — DONE
+- T = 2023-05-31 (60th pct); pre/post targets per model ~1300/900. No stratum info at calibration.
+- Native gate holds realized post-T risk ≤ α (or CP-UB does) for 4/5 models; combined for 3/5. Realized−expected combined risk ∈ [−0.042, +0.003] → temporal deployment does not silently break control. AF3 combined: cov 0.54, risk 0.130, CP-UB 0.157. Honest abstentions (chai native, boltz1x/protenix combined = LTT non-certification, not failure).
+
+## e37 — screening stats (R4.9, R4.10) — DONE
+- EF@1% discreteness: DEKOIS ipTM realizes only **15 distinct EF values** across 79 targets (20.667 ×11, 23.25 ×10, 18.083 ×9) → the median lands on a grid point = the CI endpoint. GPCR 16 distinct, LIT-PCBA 5. Explains the "20.7 [18.1,20.7]" endpoint CIs (discreteness, not instability).
+- BEDROC (α=80.5) as continuous secondary: DEKOIS affinity 0.867 [0.831,0.886], dock 0.321; GPCR affinity 0.505 [0.375,0.646], dock 0.048; LIT-PCBA affinity 0.155.
+- Beat-random proportions with Wilson95: DEKOIS **10/79 = 12.7% [7.0,21.8]**; GPCR **12/16 = 75.0% [50.5,89.8]**; LIT-PCBA **2/5 = 40% [11.8,76.9]** → footnote, underpowered.
+
+## e38 — FoldBench as risk control (R2.10) — DONE
+- Frozen RNP interface-ipTM gate τ=0.9888 on FoldBench: low-homology 52 → accepts **3**, risk 0.000 but CP-UB **0.63** (uninformative, coverage collapse to 5.8%); train-similar 384 → accepts 18, risk 0.111 [0.02,0.31]. Failure mode is coverage starvation, not risk overshoot.
+- AURC interface-ipTM **0.380 [0.331,0.432]** vs ranking_score **0.454 [0.403,0.505]** — **CIs OVERLAP** → ranking advantage directional, not significant at n=436.
+- Self-scored top-1 0.401 vs released 0.567 → directional transfer check only (feature/label self-consistent within the run).
+
+## e40 — composition + drift-bin occupancy (R2.6, A.2) — DONE
+- 2,425 systems: MW 76/396/797 (median 396); **fragment <300 = 24%, drug-like 300–500 = 55%, large >500 = 22%**; ~0 ions, 15 peptide/flexible, 2,410 drug-like. Target class (PDB `entry_keywords`, no UniProt/EC shipped): broad, top TRANSFERASE 20.6%, no class >21%; **2,412 distinct receptors, 1,685 distinct CCD ligands** → no monoculture.
+- **Protenix pocket-S3 +0.63 drift is robust, not thin-bin:** every ranking_score quintile has ≥103 novel-pocket targets; top-confidence bin (>0.987) still only 0.544 correct vs 0.947 in S0. AF3 same pattern (high-conf S3 tops at 0.72 vs 0.95). No thin-bin flag fires.
+
+## consort_flow.png — DONE (counts verified live from parquet).
+
 ## Pending (agents running)
-e26 strata+binning · e28 label-cost curve · e29 proxy stratifier · e30 decision curve · e31 extra baselines · e33 pseudo-prospective · e37 screening stats · e38 foldbench risk · e40 composition.
+e28 combined-score variant · e29 proxy stratifier · e30 decision curve · e31 extra baselines.
