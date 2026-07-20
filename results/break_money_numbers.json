@@ -1,0 +1,392 @@
+{
+  "af3": {
+    "per_stratum": {
+      "n_resamples": 300,
+      "strata": {
+        "0": {
+          "risk": 0.06886552386983348,
+          "risk_ci90": [
+            0.039164648910411624,
+            0.08963473633284953
+          ],
+          "median_n_accept": 186,
+          "n_resamples_nonempty": 239
+        },
+        "1": {
+          "risk": 0.14764818256558634,
+          "risk_ci90": [
+            0.10486712147439162,
+            0.18398937053645573
+          ],
+          "median_n_accept": 184,
+          "n_resamples_nonempty": 239
+        },
+        "2": {
+          "risk": 0.15782188748293025,
+          "risk_ci90": [
+            0.113164987941552,
+            0.1949352890422778
+          ],
+          "median_n_accept": 168,
+          "n_resamples_nonempty": 239
+        },
+        "3": {
+          "risk": 0.36746470284089067,
+          "risk_ci90": [
+            0.23715425531914894,
+            0.44713821725009023
+          ],
+          "median_n_accept": 141,
+          "n_resamples_nonempty": 239
+        },
+        "4": {
+          "risk": 0.4409894260118362,
+          "risk_ci90": [
+            0.2727272727272727,
+            0.6
+          ],
+          "median_n_accept": 10,
+          "n_resamples_nonempty": 239
+        }
+      },
+      "marginal": {
+        "risk": 0.17924192318541027,
+        "risk_ci90": [
+          0.11848682095789134,
+          0.2114596706488042
+        ],
+        "median_n_accept": 683,
+        "n_resamples_nonempty": 239
+      },
+      "n_stratum": {
+        "0": 692,
+        "1": 654,
+        "2": 629,
+        "3": 658,
+        "4": 76
+      }
+    },
+    "deploy_novel": {
+      "risk": 0.5490463215258855,
+      "cp90": [
+        0.5180484531953513,
+        0.5797509478551968
+      ],
+      "median_n_accept": 734,
+      "coverage_on_novel": 1.0,
+      "n_novel": 734
+    }
+  },
+  "boltz1": {
+    "per_stratum": {
+      "n_resamples": 300,
+      "strata": {
+        "0": {
+          "risk": 0.05136119458227401,
+          "risk_ci90": [
+            0.0,
+            0.1111111111111111
+          ],
+          "median_n_accept": 20,
+          "n_resamples_nonempty": 300
+        },
+        "1": {
+          "risk": 0.05608260781371694,
+          "risk_ci90": [
+            0.017841478696741853,
+            0.09646822584455471
+          ],
+          "median_n_accept": 57,
+          "n_resamples_nonempty": 300
+        },
+        "2": {
+          "risk": 0.22911111911174337,
+          "risk_ci90": [
+            0.10476190476190476,
+            0.3188707729468599
+          ],
+          "median_n_accept": 72,
+          "n_resamples_nonempty": 300
+        },
+        "3": {
+          "risk": 0.26690933873743244,
+          "risk_ci90": [
+            0.14285714285714285,
+            0.38893596986817325
+          ],
+          "median_n_accept": 22,
+          "n_resamples_nonempty": 300
+        },
+        "4": {
+          "risk": 0.06666666666666667,
+          "risk_ci90": [
+            0.0,
+            0.2666666666666666
+          ],
+          "median_n_accept": 1,
+          "n_resamples_nonempty": 5
+        }
+      },
+      "marginal": {
+        "risk": 0.15578769716390056,
+        "risk_ci90": [
+          0.07434968161495732,
+          0.22591501132904268
+        ],
+        "median_n_accept": 175,
+        "n_resamples_nonempty": 300
+      },
+      "n_stratum": {
+        "0": 563,
+        "1": 581,
+        "2": 577,
+        "3": 592,
+        "4": 71
+      }
+    },
+    "deploy_novel": {
+      "risk": 0.4910313901345291,
+      "cp90": [
+        0.4511041005848552,
+        0.531047506329139
+      ],
+      "median_n_accept": 446,
+      "coverage_on_novel": 0.6726998491704375,
+      "n_novel": 663
+    }
+  },
+  "boltz1x": {
+    "per_stratum": {
+      "n_resamples": 300,
+      "strata": {
+        "0": {
+          "risk": 0.052594025477598526,
+          "risk_ci90": [
+            0.0,
+            0.10344827586206896
+          ],
+          "median_n_accept": 32,
+          "n_resamples_nonempty": 299
+        },
+        "1": {
+          "risk": 0.06460388256182148,
+          "risk_ci90": [
+            0.019230769230769232,
+            0.11942736162919644
+          ],
+          "median_n_accept": 73,
+          "n_resamples_nonempty": 299
+        },
+        "2": {
+          "risk": 0.1928789199338333,
+          "risk_ci90": [
+            0.12220408163265306,
+            0.2578933189655172
+          ],
+          "median_n_accept": 96,
+          "n_resamples_nonempty": 299
+        },
+        "3": {
+          "risk": 0.29065970377747263,
+          "risk_ci90": [
+            0.15384615384615385,
+            0.41298701298701285
+          ],
+          "median_n_accept": 48,
+          "n_resamples_nonempty": 299
+        },
+        "4": {
+          "risk": 0.07657657657657657,
+          "risk_ci90": [
+            0.0,
+            0.3666666666666659
+          ],
+          "median_n_accept": 1,
+          "n_resamples_nonempty": 37
+        }
+      },
+      "marginal": {
+        "risk": 0.15350854257928523,
+        "risk_ci90": [
+          0.0798740157480315,
+          0.2105007142505295
+        ],
+        "median_n_accept": 247,
+        "n_resamples_nonempty": 299
+      },
+      "n_stratum": {
+        "0": 552,
+        "1": 566,
+        "2": 568,
+        "3": 577,
+        "4": 68
+      }
+    },
+    "deploy_novel": {
+      "risk": 0.4777777777777778,
+      "cp90": [
+        0.43812929906427583,
+        0.5176443704078733
+      ],
+      "median_n_accept": 450,
+      "coverage_on_novel": 0.6976744186046512,
+      "n_novel": 645
+    }
+  },
+  "chai": {
+    "per_stratum": {
+      "n_resamples": 300,
+      "strata": {
+        "0": {
+          "risk": 0.27944909044277944,
+          "risk_ci90": [
+            0.16666666666666666,
+            0.3793706293706294
+          ],
+          "median_n_accept": 12,
+          "n_resamples_nonempty": 26
+        },
+        "1": {
+          "risk": 0.12053393634528377,
+          "risk_ci90": [
+            0.0533625730994152,
+            0.1721014492753623
+          ],
+          "median_n_accept": 19,
+          "n_resamples_nonempty": 26
+        },
+        "2": {
+          "risk": 0.2159225419204098,
+          "risk_ci90": [
+            0.11778846153846154,
+            0.3058355437665783
+          ],
+          "median_n_accept": 29,
+          "n_resamples_nonempty": 26
+        },
+        "3": {
+          "risk": 0.6087953712953713,
+          "risk_ci90": [
+            0.4464285714285714,
+            0.75
+          ],
+          "median_n_accept": 7,
+          "n_resamples_nonempty": 26
+        },
+        "4": {
+          "risk": null,
+          "risk_ci90": [
+            NaN,
+            NaN
+          ],
+          "median_n_accept": 0,
+          "n_resamples_nonempty": 0
+        }
+      },
+      "marginal": {
+        "risk": 0.24036090177799674,
+        "risk_ci90": [
+          0.2033898305084746,
+          0.28532608695652173
+        ],
+        "median_n_accept": 72,
+        "n_resamples_nonempty": 26
+      },
+      "n_stratum": {
+        "0": 636,
+        "1": 625,
+        "2": 614,
+        "3": 624,
+        "4": 72
+      }
+    },
+    "deploy_novel": {
+      "risk": 0.5,
+      "cp90": [
+        0.26358492378234966,
+        0.7364150762176503
+      ],
+      "median_n_accept": 14,
+      "coverage_on_novel": 0.020114942528735632,
+      "n_novel": 696
+    }
+  },
+  "protenix": {
+    "per_stratum": {
+      "n_resamples": 300,
+      "strata": {
+        "0": {
+          "risk": 0.057423352089964734,
+          "risk_ci90": [
+            0.020394736842105264,
+            0.09429824561403508
+          ],
+          "median_n_accept": 65,
+          "n_resamples_nonempty": 67
+        },
+        "1": {
+          "risk": 0.11761166197990974,
+          "risk_ci90": [
+            0.06841692789968652,
+            0.1555666334330342
+          ],
+          "median_n_accept": 49,
+          "n_resamples_nonempty": 67
+        },
+        "2": {
+          "risk": 0.15940051483311887,
+          "risk_ci90": [
+            0.09363636363636364,
+            0.22438423645320196
+          ],
+          "median_n_accept": 61,
+          "n_resamples_nonempty": 67
+        },
+        "3": {
+          "risk": 0.36811429612044283,
+          "risk_ci90": [
+            0.3,
+            0.44396825396825396
+          ],
+          "median_n_accept": 60,
+          "n_resamples_nonempty": 67
+        },
+        "4": {
+          "risk": 0.2111111111111111,
+          "risk_ci90": [
+            0.0,
+            0.4
+          ],
+          "median_n_accept": 4,
+          "n_resamples_nonempty": 63
+        }
+      },
+      "marginal": {
+        "risk": 0.176327643550753,
+        "risk_ci90": [
+          0.1386546184738956,
+          0.2186445711570444
+        ],
+        "median_n_accept": 245,
+        "n_resamples_nonempty": 67
+      },
+      "n_stratum": {
+        "0": 649,
+        "1": 633,
+        "2": 618,
+        "3": 635,
+        "4": 72
+      }
+    },
+    "deploy_novel": {
+      "risk": 0.6639741518578353,
+      "cp90": [
+        0.6314013129255006,
+        0.6953801293797048
+      ],
+      "median_n_accept": 619,
+      "coverage_on_novel": 0.8755304101838756,
+      "n_novel": 707
+    }
+  }
+}

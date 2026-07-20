@@ -1,0 +1,3265 @@
+{
+  "meta": {
+    "experiment": "e29_proxy_stratifier",
+    "question": "can a deployment-computable PROXY novelty stratum built only from public information recover the oracle (training-set) stratification well enough to preserve per-stratum selective-risk control?",
+    "alpha": 0.2,
+    "delta": 0.1,
+    "n_levels": 5,
+    "oracle_stratifier": "novelty_stratum (morgan_tanimoto to TRAINING set -- not public for AF3)",
+    "proxy_signals": {
+      "ccd": "num_training_systems_with_similar_ccds (public CCD-similar count)",
+      "date": "target_release_date recency (deposition date of nearest public analog)",
+      "seqsim": "protein_seqsim_max (protein sequence identity to public PDB)"
+    },
+    "flagship_model": "af3",
+    "methods": [
+      "af3",
+      "boltz1",
+      "boltz1x",
+      "boltz2",
+      "chai",
+      "protenix"
+    ],
+    "notes": "Proxy strata are matched-marginal (per-level sizes equal the oracle's) so the confusion matrix is square and the comparison isolates rank misassignment. 'proxy_gate_per_ORACLE_stratum' is the honest deployment test: taus keyed on the PUBLIC proxy stratum, risk read out on the TRUE novelty stratum."
+  },
+  "results": {
+    "af3": {
+      "n": 2409,
+      "agreement": {
+        "ccd": {
+          "desc": "num_training_systems_with_similar_ccds (public CCD-similar count)",
+          "spearman_signal_vs_oracle": 0.5907,
+          "adjacent_agreement": 0.8315,
+          "exact_agreement": 0.4101,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              377,
+              171,
+              2,
+              4,
+              0
+            ],
+            [
+              119,
+              177,
+              145,
+              150,
+              10
+            ],
+            [
+              14,
+              98,
+              233,
+              223,
+              23
+            ],
+            [
+              20,
+              136,
+              207,
+              201,
+              33
+            ],
+            [
+              24,
+              19,
+              4,
+              19,
+              0
+            ]
+          ]
+        },
+        "date": {
+          "desc": "target_release_date recency (deposition date of nearest public analog)",
+          "spearman_signal_vs_oracle": 0.1142,
+          "adjacent_agreement": 0.6372,
+          "exact_agreement": 0.2661,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              187,
+              134,
+              142,
+              90,
+              1
+            ],
+            [
+              109,
+              136,
+              185,
+              171,
+              0
+            ],
+            [
+              99,
+              119,
+              145,
+              228,
+              0
+            ],
+            [
+              159,
+              211,
+              119,
+              108,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0,
+              65
+            ]
+          ]
+        },
+        "seqsim": {
+          "desc": "protein_seqsim_max (protein sequence identity to public PDB)",
+          "spearman_signal_vs_oracle": 0.0165,
+          "adjacent_agreement": 0.599,
+          "exact_agreement": 0.1968,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              93,
+              121,
+              203,
+              124,
+              13
+            ],
+            [
+              169,
+              153,
+              122,
+              140,
+              17
+            ],
+            [
+              162,
+              173,
+              90,
+              144,
+              22
+            ],
+            [
+              130,
+              154,
+              175,
+              131,
+              7
+            ],
+            [
+              0,
+              0,
+              1,
+              58,
+              7
+            ]
+          ]
+        }
+      },
+      "control": {
+        "alpha": 0.2,
+        "delta": 0.1,
+        "n_splits": 50,
+        "best_proxy": "ccd",
+        "gate": "mondrian (group-conditional point threshold targeting risk<=alpha per stratum)",
+        "mondrian": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 13761,
+              "n_accept_pooled": 13712,
+              "coverage": 0.9964,
+              "realized_risk": 0.1269,
+              "risk_cp_upper90": 0.1317,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 15165,
+              "n_accept_pooled": 13384,
+              "coverage": 0.8826,
+              "realized_risk": 0.1905,
+              "risk_cp_upper90": 0.1961,
+              "holds_fraction": 0.72,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14800,
+              "n_accept_pooled": 11253,
+              "coverage": 0.7603,
+              "realized_risk": 0.1964,
+              "risk_cp_upper90": 0.2027,
+              "holds_fraction": 0.64,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 15041,
+              "n_accept_pooled": 2521,
+              "coverage": 0.1676,
+              "realized_risk": 0.2321,
+              "risk_cp_upper90": 0.2463,
+              "holds_fraction": 0.408,
+              "overshoot": 0.0321,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1660,
+              "n_accept_pooled": 107,
+              "coverage": 0.0645,
+              "realized_risk": 0.5981,
+              "risk_cp_upper90": 0.6779,
+              "holds_fraction": 0.0,
+              "overshoot": 0.3981,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_proxy_stratum": {
+            "0": {
+              "n_deploy_pooled": 13852,
+              "n_accept_pooled": 13792,
+              "coverage": 0.9957,
+              "realized_risk": 0.1487,
+              "risk_cp_upper90": 0.1538,
+              "holds_fraction": 0.98,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 15002,
+              "n_accept_pooled": 5859,
+              "coverage": 0.3905,
+              "realized_risk": 0.2122,
+              "risk_cp_upper90": 0.2211,
+              "holds_fraction": 0.48,
+              "overshoot": 0.0122,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14873,
+              "n_accept_pooled": 9728,
+              "coverage": 0.6541,
+              "realized_risk": 0.1928,
+              "risk_cp_upper90": 0.1995,
+              "holds_fraction": 0.66,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 15012,
+              "n_accept_pooled": 7572,
+              "coverage": 0.5044,
+              "realized_risk": 0.2133,
+              "risk_cp_upper90": 0.2212,
+              "holds_fraction": 0.5,
+              "overshoot": 0.0133,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1688,
+              "n_accept_pooled": 1092,
+              "coverage": 0.6469,
+              "realized_risk": 0.2207,
+              "risk_cp_upper90": 0.2423,
+              "holds_fraction": 0.62,
+              "overshoot": 0.0207,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 13761,
+              "n_accept_pooled": 11380,
+              "coverage": 0.827,
+              "realized_risk": 0.1007,
+              "risk_cp_upper90": 0.1055,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 15165,
+              "n_accept_pooled": 10077,
+              "coverage": 0.6645,
+              "realized_risk": 0.1449,
+              "risk_cp_upper90": 0.1508,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14800,
+              "n_accept_pooled": 8665,
+              "coverage": 0.5855,
+              "realized_risk": 0.1751,
+              "risk_cp_upper90": 0.1819,
+              "holds_fraction": 0.9,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 15041,
+              "n_accept_pooled": 7094,
+              "coverage": 0.4716,
+              "realized_risk": 0.3743,
+              "risk_cp_upper90": 0.3838,
+              "holds_fraction": 0.0,
+              "overshoot": 0.1743,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1660,
+              "n_accept_pooled": 827,
+              "coverage": 0.4982,
+              "realized_risk": 0.2999,
+              "risk_cp_upper90": 0.3272,
+              "holds_fraction": 0.16,
+              "overshoot": 0.0999,
+              "vacuous": false
+            }
+          },
+          "max_overshoot_oracle_gate": 0.3981,
+          "max_overshoot_proxy_gate_on_true_strata": 0.1743,
+          "per_true_stratum_degradation": {
+            "0": {
+              "oracle_risk": 0.1269,
+              "proxy_risk_on_true_stratum": 0.1007,
+              "risk_degradation": -0.0262,
+              "oracle_holds_fraction": 1.0,
+              "proxy_holds_fraction": 1.0,
+              "oracle_coverage": 0.9964,
+              "proxy_coverage": 0.827
+            },
+            "1": {
+              "oracle_risk": 0.1905,
+              "proxy_risk_on_true_stratum": 0.1449,
+              "risk_degradation": -0.0456,
+              "oracle_holds_fraction": 0.72,
+              "proxy_holds_fraction": 1.0,
+              "oracle_coverage": 0.8826,
+              "proxy_coverage": 0.6645
+            },
+            "2": {
+              "oracle_risk": 0.1964,
+              "proxy_risk_on_true_stratum": 0.1751,
+              "risk_degradation": -0.0213,
+              "oracle_holds_fraction": 0.64,
+              "proxy_holds_fraction": 0.9,
+              "oracle_coverage": 0.7603,
+              "proxy_coverage": 0.5855
+            },
+            "3": {
+              "oracle_risk": 0.2321,
+              "proxy_risk_on_true_stratum": 0.3743,
+              "risk_degradation": 0.1422,
+              "oracle_holds_fraction": 0.408,
+              "proxy_holds_fraction": 0.0,
+              "oracle_coverage": 0.1676,
+              "proxy_coverage": 0.4716
+            },
+            "4": {
+              "oracle_risk": 0.5981,
+              "proxy_risk_on_true_stratum": 0.2999,
+              "risk_degradation": -0.2982,
+              "oracle_holds_fraction": 0.0,
+              "proxy_holds_fraction": 0.16,
+              "oracle_coverage": 0.0645,
+              "proxy_coverage": 0.4982
+            }
+          },
+          "max_risk_degradation_proxy_vs_oracle": 0.1422,
+          "proxy_underprotects_true_strata": [
+            3
+          ]
+        },
+        "ltt_certified_frontier": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 13761,
+              "n_accept_pooled": 13712,
+              "coverage": 0.9964,
+              "realized_risk": 0.1269,
+              "risk_cp_upper90": 0.1317,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 15165,
+              "n_accept_pooled": 479,
+              "coverage": 0.0316,
+              "realized_risk": 0.1754,
+              "risk_cp_upper90": 0.2065,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14800,
+              "n_accept_pooled": 929,
+              "coverage": 0.0628,
+              "realized_risk": 0.127,
+              "risk_cp_upper90": 0.1464,
+              "holds_fraction": 0.933,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 15041,
+              "n_accept_pooled": 242,
+              "coverage": 0.0161,
+              "realized_risk": 0.2066,
+              "risk_cp_upper90": 0.2541,
+              "holds_fraction": 0.714,
+              "overshoot": 0.0066,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1660,
+              "n_accept_pooled": 0,
+              "coverage": 0.0,
+              "realized_risk": null,
+              "risk_cp_upper90": null,
+              "holds_fraction": null,
+              "overshoot": null,
+              "vacuous": true
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 13761,
+              "n_accept_pooled": 3116,
+              "coverage": 0.2264,
+              "realized_risk": 0.0895,
+              "risk_cp_upper90": 0.0984,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 15165,
+              "n_accept_pooled": 1567,
+              "coverage": 0.1033,
+              "realized_risk": 0.1576,
+              "risk_cp_upper90": 0.1736,
+              "holds_fraction": 0.868,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14800,
+              "n_accept_pooled": 645,
+              "coverage": 0.0436,
+              "realized_risk": 0.2186,
+              "risk_cp_upper90": 0.2471,
+              "holds_fraction": 0.5,
+              "overshoot": 0.0186,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 15041,
+              "n_accept_pooled": 735,
+              "coverage": 0.0489,
+              "realized_risk": 0.3156,
+              "risk_cp_upper90": 0.345,
+              "holds_fraction": 0.206,
+              "overshoot": 0.1156,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1660,
+              "n_accept_pooled": 219,
+              "coverage": 0.1319,
+              "realized_risk": 0.3151,
+              "risk_cp_upper90": 0.3707,
+              "holds_fraction": 0.071,
+              "overshoot": 0.1151,
+              "vacuous": false
+            }
+          },
+          "note": "finite-sample LTT (delta=0.10) certifies little on novel strata (frontier collapse); shown for completeness, not the primary read"
+        },
+        "max_overshoot_oracle_gate": 0.3981,
+        "max_overshoot_proxy_gate_on_true_strata": 0.1743,
+        "max_risk_degradation_proxy_vs_oracle": 0.1422,
+        "proxy_underprotects_true_strata": [
+          3
+        ]
+      }
+    },
+    "boltz1": {
+      "n": 2139,
+      "agreement": {
+        "ccd": {
+          "desc": "num_training_systems_with_similar_ccds (public CCD-similar count)",
+          "spearman_signal_vs_oracle": 0.5668,
+          "adjacent_agreement": 0.8275,
+          "exact_agreement": 0.4053,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              298,
+              152,
+              3,
+              1,
+              0
+            ],
+            [
+              102,
+              159,
+              132,
+              131,
+              16
+            ],
+            [
+              11,
+              95,
+              214,
+              203,
+              22
+            ],
+            [
+              19,
+              115,
+              188,
+              194,
+              22
+            ],
+            [
+              24,
+              19,
+              8,
+              9,
+              2
+            ]
+          ]
+        },
+        "date": {
+          "desc": "target_release_date recency (deposition date of nearest public analog)",
+          "spearman_signal_vs_oracle": 0.0924,
+          "adjacent_agreement": 0.6344,
+          "exact_agreement": 0.2553,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              139,
+              114,
+              123,
+              78,
+              0
+            ],
+            [
+              87,
+              123,
+              173,
+              157,
+              0
+            ],
+            [
+              89,
+              107,
+              135,
+              214,
+              0
+            ],
+            [
+              139,
+              196,
+              114,
+              88,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              61
+            ]
+          ]
+        },
+        "seqsim": {
+          "desc": "protein_seqsim_max (protein sequence identity to public PDB)",
+          "spearman_signal_vs_oracle": 0.0276,
+          "adjacent_agreement": 0.6138,
+          "exact_agreement": 0.2076,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              73,
+              84,
+              179,
+              107,
+              11
+            ],
+            [
+              150,
+              140,
+              109,
+              117,
+              24
+            ],
+            [
+              127,
+              173,
+              96,
+              136,
+              13
+            ],
+            [
+              104,
+              143,
+              160,
+              126,
+              5
+            ],
+            [
+              0,
+              0,
+              1,
+              52,
+              9
+            ]
+          ]
+        }
+      },
+      "control": {
+        "alpha": 0.2,
+        "delta": 0.1,
+        "n_splits": 50,
+        "best_proxy": "ccd",
+        "gate": "mondrian (group-conditional point threshold targeting risk<=alpha per stratum)",
+        "mondrian": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 11312,
+              "n_accept_pooled": 11047,
+              "coverage": 0.9766,
+              "realized_risk": 0.1917,
+              "risk_cp_upper90": 0.198,
+              "holds_fraction": 0.6,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 13414,
+              "n_accept_pooled": 9015,
+              "coverage": 0.6721,
+              "realized_risk": 0.2061,
+              "risk_cp_upper90": 0.2132,
+              "holds_fraction": 0.42,
+              "overshoot": 0.0061,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 13802,
+              "n_accept_pooled": 2974,
+              "coverage": 0.2155,
+              "realized_risk": 0.2132,
+              "risk_cp_upper90": 0.2259,
+              "holds_fraction": 0.52,
+              "overshoot": 0.0132,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 13552,
+              "n_accept_pooled": 960,
+              "coverage": 0.0708,
+              "realized_risk": 0.2833,
+              "risk_cp_upper90": 0.3082,
+              "holds_fraction": 0.231,
+              "overshoot": 0.0833,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1535,
+              "n_accept_pooled": 125,
+              "coverage": 0.0814,
+              "realized_risk": 0.464,
+              "risk_cp_upper90": 0.5414,
+              "holds_fraction": 0.0,
+              "overshoot": 0.264,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_proxy_stratum": {
+            "0": {
+              "n_deploy_pooled": 11311,
+              "n_accept_pooled": 9340,
+              "coverage": 0.8257,
+              "realized_risk": 0.213,
+              "risk_cp_upper90": 0.22,
+              "holds_fraction": 0.4,
+              "overshoot": 0.013,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 13518,
+              "n_accept_pooled": 5606,
+              "coverage": 0.4147,
+              "realized_risk": 0.2183,
+              "risk_cp_upper90": 0.2276,
+              "holds_fraction": 0.46,
+              "overshoot": 0.0183,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 13697,
+              "n_accept_pooled": 4214,
+              "coverage": 0.3077,
+              "realized_risk": 0.2067,
+              "risk_cp_upper90": 0.2172,
+              "holds_fraction": 0.62,
+              "overshoot": 0.0067,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 13575,
+              "n_accept_pooled": 3114,
+              "coverage": 0.2294,
+              "realized_risk": 0.2148,
+              "risk_cp_upper90": 0.2273,
+              "holds_fraction": 0.54,
+              "overshoot": 0.0148,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1514,
+              "n_accept_pooled": 661,
+              "coverage": 0.4366,
+              "realized_risk": 0.2375,
+              "risk_cp_upper90": 0.2663,
+              "holds_fraction": 0.511,
+              "overshoot": 0.0375,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 11312,
+              "n_accept_pooled": 7744,
+              "coverage": 0.6846,
+              "realized_risk": 0.1318,
+              "risk_cp_upper90": 0.1383,
+              "holds_fraction": 0.98,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 13414,
+              "n_accept_pooled": 6268,
+              "coverage": 0.4673,
+              "realized_risk": 0.1768,
+              "risk_cp_upper90": 0.1849,
+              "holds_fraction": 0.82,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 13802,
+              "n_accept_pooled": 5310,
+              "coverage": 0.3847,
+              "realized_risk": 0.2497,
+              "risk_cp_upper90": 0.2597,
+              "holds_fraction": 0.14,
+              "overshoot": 0.0497,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 13552,
+              "n_accept_pooled": 3095,
+              "coverage": 0.2284,
+              "realized_risk": 0.3745,
+              "risk_cp_upper90": 0.389,
+              "holds_fraction": 0.0,
+              "overshoot": 0.1745,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1535,
+              "n_accept_pooled": 518,
+              "coverage": 0.3375,
+              "realized_risk": 0.5714,
+              "risk_cp_upper90": 0.6078,
+              "holds_fraction": 0.0,
+              "overshoot": 0.3714,
+              "vacuous": false
+            }
+          },
+          "max_overshoot_oracle_gate": 0.264,
+          "max_overshoot_proxy_gate_on_true_strata": 0.3714,
+          "per_true_stratum_degradation": {
+            "0": {
+              "oracle_risk": 0.1917,
+              "proxy_risk_on_true_stratum": 0.1318,
+              "risk_degradation": -0.0599,
+              "oracle_holds_fraction": 0.6,
+              "proxy_holds_fraction": 0.98,
+              "oracle_coverage": 0.9766,
+              "proxy_coverage": 0.6846
+            },
+            "1": {
+              "oracle_risk": 0.2061,
+              "proxy_risk_on_true_stratum": 0.1768,
+              "risk_degradation": -0.0293,
+              "oracle_holds_fraction": 0.42,
+              "proxy_holds_fraction": 0.82,
+              "oracle_coverage": 0.6721,
+              "proxy_coverage": 0.4673
+            },
+            "2": {
+              "oracle_risk": 0.2132,
+              "proxy_risk_on_true_stratum": 0.2497,
+              "risk_degradation": 0.0365,
+              "oracle_holds_fraction": 0.52,
+              "proxy_holds_fraction": 0.14,
+              "oracle_coverage": 0.2155,
+              "proxy_coverage": 0.3847
+            },
+            "3": {
+              "oracle_risk": 0.2833,
+              "proxy_risk_on_true_stratum": 0.3745,
+              "risk_degradation": 0.0912,
+              "oracle_holds_fraction": 0.231,
+              "proxy_holds_fraction": 0.0,
+              "oracle_coverage": 0.0708,
+              "proxy_coverage": 0.2284
+            },
+            "4": {
+              "oracle_risk": 0.464,
+              "proxy_risk_on_true_stratum": 0.5714,
+              "risk_degradation": 0.1074,
+              "oracle_holds_fraction": 0.0,
+              "proxy_holds_fraction": 0.0,
+              "oracle_coverage": 0.0814,
+              "proxy_coverage": 0.3375
+            }
+          },
+          "max_risk_degradation_proxy_vs_oracle": 0.1074,
+          "proxy_underprotects_true_strata": []
+        },
+        "ltt_certified_frontier": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 11312,
+              "n_accept_pooled": 5025,
+              "coverage": 0.4442,
+              "realized_risk": 0.1713,
+              "risk_cp_upper90": 0.1803,
+              "holds_fraction": 0.743,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 13414,
+              "n_accept_pooled": 3328,
+              "coverage": 0.2481,
+              "realized_risk": 0.1427,
+              "risk_cp_upper90": 0.1531,
+              "holds_fraction": 0.941,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 13802,
+              "n_accept_pooled": 1311,
+              "coverage": 0.095,
+              "realized_risk": 0.1182,
+              "risk_cp_upper90": 0.1339,
+              "holds_fraction": 0.857,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 13552,
+              "n_accept_pooled": 0,
+              "coverage": 0.0,
+              "realized_risk": null,
+              "risk_cp_upper90": null,
+              "holds_fraction": null,
+              "overshoot": null,
+              "vacuous": true
+            },
+            "4": {
+              "n_deploy_pooled": 1535,
+              "n_accept_pooled": 0,
+              "coverage": 0.0,
+              "realized_risk": null,
+              "risk_cp_upper90": null,
+              "holds_fraction": null,
+              "overshoot": null,
+              "vacuous": true
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 11312,
+              "n_accept_pooled": 1056,
+              "coverage": 0.0934,
+              "realized_risk": 0.0833,
+              "risk_cp_upper90": 0.0987,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 13414,
+              "n_accept_pooled": 1652,
+              "coverage": 0.1232,
+              "realized_risk": 0.1108,
+              "risk_cp_upper90": 0.1243,
+              "holds_fraction": 0.875,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 13802,
+              "n_accept_pooled": 1323,
+              "coverage": 0.0959,
+              "realized_risk": 0.1655,
+              "risk_cp_upper90": 0.1833,
+              "holds_fraction": 0.773,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 13552,
+              "n_accept_pooled": 509,
+              "coverage": 0.0376,
+              "realized_risk": 0.3281,
+              "risk_cp_upper90": 0.364,
+              "holds_fraction": 0.172,
+              "overshoot": 0.1281,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1535,
+              "n_accept_pooled": 40,
+              "coverage": 0.0261,
+              "realized_risk": 0.475,
+              "risk_cp_upper90": 0.6152,
+              "holds_fraction": null,
+              "overshoot": 0.275,
+              "vacuous": true
+            }
+          },
+          "note": "finite-sample LTT (delta=0.10) certifies little on novel strata (frontier collapse); shown for completeness, not the primary read"
+        },
+        "max_overshoot_oracle_gate": 0.264,
+        "max_overshoot_proxy_gate_on_true_strata": 0.3714,
+        "max_risk_degradation_proxy_vs_oracle": 0.1074,
+        "proxy_underprotects_true_strata": []
+      }
+    },
+    "boltz1x": {
+      "n": 2091,
+      "agreement": {
+        "ccd": {
+          "desc": "num_training_systems_with_similar_ccds (public CCD-similar count)",
+          "spearman_signal_vs_oracle": 0.5747,
+          "adjacent_agreement": 0.8226,
+          "exact_agreement": 0.3974,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              304,
+              139,
+              2,
+              2,
+              0
+            ],
+            [
+              93,
+              144,
+              142,
+              132,
+              12
+            ],
+            [
+              12,
+              97,
+              204,
+              207,
+              17
+            ],
+            [
+              18,
+              124,
+              176,
+              178,
+              29
+            ],
+            [
+              20,
+              19,
+              13,
+              6,
+              1
+            ]
+          ]
+        },
+        "date": {
+          "desc": "target_release_date recency (deposition date of nearest public analog)",
+          "spearman_signal_vs_oracle": 0.087,
+          "adjacent_agreement": 0.6322,
+          "exact_agreement": 0.2563,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              140,
+              112,
+              119,
+              76,
+              0
+            ],
+            [
+              86,
+              111,
+              173,
+              153,
+              0
+            ],
+            [
+              82,
+              100,
+              143,
+              212,
+              0
+            ],
+            [
+              139,
+              199,
+              102,
+              84,
+              1
+            ],
+            [
+              0,
+              1,
+              0,
+              0,
+              58
+            ]
+          ]
+        },
+        "seqsim": {
+          "desc": "protein_seqsim_max (protein sequence identity to public PDB)",
+          "spearman_signal_vs_oracle": 0.0131,
+          "adjacent_agreement": 0.6059,
+          "exact_agreement": 0.2109,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              71,
+              77,
+              179,
+              111,
+              9
+            ],
+            [
+              134,
+              146,
+              104,
+              123,
+              16
+            ],
+            [
+              127,
+              175,
+              93,
+              124,
+              18
+            ],
+            [
+              115,
+              125,
+              160,
+              120,
+              5
+            ],
+            [
+              0,
+              0,
+              1,
+              47,
+              11
+            ]
+          ]
+        }
+      },
+      "control": {
+        "alpha": 0.2,
+        "delta": 0.1,
+        "n_splits": 50,
+        "best_proxy": "ccd",
+        "gate": "mondrian (group-conditional point threshold targeting risk<=alpha per stratum)",
+        "mondrian": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 11241,
+              "n_accept_pooled": 11131,
+              "coverage": 0.9902,
+              "realized_risk": 0.1806,
+              "risk_cp_upper90": 0.1867,
+              "holds_fraction": 0.9,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 13117,
+              "n_accept_pooled": 10076,
+              "coverage": 0.7682,
+              "realized_risk": 0.2054,
+              "risk_cp_upper90": 0.2122,
+              "holds_fraction": 0.54,
+              "overshoot": 0.0054,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 13331,
+              "n_accept_pooled": 4869,
+              "coverage": 0.3652,
+              "realized_risk": 0.2161,
+              "risk_cp_upper90": 0.226,
+              "holds_fraction": 0.58,
+              "overshoot": 0.0161,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 13235,
+              "n_accept_pooled": 938,
+              "coverage": 0.0709,
+              "realized_risk": 0.29,
+              "risk_cp_upper90": 0.3153,
+              "holds_fraction": 0.237,
+              "overshoot": 0.09,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1495,
+              "n_accept_pooled": 63,
+              "coverage": 0.0421,
+              "realized_risk": 0.5397,
+              "risk_cp_upper90": 0.6477,
+              "holds_fraction": 0.0,
+              "overshoot": 0.3397,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_proxy_stratum": {
+            "0": {
+              "n_deploy_pooled": 11277,
+              "n_accept_pooled": 10402,
+              "coverage": 0.9224,
+              "realized_risk": 0.2037,
+              "risk_cp_upper90": 0.2103,
+              "holds_fraction": 0.4,
+              "overshoot": 0.0037,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 13194,
+              "n_accept_pooled": 3452,
+              "coverage": 0.2616,
+              "realized_risk": 0.2161,
+              "risk_cp_upper90": 0.228,
+              "holds_fraction": 0.58,
+              "overshoot": 0.0161,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 13290,
+              "n_accept_pooled": 6213,
+              "coverage": 0.4675,
+              "realized_risk": 0.2059,
+              "risk_cp_upper90": 0.2145,
+              "holds_fraction": 0.52,
+              "overshoot": 0.0059,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 13172,
+              "n_accept_pooled": 4805,
+              "coverage": 0.3648,
+              "realized_risk": 0.2185,
+              "risk_cp_upper90": 0.2286,
+              "holds_fraction": 0.36,
+              "overshoot": 0.0185,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1486,
+              "n_accept_pooled": 806,
+              "coverage": 0.5424,
+              "realized_risk": 0.232,
+              "risk_cp_upper90": 0.2578,
+              "holds_fraction": 0.521,
+              "overshoot": 0.032,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 11241,
+              "n_accept_pooled": 7879,
+              "coverage": 0.7009,
+              "realized_risk": 0.1187,
+              "risk_cp_upper90": 0.1248,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 13117,
+              "n_accept_pooled": 6615,
+              "coverage": 0.5043,
+              "realized_risk": 0.1799,
+              "risk_cp_upper90": 0.1878,
+              "holds_fraction": 0.74,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 13331,
+              "n_accept_pooled": 6472,
+              "coverage": 0.4855,
+              "realized_risk": 0.2335,
+              "risk_cp_upper90": 0.2423,
+              "holds_fraction": 0.18,
+              "overshoot": 0.0335,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 13235,
+              "n_accept_pooled": 4215,
+              "coverage": 0.3185,
+              "realized_risk": 0.3452,
+              "risk_cp_upper90": 0.3574,
+              "holds_fraction": 0.0,
+              "overshoot": 0.1452,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1495,
+              "n_accept_pooled": 497,
+              "coverage": 0.3324,
+              "realized_risk": 0.5835,
+              "risk_cp_upper90": 0.6204,
+              "holds_fraction": 0.0,
+              "overshoot": 0.3835,
+              "vacuous": false
+            }
+          },
+          "max_overshoot_oracle_gate": 0.3397,
+          "max_overshoot_proxy_gate_on_true_strata": 0.3835,
+          "per_true_stratum_degradation": {
+            "0": {
+              "oracle_risk": 0.1806,
+              "proxy_risk_on_true_stratum": 0.1187,
+              "risk_degradation": -0.0619,
+              "oracle_holds_fraction": 0.9,
+              "proxy_holds_fraction": 1.0,
+              "oracle_coverage": 0.9902,
+              "proxy_coverage": 0.7009
+            },
+            "1": {
+              "oracle_risk": 0.2054,
+              "proxy_risk_on_true_stratum": 0.1799,
+              "risk_degradation": -0.0255,
+              "oracle_holds_fraction": 0.54,
+              "proxy_holds_fraction": 0.74,
+              "oracle_coverage": 0.7682,
+              "proxy_coverage": 0.5043
+            },
+            "2": {
+              "oracle_risk": 0.2161,
+              "proxy_risk_on_true_stratum": 0.2335,
+              "risk_degradation": 0.0174,
+              "oracle_holds_fraction": 0.58,
+              "proxy_holds_fraction": 0.18,
+              "oracle_coverage": 0.3652,
+              "proxy_coverage": 0.4855
+            },
+            "3": {
+              "oracle_risk": 0.29,
+              "proxy_risk_on_true_stratum": 0.3452,
+              "risk_degradation": 0.0552,
+              "oracle_holds_fraction": 0.237,
+              "proxy_holds_fraction": 0.0,
+              "oracle_coverage": 0.0709,
+              "proxy_coverage": 0.3185
+            },
+            "4": {
+              "oracle_risk": 0.5397,
+              "proxy_risk_on_true_stratum": 0.5835,
+              "risk_degradation": 0.0438,
+              "oracle_holds_fraction": 0.0,
+              "proxy_holds_fraction": 0.0,
+              "oracle_coverage": 0.0421,
+              "proxy_coverage": 0.3324
+            }
+          },
+          "max_risk_degradation_proxy_vs_oracle": 0.0552,
+          "proxy_underprotects_true_strata": []
+        },
+        "ltt_certified_frontier": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 11241,
+              "n_accept_pooled": 2626,
+              "coverage": 0.2336,
+              "realized_risk": 0.1508,
+              "risk_cp_upper90": 0.1628,
+              "holds_fraction": 0.962,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 13117,
+              "n_accept_pooled": 3288,
+              "coverage": 0.2507,
+              "realized_risk": 0.1819,
+              "risk_cp_upper90": 0.1933,
+              "holds_fraction": 0.727,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 13331,
+              "n_accept_pooled": 1438,
+              "coverage": 0.1079,
+              "realized_risk": 0.1384,
+              "risk_cp_upper90": 0.1543,
+              "holds_fraction": 0.829,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 13235,
+              "n_accept_pooled": 0,
+              "coverage": 0.0,
+              "realized_risk": null,
+              "risk_cp_upper90": null,
+              "holds_fraction": null,
+              "overshoot": null,
+              "vacuous": true
+            },
+            "4": {
+              "n_deploy_pooled": 1495,
+              "n_accept_pooled": 0,
+              "coverage": 0.0,
+              "realized_risk": null,
+              "risk_cp_upper90": null,
+              "holds_fraction": null,
+              "overshoot": null,
+              "vacuous": true
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 11241,
+              "n_accept_pooled": 1536,
+              "coverage": 0.1366,
+              "realized_risk": 0.0885,
+              "risk_cp_upper90": 0.1014,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 13117,
+              "n_accept_pooled": 1889,
+              "coverage": 0.144,
+              "realized_risk": 0.1091,
+              "risk_cp_upper90": 0.1216,
+              "holds_fraction": 0.894,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 13331,
+              "n_accept_pooled": 1527,
+              "coverage": 0.1145,
+              "realized_risk": 0.1729,
+              "risk_cp_upper90": 0.1896,
+              "holds_fraction": 0.761,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 13235,
+              "n_accept_pooled": 680,
+              "coverage": 0.0514,
+              "realized_risk": 0.2941,
+              "risk_cp_upper90": 0.3242,
+              "holds_fraction": 0.189,
+              "overshoot": 0.0941,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1495,
+              "n_accept_pooled": 50,
+              "coverage": 0.0334,
+              "realized_risk": 0.42,
+              "risk_cp_upper90": 0.546,
+              "holds_fraction": 0.0,
+              "overshoot": 0.22,
+              "vacuous": false
+            }
+          },
+          "note": "finite-sample LTT (delta=0.10) certifies little on novel strata (frontier collapse); shown for completeness, not the primary read"
+        },
+        "max_overshoot_oracle_gate": 0.3397,
+        "max_overshoot_proxy_gate_on_true_strata": 0.3835,
+        "max_risk_degradation_proxy_vs_oracle": 0.0552,
+        "proxy_underprotects_true_strata": []
+      }
+    },
+    "boltz2": {
+      "n": 871,
+      "agreement": {
+        "ccd": {
+          "desc": "num_training_systems_with_similar_ccds (public CCD-similar count)",
+          "spearman_signal_vs_oracle": 0.528,
+          "adjacent_agreement": 0.8129,
+          "exact_agreement": 0.3869,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              107,
+              51,
+              1,
+              2,
+              0
+            ],
+            [
+              36,
+              61,
+              66,
+              52,
+              4
+            ],
+            [
+              3,
+              46,
+              120,
+              82,
+              20
+            ],
+            [
+              5,
+              49,
+              79,
+              49,
+              7
+            ],
+            [
+              10,
+              12,
+              5,
+              4,
+              0
+            ]
+          ]
+        },
+        "date": {
+          "desc": "target_release_date recency (deposition date of nearest public analog)",
+          "spearman_signal_vs_oracle": 0.1676,
+          "adjacent_agreement": 0.7061,
+          "exact_agreement": 0.2595,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              54,
+              51,
+              52,
+              4,
+              0
+            ],
+            [
+              31,
+              48,
+              91,
+              49,
+              0
+            ],
+            [
+              27,
+              45,
+              78,
+              121,
+              0
+            ],
+            [
+              49,
+              75,
+              50,
+              15,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              31
+            ]
+          ]
+        },
+        "seqsim": {
+          "desc": "protein_seqsim_max (protein sequence identity to public PDB)",
+          "spearman_signal_vs_oracle": 0.0188,
+          "adjacent_agreement": 0.6383,
+          "exact_agreement": 0.1894,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              18,
+              28,
+              78,
+              34,
+              3
+            ],
+            [
+              53,
+              57,
+              54,
+              46,
+              9
+            ],
+            [
+              62,
+              91,
+              55,
+              51,
+              12
+            ],
+            [
+              28,
+              43,
+              84,
+              31,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              27,
+              4
+            ]
+          ]
+        }
+      },
+      "control": {
+        "alpha": 0.2,
+        "delta": 0.1,
+        "n_splits": 50,
+        "best_proxy": "ccd",
+        "gate": "mondrian (group-conditional point threshold targeting risk<=alpha per stratum)",
+        "mondrian": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 4108,
+              "n_accept_pooled": 4044,
+              "coverage": 0.9844,
+              "realized_risk": 0.1654,
+              "risk_cp_upper90": 0.1753,
+              "holds_fraction": 0.92,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 5370,
+              "n_accept_pooled": 5328,
+              "coverage": 0.9922,
+              "realized_risk": 0.1575,
+              "risk_cp_upper90": 0.1659,
+              "holds_fraction": 0.98,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 6771,
+              "n_accept_pooled": 6674,
+              "coverage": 0.9857,
+              "realized_risk": 0.1689,
+              "risk_cp_upper90": 0.1766,
+              "holds_fraction": 0.96,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 4822,
+              "n_accept_pooled": 736,
+              "coverage": 0.1526,
+              "realized_risk": 0.2799,
+              "risk_cp_upper90": 0.3084,
+              "holds_fraction": 0.357,
+              "overshoot": 0.0799,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 801,
+              "n_accept_pooled": 83,
+              "coverage": 0.1036,
+              "realized_risk": 0.5663,
+              "risk_cp_upper90": 0.6588,
+              "holds_fraction": 0.0,
+              "overshoot": 0.3663,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_proxy_stratum": {
+            "0": {
+              "n_deploy_pooled": 4090,
+              "n_accept_pooled": 3506,
+              "coverage": 0.8572,
+              "realized_risk": 0.2014,
+              "risk_cp_upper90": 0.2128,
+              "holds_fraction": 0.56,
+              "overshoot": 0.0014,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 5464,
+              "n_accept_pooled": 3486,
+              "coverage": 0.638,
+              "realized_risk": 0.2309,
+              "risk_cp_upper90": 0.243,
+              "holds_fraction": 0.36,
+              "overshoot": 0.0309,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 6811,
+              "n_accept_pooled": 5906,
+              "coverage": 0.8671,
+              "realized_risk": 0.2088,
+              "risk_cp_upper90": 0.2177,
+              "holds_fraction": 0.38,
+              "overshoot": 0.0088,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 4730,
+              "n_accept_pooled": 4248,
+              "coverage": 0.8981,
+              "realized_risk": 0.2222,
+              "risk_cp_upper90": 0.233,
+              "holds_fraction": 0.4,
+              "overshoot": 0.0222,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 777,
+              "n_accept_pooled": 574,
+              "coverage": 0.7387,
+              "realized_risk": 0.1864,
+              "risk_cp_upper90": 0.2152,
+              "holds_fraction": 0.583,
+              "overshoot": 0.0,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 4108,
+              "n_accept_pooled": 3265,
+              "coverage": 0.7948,
+              "realized_risk": 0.1302,
+              "risk_cp_upper90": 0.1403,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 5370,
+              "n_accept_pooled": 4652,
+              "coverage": 0.8663,
+              "realized_risk": 0.1283,
+              "risk_cp_upper90": 0.1367,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 6771,
+              "n_accept_pooled": 6166,
+              "coverage": 0.9106,
+              "realized_risk": 0.1461,
+              "risk_cp_upper90": 0.1537,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 4822,
+              "n_accept_pooled": 3224,
+              "coverage": 0.6686,
+              "realized_risk": 0.5167,
+              "risk_cp_upper90": 0.5314,
+              "holds_fraction": 0.0,
+              "overshoot": 0.3167,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 801,
+              "n_accept_pooled": 413,
+              "coverage": 0.5156,
+              "realized_risk": 0.4988,
+              "risk_cp_upper90": 0.5404,
+              "holds_fraction": 0.0,
+              "overshoot": 0.2988,
+              "vacuous": false
+            }
+          },
+          "max_overshoot_oracle_gate": 0.3663,
+          "max_overshoot_proxy_gate_on_true_strata": 0.3167,
+          "per_true_stratum_degradation": {
+            "0": {
+              "oracle_risk": 0.1654,
+              "proxy_risk_on_true_stratum": 0.1302,
+              "risk_degradation": -0.0352,
+              "oracle_holds_fraction": 0.92,
+              "proxy_holds_fraction": 1.0,
+              "oracle_coverage": 0.9844,
+              "proxy_coverage": 0.7948
+            },
+            "1": {
+              "oracle_risk": 0.1575,
+              "proxy_risk_on_true_stratum": 0.1283,
+              "risk_degradation": -0.0292,
+              "oracle_holds_fraction": 0.98,
+              "proxy_holds_fraction": 1.0,
+              "oracle_coverage": 0.9922,
+              "proxy_coverage": 0.8663
+            },
+            "2": {
+              "oracle_risk": 0.1689,
+              "proxy_risk_on_true_stratum": 0.1461,
+              "risk_degradation": -0.0228,
+              "oracle_holds_fraction": 0.96,
+              "proxy_holds_fraction": 1.0,
+              "oracle_coverage": 0.9857,
+              "proxy_coverage": 0.9106
+            },
+            "3": {
+              "oracle_risk": 0.2799,
+              "proxy_risk_on_true_stratum": 0.5167,
+              "risk_degradation": 0.2368,
+              "oracle_holds_fraction": 0.357,
+              "proxy_holds_fraction": 0.0,
+              "oracle_coverage": 0.1526,
+              "proxy_coverage": 0.6686
+            },
+            "4": {
+              "oracle_risk": 0.5663,
+              "proxy_risk_on_true_stratum": 0.4988,
+              "risk_degradation": -0.0675,
+              "oracle_holds_fraction": 0.0,
+              "proxy_holds_fraction": 0.0,
+              "oracle_coverage": 0.1036,
+              "proxy_coverage": 0.5156
+            }
+          },
+          "max_risk_degradation_proxy_vs_oracle": 0.2368,
+          "proxy_underprotects_true_strata": []
+        },
+        "ltt_certified_frontier": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 4108,
+              "n_accept_pooled": 935,
+              "coverage": 0.2276,
+              "realized_risk": 0.1433,
+              "risk_cp_upper90": 0.1635,
+              "holds_fraction": 0.95,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 5370,
+              "n_accept_pooled": 5067,
+              "coverage": 0.9436,
+              "realized_risk": 0.1472,
+              "risk_cp_upper90": 0.1557,
+              "holds_fraction": 0.98,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 6771,
+              "n_accept_pooled": 5796,
+              "coverage": 0.856,
+              "realized_risk": 0.1492,
+              "risk_cp_upper90": 0.1572,
+              "holds_fraction": 0.96,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 4822,
+              "n_accept_pooled": 0,
+              "coverage": 0.0,
+              "realized_risk": null,
+              "risk_cp_upper90": null,
+              "holds_fraction": null,
+              "overshoot": null,
+              "vacuous": true
+            },
+            "4": {
+              "n_deploy_pooled": 801,
+              "n_accept_pooled": 0,
+              "coverage": 0.0,
+              "realized_risk": null,
+              "risk_cp_upper90": null,
+              "holds_fraction": null,
+              "overshoot": null,
+              "vacuous": true
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 4108,
+              "n_accept_pooled": 1380,
+              "coverage": 0.3359,
+              "realized_risk": 0.0623,
+              "risk_cp_upper90": 0.0741,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 5370,
+              "n_accept_pooled": 2793,
+              "coverage": 0.5201,
+              "realized_risk": 0.0505,
+              "risk_cp_upper90": 0.0578,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 6771,
+              "n_accept_pooled": 4310,
+              "coverage": 0.6365,
+              "realized_risk": 0.1051,
+              "risk_cp_upper90": 0.1131,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 4822,
+              "n_accept_pooled": 1671,
+              "coverage": 0.3465,
+              "realized_risk": 0.4428,
+              "risk_cp_upper90": 0.4632,
+              "holds_fraction": 0.02,
+              "overshoot": 0.2428,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 801,
+              "n_accept_pooled": 102,
+              "coverage": 0.1273,
+              "realized_risk": 0.4412,
+              "risk_cp_upper90": 0.5274,
+              "holds_fraction": null,
+              "overshoot": 0.2412,
+              "vacuous": true
+            }
+          },
+          "note": "finite-sample LTT (delta=0.10) certifies little on novel strata (frontier collapse); shown for completeness, not the primary read"
+        },
+        "max_overshoot_oracle_gate": 0.3663,
+        "max_overshoot_proxy_gate_on_true_strata": 0.3167,
+        "max_risk_degradation_proxy_vs_oracle": 0.2368,
+        "proxy_underprotects_true_strata": []
+      }
+    },
+    "chai": {
+      "n": 2292,
+      "agreement": {
+        "ccd": {
+          "desc": "num_training_systems_with_similar_ccds (public CCD-similar count)",
+          "spearman_signal_vs_oracle": 0.5948,
+          "adjacent_agreement": 0.8408,
+          "exact_agreement": 0.4114,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              355,
+              157,
+              3,
+              0,
+              0
+            ],
+            [
+              106,
+              178,
+              146,
+              128,
+              12
+            ],
+            [
+              15,
+              105,
+              207,
+              225,
+              28
+            ],
+            [
+              17,
+              109,
+              214,
+              202,
+              22
+            ],
+            [
+              22,
+              21,
+              10,
+              9,
+              1
+            ]
+          ]
+        },
+        "date": {
+          "desc": "target_release_date recency (deposition date of nearest public analog)",
+          "spearman_signal_vs_oracle": 0.1185,
+          "adjacent_agreement": 0.6396,
+          "exact_agreement": 0.2627,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              173,
+              131,
+              134,
+              77,
+              0
+            ],
+            [
+              101,
+              117,
+              184,
+              168,
+              0
+            ],
+            [
+              93,
+              117,
+              150,
+              219,
+              1
+            ],
+            [
+              148,
+              204,
+              112,
+              100,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0,
+              62
+            ]
+          ]
+        },
+        "seqsim": {
+          "desc": "protein_seqsim_max (protein sequence identity to public PDB)",
+          "spearman_signal_vs_oracle": 0.0099,
+          "adjacent_agreement": 0.5929,
+          "exact_agreement": 0.1998,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              78,
+              110,
+              198,
+              117,
+              12
+            ],
+            [
+              154,
+              150,
+              116,
+              135,
+              15
+            ],
+            [
+              164,
+              156,
+              102,
+              140,
+              18
+            ],
+            [
+              119,
+              154,
+              163,
+              119,
+              9
+            ],
+            [
+              0,
+              0,
+              1,
+              53,
+              9
+            ]
+          ]
+        }
+      },
+      "control": {
+        "alpha": 0.2,
+        "delta": 0.1,
+        "n_splits": 50,
+        "best_proxy": "ccd",
+        "gate": "mondrian (group-conditional point threshold targeting risk<=alpha per stratum)",
+        "mondrian": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 12975,
+              "n_accept_pooled": 12875,
+              "coverage": 0.9923,
+              "realized_risk": 0.1808,
+              "risk_cp_upper90": 0.1865,
+              "holds_fraction": 0.88,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 14188,
+              "n_accept_pooled": 11733,
+              "coverage": 0.827,
+              "realized_risk": 0.204,
+              "risk_cp_upper90": 0.2103,
+              "holds_fraction": 0.44,
+              "overshoot": 0.004,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14569,
+              "n_accept_pooled": 3353,
+              "coverage": 0.2301,
+              "realized_risk": 0.2374,
+              "risk_cp_upper90": 0.2498,
+              "holds_fraction": 0.378,
+              "overshoot": 0.0374,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 14087,
+              "n_accept_pooled": 157,
+              "coverage": 0.0111,
+              "realized_risk": 0.5414,
+              "risk_cp_upper90": 0.609,
+              "holds_fraction": 0.0,
+              "overshoot": 0.3414,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1617,
+              "n_accept_pooled": 87,
+              "coverage": 0.0538,
+              "realized_risk": 0.5747,
+              "risk_cp_upper90": 0.6646,
+              "holds_fraction": 0.0,
+              "overshoot": 0.3747,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_proxy_stratum": {
+            "0": {
+              "n_deploy_pooled": 12925,
+              "n_accept_pooled": 11980,
+              "coverage": 0.9269,
+              "realized_risk": 0.202,
+              "risk_cp_upper90": 0.2081,
+              "holds_fraction": 0.48,
+              "overshoot": 0.002,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 14387,
+              "n_accept_pooled": 3356,
+              "coverage": 0.2333,
+              "realized_risk": 0.2318,
+              "risk_cp_upper90": 0.2441,
+              "holds_fraction": 0.44,
+              "overshoot": 0.0318,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14426,
+              "n_accept_pooled": 2931,
+              "coverage": 0.2032,
+              "realized_risk": 0.216,
+              "risk_cp_upper90": 0.2288,
+              "holds_fraction": 0.52,
+              "overshoot": 0.016,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 14150,
+              "n_accept_pooled": 2314,
+              "coverage": 0.1635,
+              "realized_risk": 0.2489,
+              "risk_cp_upper90": 0.2642,
+              "holds_fraction": 0.146,
+              "overshoot": 0.0489,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1548,
+              "n_accept_pooled": 231,
+              "coverage": 0.1492,
+              "realized_risk": 0.4026,
+              "risk_cp_upper90": 0.4586,
+              "holds_fraction": 0.0,
+              "overshoot": 0.2026,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 12975,
+              "n_accept_pooled": 9176,
+              "coverage": 0.7072,
+              "realized_risk": 0.1336,
+              "risk_cp_upper90": 0.1396,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 14188,
+              "n_accept_pooled": 5636,
+              "coverage": 0.3972,
+              "realized_risk": 0.204,
+              "risk_cp_upper90": 0.2131,
+              "holds_fraction": 0.44,
+              "overshoot": 0.004,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14569,
+              "n_accept_pooled": 4068,
+              "coverage": 0.2792,
+              "realized_risk": 0.2325,
+              "risk_cp_upper90": 0.2437,
+              "holds_fraction": 0.18,
+              "overshoot": 0.0325,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 14087,
+              "n_accept_pooled": 1443,
+              "coverage": 0.1024,
+              "realized_risk": 0.5974,
+              "risk_cp_upper90": 0.6188,
+              "holds_fraction": 0.0,
+              "overshoot": 0.3974,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1617,
+              "n_accept_pooled": 489,
+              "coverage": 0.3024,
+              "realized_risk": 0.6462,
+              "risk_cp_upper90": 0.6821,
+              "holds_fraction": 0.0,
+              "overshoot": 0.4462,
+              "vacuous": false
+            }
+          },
+          "max_overshoot_oracle_gate": 0.3747,
+          "max_overshoot_proxy_gate_on_true_strata": 0.4462,
+          "per_true_stratum_degradation": {
+            "0": {
+              "oracle_risk": 0.1808,
+              "proxy_risk_on_true_stratum": 0.1336,
+              "risk_degradation": -0.0472,
+              "oracle_holds_fraction": 0.88,
+              "proxy_holds_fraction": 1.0,
+              "oracle_coverage": 0.9923,
+              "proxy_coverage": 0.7072
+            },
+            "1": {
+              "oracle_risk": 0.204,
+              "proxy_risk_on_true_stratum": 0.204,
+              "risk_degradation": 0.0,
+              "oracle_holds_fraction": 0.44,
+              "proxy_holds_fraction": 0.44,
+              "oracle_coverage": 0.827,
+              "proxy_coverage": 0.3972
+            },
+            "2": {
+              "oracle_risk": 0.2374,
+              "proxy_risk_on_true_stratum": 0.2325,
+              "risk_degradation": -0.0049,
+              "oracle_holds_fraction": 0.378,
+              "proxy_holds_fraction": 0.18,
+              "oracle_coverage": 0.2301,
+              "proxy_coverage": 0.2792
+            },
+            "3": {
+              "oracle_risk": 0.5414,
+              "proxy_risk_on_true_stratum": 0.5974,
+              "risk_degradation": 0.056,
+              "oracle_holds_fraction": 0.0,
+              "proxy_holds_fraction": 0.0,
+              "oracle_coverage": 0.0111,
+              "proxy_coverage": 0.1024
+            },
+            "4": {
+              "oracle_risk": 0.5747,
+              "proxy_risk_on_true_stratum": 0.6462,
+              "risk_degradation": 0.0715,
+              "oracle_holds_fraction": 0.0,
+              "proxy_holds_fraction": 0.0,
+              "oracle_coverage": 0.0538,
+              "proxy_coverage": 0.3024
+            }
+          },
+          "max_risk_degradation_proxy_vs_oracle": 0.0715,
+          "proxy_underprotects_true_strata": []
+        },
+        "ltt_certified_frontier": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 12975,
+              "n_accept_pooled": 1758,
+              "coverage": 0.1355,
+              "realized_risk": 0.1684,
+              "risk_cp_upper90": 0.1837,
+              "holds_fraction": 0.909,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 14188,
+              "n_accept_pooled": 1975,
+              "coverage": 0.1392,
+              "realized_risk": 0.1813,
+              "risk_cp_upper90": 0.1961,
+              "holds_fraction": 0.857,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14569,
+              "n_accept_pooled": 83,
+              "coverage": 0.0057,
+              "realized_risk": 0.2651,
+              "risk_cp_upper90": 0.3564,
+              "holds_fraction": 0.0,
+              "overshoot": 0.0651,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 14087,
+              "n_accept_pooled": 0,
+              "coverage": 0.0,
+              "realized_risk": null,
+              "risk_cp_upper90": null,
+              "holds_fraction": null,
+              "overshoot": null,
+              "vacuous": true
+            },
+            "4": {
+              "n_deploy_pooled": 1617,
+              "n_accept_pooled": 0,
+              "coverage": 0.0,
+              "realized_risk": null,
+              "risk_cp_upper90": null,
+              "holds_fraction": null,
+              "overshoot": null,
+              "vacuous": true
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 12975,
+              "n_accept_pooled": 2520,
+              "coverage": 0.1942,
+              "realized_risk": 0.1036,
+              "risk_cp_upper90": 0.1141,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 14188,
+              "n_accept_pooled": 759,
+              "coverage": 0.0535,
+              "realized_risk": 0.2345,
+              "risk_cp_upper90": 0.2612,
+              "holds_fraction": 0.429,
+              "overshoot": 0.0345,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14569,
+              "n_accept_pooled": 146,
+              "coverage": 0.01,
+              "realized_risk": 0.2877,
+              "risk_cp_upper90": 0.3556,
+              "holds_fraction": 0.0,
+              "overshoot": 0.0877,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 14087,
+              "n_accept_pooled": 143,
+              "coverage": 0.0102,
+              "realized_risk": 0.6853,
+              "risk_cp_upper90": 0.7493,
+              "holds_fraction": 0.0,
+              "overshoot": 0.4853,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1617,
+              "n_accept_pooled": 101,
+              "coverage": 0.0625,
+              "realized_risk": 0.604,
+              "risk_cp_upper90": 0.6858,
+              "holds_fraction": 0.0,
+              "overshoot": 0.404,
+              "vacuous": false
+            }
+          },
+          "note": "finite-sample LTT (delta=0.10) certifies little on novel strata (frontier collapse); shown for completeness, not the primary read"
+        },
+        "max_overshoot_oracle_gate": 0.3747,
+        "max_overshoot_proxy_gate_on_true_strata": 0.4462,
+        "max_risk_degradation_proxy_vs_oracle": 0.0715,
+        "proxy_underprotects_true_strata": []
+      }
+    },
+    "protenix": {
+      "n": 2323,
+      "agreement": {
+        "ccd": {
+          "desc": "num_training_systems_with_similar_ccds (public CCD-similar count)",
+          "spearman_signal_vs_oracle": 0.6007,
+          "adjacent_agreement": 0.8373,
+          "exact_agreement": 0.4266,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              363,
+              161,
+              3,
+              2,
+              0
+            ],
+            [
+              113,
+              180,
+              131,
+              140,
+              14
+            ],
+            [
+              15,
+              104,
+              243,
+              204,
+              23
+            ],
+            [
+              15,
+              116,
+              202,
+              205,
+              26
+            ],
+            [
+              23,
+              17,
+              10,
+              13,
+              0
+            ]
+          ]
+        },
+        "date": {
+          "desc": "target_release_date recency (deposition date of nearest public analog)",
+          "spearman_signal_vs_oracle": 0.1189,
+          "adjacent_agreement": 0.6406,
+          "exact_agreement": 0.2686,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              180,
+              129,
+              141,
+              79,
+              0
+            ],
+            [
+              103,
+              128,
+              185,
+              161,
+              1
+            ],
+            [
+              101,
+              114,
+              152,
+              222,
+              0
+            ],
+            [
+              145,
+              206,
+              111,
+              102,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0,
+              62
+            ]
+          ]
+        },
+        "seqsim": {
+          "desc": "protein_seqsim_max (protein sequence identity to public PDB)",
+          "spearman_signal_vs_oracle": 0.0204,
+          "adjacent_agreement": 0.6044,
+          "exact_agreement": 0.2015,
+          "confusion_oracle_rows_proxy_cols": [
+            [
+              87,
+              113,
+              208,
+              110,
+              11
+            ],
+            [
+              168,
+              139,
+              120,
+              130,
+              21
+            ],
+            [
+              149,
+              180,
+              101,
+              141,
+              18
+            ],
+            [
+              125,
+              146,
+              159,
+              131,
+              3
+            ],
+            [
+              0,
+              0,
+              1,
+              52,
+              10
+            ]
+          ]
+        }
+      },
+      "control": {
+        "alpha": 0.2,
+        "delta": 0.1,
+        "n_splits": 50,
+        "best_proxy": "ccd",
+        "gate": "mondrian (group-conditional point threshold targeting risk<=alpha per stratum)",
+        "mondrian": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 13189,
+              "n_accept_pooled": 13134,
+              "coverage": 0.9958,
+              "realized_risk": 0.1594,
+              "risk_cp_upper90": 0.1647,
+              "holds_fraction": 0.98,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 14449,
+              "n_accept_pooled": 6616,
+              "coverage": 0.4579,
+              "realized_risk": 0.2199,
+              "risk_cp_upper90": 0.2285,
+              "holds_fraction": 0.42,
+              "overshoot": 0.0199,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14850,
+              "n_accept_pooled": 3464,
+              "coverage": 0.2333,
+              "realized_risk": 0.1975,
+              "risk_cp_upper90": 0.2089,
+              "holds_fraction": 0.54,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 14099,
+              "n_accept_pooled": 705,
+              "coverage": 0.05,
+              "realized_risk": 0.3092,
+              "risk_cp_upper90": 0.3391,
+              "holds_fraction": 0.0,
+              "overshoot": 0.1092,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1644,
+              "n_accept_pooled": 51,
+              "coverage": 0.031,
+              "realized_risk": 0.7059,
+              "risk_cp_upper90": 0.8092,
+              "holds_fraction": 0.0,
+              "overshoot": 0.5059,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_proxy_stratum": {
+            "0": {
+              "n_deploy_pooled": 13300,
+              "n_accept_pooled": 12844,
+              "coverage": 0.9657,
+              "realized_risk": 0.2027,
+              "risk_cp_upper90": 0.2086,
+              "holds_fraction": 0.46,
+              "overshoot": 0.0027,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 14411,
+              "n_accept_pooled": 3762,
+              "coverage": 0.2611,
+              "realized_risk": 0.2108,
+              "risk_cp_upper90": 0.222,
+              "holds_fraction": 0.52,
+              "overshoot": 0.0108,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14780,
+              "n_accept_pooled": 3581,
+              "coverage": 0.2423,
+              "realized_risk": 0.2147,
+              "risk_cp_upper90": 0.2263,
+              "holds_fraction": 0.48,
+              "overshoot": 0.0147,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 14169,
+              "n_accept_pooled": 2400,
+              "coverage": 0.1694,
+              "realized_risk": 0.2225,
+              "risk_cp_upper90": 0.2369,
+              "holds_fraction": 0.457,
+              "overshoot": 0.0225,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1571,
+              "n_accept_pooled": 330,
+              "coverage": 0.2101,
+              "realized_risk": 0.2515,
+              "risk_cp_upper90": 0.2939,
+              "holds_fraction": 0.0,
+              "overshoot": 0.0515,
+              "vacuous": false
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 13189,
+              "n_accept_pooled": 10105,
+              "coverage": 0.7662,
+              "realized_risk": 0.1263,
+              "risk_cp_upper90": 0.1318,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 14449,
+              "n_accept_pooled": 5160,
+              "coverage": 0.3571,
+              "realized_risk": 0.2068,
+              "risk_cp_upper90": 0.2163,
+              "holds_fraction": 0.46,
+              "overshoot": 0.0068,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14850,
+              "n_accept_pooled": 3534,
+              "coverage": 0.238,
+              "realized_risk": 0.2068,
+              "risk_cp_upper90": 0.2184,
+              "holds_fraction": 0.5,
+              "overshoot": 0.0068,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 14099,
+              "n_accept_pooled": 3440,
+              "coverage": 0.244,
+              "realized_risk": 0.4076,
+              "risk_cp_upper90": 0.4215,
+              "holds_fraction": 0.0,
+              "overshoot": 0.2076,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1644,
+              "n_accept_pooled": 678,
+              "coverage": 0.4124,
+              "realized_risk": 0.4513,
+              "risk_cp_upper90": 0.4836,
+              "holds_fraction": 0.02,
+              "overshoot": 0.2513,
+              "vacuous": false
+            }
+          },
+          "max_overshoot_oracle_gate": 0.5059,
+          "max_overshoot_proxy_gate_on_true_strata": 0.2513,
+          "per_true_stratum_degradation": {
+            "0": {
+              "oracle_risk": 0.1594,
+              "proxy_risk_on_true_stratum": 0.1263,
+              "risk_degradation": -0.0331,
+              "oracle_holds_fraction": 0.98,
+              "proxy_holds_fraction": 1.0,
+              "oracle_coverage": 0.9958,
+              "proxy_coverage": 0.7662
+            },
+            "1": {
+              "oracle_risk": 0.2199,
+              "proxy_risk_on_true_stratum": 0.2068,
+              "risk_degradation": -0.0131,
+              "oracle_holds_fraction": 0.42,
+              "proxy_holds_fraction": 0.46,
+              "oracle_coverage": 0.4579,
+              "proxy_coverage": 0.3571
+            },
+            "2": {
+              "oracle_risk": 0.1975,
+              "proxy_risk_on_true_stratum": 0.2068,
+              "risk_degradation": 0.0093,
+              "oracle_holds_fraction": 0.54,
+              "proxy_holds_fraction": 0.5,
+              "oracle_coverage": 0.2333,
+              "proxy_coverage": 0.238
+            },
+            "3": {
+              "oracle_risk": 0.3092,
+              "proxy_risk_on_true_stratum": 0.4076,
+              "risk_degradation": 0.0984,
+              "oracle_holds_fraction": 0.0,
+              "proxy_holds_fraction": 0.0,
+              "oracle_coverage": 0.05,
+              "proxy_coverage": 0.244
+            },
+            "4": {
+              "oracle_risk": 0.7059,
+              "proxy_risk_on_true_stratum": 0.4513,
+              "risk_degradation": -0.2546,
+              "oracle_holds_fraction": 0.0,
+              "proxy_holds_fraction": 0.02,
+              "oracle_coverage": 0.031,
+              "proxy_coverage": 0.4124
+            }
+          },
+          "max_risk_degradation_proxy_vs_oracle": 0.0984,
+          "proxy_underprotects_true_strata": []
+        },
+        "ltt_certified_frontier": {
+          "oracle_gate_per_oracle_stratum": {
+            "0": {
+              "n_deploy_pooled": 13189,
+              "n_accept_pooled": 12506,
+              "coverage": 0.9482,
+              "realized_risk": 0.1586,
+              "risk_cp_upper90": 0.164,
+              "holds_fraction": 0.98,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 14449,
+              "n_accept_pooled": 1559,
+              "coverage": 0.1079,
+              "realized_risk": 0.1398,
+              "risk_cp_upper90": 0.1551,
+              "holds_fraction": 0.909,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14850,
+              "n_accept_pooled": 999,
+              "coverage": 0.0673,
+              "realized_risk": 0.1361,
+              "risk_cp_upper90": 0.1553,
+              "holds_fraction": 0.9,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 14099,
+              "n_accept_pooled": 33,
+              "coverage": 0.0023,
+              "realized_risk": 0.3636,
+              "risk_cp_upper90": 0.5216,
+              "holds_fraction": 0.0,
+              "overshoot": 0.1636,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1644,
+              "n_accept_pooled": 0,
+              "coverage": 0.0,
+              "realized_risk": null,
+              "risk_cp_upper90": null,
+              "holds_fraction": null,
+              "overshoot": null,
+              "vacuous": true
+            }
+          },
+          "proxy_gate_per_ORACLE_stratum": {
+            "0": {
+              "n_deploy_pooled": 13189,
+              "n_accept_pooled": 3021,
+              "coverage": 0.2291,
+              "realized_risk": 0.096,
+              "risk_cp_upper90": 0.1053,
+              "holds_fraction": 1.0,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "1": {
+              "n_deploy_pooled": 14449,
+              "n_accept_pooled": 1016,
+              "coverage": 0.0703,
+              "realized_risk": 0.1722,
+              "risk_cp_upper90": 0.1929,
+              "holds_fraction": 0.692,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "2": {
+              "n_deploy_pooled": 14850,
+              "n_accept_pooled": 417,
+              "coverage": 0.0281,
+              "realized_risk": 0.1823,
+              "risk_cp_upper90": 0.2162,
+              "holds_fraction": 0.667,
+              "overshoot": 0.0,
+              "vacuous": false
+            },
+            "3": {
+              "n_deploy_pooled": 14099,
+              "n_accept_pooled": 407,
+              "coverage": 0.0289,
+              "realized_risk": 0.3784,
+              "risk_cp_upper90": 0.4197,
+              "holds_fraction": 0.045,
+              "overshoot": 0.1784,
+              "vacuous": false
+            },
+            "4": {
+              "n_deploy_pooled": 1644,
+              "n_accept_pooled": 175,
+              "coverage": 0.1064,
+              "realized_risk": 0.4914,
+              "risk_cp_upper90": 0.5562,
+              "holds_fraction": 0.0,
+              "overshoot": 0.2914,
+              "vacuous": false
+            }
+          },
+          "note": "finite-sample LTT (delta=0.10) certifies little on novel strata (frontier collapse); shown for completeness, not the primary read"
+        },
+        "max_overshoot_oracle_gate": 0.5059,
+        "max_overshoot_proxy_gate_on_true_strata": 0.2513,
+        "max_risk_degradation_proxy_vs_oracle": 0.0984,
+        "proxy_underprotects_true_strata": []
+      }
+    }
+  },
+  "flagship_af3": {
+    "best_proxy": "ccd",
+    "agreement_best_proxy": {
+      "desc": "num_training_systems_with_similar_ccds (public CCD-similar count)",
+      "spearman_signal_vs_oracle": 0.5907,
+      "adjacent_agreement": 0.8315,
+      "exact_agreement": 0.4101,
+      "confusion_oracle_rows_proxy_cols": [
+        [
+          377,
+          171,
+          2,
+          4,
+          0
+        ],
+        [
+          119,
+          177,
+          145,
+          150,
+          10
+        ],
+        [
+          14,
+          98,
+          233,
+          223,
+          23
+        ],
+        [
+          20,
+          136,
+          207,
+          201,
+          33
+        ],
+        [
+          24,
+          19,
+          4,
+          19,
+          0
+        ]
+      ]
+    },
+    "control": {
+      "alpha": 0.2,
+      "delta": 0.1,
+      "n_splits": 50,
+      "best_proxy": "ccd",
+      "gate": "mondrian (group-conditional point threshold targeting risk<=alpha per stratum)",
+      "mondrian": {
+        "oracle_gate_per_oracle_stratum": {
+          "0": {
+            "n_deploy_pooled": 13761,
+            "n_accept_pooled": 13712,
+            "coverage": 0.9964,
+            "realized_risk": 0.1269,
+            "risk_cp_upper90": 0.1317,
+            "holds_fraction": 1.0,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "1": {
+            "n_deploy_pooled": 15165,
+            "n_accept_pooled": 13384,
+            "coverage": 0.8826,
+            "realized_risk": 0.1905,
+            "risk_cp_upper90": 0.1961,
+            "holds_fraction": 0.72,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "2": {
+            "n_deploy_pooled": 14800,
+            "n_accept_pooled": 11253,
+            "coverage": 0.7603,
+            "realized_risk": 0.1964,
+            "risk_cp_upper90": 0.2027,
+            "holds_fraction": 0.64,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "3": {
+            "n_deploy_pooled": 15041,
+            "n_accept_pooled": 2521,
+            "coverage": 0.1676,
+            "realized_risk": 0.2321,
+            "risk_cp_upper90": 0.2463,
+            "holds_fraction": 0.408,
+            "overshoot": 0.0321,
+            "vacuous": false
+          },
+          "4": {
+            "n_deploy_pooled": 1660,
+            "n_accept_pooled": 107,
+            "coverage": 0.0645,
+            "realized_risk": 0.5981,
+            "risk_cp_upper90": 0.6779,
+            "holds_fraction": 0.0,
+            "overshoot": 0.3981,
+            "vacuous": false
+          }
+        },
+        "proxy_gate_per_proxy_stratum": {
+          "0": {
+            "n_deploy_pooled": 13852,
+            "n_accept_pooled": 13792,
+            "coverage": 0.9957,
+            "realized_risk": 0.1487,
+            "risk_cp_upper90": 0.1538,
+            "holds_fraction": 0.98,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "1": {
+            "n_deploy_pooled": 15002,
+            "n_accept_pooled": 5859,
+            "coverage": 0.3905,
+            "realized_risk": 0.2122,
+            "risk_cp_upper90": 0.2211,
+            "holds_fraction": 0.48,
+            "overshoot": 0.0122,
+            "vacuous": false
+          },
+          "2": {
+            "n_deploy_pooled": 14873,
+            "n_accept_pooled": 9728,
+            "coverage": 0.6541,
+            "realized_risk": 0.1928,
+            "risk_cp_upper90": 0.1995,
+            "holds_fraction": 0.66,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "3": {
+            "n_deploy_pooled": 15012,
+            "n_accept_pooled": 7572,
+            "coverage": 0.5044,
+            "realized_risk": 0.2133,
+            "risk_cp_upper90": 0.2212,
+            "holds_fraction": 0.5,
+            "overshoot": 0.0133,
+            "vacuous": false
+          },
+          "4": {
+            "n_deploy_pooled": 1688,
+            "n_accept_pooled": 1092,
+            "coverage": 0.6469,
+            "realized_risk": 0.2207,
+            "risk_cp_upper90": 0.2423,
+            "holds_fraction": 0.62,
+            "overshoot": 0.0207,
+            "vacuous": false
+          }
+        },
+        "proxy_gate_per_ORACLE_stratum": {
+          "0": {
+            "n_deploy_pooled": 13761,
+            "n_accept_pooled": 11380,
+            "coverage": 0.827,
+            "realized_risk": 0.1007,
+            "risk_cp_upper90": 0.1055,
+            "holds_fraction": 1.0,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "1": {
+            "n_deploy_pooled": 15165,
+            "n_accept_pooled": 10077,
+            "coverage": 0.6645,
+            "realized_risk": 0.1449,
+            "risk_cp_upper90": 0.1508,
+            "holds_fraction": 1.0,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "2": {
+            "n_deploy_pooled": 14800,
+            "n_accept_pooled": 8665,
+            "coverage": 0.5855,
+            "realized_risk": 0.1751,
+            "risk_cp_upper90": 0.1819,
+            "holds_fraction": 0.9,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "3": {
+            "n_deploy_pooled": 15041,
+            "n_accept_pooled": 7094,
+            "coverage": 0.4716,
+            "realized_risk": 0.3743,
+            "risk_cp_upper90": 0.3838,
+            "holds_fraction": 0.0,
+            "overshoot": 0.1743,
+            "vacuous": false
+          },
+          "4": {
+            "n_deploy_pooled": 1660,
+            "n_accept_pooled": 827,
+            "coverage": 0.4982,
+            "realized_risk": 0.2999,
+            "risk_cp_upper90": 0.3272,
+            "holds_fraction": 0.16,
+            "overshoot": 0.0999,
+            "vacuous": false
+          }
+        },
+        "max_overshoot_oracle_gate": 0.3981,
+        "max_overshoot_proxy_gate_on_true_strata": 0.1743,
+        "per_true_stratum_degradation": {
+          "0": {
+            "oracle_risk": 0.1269,
+            "proxy_risk_on_true_stratum": 0.1007,
+            "risk_degradation": -0.0262,
+            "oracle_holds_fraction": 1.0,
+            "proxy_holds_fraction": 1.0,
+            "oracle_coverage": 0.9964,
+            "proxy_coverage": 0.827
+          },
+          "1": {
+            "oracle_risk": 0.1905,
+            "proxy_risk_on_true_stratum": 0.1449,
+            "risk_degradation": -0.0456,
+            "oracle_holds_fraction": 0.72,
+            "proxy_holds_fraction": 1.0,
+            "oracle_coverage": 0.8826,
+            "proxy_coverage": 0.6645
+          },
+          "2": {
+            "oracle_risk": 0.1964,
+            "proxy_risk_on_true_stratum": 0.1751,
+            "risk_degradation": -0.0213,
+            "oracle_holds_fraction": 0.64,
+            "proxy_holds_fraction": 0.9,
+            "oracle_coverage": 0.7603,
+            "proxy_coverage": 0.5855
+          },
+          "3": {
+            "oracle_risk": 0.2321,
+            "proxy_risk_on_true_stratum": 0.3743,
+            "risk_degradation": 0.1422,
+            "oracle_holds_fraction": 0.408,
+            "proxy_holds_fraction": 0.0,
+            "oracle_coverage": 0.1676,
+            "proxy_coverage": 0.4716
+          },
+          "4": {
+            "oracle_risk": 0.5981,
+            "proxy_risk_on_true_stratum": 0.2999,
+            "risk_degradation": -0.2982,
+            "oracle_holds_fraction": 0.0,
+            "proxy_holds_fraction": 0.16,
+            "oracle_coverage": 0.0645,
+            "proxy_coverage": 0.4982
+          }
+        },
+        "max_risk_degradation_proxy_vs_oracle": 0.1422,
+        "proxy_underprotects_true_strata": [
+          3
+        ]
+      },
+      "ltt_certified_frontier": {
+        "oracle_gate_per_oracle_stratum": {
+          "0": {
+            "n_deploy_pooled": 13761,
+            "n_accept_pooled": 13712,
+            "coverage": 0.9964,
+            "realized_risk": 0.1269,
+            "risk_cp_upper90": 0.1317,
+            "holds_fraction": 1.0,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "1": {
+            "n_deploy_pooled": 15165,
+            "n_accept_pooled": 479,
+            "coverage": 0.0316,
+            "realized_risk": 0.1754,
+            "risk_cp_upper90": 0.2065,
+            "holds_fraction": 1.0,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "2": {
+            "n_deploy_pooled": 14800,
+            "n_accept_pooled": 929,
+            "coverage": 0.0628,
+            "realized_risk": 0.127,
+            "risk_cp_upper90": 0.1464,
+            "holds_fraction": 0.933,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "3": {
+            "n_deploy_pooled": 15041,
+            "n_accept_pooled": 242,
+            "coverage": 0.0161,
+            "realized_risk": 0.2066,
+            "risk_cp_upper90": 0.2541,
+            "holds_fraction": 0.714,
+            "overshoot": 0.0066,
+            "vacuous": false
+          },
+          "4": {
+            "n_deploy_pooled": 1660,
+            "n_accept_pooled": 0,
+            "coverage": 0.0,
+            "realized_risk": null,
+            "risk_cp_upper90": null,
+            "holds_fraction": null,
+            "overshoot": null,
+            "vacuous": true
+          }
+        },
+        "proxy_gate_per_ORACLE_stratum": {
+          "0": {
+            "n_deploy_pooled": 13761,
+            "n_accept_pooled": 3116,
+            "coverage": 0.2264,
+            "realized_risk": 0.0895,
+            "risk_cp_upper90": 0.0984,
+            "holds_fraction": 1.0,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "1": {
+            "n_deploy_pooled": 15165,
+            "n_accept_pooled": 1567,
+            "coverage": 0.1033,
+            "realized_risk": 0.1576,
+            "risk_cp_upper90": 0.1736,
+            "holds_fraction": 0.868,
+            "overshoot": 0.0,
+            "vacuous": false
+          },
+          "2": {
+            "n_deploy_pooled": 14800,
+            "n_accept_pooled": 645,
+            "coverage": 0.0436,
+            "realized_risk": 0.2186,
+            "risk_cp_upper90": 0.2471,
+            "holds_fraction": 0.5,
+            "overshoot": 0.0186,
+            "vacuous": false
+          },
+          "3": {
+            "n_deploy_pooled": 15041,
+            "n_accept_pooled": 735,
+            "coverage": 0.0489,
+            "realized_risk": 0.3156,
+            "risk_cp_upper90": 0.345,
+            "holds_fraction": 0.206,
+            "overshoot": 0.1156,
+            "vacuous": false
+          },
+          "4": {
+            "n_deploy_pooled": 1660,
+            "n_accept_pooled": 219,
+            "coverage": 0.1319,
+            "realized_risk": 0.3151,
+            "risk_cp_upper90": 0.3707,
+            "holds_fraction": 0.071,
+            "overshoot": 0.1151,
+            "vacuous": false
+          }
+        },
+        "note": "finite-sample LTT (delta=0.10) certifies little on novel strata (frontier collapse); shown for completeness, not the primary read"
+      },
+      "max_overshoot_oracle_gate": 0.3981,
+      "max_overshoot_proxy_gate_on_true_strata": 0.1743,
+      "max_risk_degradation_proxy_vs_oracle": 0.1422,
+      "proxy_underprotects_true_strata": [
+        3
+      ]
+    }
+  },
+  "spearman_and_adjacent_per_model": {
+    "af3": {
+      "ccd": {
+        "spearman": 0.5907,
+        "adjacent": 0.8315
+      },
+      "date": {
+        "spearman": 0.1142,
+        "adjacent": 0.6372
+      },
+      "seqsim": {
+        "spearman": 0.0165,
+        "adjacent": 0.599
+      }
+    },
+    "boltz1": {
+      "ccd": {
+        "spearman": 0.5668,
+        "adjacent": 0.8275
+      },
+      "date": {
+        "spearman": 0.0924,
+        "adjacent": 0.6344
+      },
+      "seqsim": {
+        "spearman": 0.0276,
+        "adjacent": 0.6138
+      }
+    },
+    "boltz1x": {
+      "ccd": {
+        "spearman": 0.5747,
+        "adjacent": 0.8226
+      },
+      "date": {
+        "spearman": 0.087,
+        "adjacent": 0.6322
+      },
+      "seqsim": {
+        "spearman": 0.0131,
+        "adjacent": 0.6059
+      }
+    },
+    "boltz2": {
+      "ccd": {
+        "spearman": 0.528,
+        "adjacent": 0.8129
+      },
+      "date": {
+        "spearman": 0.1676,
+        "adjacent": 0.7061
+      },
+      "seqsim": {
+        "spearman": 0.0188,
+        "adjacent": 0.6383
+      }
+    },
+    "chai": {
+      "ccd": {
+        "spearman": 0.5948,
+        "adjacent": 0.8408
+      },
+      "date": {
+        "spearman": 0.1185,
+        "adjacent": 0.6396
+      },
+      "seqsim": {
+        "spearman": 0.0099,
+        "adjacent": 0.5929
+      }
+    },
+    "protenix": {
+      "ccd": {
+        "spearman": 0.6007,
+        "adjacent": 0.8373
+      },
+      "date": {
+        "spearman": 0.1189,
+        "adjacent": 0.6406
+      },
+      "seqsim": {
+        "spearman": 0.0204,
+        "adjacent": 0.6044
+      }
+    }
+  },
+  "verdict": [
+    "OUTCOME: GRACEFUL DEGRADATION (flagship = af3, best public proxy = ccd).",
+    "The public 'ccd' proxy tracks true novelty (Spearman 0.59, adjacent 0.83) and matches oracle control on the low-novelty strata, but its mis-ranking loosens per-stratum risk on the truly-novel tail by up to +0.142 and specifically un-controls true stratum(s) [3]; this is the measurable PRICE of not being able to enumerate the training set.",
+    "Caveat that stands regardless of proxy: even ORACLE group-conditional gating on native ranking_score leaves the most-novel strata above alpha (max oracle overshoot 0.398), so concept shift -- not just an un-enumerable training set -- caps how much any stratifier can repair the novel tail."
+  ]
+}

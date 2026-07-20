@@ -1,0 +1,550 @@
+{
+  "config": {
+    "alpha": 0.2,
+    "delta": 0.1,
+    "fixed_iptm_tau": 0.8,
+    "source_strata": [
+      0,
+      1
+    ],
+    "target_strata": [
+      2,
+      3
+    ],
+    "n_iid_repeats": 6,
+    "n_shift_repeats": 15,
+    "combiner_features": [
+      "ranking_score",
+      "iface_iptm",
+      "ens_ranking_std",
+      "ens_ranking_range",
+      "ens_iptm_std",
+      "pb_valid",
+      "xmodel_iptm_mean",
+      "xmodel_iptm_std",
+      "xmodel_n_models",
+      "ligand_molecular_weight",
+      "ligand_num_rot_bonds",
+      "ligand_num_heavy_atoms"
+    ],
+    "native_score": "ranking_score",
+    "localizer": "ligand_similarity",
+    "venn_abers": "in-house IVAP/ABERS (grid=40)"
+  },
+  "venn_abers_self_check": {
+    "max_abs_err_vs_sklearn": 0.0,
+    "ok": true
+  },
+  "methods": [
+    "af3",
+    "boltz1",
+    "boltz1x",
+    "chai",
+    "protenix"
+  ],
+  "fixed_iptm_all_models": {
+    "af3": {
+      "iid": {
+        "coverage": 0.7131782945736435,
+        "selective_risk": 0.22360248447204967
+      },
+      "shift": {
+        "coverage": 0.6887376556493304,
+        "selective_risk": 0.3014231841162843,
+        "per_stratum": {
+          "2": {
+            "coverage": 0.7646346817187949,
+            "selective_risk": 0.2362482161794239
+          },
+          "3": {
+            "coverage": 0.6172507347458491,
+            "selective_risk": 0.3777734385278092
+          }
+        }
+      }
+    },
+    "boltz1": {
+      "iid": {
+        "coverage": 0.10864093959731545,
+        "selective_risk": 0.07722007722007718
+      },
+      "shift": {
+        "coverage": 0.03771641100146894,
+        "selective_risk": 0.28178617296199293,
+        "per_stratum": {
+          "2": {
+            "coverage": 0.055012230549746334,
+            "selective_risk": 0.27917274246221613
+          },
+          "3": {
+            "coverage": 0.02074563081752022,
+            "selective_risk": 0.29357142857142865
+          }
+        }
+      }
+    },
+    "boltz1x": {
+      "iid": {
+        "coverage": 0.09309309309309309,
+        "selective_risk": 0.09216589861751157
+      },
+      "shift": {
+        "coverage": 0.03913368674129843,
+        "selective_risk": 0.33977468721908266,
+        "per_stratum": {
+          "2": {
+            "coverage": 0.053703140237570855,
+            "selective_risk": 0.2366023954259248
+          },
+          "3": {
+            "coverage": 0.024803479904196412,
+            "selective_risk": 0.553068783068783
+          }
+        }
+      }
+    },
+    "chai": {
+      "iid": {
+        "coverage": 0.17152858809801633,
+        "selective_risk": 0.09297052154195007
+      },
+      "shift": {
+        "coverage": 0.11431665533508323,
+        "selective_risk": 0.1508992773617527,
+        "per_stratum": {
+          "2": {
+            "coverage": 0.137806118246551,
+            "selective_risk": 0.15887929545228283
+          },
+          "3": {
+            "coverage": 0.09063392522009009,
+            "selective_risk": 0.13506008585968607
+          }
+        }
+      }
+    },
+    "protenix": {
+      "iid": {
+        "coverage": 0.9205983889528193,
+        "selective_risk": 0.36041666666666666
+      },
+      "shift": {
+        "coverage": 0.9307706707689085,
+        "selective_risk": 0.5109398977288185,
+        "per_stratum": {
+          "2": {
+            "coverage": 0.9411466507364984,
+            "selective_risk": 0.3674808981582219
+          },
+          "3": {
+            "coverage": 0.9205043961105671,
+            "selective_risk": 0.6559159599401755
+          }
+        }
+      }
+    }
+  },
+  "accept_all_all_models": {
+    "af3": {
+      "iid_base_error": 0.29568106312292364,
+      "shift_base_error": 0.4172292480816723
+    },
+    "boltz1": {
+      "iid_base_error": 0.3624161073825504,
+      "shift_base_error": 0.47809507973736126
+    },
+    "boltz1x": {
+      "iid_base_error": 0.34448734448734447,
+      "shift_base_error": 0.44989811294732374
+    },
+    "chai": {
+      "iid_base_error": 0.3512252042007002,
+      "shift_base_error": 0.46973609474618055
+    },
+    "protenix": {
+      "iid_base_error": 0.3659378596087457,
+      "shift_base_error": 0.5192948945119932
+    }
+  },
+  "af3_detail": {
+    "iid": {
+      "fixed_iptm": {
+        "coverage": 0.7131782945736435,
+        "selective_risk": 0.22360248447204967,
+        "risk_std": 0.0,
+        "frac_repeats_risk_le_alpha": 0.0,
+        "mean_n_accept": 1932.0,
+        "n_repeats": 6
+      },
+      "venn_abers": {
+        "coverage": 0.4164513350559862,
+        "selective_risk": 0.1239609163421217,
+        "risk_std": 0.003242778709397916,
+        "frac_repeats_risk_le_alpha": 1.0,
+        "mean_n_accept": 1128.1666666666667,
+        "n_repeats": 6
+      },
+      "localized": {
+        "coverage": 0.7171773102005661,
+        "selective_risk": 0.17033331281856365,
+        "risk_std": 0.004552880690021402,
+        "frac_repeats_risk_le_alpha": 1.0,
+        "mean_n_accept": 1942.8333333333333,
+        "n_repeats": 6
+      },
+      "groupcond": {
+        "coverage": 0.477728559123908,
+        "selective_risk": 0.13834194323791307,
+        "risk_std": 0.004001104080602829,
+        "frac_repeats_risk_le_alpha": 1.0,
+        "mean_n_accept": 1294.1666666666667,
+        "n_repeats": 6
+      },
+      "combined_conformal": {
+        "coverage": 0.7463393626184324,
+        "selective_risk": 0.18090665864187108,
+        "risk_std": 0.006830922839428401,
+        "frac_repeats_risk_le_alpha": 1.0,
+        "mean_n_accept": 2021.8333333333333,
+        "n_repeats": 6
+      },
+      "accept_all": {
+        "coverage": 1.0,
+        "selective_risk": 0.29568106312292364,
+        "risk_std": 0.0,
+        "frac_repeats_risk_le_alpha": 0.0,
+        "mean_n_accept": 2709.0,
+        "n_repeats": 6
+      },
+      "abstain_all": {
+        "coverage": 0.0,
+        "selective_risk": NaN,
+        "risk_std": NaN,
+        "frac_repeats_risk_le_alpha": NaN,
+        "mean_n_accept": 0.0,
+        "n_repeats": 6
+      }
+    },
+    "shift": {
+      "fixed_iptm": {
+        "coverage": 0.6887376556493304,
+        "selective_risk": 0.3014231841162843,
+        "risk_std": 0.01863339134903143,
+        "frac_repeats_risk_le_alpha": 0.0,
+        "mean_n_accept": 442.4,
+        "n_repeats": 15,
+        "per_stratum": {
+          "2": {
+            "coverage": 0.7646346817187949,
+            "selective_risk": 0.2362482161794239,
+            "risk_std": 0.022486000790705604,
+            "frac_repeats_risk_le_alpha": 0.06666666666666667,
+            "mean_n_accept": 238.46666666666667,
+            "n_repeats": 15
+          },
+          "3": {
+            "coverage": 0.6172507347458491,
+            "selective_risk": 0.3777734385278092,
+            "risk_std": 0.024654563159052803,
+            "frac_repeats_risk_le_alpha": 0.0,
+            "mean_n_accept": 203.93333333333334,
+            "n_repeats": 15
+          }
+        }
+      },
+      "naive_conformal": {
+        "coverage": 0.988483840951252,
+        "selective_risk": 0.41241342018788246,
+        "risk_std": 0.019922410858837794,
+        "frac_repeats_risk_le_alpha": 0.0,
+        "mean_n_accept": 634.9333333333333,
+        "n_repeats": 15,
+        "per_stratum": {
+          "2": {
+            "coverage": 0.9947074247294818,
+            "selective_risk": 0.2702968421983989,
+            "risk_std": 0.019958121816139287,
+            "frac_repeats_risk_le_alpha": 0.0,
+            "mean_n_accept": 310.2,
+            "n_repeats": 15
+          },
+          "3": {
+            "coverage": 0.9826125697678714,
+            "selective_risk": 0.5481746880707907,
+            "risk_std": 0.02207088481994794,
+            "frac_repeats_risk_le_alpha": 0.0,
+            "mean_n_accept": 324.73333333333335,
+            "n_repeats": 15
+          }
+        }
+      },
+      "venn_abers": {
+        "coverage": 0.23571277174961422,
+        "selective_risk": 0.16598862470212822,
+        "risk_std": 0.01960329892448849,
+        "frac_repeats_risk_le_alpha": 0.9333333333333333,
+        "mean_n_accept": 151.4,
+        "n_repeats": 15,
+        "per_stratum": {
+          "2": {
+            "coverage": 0.4237956485159648,
+            "selective_risk": 0.15804908165109158,
+            "risk_std": 0.0237837620049178,
+            "frac_repeats_risk_le_alpha": 0.9333333333333333,
+            "mean_n_accept": 131.8,
+            "n_repeats": 15
+          },
+          "3": {
+            "coverage": 0.059668779320574496,
+            "selective_risk": 0.24203628041254813,
+            "risk_std": 0.21438385781199032,
+            "frac_repeats_risk_le_alpha": 0.6,
+            "mean_n_accept": 19.6,
+            "n_repeats": 15
+          }
+        }
+      },
+      "localized": {
+        "coverage": 0.4362891154317819,
+        "selective_risk": 0.18729089719988423,
+        "risk_std": 0.04483129981957397,
+        "frac_repeats_risk_le_alpha": 0.8,
+        "mean_n_accept": 280.26666666666665,
+        "n_repeats": 15,
+        "per_stratum": {
+          "2": {
+            "coverage": 0.6581583755696166,
+            "selective_risk": 0.16576824782035085,
+            "risk_std": 0.03647603948062975,
+            "frac_repeats_risk_le_alpha": 0.8666666666666667,
+            "mean_n_accept": 204.93333333333334,
+            "n_repeats": 15
+          },
+          "3": {
+            "coverage": 0.22696530435173312,
+            "selective_risk": 0.2507564334002298,
+            "risk_std": 0.07634622513167262,
+            "frac_repeats_risk_le_alpha": 0.26666666666666666,
+            "mean_n_accept": 75.33333333333333,
+            "n_repeats": 15
+          }
+        }
+      },
+      "groupcond": {
+        "coverage": 0.18288865649587663,
+        "selective_risk": 0.18962270105953194,
+        "risk_std": 0.05950801559399833,
+        "frac_repeats_risk_le_alpha": 0.5714285714285714,
+        "mean_n_accept": 117.46666666666667,
+        "n_repeats": 15,
+        "per_stratum": {
+          "2": {
+            "coverage": 0.3317945871143216,
+            "selective_risk": 0.19343078689947288,
+            "risk_std": 0.05916497360509146,
+            "frac_repeats_risk_le_alpha": 0.42857142857142855,
+            "mean_n_accept": 103.06666666666666,
+            "n_repeats": 15
+          },
+          "3": {
+            "coverage": 0.04341344935969374,
+            "selective_risk": 0.15072222222222226,
+            "risk_std": 0.10790622357593539,
+            "frac_repeats_risk_le_alpha": 0.6,
+            "mean_n_accept": 14.4,
+            "n_repeats": 15
+          }
+        }
+      },
+      "accept_all": {
+        "coverage": 1.0,
+        "selective_risk": 0.4172292480816723,
+        "risk_std": 0.01915485756516861,
+        "frac_repeats_risk_le_alpha": 0.0,
+        "mean_n_accept": 642.3333333333334,
+        "n_repeats": 15
+      },
+      "abstain_all": {
+        "coverage": 0.0,
+        "selective_risk": NaN,
+        "risk_std": NaN,
+        "frac_repeats_risk_le_alpha": NaN,
+        "mean_n_accept": 0.0,
+        "n_repeats": 15
+      }
+    }
+  },
+  "all_models_shift": {
+    "af3": {
+      "groupcond": {
+        "coverage": 0.18288865649587663,
+        "selective_risk": 0.18962270105953194,
+        "frac_repeats_risk_le_alpha": 0.5714285714285714
+      },
+      "venn_abers": {
+        "coverage": 0.23571277174961422,
+        "selective_risk": 0.16598862470212822,
+        "frac_repeats_risk_le_alpha": 0.9333333333333333
+      },
+      "localized": {
+        "coverage": 0.4362891154317819,
+        "selective_risk": 0.18729089719988423,
+        "frac_repeats_risk_le_alpha": 0.8
+      },
+      "naive_conformal": {
+        "coverage": 0.988483840951252,
+        "selective_risk": 0.41241342018788246,
+        "frac_repeats_risk_le_alpha": 0.0
+      },
+      "fixed_iptm": {
+        "coverage": 0.6887376556493304,
+        "selective_risk": 0.3014231841162843,
+        "frac_repeats_risk_le_alpha": 0.0
+      }
+    },
+    "boltz1": {
+      "groupcond": {
+        "coverage": 0.010795976510262225,
+        "selective_risk": 0.15080701032713417,
+        "frac_repeats_risk_le_alpha": 1.0
+      },
+      "venn_abers": {
+        "coverage": 0.06564426960999972,
+        "selective_risk": 0.12089580077702361,
+        "frac_repeats_risk_le_alpha": 0.9333333333333333
+      },
+      "localized": {
+        "coverage": 0.19505113579339986,
+        "selective_risk": 0.20953352810184273,
+        "frac_repeats_risk_le_alpha": 0.3333333333333333
+      },
+      "naive_conformal": {
+        "coverage": 0.5975311070367805,
+        "selective_risk": 0.36589654659456694,
+        "frac_repeats_risk_le_alpha": 0.0
+      },
+      "fixed_iptm": {
+        "coverage": 0.03771641100146894,
+        "selective_risk": 0.28178617296199293,
+        "frac_repeats_risk_le_alpha": 0.2
+      }
+    },
+    "boltz1x": {
+      "groupcond": {
+        "coverage": 0.04496080660096299,
+        "selective_risk": 0.1643217349627588,
+        "frac_repeats_risk_le_alpha": 0.7142857142857143
+      },
+      "venn_abers": {
+        "coverage": 0.08815558396372308,
+        "selective_risk": 0.14219618262161235,
+        "frac_repeats_risk_le_alpha": 0.8
+      },
+      "localized": {
+        "coverage": 0.22444162571324297,
+        "selective_risk": 0.20408729187735677,
+        "frac_repeats_risk_le_alpha": 0.4
+      },
+      "naive_conformal": {
+        "coverage": 0.6838062441672859,
+        "selective_risk": 0.3411866823431621,
+        "frac_repeats_risk_le_alpha": 0.0
+      },
+      "fixed_iptm": {
+        "coverage": 0.03913368674129843,
+        "selective_risk": 0.33977468721908266,
+        "frac_repeats_risk_le_alpha": 0.06666666666666667
+      }
+    },
+    "chai": {
+      "groupcond": {
+        "coverage": 0.15083529967256912,
+        "selective_risk": 0.11471782209765574,
+        "frac_repeats_risk_le_alpha": 0.9230769230769231
+      },
+      "venn_abers": {
+        "coverage": 0.055046533180032164,
+        "selective_risk": 0.2883350720029552,
+        "frac_repeats_risk_le_alpha": 0.21428571428571427
+      },
+      "localized": {
+        "coverage": 0.3451403774025514,
+        "selective_risk": 0.19645833504254787,
+        "frac_repeats_risk_le_alpha": 0.6
+      },
+      "naive_conformal": {
+        "coverage": 0.6573021571492359,
+        "selective_risk": 0.37414319688536685,
+        "frac_repeats_risk_le_alpha": 0.0
+      },
+      "fixed_iptm": {
+        "coverage": 0.11431665533508323,
+        "selective_risk": 0.1508992773617527,
+        "frac_repeats_risk_le_alpha": 0.8666666666666667
+      }
+    },
+    "protenix": {
+      "groupcond": {
+        "coverage": 0.01575870300975834,
+        "selective_risk": 0.13149801587301588,
+        "frac_repeats_risk_le_alpha": 0.75
+      },
+      "venn_abers": {
+        "coverage": 0.030491831164434696,
+        "selective_risk": 0.1711768139788541,
+        "frac_repeats_risk_le_alpha": 0.7333333333333333
+      },
+      "localized": {
+        "coverage": 0.16820499280188547,
+        "selective_risk": 0.19671812643797523,
+        "frac_repeats_risk_le_alpha": 0.4
+      },
+      "naive_conformal": {
+        "coverage": 0.8014730564962614,
+        "selective_risk": 0.44190728785837413,
+        "frac_repeats_risk_le_alpha": 0.0
+      },
+      "fixed_iptm": {
+        "coverage": 0.9307706707689085,
+        "selective_risk": 0.5109398977288185,
+        "frac_repeats_risk_le_alpha": 0.0
+      }
+    }
+  },
+  "venn_abers_vs_gbm": {
+    "af3_va_shift_risk": 0.16598862470212822,
+    "af3_gbm_shift_risk": 0.18962270105953194,
+    "af3_va_shift_coverage": 0.23571277174961422,
+    "af3_gbm_shift_coverage": 0.18288865649587663,
+    "va_holds_risk": true,
+    "gbm_holds_risk": true,
+    "coverage_gap_va_minus_gbm": 0.05282411525373759,
+    "va_matches_gbm": true
+  },
+  "shift_verdict_af3": {
+    "hold_risk_le_alpha": [
+      {
+        "baseline": "venn_abers",
+        "shift_risk": 0.16598862470212822
+      },
+      {
+        "baseline": "localized",
+        "shift_risk": 0.18729089719988423
+      },
+      {
+        "baseline": "groupcond",
+        "shift_risk": 0.18962270105953194
+      }
+    ],
+    "break_risk_gt_alpha": [
+      {
+        "baseline": "fixed_iptm",
+        "shift_risk": 0.3014231841162843
+      },
+      {
+        "baseline": "naive_conformal",
+        "shift_risk": 0.41241342018788246
+      }
+    ]
+  }
+}
