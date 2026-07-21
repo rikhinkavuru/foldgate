@@ -1,9 +1,19 @@
 \documentclass[10pt]{article}
 
-% ARCHIVAL PAPER -- target venue Digital Discovery (RSC): gold OA, ML-for-chemistry + honest-negative
-% friendly, tolerant of the conformal framing. Self-contained single-column article (US Letter, Times 10pt)
-% with no external style-file dependency, so it compiles anywhere; swap in the RSC class at submission.
-% (J. Cheminformatics is the backup; both are more receptive to the statistical core than JCIM.)
+% ARCHIVAL PAPER -- target venue J. Chem. Inf. Model. (JCIM, ACS). Chosen 2026-07-21 over Digital
+% Discovery / J. Cheminformatics / Bioinformatics Advances: JCIM is the only candidate with a zero-cost
+% publication path (hybrid, subscription route) for an unfunded independent author, has no hard length
+% cap, and is the house venue for the benchmark-methodology-critique genre this paper belongs to
+% (CASF/DEKOIS/LIT-PCBA lineage; "Critical Assessment of Conformal Prediction Methods", JCIM 2021;
+% "Beware of Simple Methods for Structure-Based Virtual Screening", JCIM 2023; "The Need for Continuing
+% Blinded Pose- and Activity Prediction Benchmarks", JCIM 2025). ACS editorial guidance explicitly
+% rewards "provocative papers criticizing/rejecting existing paradigms" that "provide the reader some
+% idea(s) how to solve the problem" -- i.e. collapse -> frontier -> priced repair.
+% (J. Cheminformatics is the backup: no cap, conformal house tradition, but a GBP 1690 APC at risk.)
+% Self-contained single-column article (US Letter, Times 10pt) with no external style-file dependency,
+% so it compiles anywhere; swap in the ACS class at submission.
+% SUBMISSION-TIME STEP: the Supporting Information section at the end of this file must be split into a
+% separate SI PDF (ACS requires it as a separate file), and a TOC/abstract graphic must be supplied.
 % Build: tectonic paper/foldgate_journal.tex
 % This is the post-audit revision: 3 contributions (break+frontier / decomposition-as-diagnostic /
 % priced repair), leakage-free headlines, notation + certificate-ledger + provenance tables,
@@ -31,8 +41,8 @@
 \setlength{\parskip}{5.0pt}
 \newcommand{\Real}{\mathbb{R}}
 
-\title{\vspace{-2.2em}\textbf{\large Know When to Fold: Risk-Controlled Abstention for\\
-Protein--Ligand Co-Folding under Novelty Shift}}
+\title{\vspace{-2.2em}\textbf{\large Knowing When to Trust a Co-Folded Pose: Risk-Controlled\\
+Abstention for Protein--Ligand Confidence under Novelty Shift}}
 \author{Rikhin Kavuru\\ \small Independent Researcher \\ \small \texttt{rikhin@virahacks.com}}
 \date{}
 
@@ -85,10 +95,11 @@ We make three contributions, all training-free with respect to the co-folding mo
 released predictions on CPU.
 \textbf{(1)} We give a finite-sample selective-risk gate over frozen co-folding confidence, show its
 guarantee collapses under novelty shift, and map the collapse with a per-stratum \emph{feasibility
-frontier} that decays to zero on novel strata; reliability drift attributes the collapse to concept shift
+frontier} that decays to zero on novel strata; the collapse is base-rate-bound rather than a loss of the
+score's ranking signal, and score-conditional reliability drift measures it
 (Sec.~\ref{sec:break}--\ref{sec:frontier}).
 \textbf{(2)} We prove an exact decomposition of the realized selective risk into a covariate-corrected
-reference and an accept-region concept gap that no training-free reweighting can move, turning it into a
+reference and an accept-region score-fiber gap that no training-free reweighting can move, turning it into a
 measurable diagnostic that selects, from a labeled probe, which repair a deployment region admits
 (Sec.~\ref{sec:decomp}).
 \textbf{(3)} We repair what is repairable with group-conditional calibration and a label-free
@@ -110,7 +121,16 @@ abstention~\citep{crcgupta} (arXiv preprint, June 2026); ours is its co-folding 
 per novelty stratum with a matching in-stratum achievability bracket. Conformal
 selection~\citep{jin2023selection,bai2026score} (the latter an arXiv preprint) is complementary: it certifies
 which \emph{compounds} to advance given a labeled calibration set, while this layer certifies the
-\emph{pose} correctness a co-folding screen rests on, training-free.
+\emph{pose} correctness a co-folding screen rests on, training-free. Two 2026 preprints sit adjacent and
+neither occupies this cell. CalPro~\citep{calpro} conformalizes protein-structure prediction and reports a
+downstream docking gain, but it \emph{trains} an evidential head rather than consuming a frozen model's
+released confidence, and it keys on modality and disorder rather than on training-set similarity, so the
+training-free constraint that makes our impossibility bite does not apply to it. Concurrently, marginal
+conformal coverage was shown to hide minority-class collapse in ligand-based virtual
+screening~\citep{quietfailure}, with a group-conditional repair; that is the same shape as our break and
+repair in a different corner of the field, on a scalar activity label stratified by class rather than on
+pose geometry stratified by novelty, and we read it as independent corroboration that marginal validity is
+the wrong target for drug-discovery deployment.
 
 We connect four literatures. Using training-set similarity as a reliability predictor is the
 cheminformatics \emph{applicability domain}~\citep{sheridan2004,sahigara2012,norinder2014}, and our claim is
@@ -152,8 +172,8 @@ externally recomputed ECFP4/pocket similarity would purify it to the $\sim\!29$-
 break is carried by $S_3$, which has no such ambiguity. The quartile edges are taken from the full-benchmark
 \emph{similarity} marginal (a covariate, not a label, so this is not label leakage), and the frontier is
 robust to replacing them with fixed absolute similarity cuts, which we promote as an alternative (the
-zero-frontier fraction stays near $0.4$ across $3/5/7$ bins and fixed edges); Table~S1
-lists $n$ and the similarity range each bin spans, per model and axis. One similarity reference stratifies
+zero-frontier fraction stays near $0.4$ across $3/5/7$ bins and fixed edges); a per-model, per-axis table of $n$ and the
+similarity range each bin spans is in the SI. One similarity reference stratifies
 all five governed models because they share the same $\sim\!2021$ training cutoff, so a ligand or pocket
 novel to one is novel to the others; the reference year is not incidental (re-keying the pocket similarity
 to a $2023$ PDB snapshot rank-correlates with the $2021$ one at only Spearman $0.14$, since the PDB grows),
@@ -173,6 +193,28 @@ and not a single-family monoculture: $55\%$ drug-like ($300$--$500$\,Da) with a 
 $954$ receptor sequence clusters (the largest covering $7\%$ of systems), and no PDB header class above
 $17\%$.
 
+\textbf{Data curation.} Every record consumed here is a released artifact, and the curation is the chain
+that turns them into one analysis table. From the Runs N' Poses release we read the delivered predictions,
+the shipped BiSyRMSD labels, the PoseBusters results, and the similarity annotations, and we join them on
+(system id, model, ligand instance). Records are dropped at four points, each of which appears as a node in
+Fig.~\ref{fig:consort} so the counts reconcile: predictions carrying no ranking score (unparseable or
+absent confidence, so no gate input exists), systems carrying no shipped BiSyRMSD (no label, so no loss is
+defined), the $933$ Boltz-2 poses (a $2023$-cutoff model in a $2021$-cutoff cohort, held out as an
+ungoverned comparator rather than pooled), and, for the per-model certificates only, duplicate ligand
+instances of one system (deduplicated to one delivered top-1 pose per (system, model), since instances of a
+system fail together). We do not impute missing confidences or missing labels, and we do not filter on
+PoseBusters validity, pose quality, or any quantity correlated with the label, so the retained set is not
+enriched for easy targets. Similarity annotations are consumed as released rather than recomputed, with one
+consequence we treat explicitly: systems whose similarity search returns no neighbor are retained as the
+$S_4$ stratum instead of being dropped, which is why $S_4$ is a mixture of genuine novelty and search
+coverage gaps and why we lead on $S_3$. Ligand-local pLDDT is the one feature extracted from the predicted
+structures rather than read from a table (per-atom confidence over the ligand chain), and crystal
+resolution is fetched per PDB entry; both are cached in the repository. Units are fixed once and used
+throughout (RMSD in \AA, pLDDT on $0$--$100$, Tanimoto and coverage on $0$--$1$). The single per-pose
+analysis table that results, with the scores, the label, both similarities and strata, sequence cluster,
+resolution, and ligand-local pLDDT, is committed, and every tabular result in this paper re-derives from it
+without the structure stream.
+
 \textbf{Deployment cost.} The native-score gate is CPU-only and consumes one released prediction per
 target. An optional combined score (a calibration-only gradient-boosted map from cheap per-prediction
 features to $P(\text{correct})$: confidence, interface ipTM, ensemble spread, cross-model agreement,
@@ -188,58 +230,14 @@ combined score already gains over native --- so novelty is worth far more as the
 than as a score \emph{feature}, and the training-free constraint costs little. This is the measured price of
 staying training-free.
 
-\begin{table}[t]
-\centering\small
-\caption{Notation.}
-\label{tab:notation}
-\begin{tabular}{ll@{\hskip 2em}ll}
-\toprule
-$L$ & loss $\mathbf{1}[\text{RMSD}>2$\,\AA$]$ & $\alpha,\delta$ & risk target, failure prob.\ ($0.20,0.10$) \\
-$s,\tau$ & score, accept threshold ($s\ge\tau$) & $c$ & coverage (accepted fraction) \\
-$\nu, S_\nu$ & novelty axis, stratum & $\eta_P,\eta_Q$ & source/target score-conditional error $P(L{=}1\mid s)$ \\
-$R_{\mathrm{ref}}$ & covariate-corrected reference risk & $\bar\Delta_c$ & accept-region score-fiber gap \\
-$D(\nu)$ & reliability drift at stratum $\nu$ & $m^\star,\beta^\star$ & certified min.\ subpop.\ mass, CVaR level \\
-$\rho^\star$ & DRO robustness radius & $n_g$ & in-stratum labels \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[t]
-\centering\small
-\caption{Label provenance. The primary selective-risk results use the shipped BiSyRMSD label. The
-protomer trap of App.~\ref{app:integrity} afflicts only cross-frame \emph{superposition}, so the
-cross-model danger floor is restricted to the single-chain subset; interaction-fingerprint recovery
-enumerates contacts \emph{within} each structure and matches them by residue identity (seqid, resname),
-which is invariant to a protomer swap (homodimer copies share numbering), and its result is unchanged on
-the single-chain subset (gate coefficient $+0.04$--$+0.06$ there vs.\ $+0.03$--$+0.07$ on the full set).}
-\label{tab:provenance}
-\begin{tabular}{lll}
-\toprule
-Result & Label / geometry & $n$ \\
-\midrule
-Break, frontier, repair, utility (Secs.~\ref{sec:break}--\ref{sec:utility}) & shipped BiSyRMSD & $11{,}254$ target-labels \\
-Cross-model danger floor / consensus (SI) & recomputed, single-chain receptors & $6{,}163$ instances \\
-Interaction-fingerprint recovery (Sec.~\ref{sec:utility}) & per-structure contacts vs.\ crystal & $12{,}475$ poses \\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \textbf{A benchmark-integrity finding, of independent value.} Anyone recomputing pose geometry on Runs N'
-Poses will hit a silent trap we document in full in App.~\ref{app:integrity}: the benchmark ships only the
+Poses will hit a silent trap we document in full in SI Sec.~\ref{app:integrity}: the benchmark ships only the
 receptor chain while co-folding models predict the full assembly, so a chain-ordinal superposition can seat
 the ligand in the wrong protomer of a homodimer, and a distance-consistency check passes at $0$ of
 $13{,}146$ pairs while $15\%$ of the recomputed binary labels are wrong; only comparison against the shipped
 BiSyRMSD exposes it, and restricting to single-chain receptors raises agreement from Spearman $0.62$ to
 $0.995$. We surface it here rather than bury it because it is a reusable finding for the benchmark, and we
 report which of our own results touch recomputed geometry (Table~\ref{tab:provenance}).
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.82\textwidth]{../results/figures/consort_flow.png}
-\caption{Dataset flow. One reduction chain reconciles every count; each node is annotated with the
-experiments that consume it. Counts are recomputed live from the released predictions.}
-\label{fig:consort}
-\end{figure}
 
 \textbf{Gate.} The gate accepts when $s\ge\tau$ and picks the largest accept set whose selective risk is
 certified $\le\alpha$ by Learn-then-Test with fixed-sequence testing~\citep{angelopoulos2021ltt}, testing
@@ -287,16 +285,6 @@ drops), which is precisely the score-conditional drift $D(\nu)$ measures.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.98\textwidth]{../results/figures/reliability_diagram.png}
-\caption{Reliability diagram. Empirical $P(\text{correct})$ against the frozen ranking score (shared
-quantile bins), one curve per ligand-novelty stratum. The curves stay monotone (the score discriminates
-within each stratum, so the gate is not anti-selective) but drop together on novel strata (the base rate
-collapses), the visible form of the score-conditional reliability drift $D(\nu)$.}
-\label{fig:reliability}
-\end{figure}
-
-\begin{figure}[t]
-\centering
 \includegraphics[width=0.98\textwidth]{../results/figures/break_money.png}
 \caption{The break. Per-stratum realized selective risk of a marginally-compliant global gate, over $300$
 target-grouped calibrate/deploy resamples (mean, $90\%$ resample interval, median accepted $n$ per point);
@@ -306,7 +294,7 @@ risk (AF3 $0.55$). The break is carried by $S_3$.}
 \label{fig:break}
 \end{figure}
 
-\textbf{Why it breaks: concept shift, not recency.} Weighted conformal would fix this if the shift were
+\textbf{Why it breaks: score-conditional reliability drift, not recency.} Weighted conformal would fix this if the shift were
 pure covariate shift, where $P(L\mid s)$ is stable and only the marginal $P(s)$ moves. We test that by
 measuring \emph{reliability drift}
 $D(\nu)=\sum_{\text{bins}} w\,[\,P(L{=}0\mid s,S_0)-P(L{=}0\mid s,S_\nu)\,]$, the confidence-conditional
@@ -397,7 +385,8 @@ score's own $\sigma$-algebra $\sigma(s)$, because that is what a gate on $s$ and
 weight on $s$ can see: let $\eta_P(s)=P_P(Y{=}1\mid s)$ and $\eta_Q(s)=P_Q(Y{=}1\mid s)$ be the
 score-conditional error rates under the calibration law $P$ and the deployment law $Q$, and call a
 reweighting \emph{training-free} if its weights are $\sigma(s)$-measurable and use no target labels
-(density-ratio, classifier, or KLIEP weights on $s$, including the point mass of weighted conformal). Write
+(density-ratio, classifier, KLIEP, or kernel-mean-matching weights on $s$~\citep{kmmcp}, including the
+point mass of weighted conformal). Write
 $R_{\mathrm{ref}}(\tau_c)=\mathbb{E}_Q[\eta_P(s)\mid s\ge\tau_c]$ and
 $\bar\Delta_c=\mathbb{E}_Q[\eta_Q(s)-\eta_P(s)\mid s\ge\tau_c]$. We estimate $\bar\Delta_c$ by binning $s$
 (Sec.~\ref{sec:break}), so it is the accept-region gap between the source and target label rates \emph{at
@@ -407,7 +396,7 @@ $\sigma(s)$-measurable reweighting, which is exactly what the impossibility requ
 \emph{score-conditional reliability drift} rather than concept shift, and report its binning sensitivity.
 
 \begin{quote}\small
-\textbf{Lemma (exact decomposition; App.~\ref{app:proof}).} At fixed coverage $c$ the realized target
+\textbf{Lemma (exact decomposition; SI Sec.~\ref{app:proof}).} At fixed coverage $c$ the realized target
 selective risk is $R_Q(\tau_c)=R_{\mathrm{ref}}(\tau_c)+\bar\Delta_c$, and $\bar\Delta_c$ is invariant to
 the choice of training-free ($\sigma(s)$-measurable) weights. Hence the oracle-weighted plug-in certificate
 reports $R_{\mathrm{ref}}$ and under-states the realized risk by exactly $\bar\Delta_c$.
@@ -446,14 +435,14 @@ sweeping the target drift locates the coverage at which no reweighting reaches $
 non-co-folding benchmarks elec2 (worst-block concept gap $0.36$) and ACS~Income (gap $0.05$), a
 single-threshold gate under-controls the worst block, weighted conformal issues a certificate its realized
 risk then violates on elec2 but repairs on ACS, and group-conditional calibration certifies control by
-abstaining, with the elec2/ACS realized worst-block risks in App.~\ref{app:bench}.
+abstaining, with the elec2/ACS realized worst-block risks in SI Sec.~\ref{app:bench}.
 
 \textbf{Drift selects the repair.} Reliability drift $D(\nu)$ is a label-based diagnostic that tracks
 $\bar\Delta_c$, so it decides, from a labeled probe rather than after a failed deployment, which repair a
 region admits. A small drift signals a covariate-dominated shift that weighted conformal repairs by choosing
 a more conservative threshold from unlabeled data (weighted conformal's \emph{only} lever is threshold
 selection; on the moderate ligand shift $S_0,S_1\!\to\!S_2$ it pulls AF3 realized error from $0.27$ at
-$98\%$ coverage to $0.19$ at $70\%$ coverage). A large drift signals a concept-dominated shift where
+$98\%$ coverage to $0.19$ at $70\%$ coverage). A large drift signals a drift-dominated shift where
 weighted conformal silently violates its own certificate, leaving group-conditional recalibration as the
 only valid repair.
 
@@ -711,15 +700,6 @@ accept-all wins (abstention only forfeits benefit when wrong poses are cheap), a
 abstain-all wins (no accepted set is worth its false positives), so the gate occupies the intermediate,
 high-but-finite-cost regime, which is where a delivered pose that must be trusted lives.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.62\textwidth]{../results/figures/decision_curve.png}
-\caption{Decision curve (AF3). Net benefit per delivered pose vs.\ the cost ratio $\lambda$; the shaded band
-is where the conformal gate is the best of the four strategies. It dominates a fixed-ipTM threshold
-everywhere and serves the high-cost regime, so there is no single $\alpha$ to defend.}
-\label{fig:decision}
-\end{figure}
-
 \textbf{A non-circular quality, honestly conditioned.} Accepted-pose purity is $1-$ selective risk by
 construction, so it cannot show the gate buys anything past the guarantee. Interaction-fingerprint recovery
 is a different quantity a medicinal chemist reads: the fraction of the crystal's protein-ligand contacts a
@@ -840,7 +820,15 @@ of each model's predictions and of the reused benchmarks are noted in the reposi
 fixed-sequence order, binning, and endpoints are frozen in a pre-registration file, timestamped independently
 of the git history (OpenTimestamps).
 
-\textbf{Funding.} No external funding. \textbf{Competing interests.} The author declares none.
+\textbf{Funding.} No external funding; the author is an independent researcher with no institutional
+support, and no funder had any role in the study design, analysis, or decision to publish.
+\textbf{Competing interests.} The author declares no competing financial interest.
+\textbf{Use of AI tools.} A large language model (Anthropic Claude) was used as a coding and editing
+assistant: it assisted in writing analysis and figure code, in drafting and revising manuscript prose, and
+in literature search. It was not used to generate data, results, or figures' underlying numbers, every
+reported number is produced by the committed analysis code from the released benchmark artifacts, and the
+author verified all quantitative claims against those outputs and takes full responsibility for the
+content. No AI tool is an author.
 \textbf{Broader impact.} The layer is a decision gate for drug-discovery pipelines; its central message is
 conservative (abstain where the guarantee is vacuous), and its main risk is misuse as a certificate on the
 novel tail, which Secs.~\ref{sec:frontier}--\ref{sec:repair} explicitly forbid.
@@ -935,7 +923,87 @@ Theory 16(1), 1970.
 by Learning to Defer. NeurIPS, 2018.
 \bibitem{mozannar2020} H. Mozannar, D. Sontag. Consistent Estimators for Learning to Defer to an Expert.
 ICML, 2020.
+\bibitem{calpro} CalPro: Prior-Aware Evidential-Conformal Prediction with Structure-Aware Guarantees for
+Protein Structures. arXiv:2601.07201 (preprint), 2026.
+\bibitem{quietfailure} A Quiet Failure in Calibrated Virtual Screening: Marginal Conformal Coverage Hides
+Minority-Class Collapse. arXiv:2607.06605 (preprint), 2026.
+\bibitem{kmmcp} Selective Kernel Mean Matching for Conformal Prediction under Covariate Shift.
+arXiv:2603.26415 (preprint), 2026.
 \end{thebibliography}
+
+\clearpage
+\normalsize
+\setcounter{figure}{0}\renewcommand{\thefigure}{S\arabic{figure}}
+\setcounter{table}{0}\renewcommand{\thetable}{S\arabic{table}}
+\begin{center}\large\textbf{Supporting Information}\end{center}
+\vspace{0.5em}
+Supporting Information available: dataset flow diagram; notation and label-provenance tables; reliability
+diagram; decision-curve analysis; per-stratum bin sizes and similarity ranges; the screening arm; the
+cross-model danger floor; the synthetic-generator and public-benchmark validation; the full certificate-card
+grid; proof of the decomposition (PDF).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{../results/figures/consort_flow.png}
+\caption{Dataset flow. One reduction chain reconciles every count; each node is annotated with the
+experiments that consume it. Counts are recomputed live from the released predictions.}
+\label{fig:consort}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.98\textwidth]{../results/figures/reliability_diagram.png}
+\caption{Reliability diagram. Empirical $P(\text{correct})$ against the frozen ranking score (shared
+quantile bins), one curve per ligand-novelty stratum. The curves stay monotone (the score discriminates
+within each stratum, so the gate is not anti-selective) but drop together on novel strata (the base rate
+collapses), the visible form of the score-conditional reliability drift $D(\nu)$.}
+\label{fig:reliability}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.62\textwidth]{../results/figures/decision_curve.png}
+\caption{Decision curve (AF3). Net benefit per delivered pose vs.\ the cost ratio $\lambda$; the shaded band
+is where the conformal gate is the best of the four strategies. It dominates a fixed-ipTM threshold
+everywhere and serves the high-cost regime, so there is no single $\alpha$ to defend.}
+\label{fig:decision}
+\end{figure}
+
+\begin{table}[h]
+\centering\small
+\caption{Notation.}
+\label{tab:notation}
+\begin{tabular}{ll@{\hskip 2em}ll}
+\toprule
+$L$ & loss $\mathbf{1}[\text{RMSD}>2$\,\AA$]$ & $\alpha,\delta$ & risk target, failure prob.\ ($0.20,0.10$) \\
+$s,\tau$ & score, accept threshold ($s\ge\tau$) & $c$ & coverage (accepted fraction) \\
+$\nu, S_\nu$ & novelty axis, stratum & $\eta_P,\eta_Q$ & source/target score-conditional error $P(L{=}1\mid s)$ \\
+$R_{\mathrm{ref}}$ & covariate-corrected reference risk & $\bar\Delta_c$ & accept-region score-fiber gap \\
+$D(\nu)$ & reliability drift at stratum $\nu$ & $m^\star,\beta^\star$ & certified min.\ subpop.\ mass, CVaR level \\
+$\rho^\star$ & DRO robustness radius & $n_g$ & in-stratum labels \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Label provenance. The primary selective-risk results use the shipped BiSyRMSD label. The
+protomer trap of SI Sec.~\ref{app:integrity} afflicts only cross-frame \emph{superposition}, so the
+cross-model danger floor is restricted to the single-chain subset; interaction-fingerprint recovery
+enumerates contacts \emph{within} each structure and matches them by residue identity (seqid, resname),
+which is invariant to a protomer swap (homodimer copies share numbering), and its result is unchanged on
+the single-chain subset (gate coefficient $+0.04$--$+0.06$ there vs.\ $+0.03$--$+0.07$ on the full set).}
+\label{tab:provenance}
+\begin{tabular}{lll}
+\toprule
+Result & Label / geometry & $n$ \\
+\midrule
+Break, frontier, repair, utility (Secs.~\ref{sec:break}--\ref{sec:utility}) & shipped BiSyRMSD & $11{,}254$ target-labels \\
+Cross-model danger floor / consensus (SI) & recomputed, single-chain receptors & $6{,}163$ instances \\
+Interaction-fingerprint recovery (Sec.~\ref{sec:utility}) & per-structure contacts vs.\ crystal & $12{,}475$ poses \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \appendix
 \section{Proof of the decomposition, and the ties bracket}\label{app:proof}
