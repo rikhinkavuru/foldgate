@@ -26,7 +26,10 @@ if [ ! -f results/toc_render/5sku_pred.pdb ]; then
   exit 1
 fi
 
-"$CX" --nogui --offscreen --exit --script scripts/toc_chimerax.cxc
+# macOS ChimeraX has no OSMesa, so --offscreen fails with "OpenGL rendering is not
+# available". Letting the GUI open briefly provides a real GL context; the window
+# flashes, renders, and exits. --exit is inside the .cxc.
+"$CX" --script scripts/toc_chimerax.cxc
 echo "panels rendered; compositing ACS layout"
 .venv/bin/python scripts/make_toc_graphic_f.py
 echo "done -> results/figures/toc_option_f.png"

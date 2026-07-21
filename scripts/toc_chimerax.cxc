@@ -12,6 +12,8 @@ set bgColor white
 graphics silhouettes true
 graphics silhouettes width 1.4
 lighting soft
+lighting depthCue false
+material dull
 lighting shadows false
 
 # ---- panel 1: 5sgt, familiar ligand, correct pose (green) ----
@@ -19,21 +21,26 @@ open results/toc_render/5sgt_crystal.pdb
 open results/toc_render/5sgt_pred.pdb
 hide atoms
 hide cartoons
-surface #1/A resolution 4 gridSpacing 0.7
+surface #1/A
 color #1/A #b7c4d6
-transparency #1/A 45
+transparency #1/A 55
 show #1/L atoms
 style #1/L stick
-color #1/L #8a8a8a
+size #1/L stickRadius 0.34
+color #1/L #7d7d7d
 show #2/L atoms
 style #2/L stick
+size #2/L stickRadius 0.34
 color #2/L byhet
 color #2/L & C green
-# frame the pocket on the two ligands, then ease back for context
+# frame on the whole domain so the surface reads as a solid body, center the
+# view on the two ligands, and disable clipping so the surface is not sliced open
+view
 view #1/L #2/L
-zoom 0.62
-turn y 12
-turn x -6
+zoom 0.5
+clip off
+turn y 15
+turn x -8
 save results/toc_render/panel_5sgt.png width 1400 height 1400 transparentBackground true supersample 4
 close all
 
@@ -44,20 +51,24 @@ open results/toc_render/5sku_crystal.pdb
 open results/toc_render/5sku_pred.pdb
 hide atoms
 hide cartoons
-surface #1/A resolution 4 gridSpacing 0.7
+surface #1/A
 color #1/A #b7c4d6
-transparency #1/A 45
+transparency #1/A 55
 show #1/L atoms
 style #1/L stick
-color #1/L #8a8a8a
+size #1/L stickRadius 0.34
+color #1/L #7d7d7d
 show #2/L atoms
 style #2/L stick
+size #2/L stickRadius 0.34
 color #2/L byhet
 color #2/L & C firebrick
+view
 view #1/L #2/L
-zoom 0.62
-turn y 12
-turn x -6
+zoom 0.5
+clip off
+turn y 15
+turn x -8
 save results/toc_render/panel_5sku.png width 1400 height 1400 transparentBackground true supersample 4
 close all
 exit

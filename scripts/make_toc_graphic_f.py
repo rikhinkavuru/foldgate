@@ -33,7 +33,7 @@ plt.rcParams.update({"font.family": "serif",
 def place(ax, img_path, x, y, zoom):
     img = mpimg.imread(img_path)
     ab = AnnotationBbox(OffsetImage(img, zoom=zoom), (x, y),
-                        frameon=False, box_alignment=(0.5, 0.5))
+                        frameon=False, box_alignment=(0.5, 0.5), zorder=2)
     ax.add_artist(ab)
 
 
@@ -80,9 +80,15 @@ def main():
             f"ipTM {meta['iptm']:.2f}   ligand pLDDT {meta['plddt']:.0f}",
             ha="center", va="center", fontsize=5.5, color=DARK, zorder=4)
 
+    # White cards behind the panels so the transparent surface never bleeds under
+    # the banner or caption; panels sit as clean tiles.
+    for cx in (0.86, 2.39):
+        ax.add_patch(FancyBboxPatch((cx - 0.70, 0.42), 1.40, 0.92,
+                                    boxstyle="round,pad=0.01", linewidth=0,
+                                    facecolor="white", zorder=1.5))
     # Zoom is tuned to the 1400 px panels; adjust if the render size changes.
-    place(ax, panels[0], 0.85, 0.90, zoom=0.083)
-    place(ax, panels[1], 2.40, 0.90, zoom=0.083)
+    place(ax, panels[0], 0.86, 0.88, zoom=0.052)
+    place(ax, panels[1], 2.39, 0.88, zoom=0.052)
 
     ax.text(0.85, 1.37, "familiar ligand", ha="center", va="center",
             fontsize=6.3, color=DARK, weight="bold")
