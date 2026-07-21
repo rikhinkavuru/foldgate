@@ -1,0 +1,681 @@
+{
+  "alpha": 0.2,
+  "delta": 0.1,
+  "score": "ranking_score",
+  "min_accepts": [
+    10,
+    20,
+    30,
+    50
+  ],
+  "cal_min": 20,
+  "seed": 20260715,
+  "n_nonreference_cells": 40,
+  "n_target_rows": 12125,
+  "n_systems": 2425,
+  "methods": [
+    "af3",
+    "boltz1",
+    "boltz1x",
+    "chai",
+    "protenix"
+  ],
+  "per_min_accept": {
+    "10": {
+      "zero_frontier_count": 19,
+      "n_nonreference_cells": 40,
+      "n_at_best_coverage": {
+        "median": 25.0,
+        "min": 1.0,
+        "max": 194.0,
+        "n_cells": 19
+      },
+      "zero_frontier_cells": [
+        {
+          "axis": "ligand",
+          "model": "af3",
+          "stratum": 4,
+          "min_risk": 0.4,
+          "n_at_min_risk": 40
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 2
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1x",
+          "stratum": 3,
+          "min_risk": 0.24,
+          "n_at_min_risk": 25
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1x",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 2,
+          "min_risk": 0.211340206185567,
+          "n_at_min_risk": 194
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 3,
+          "min_risk": 0.4230769230769231,
+          "n_at_min_risk": 26
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "ligand",
+          "model": "protenix",
+          "stratum": 3,
+          "min_risk": 0.29347826086956524,
+          "n_at_min_risk": 92
+        },
+        {
+          "axis": "ligand",
+          "model": "protenix",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "pocket",
+          "model": "af3",
+          "stratum": 4,
+          "min_risk": 0.4,
+          "n_at_min_risk": 30
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1",
+          "stratum": 3,
+          "min_risk": 0.3411764705882353,
+          "n_at_min_risk": 85
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 3
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1x",
+          "stratum": 3,
+          "min_risk": 0.3448275862068966,
+          "n_at_min_risk": 29
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1x",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 2
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 3,
+          "min_risk": 0.5652173913043478,
+          "n_at_min_risk": 23
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 2,
+          "min_risk": 0.21739130434782608,
+          "n_at_min_risk": 46
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 3,
+          "min_risk": 0.24,
+          "n_at_min_risk": 25
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        }
+      ]
+    },
+    "20": {
+      "zero_frontier_count": 21,
+      "n_nonreference_cells": 40,
+      "n_at_best_coverage": {
+        "median": 23.0,
+        "min": 1.0,
+        "max": 194.0,
+        "n_cells": 21
+      },
+      "zero_frontier_cells": [
+        {
+          "axis": "ligand",
+          "model": "af3",
+          "stratum": 4,
+          "min_risk": 0.4,
+          "n_at_min_risk": 40
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1",
+          "stratum": 3,
+          "min_risk": 0.16666666666666666,
+          "n_at_min_risk": 18
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 2
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1x",
+          "stratum": 3,
+          "min_risk": 0.24,
+          "n_at_min_risk": 25
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1x",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 2,
+          "min_risk": 0.211340206185567,
+          "n_at_min_risk": 194
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 3,
+          "min_risk": 0.4230769230769231,
+          "n_at_min_risk": 26
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "ligand",
+          "model": "protenix",
+          "stratum": 3,
+          "min_risk": 0.29347826086956524,
+          "n_at_min_risk": 92
+        },
+        {
+          "axis": "ligand",
+          "model": "protenix",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "pocket",
+          "model": "af3",
+          "stratum": 4,
+          "min_risk": 0.4,
+          "n_at_min_risk": 30
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1",
+          "stratum": 3,
+          "min_risk": 0.3411764705882353,
+          "n_at_min_risk": 85
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 3
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1x",
+          "stratum": 3,
+          "min_risk": 0.3448275862068966,
+          "n_at_min_risk": 29
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1x",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 2
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 2,
+          "min_risk": 0.1875,
+          "n_at_min_risk": 16
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 3,
+          "min_risk": 0.5652173913043478,
+          "n_at_min_risk": 23
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 2,
+          "min_risk": 0.21739130434782608,
+          "n_at_min_risk": 46
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 3,
+          "min_risk": 0.24,
+          "n_at_min_risk": 25
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        }
+      ]
+    },
+    "30": {
+      "zero_frontier_count": 22,
+      "n_nonreference_cells": 40,
+      "n_at_best_coverage": {
+        "median": 20.5,
+        "min": 1.0,
+        "max": 194.0,
+        "n_cells": 22
+      },
+      "zero_frontier_cells": [
+        {
+          "axis": "ligand",
+          "model": "af3",
+          "stratum": 4,
+          "min_risk": 0.4,
+          "n_at_min_risk": 40
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1",
+          "stratum": 3,
+          "min_risk": 0.16666666666666666,
+          "n_at_min_risk": 18
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 2
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1x",
+          "stratum": 3,
+          "min_risk": 0.24,
+          "n_at_min_risk": 25
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1x",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 2,
+          "min_risk": 0.211340206185567,
+          "n_at_min_risk": 194
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 3,
+          "min_risk": 0.4230769230769231,
+          "n_at_min_risk": 26
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "ligand",
+          "model": "protenix",
+          "stratum": 3,
+          "min_risk": 0.29347826086956524,
+          "n_at_min_risk": 92
+        },
+        {
+          "axis": "ligand",
+          "model": "protenix",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "pocket",
+          "model": "af3",
+          "stratum": 4,
+          "min_risk": 0.4,
+          "n_at_min_risk": 30
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1",
+          "stratum": 2,
+          "min_risk": 0.0,
+          "n_at_min_risk": 2
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1",
+          "stratum": 3,
+          "min_risk": 0.3411764705882353,
+          "n_at_min_risk": 85
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 3
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1x",
+          "stratum": 3,
+          "min_risk": 0.3448275862068966,
+          "n_at_min_risk": 29
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1x",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 2
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 2,
+          "min_risk": 0.1875,
+          "n_at_min_risk": 16
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 3,
+          "min_risk": 0.5652173913043478,
+          "n_at_min_risk": 23
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 2,
+          "min_risk": 0.21739130434782608,
+          "n_at_min_risk": 46
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 3,
+          "min_risk": 0.24,
+          "n_at_min_risk": 25
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        }
+      ]
+    },
+    "50": {
+      "zero_frontier_count": 24,
+      "n_nonreference_cells": 40,
+      "n_at_best_coverage": {
+        "median": 20.5,
+        "min": 1.0,
+        "max": 194.0,
+        "n_cells": 24
+      },
+      "zero_frontier_cells": [
+        {
+          "axis": "ligand",
+          "model": "af3",
+          "stratum": 4,
+          "min_risk": 0.4,
+          "n_at_min_risk": 40
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1",
+          "stratum": 3,
+          "min_risk": 0.16666666666666666,
+          "n_at_min_risk": 18
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 2
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1x",
+          "stratum": 3,
+          "min_risk": 0.24,
+          "n_at_min_risk": 25
+        },
+        {
+          "axis": "ligand",
+          "model": "boltz1x",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 2,
+          "min_risk": 0.211340206185567,
+          "n_at_min_risk": 194
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 3,
+          "min_risk": 0.4230769230769231,
+          "n_at_min_risk": 26
+        },
+        {
+          "axis": "ligand",
+          "model": "chai",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "ligand",
+          "model": "protenix",
+          "stratum": 3,
+          "min_risk": 0.29347826086956524,
+          "n_at_min_risk": 92
+        },
+        {
+          "axis": "ligand",
+          "model": "protenix",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "pocket",
+          "model": "af3",
+          "stratum": 3,
+          "min_risk": 0.1891891891891892,
+          "n_at_min_risk": 37
+        },
+        {
+          "axis": "pocket",
+          "model": "af3",
+          "stratum": 4,
+          "min_risk": 0.4,
+          "n_at_min_risk": 30
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1",
+          "stratum": 2,
+          "min_risk": 0.0,
+          "n_at_min_risk": 2
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1",
+          "stratum": 3,
+          "min_risk": 0.3411764705882353,
+          "n_at_min_risk": 85
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 3
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1x",
+          "stratum": 2,
+          "min_risk": 0.0,
+          "n_at_min_risk": 3
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1x",
+          "stratum": 3,
+          "min_risk": 0.3448275862068966,
+          "n_at_min_risk": 29
+        },
+        {
+          "axis": "pocket",
+          "model": "boltz1x",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 2
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 2,
+          "min_risk": 0.1875,
+          "n_at_min_risk": 16
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 3,
+          "min_risk": 0.5652173913043478,
+          "n_at_min_risk": 23
+        },
+        {
+          "axis": "pocket",
+          "model": "chai",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 2,
+          "min_risk": 0.21739130434782608,
+          "n_at_min_risk": 46
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 3,
+          "min_risk": 0.24,
+          "n_at_min_risk": 25
+        },
+        {
+          "axis": "pocket",
+          "model": "protenix",
+          "stratum": 4,
+          "min_risk": 0.0,
+          "n_at_min_risk": 1
+        }
+      ]
+    }
+  },
+  "count_range": [
+    19,
+    24
+  ],
+  "count_spread": 5,
+  "takeaway": "zero-frontier count moves within 19-24 of 40 as the accept gate slides 10->50; the impossibility tracks the score, not the >=20 threshold"
+}

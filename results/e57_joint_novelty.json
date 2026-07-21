@@ -1,0 +1,235 @@
+{
+  "alpha": 0.2,
+  "score": "ranking_score",
+  "n_repeats": 200,
+  "definition": "ligand-novel = novelty_stratum>=3; pocket-novel = pocket_novelty_stratum>=3",
+  "gate": "global iid naive_threshold on native ranking_score, empirical risk<=alpha, calibrated novelty-blind on a system-disjoint half, evaluated on the other half",
+  "cells": [
+    "familiar_familiar",
+    "ligand_novel_only",
+    "pocket_novel_only",
+    "both_novel"
+  ],
+  "methods": [
+    "af3",
+    "boltz1",
+    "boltz1x",
+    "chai",
+    "protenix"
+  ],
+  "models": {
+    "af3": {
+      "n_total": 2409,
+      "overall_realized_risk": 0.19754470699898094,
+      "cells": {
+        "familiar_familiar": {
+          "n": 1521,
+          "base_correctness": 0.831689677843524,
+          "global_gate_realized_risk": 0.11598730122438873,
+          "global_gate_coverage": 0.6738989395250669
+        },
+        "ligand_novel_only": {
+          "n": 210,
+          "base_correctness": 0.6047619047619047,
+          "global_gate_realized_risk": 0.29551304216031454,
+          "global_gate_coverage": 0.6550422757481638
+        },
+        "pocket_novel_only": {
+          "n": 229,
+          "base_correctness": 0.49344978165938863,
+          "global_gate_realized_risk": 0.38874601381419926,
+          "global_gate_coverage": 0.47407336119183313
+        },
+        "both_novel": {
+          "n": 449,
+          "base_correctness": 0.40757238307349664,
+          "global_gate_realized_risk": 0.44926203066562836,
+          "global_gate_coverage": 0.43412771452109317
+        }
+      },
+      "marginal_realized_risk": {
+        "ligand_novel_pooled": 0.38601512257845233,
+        "pocket_novel_pooled": 0.42773274163372094
+      },
+      "both_novel_risk": 0.44926203066562836,
+      "both_worse_than_both_only_cells": true,
+      "both_worse_than_both_pooled_marginals": true,
+      "worst_gate_risk_cell": "both_novel",
+      "both_is_worst_cell": true,
+      "both_has_lowest_base_correctness": true,
+      "both_exceeds_alpha": true
+    },
+    "boltz1": {
+      "n_total": 2139,
+      "overall_realized_risk": 0.19164497196681168,
+      "cells": {
+        "familiar_familiar": {
+          "n": 1346,
+          "base_correctness": 0.7644873699851411,
+          "global_gate_realized_risk": 0.1553719232526118,
+          "global_gate_coverage": 0.3202706421924198
+        },
+        "ligand_novel_only": {
+          "n": 203,
+          "base_correctness": 0.5714285714285714,
+          "global_gate_realized_risk": 0.25145763883855254,
+          "global_gate_coverage": 0.3347675713554193
+        },
+        "pocket_novel_only": {
+          "n": 196,
+          "base_correctness": 0.3979591836734694,
+          "global_gate_realized_risk": 0.40755198745848403,
+          "global_gate_coverage": 0.10790429152649401
+        },
+        "both_novel": {
+          "n": 394,
+          "base_correctness": 0.35279187817258884,
+          "global_gate_realized_risk": 0.344927313458315,
+          "global_gate_coverage": 0.13308657307611427
+        }
+      },
+      "marginal_realized_risk": {
+        "ligand_novel_pooled": 0.286199707390298,
+        "pocket_novel_pooled": 0.3634541906980084
+      },
+      "both_novel_risk": 0.344927313458315,
+      "both_worse_than_both_only_cells": false,
+      "both_worse_than_both_pooled_marginals": false,
+      "worst_gate_risk_cell": "pocket_novel_only",
+      "both_is_worst_cell": false,
+      "both_has_lowest_base_correctness": true,
+      "both_exceeds_alpha": true
+    },
+    "boltz1x": {
+      "n_total": 2091,
+      "overall_realized_risk": 0.19687833358076254,
+      "cells": {
+        "familiar_familiar": {
+          "n": 1321,
+          "base_correctness": 0.7797123391370174,
+          "global_gate_realized_risk": 0.14074531915209315,
+          "global_gate_coverage": 0.4367023072538883
+        },
+        "ligand_novel_only": {
+          "n": 192,
+          "base_correctness": 0.625,
+          "global_gate_realized_risk": 0.30882329138673836,
+          "global_gate_coverage": 0.48235156034920307
+        },
+        "pocket_novel_only": {
+          "n": 188,
+          "base_correctness": 0.425531914893617,
+          "global_gate_realized_risk": 0.4365544987084127,
+          "global_gate_coverage": 0.16431763951398182
+        },
+        "both_novel": {
+          "n": 390,
+          "base_correctness": 0.35128205128205126,
+          "global_gate_realized_risk": 0.37258765690442597,
+          "global_gate_coverage": 0.21988057811003678
+        }
+      },
+      "marginal_realized_risk": {
+        "ligand_novel_pooled": 0.3395461051719895,
+        "pocket_novel_pooled": 0.38780967870463945
+      },
+      "both_novel_risk": 0.37258765690442597,
+      "both_worse_than_both_only_cells": false,
+      "both_worse_than_both_pooled_marginals": false,
+      "worst_gate_risk_cell": "pocket_novel_only",
+      "both_is_worst_cell": false,
+      "both_has_lowest_base_correctness": true,
+      "both_exceeds_alpha": true
+    },
+    "chai": {
+      "n_total": 2292,
+      "overall_realized_risk": 0.25172812806338524,
+      "cells": {
+        "familiar_familiar": {
+          "n": 1459,
+          "base_correctness": 0.7916381082933516,
+          "global_gate_realized_risk": 0.161256280733583,
+          "global_gate_coverage": 0.148157685309064
+        },
+        "ligand_novel_only": {
+          "n": 206,
+          "base_correctness": 0.5728155339805825,
+          "global_gate_realized_risk": 0.456792780476991,
+          "global_gate_coverage": 0.07134523618757765
+        },
+        "pocket_novel_only": {
+          "n": 209,
+          "base_correctness": 0.3827751196172249,
+          "global_gate_realized_risk": 0.5684738464150229,
+          "global_gate_coverage": 0.041049675892311205
+        },
+        "both_novel": {
+          "n": 418,
+          "base_correctness": 0.2942583732057416,
+          "global_gate_realized_risk": 0.8658842562496363,
+          "global_gate_coverage": 0.03964598071541211
+        }
+      },
+      "marginal_realized_risk": {
+        "ligand_novel_pooled": 0.7030991586351472,
+        "pocket_novel_pooled": 0.7663044165747607
+      },
+      "both_novel_risk": 0.8658842562496363,
+      "both_worse_than_both_only_cells": true,
+      "both_worse_than_both_pooled_marginals": true,
+      "worst_gate_risk_cell": "both_novel",
+      "both_is_worst_cell": true,
+      "both_has_lowest_base_correctness": true,
+      "both_exceeds_alpha": true
+    },
+    "protenix": {
+      "n_total": 2323,
+      "overall_realized_risk": 0.1876342247358402,
+      "cells": {
+        "familiar_familiar": {
+          "n": 1473,
+          "base_correctness": 0.7888662593346911,
+          "global_gate_realized_risk": 0.1095721082320203,
+          "global_gate_coverage": 0.15961581795119673
+        },
+        "ligand_novel_only": {
+          "n": 208,
+          "base_correctness": 0.5096153846153846,
+          "global_gate_realized_risk": 0.3492922354747643,
+          "global_gate_coverage": 0.2502034791460627
+        },
+        "pocket_novel_only": {
+          "n": 212,
+          "base_correctness": 0.3113207547169811,
+          "global_gate_realized_risk": 0.49414212444450706,
+          "global_gate_coverage": 0.10045495420261896
+        },
+        "both_novel": {
+          "n": 430,
+          "base_correctness": 0.29069767441860467,
+          "global_gate_realized_risk": 0.49437726450047026,
+          "global_gate_coverage": 0.11264971329605254
+        }
+      },
+      "marginal_realized_risk": {
+        "ligand_novel_pooled": 0.4060595596158361,
+        "pocket_novel_pooled": 0.527535227798818
+      },
+      "both_novel_risk": 0.49437726450047026,
+      "both_worse_than_both_only_cells": true,
+      "both_worse_than_both_pooled_marginals": false,
+      "worst_gate_risk_cell": "both_novel",
+      "both_is_worst_cell": true,
+      "both_has_lowest_base_correctness": true,
+      "both_exceeds_alpha": true
+    }
+  },
+  "summary": {
+    "n_models": 5,
+    "n_models_both_is_worst_gate_risk_cell": 3,
+    "n_models_both_worse_than_both_only_cells": 3,
+    "n_models_both_lowest_base_correctness": 5,
+    "n_models_both_exceeds_alpha": 5,
+    "takeaway": "the both-novel corner has the lowest base correctness in 5/5 models and its gate risk exceeds alpha=0.2 in 5/5; it is the single worst-risk cell in 3/5 (novel-pocket dominates otherwise), so the joint corner is where the novelty-blind global gate fails hardest -- but pocket novelty alone is nearly as damaging"
+  }
+}

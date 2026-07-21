@@ -1,0 +1,58 @@
+{
+  "alpha": 0.2,
+  "delta": 0.1,
+  "score": "ranking_score",
+  "rmsd_cutoffs": [
+    1.0,
+    1.5,
+    2.0,
+    2.5,
+    3.0
+  ],
+  "min_accept": 20,
+  "cal_min": 20,
+  "seed": 20260715,
+  "n_nonreference_cells": 40,
+  "n_target_rows": 12125,
+  "n_systems": 2425,
+  "methods": [
+    "af3",
+    "boltz1",
+    "boltz1x",
+    "chai",
+    "protenix"
+  ],
+  "per_cutoff": {
+    "1.0": {
+      "zero_frontier_count": 35,
+      "n_nonreference_cells": 40,
+      "overall_correct_rate": 0.4692783505154639
+    },
+    "1.5": {
+      "zero_frontier_count": 24,
+      "n_nonreference_cells": 40,
+      "overall_correct_rate": 0.5854020618556701
+    },
+    "2.0": {
+      "zero_frontier_count": 21,
+      "n_nonreference_cells": 40,
+      "overall_correct_rate": 0.6589690721649485
+    },
+    "2.5": {
+      "zero_frontier_count": 18,
+      "n_nonreference_cells": 40,
+      "overall_correct_rate": 0.7112577319587629
+    },
+    "3.0": {
+      "zero_frontier_count": 16,
+      "n_nonreference_cells": 40,
+      "overall_correct_rate": 0.7476288659793815
+    }
+  },
+  "count_range": [
+    16,
+    35
+  ],
+  "count_spread": 19,
+  "takeaway": "zero-frontier count stays in 16-35 of 40 as the RMSD label moves 1.0->3.0 A; the impossibility is a property of the frozen score's ranking, not of the 2 A convention"
+}

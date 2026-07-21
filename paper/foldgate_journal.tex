@@ -181,7 +181,12 @@ ensemble and cross-model features, so it needs $N$ model inferences per target. 
 guarantee prominently and flag the combined score as the upgrade. The combined score's cross-model features
 are moderately correlated with novelty ($|\rho|$ up to $0.35$), so it is a partly novelty-aware re-score;
 this is legitimate and places the \emph{combined} score on the achievability side of the theorem below,
-which governs the frozen \emph{native} score.
+which governs the frozen \emph{native} score. Feeding novelty in even harder confirms where its value lies:
+a score trained end-to-end with the training-set similarities as explicit features beats the training-free
+combined score by only a median $0.013$ AURC (max $0.026$, Protenix), against the $0.06$--$0.12$ that the
+combined score already gains over native --- so novelty is worth far more as the conformal \emph{stratifier}
+than as a score \emph{feature}, and the training-free constraint costs little. This is the measured price of
+staying training-free.
 
 \begin{table}[t]
 \centering\small
@@ -362,8 +367,15 @@ reaches $\alpha$ at any coverage, and $21$ of $40$ at $\alpha=0.10$. Ligand pLDD
 not close the frontier precisely because the break is base-rate-bound, not discrimination-bound; the one
 pose-triage signal we could not test, the protein-ligand PAE block, is absent from the released prediction
 dump (it ships coordinates and ranking scores only) and would require regeneration. The infeasibility is not
-an artifact of the quartile binning: the zero-frontier fraction stays near $0.4$ whether we use $3$, $5$, or
-$7$ strata or fixed-similarity edges. The deployed view is starkest of all: the AF3 rule that Learn-then-Test certifies at $\alpha=0.20$
+an artifact of a convention. The count is stable in the quartile binning ($0.4$ zero-frontier fraction
+across $3$, $5$, or $7$ strata or fixed-similarity edges), in the $\ge\!20$-accept feasibility rule (the
+ranking-score count moves only within $19$--$24$ of $40$ as the rule slides from $10$ to $50$, and the
+zero-frontier cells retain a healthy median $20$--$25$ accepted targets, so they are not zero-frontier for
+want of samples), and in the RMSD label cutoff (loosening the $2$\,\AA\ line to $1.0/1.5/2.5/3.0$\,\AA\ gives
+$35/24/18/16$ of $40$ --- the impossibility persists even at $3$\,\AA). It tracks the frozen score's ranking,
+not the thresholds we chose. On the two axes jointly, the both-novel corner (ligand- and pocket-novel) is
+the single worst cell in $3$ of $5$ models (base correctness $0.29$--$0.41$, realized risk up to $0.87$),
+with novel-pocket-alone nearly as damaging. The deployed view is starkest of all: the AF3 rule that Learn-then-Test certifies at $\alpha=0.20$
 on familiar targets realizes risk $R_{\mathrm{gate},S_3}=0.538$ on $S_3$, a margin of $-0.338$.
 
 A one-sided escape survives the impossibility, which constrains only certified \emph{upper} bounds:

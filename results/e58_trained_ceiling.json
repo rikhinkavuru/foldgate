@@ -1,0 +1,108 @@
+{
+  "score_native": "ranking_score",
+  "n_splits": 5,
+  "default_features": [
+    "ranking_score",
+    "iface_iptm",
+    "ens_ranking_std",
+    "ens_ranking_range",
+    "ens_iptm_std",
+    "pb_valid",
+    "xmodel_iptm_mean",
+    "xmodel_iptm_std",
+    "xmodel_n_models",
+    "ligand_molecular_weight",
+    "ligand_num_rot_bonds",
+    "ligand_num_heavy_atoms"
+  ],
+  "novelty_features_added": [
+    "ligand_similarity",
+    "pocket_similarity"
+  ],
+  "methods": [
+    "af3",
+    "boltz1",
+    "boltz1x",
+    "chai",
+    "protenix"
+  ],
+  "models": {
+    "af3": {
+      "n": 2709,
+      "n_systems": 2409,
+      "aurc_native": 0.18531223008956035,
+      "aurc_combined_trainingfree": 0.11756802817275346,
+      "aurc_novelty_aware_trained": 0.10324837667104009,
+      "gap_native_to_combined": 0.0677442019168069,
+      "price_of_trainingfree_combined_minus_novelty": 0.014319651501713368,
+      "price_ci90": [
+        0.00954212806905291,
+        0.019144747400236934
+      ],
+      "price_excludes_zero": true
+    },
+    "boltz1": {
+      "n": 2384,
+      "n_systems": 2139,
+      "aurc_native": 0.2339968711424851,
+      "aurc_combined_trainingfree": 0.16225292742776343,
+      "aurc_novelty_aware_trained": 0.14883983332802597,
+      "gap_native_to_combined": 0.07174394371472168,
+      "price_of_trainingfree_combined_minus_novelty": 0.013413094099737455,
+      "price_ci90": [
+        0.007640208549697951,
+        0.018967495844028445
+      ],
+      "price_excludes_zero": true
+    },
+    "boltz1x": {
+      "n": 2331,
+      "n_systems": 2091,
+      "aurc_native": 0.21490919525159108,
+      "aurc_combined_trainingfree": 0.15377337621819556,
+      "aurc_novelty_aware_trained": 0.1410936536325093,
+      "gap_native_to_combined": 0.061135819033395516,
+      "price_of_trainingfree_combined_minus_novelty": 0.012679722585686254,
+      "price_ci90": [
+        0.007258243759393458,
+        0.018248242518877685
+      ],
+      "price_excludes_zero": true
+    },
+    "chai": {
+      "n": 2571,
+      "n_systems": 2292,
+      "aurc_native": 0.24731596402563683,
+      "aurc_combined_trainingfree": 0.1464536013971121,
+      "aurc_novelty_aware_trained": 0.13644744483561283,
+      "gap_native_to_combined": 0.10086236262852472,
+      "price_of_trainingfree_combined_minus_novelty": 0.01000615656149928,
+      "price_ci90": [
+        0.00455018534585457,
+        0.015969920611304044
+      ],
+      "price_excludes_zero": true
+    },
+    "protenix": {
+      "n": 2607,
+      "n_systems": 2323,
+      "aurc_native": 0.28051066941349506,
+      "aurc_combined_trainingfree": 0.16595723594570921,
+      "aurc_novelty_aware_trained": 0.14036362960008225,
+      "gap_native_to_combined": 0.11455343346778585,
+      "price_of_trainingfree_combined_minus_novelty": 0.025593606345626962,
+      "price_ci90": [
+        0.019295515848809203,
+        0.03160029479765256
+      ],
+      "price_excludes_zero": true
+    }
+  },
+  "summary": {
+    "median_price_aurc": 0.013413094099737455,
+    "max_price_aurc": 0.025593606345626962,
+    "n_models_price_excludes_zero": 5,
+    "n_models": 5,
+    "takeaway": "adding similarity-to-train to the trained score cuts AURC by a median 0.0134 (max 0.0256); this gap, significant in 5/5 models, is the measured price of keeping the score training-free -- novelty is worth more as a stratifier than as a feature"
+  }
+}
