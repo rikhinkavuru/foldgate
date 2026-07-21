@@ -157,7 +157,7 @@ Open method question to resolve early: is the shift **pure covariate shift** (we
 - **Mid-Aug 2026:** preprint to arXiv (**q-bio.BM** primary + cs.LG + stat.ML) and bioRxiv.
 - **Sept 1, 2026:** MoML 2026 short paper (2-4 pp, non-archival, MIT Oct 14).
 - **~late Sept 2026:** MLSB @ NeurIPS 2026 extended abstract (non-archival; CFP not yet posted — watch mlsb.io / @workshopmlsb).
-- **~early Oct 2026:** full method + tool paper to **Digital Discovery** (RSC; ~45-day first decision, gold OA, APC ~£2100) → Dec-Jan acceptance. Backup: **J. Cheminformatics**. PLOS Comp Bio only if a biology-methods narrative is preferred (slower).
+- **~early Oct 2026:** full method + tool paper to **JCIM (ACS)** — decided 2026-07-21 after researching six venues. It is the only candidate with a **zero-cost path** (hybrid; the subscription route has no APC), which is decisive for an unfunded independent author; it has no hard length cap; and it is the house venue for the benchmark-methodology-critique genre. ~3 months to first decision. Requires a **data curation section**, an **AI-tool disclosure**, and a **TOC graphic**. Backup: **J. Cheminformatics** (no cap, conformal house tradition, £1,690 APC at risk). Digital Discovery is faster (45 days) but £2,200 gold-OA-only with the waiver decided only after acceptance; Bioinformatics Advances caps at 8 pp / 6 display items and charges $2,620.
 
 Workshops are non-archival → they don't burn journal novelty; the journal paper is still the archival record.
 
