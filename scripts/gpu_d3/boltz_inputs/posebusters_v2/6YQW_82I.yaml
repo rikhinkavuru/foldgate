@@ -1,0 +1,8 @@
+version: 1
+sequences:
+  - protein:
+      id: A
+      sequence: GAENESTPIQQLLEHFLRQLQRKDPHGFFAFPVTDAIAPGYSMIIKHPMDFGTMKDKIVANEYKSVTEFKADFKLMCDNAMTYNRPDTVYYKLAKKILHAGFKMMS
+  - ligand:
+      id: B
+      smiles: 'CNC1=C(C(=O)N(N=C1)C)Cl'

@@ -1,0 +1,170 @@
+{
+  "alpha": 0.2,
+  "delta": 0.1,
+  "tool": "hydrogen-free heavy-atom typed IFP (RDKit connectivity; ProLIF/PLIP H-bond detectors unusable without explicit hydrogens on H-free predictions + crystals)",
+  "protocol": "E32 target-grouped LOTO gate (GroupKFold outer, grouped fit/cal inner), combined score; within-correct (sub-2A) per-type recovery gap, 90% row bootstrap",
+  "protonation_assumptions": "no explicit H; protein Asp/Glu anionic, Arg/Lys/His cationic by residue rule, all backbone+sidechain N/O are H-bond partners; ligand aromatic rings = planar 5/6-rings and charged groups from RDKit connectivity heuristics (carboxylate/phosphate/sulfonate anionic, guanidinium/amidine/aliphatic-amine cationic); net charge not assumed",
+  "types": [
+    "hbond",
+    "salt_bridge",
+    "pi_stacking",
+    "hydrophobic"
+  ],
+  "per_model": {
+    "af3": {
+      "n_total": 2683,
+      "n_evaluated": 2683,
+      "n_correct_evaluated": 1890,
+      "coverage_evaluated": 0.7361162877376072,
+      "lig_perceived_frac": 1.0,
+      "untyped_4.5A_within_correct": {
+        "within_correct_gap": 0.028439145629859053,
+        "gap_ci90": [
+          0.015193343467988979,
+          0.04455915287149442
+        ],
+        "accepted_recovery": 0.9384845242723077,
+        "rejected_recovery": 0.9100453786424486,
+        "gap_excludes_zero": true
+      },
+      "typed": {
+        "hbond": {
+          "n_correct_with_type": 1881,
+          "n_correct_accepted": 1615,
+          "n_correct_rejected": 266,
+          "median_n_true_interactions": 4.0,
+          "accepted_recovery": 0.8769786571812616,
+          "rejected_recovery": 0.8052428519561425,
+          "within_correct_gap": 0.07173580522511902,
+          "gap_ci90": [
+            0.03993439611317799,
+            0.10210858105880445
+          ],
+          "gap_excludes_zero": true
+        },
+        "salt_bridge": {
+          "n_correct_with_type": 1076,
+          "n_correct_accepted": 902,
+          "n_correct_rejected": 174,
+          "median_n_true_interactions": 2.0,
+          "accepted_recovery": 0.9026831907929469,
+          "rejected_recovery": 0.869109195402299,
+          "within_correct_gap": 0.03357399539064787,
+          "gap_ci90": [
+            -0.004608277969080018,
+            0.07239756281589167
+          ],
+          "gap_excludes_zero": false
+        },
+        "pi_stacking": {
+          "n_correct_with_type": 1277,
+          "n_correct_accepted": 1125,
+          "n_correct_rejected": 152,
+          "median_n_true_interactions": 1.0,
+          "accepted_recovery": 0.7926835978835979,
+          "rejected_recovery": 0.7192982456140351,
+          "within_correct_gap": 0.07338535226956278,
+          "gap_ci90": [
+            0.02105543158868473,
+            0.13027906168326361
+          ],
+          "gap_excludes_zero": true
+        },
+        "hydrophobic": {
+          "n_correct_with_type": 1890,
+          "n_correct_accepted": 1621,
+          "n_correct_rejected": 269,
+          "median_n_true_interactions": 12.0,
+          "accepted_recovery": 0.9185769257617026,
+          "rejected_recovery": 0.8688224762253042,
+          "within_correct_gap": 0.049754449536398404,
+          "gap_ci90": [
+            0.032470133532123496,
+            0.06855793364271547
+          ],
+          "gap_excludes_zero": true
+        }
+      }
+    },
+    "chai": {
+      "n_total": 2545,
+      "n_evaluated": 2545,
+      "n_correct_evaluated": 1652,
+      "coverage_evaluated": 0.6514734774066797,
+      "lig_perceived_frac": 1.0,
+      "untyped_4.5A_within_correct": {
+        "within_correct_gap": 0.03789507238271328,
+        "gap_ci90": [
+          0.02197808901035968,
+          0.0542181092790334
+        ],
+        "accepted_recovery": 0.9390034856174629,
+        "rejected_recovery": 0.9011084132347497,
+        "gap_excludes_zero": true
+      },
+      "typed": {
+        "hbond": {
+          "n_correct_with_type": 1647,
+          "n_correct_accepted": 1362,
+          "n_correct_rejected": 285,
+          "median_n_true_interactions": 4.0,
+          "accepted_recovery": 0.882291156076463,
+          "rejected_recovery": 0.8004939719723001,
+          "within_correct_gap": 0.08179718410416292,
+          "gap_ci90": [
+            0.053609980592136626,
+            0.11123967878876982
+          ],
+          "gap_excludes_zero": true
+        },
+        "salt_bridge": {
+          "n_correct_with_type": 949,
+          "n_correct_accepted": 778,
+          "n_correct_rejected": 171,
+          "median_n_true_interactions": 2.0,
+          "accepted_recovery": 0.9099231852123884,
+          "rejected_recovery": 0.8685742133110556,
+          "within_correct_gap": 0.0413489719013328,
+          "gap_ci90": [
+            0.004895533797072124,
+            0.07884299480411279
+          ],
+          "gap_excludes_zero": true
+        },
+        "pi_stacking": {
+          "n_correct_with_type": 1139,
+          "n_correct_accepted": 952,
+          "n_correct_rejected": 187,
+          "median_n_true_interactions": 1.0,
+          "accepted_recovery": 0.7836234493797519,
+          "rejected_recovery": 0.7228163992869875,
+          "within_correct_gap": 0.060807050092764436,
+          "gap_ci90": [
+            0.012027363037905397,
+            0.1094848471846809
+          ],
+          "gap_excludes_zero": true
+        },
+        "hydrophobic": {
+          "n_correct_with_type": 1652,
+          "n_correct_accepted": 1365,
+          "n_correct_rejected": 287,
+          "median_n_true_interactions": 12.0,
+          "accepted_recovery": 0.9181828195272572,
+          "rejected_recovery": 0.8769845805430103,
+          "within_correct_gap": 0.041198238984246904,
+          "gap_ci90": [
+            0.02482680917668853,
+            0.05805062668186177
+          ],
+          "gap_excludes_zero": true
+        }
+      }
+    }
+  },
+  "takeaway": [
+    "The gate's non-circular interaction-recovery lift SURVIVES on the polar/directional classes: within the sub-2A (correct) subset, accepted poses recover more crystal H-bonds and pi-stacking than rejected poses by +0.07-0.08 (CI excludes 0 for both AF3 and Chai) -- LARGER than the untyped-4.5A gap (+0.03-0.04) and larger than the hydrophobic-only gap (+0.04-0.05).",
+    "So the lift is NOT just hydrophobic-contact count / ligand-in-pocket: the chemically meaningful directional interactions are exactly where the gate separates accepted from rejected poses most. Salt bridges (rare; median 2/pose, present in ~half of systems) also show a positive gap, significant for Chai (+0.041, CI excludes 0) and marginal for AF3 (+0.034, CI touches 0).",
+    "Verdict: the non-circular quality claim is chemically credible under typed interaction fingerprints -- it holds per interaction class, most strongly for the polar/directional interactions a medicinal chemist reads for SAR, not only for hydrophobic bulk."
+  ]
+}

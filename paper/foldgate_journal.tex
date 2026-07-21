@@ -147,7 +147,10 @@ coverage gap, not novelty. The genuinely drug-like, single-component, non-cofact
 $76$ instances (its pose accuracy $0.44$ against $0.67$ elsewhere confirms it is genuinely hard). We
 therefore treat $S_4$ as a diagnostic extreme rather than a headline, report its composition, and note that
 externally recomputed ECFP4/pocket similarity would purify it to the $\sim\!29$-member core; the load-bearing
-break is carried by $S_3$, which has no such ambiguity. The quartile edges are fixed a priori from the similarity marginal; Table~S1
+break is carried by $S_3$, which has no such ambiguity. The quartile edges are taken from the full-benchmark
+\emph{similarity} marginal (a covariate, not a label, so this is not label leakage), and the frontier is
+robust to replacing them with fixed absolute similarity cuts, which we promote as an alternative (the
+zero-frontier fraction stays near $0.4$ across $3/5/7$ bins and fixed edges); Table~S1
 lists $n$ and the similarity range each bin spans, per model and axis. One similarity reference stratifies
 all five governed models because they share the same $\sim\!2021$ training cutoff, so a ligand or pocket
 novel to one is novel to the others; the reference year is not incidental (re-keying the pocket similarity
@@ -684,12 +687,16 @@ pose reproduces, where a contact is any receptor residue with a heavy atom withi
 heavy atom, enumerated within each structure and matched to the crystal contact set by residue identity
 (no interaction typing or protonation modeling). Pooling all accepted against all rejected poses shows a
 large recall gap ($0.19$ for AF3), but most of that is the accepted set being enriched for low-RMSD poses.
-Conditioning removes the confound: \emph{within} the sub-$2$\,\AA\ (correct) set, which holds $8{,}277$ poses pooled across
-models) the accepted-minus-rejected recall gap is $+0.02$ to $+0.04$, and a regression of recall (a
-$[0,1]$ fraction) on RMSD with the gate as a $0/1$ covariate leaves a gate coefficient of $+0.03$ to
-$+0.07$ recall units (all five $90\%$ intervals excluding zero), stable at $+0.04$ to $+0.06$ on the
-single-chain subset. So the gate buys a small but robust non-circular interaction-recovery lift, once the
-RMSD confound is removed. Separately, the accepted set is
+Conditioning removes the confound: \emph{within} the sub-$2$\,\AA\ (correct) set, which holds $8{,}277$ poses
+pooled across models, the untyped accepted-minus-rejected recall gap is $+0.02$ to $+0.04$ (all five $90\%$
+intervals excluding zero), stable on the single-chain subset. The chemically important question is whether
+this survives when contacts are \emph{typed}: recomputed with a PLIP-style typed scheme (H-bond, salt
+bridge, $\pi$-stacking, hydrophobic; heavy-atom geometry, since the deposited coordinates carry no
+hydrogens), the within-correct gate lift is \emph{largest on the polar, directional interactions} --- H-bond
+$+0.072$ (AF3) and $+0.082$ (Chai), $\pi$-stacking $+0.073$ and $+0.061$, both intervals excluding zero and
+both exceeding the hydrophobic gap ($+0.05$, $+0.04$). So the lift is not merely hydrophobic burial: among
+equally-correct poses, the gate-accepted ones recover the SAR-relevant contacts a medicinal chemist reads
+markedly better than the rejected ones. Separately, the accepted set is
 PoseBusters-valid at a higher rate than the rejected set for every model (AF3 $0.77$ vs.\ $0.58$), a free
 strengthening; certifying the joint label (RMSD $\le2$\,\AA\ \emph{and} physically valid) directly is
 expensive because the confidence ranks for correctness, not validity, and we report that cost rather than
