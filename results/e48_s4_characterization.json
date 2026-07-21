@@ -1,0 +1,188 @@
+{
+  "stratum": "S4 (no-analog: ligand_similarity / morgan_tanimoto NaN)",
+  "size": {
+    "unique_ligand_instances": 76,
+    "unique_systems": 66,
+    "governed_poses_by_model": {
+      "af3": 76,
+      "chai": 72,
+      "protenix": 72,
+      "boltz1": 71,
+      "boltz1x": 68,
+      "boltz2": 33
+    },
+    "governed_poses_5model_ex_boltz2": 359,
+    "governed_poses_total": 392
+  },
+  "chemistry_vs_rest": {
+    "molecular_weight": {
+      "S4": {
+        "n": 76,
+        "mean": 390.2,
+        "median": 347.1,
+        "p25": 283.5,
+        "p75": 505.3
+      },
+      "rest": {
+        "n": 2649,
+        "mean": 404.0,
+        "median": 396.2,
+        "p25": 300.1,
+        "p75": 486.1
+      }
+    },
+    "heavy_atoms": {
+      "S4": {
+        "n": 76,
+        "mean": 26.2,
+        "median": 24.0,
+        "p25": 19.8,
+        "p75": 33.2
+      },
+      "rest": {
+        "n": 2649,
+        "mean": 27.7,
+        "median": 27.0,
+        "p25": 21.0,
+        "p75": 32.0
+      }
+    },
+    "rot_bonds": {
+      "S4": {
+        "n": 76,
+        "mean": 5.1,
+        "median": 5.0,
+        "p25": 2.0,
+        "p75": 7.0
+      },
+      "rest": {
+        "n": 2649,
+        "mean": 5.6,
+        "median": 5.0,
+        "p25": 3.0,
+        "p75": 8.0
+      }
+    },
+    "num_rings": {
+      "S4": {
+        "n": 76,
+        "mean": 2.8,
+        "median": 3.0,
+        "p25": 2.0,
+        "p75": 4.0
+      },
+      "rest": {
+        "n": 2649,
+        "mean": 3.3,
+        "median": 3.0,
+        "p25": 2.0,
+        "p75": 4.0
+      }
+    },
+    "note": "S4 ligands are indistinguishable from the rest in size/flexibility: drug-like, not tiny metals nor giant peptides."
+  },
+  "parseability": {
+    "smiles_present": 76,
+    "rdkit_descriptors_present": 76,
+    "ligand_is_proper_true": 76,
+    "verdict": "All 76 have valid SMILES + RDKit descriptors + is_proper=True => the ligands DO parse; NaN similarity is NOT a per-ligand fingerprint parse failure."
+  },
+  "similarity_block_lockstep": {
+    "S4_morgan_present": 0,
+    "S4_topological_present": 2,
+    "S4_pocket_qcov_present": 2,
+    "S4_protein_seqsim_present": 2,
+    "fullset_morganNaN_implies_pocketNaN_frac": 0.9984,
+    "verdict": "For 74/76 S4 instances the ENTIRE similarity block (ligand morgan+topological, pocket_qcov, protein_seqsim) is NaN together. Missing similarity = the RNP/PLINDER similarity SEARCH returned no training neighbor at all, not a ligand-only issue."
+  },
+  "fallback_topological": {
+    "S4_recoverable_via_topological": 2,
+    "S4_total": 76,
+    "fraction": 0.0263,
+    "fullset_morganNaN_but_topoPresent": 2,
+    "verdict": "topological_tanimoto is NaN in lockstep with morgan (only 2/76 S4, and only 2/1287 in the whole set differ). It is NOT a usable fallback; no in-file re-stratification rescues S4."
+  },
+  "pipeline_artifact_signals": {
+    "multi_ligand_chain_frac_S4": 0.526,
+    "multi_proper_ligand_chain_count_S4": 20,
+    "fullset_morganNaN_multichain_frac": 0.971,
+    "fullset_morganPresent_multichain_frac": 0.529,
+    "cofactor_or_sugar_CCD_count_S4": 16,
+    "cofactor_or_sugar_CCDs": [
+      "ADP",
+      "AMP",
+      "AMU",
+      "APR",
+      "BGC",
+      "DCP",
+      "FAD",
+      "GDD",
+      "GNL",
+      "M7G",
+      "NAG",
+      "NAP",
+      "UDP"
+    ],
+    "verdict": "Missing-similarity is strongly entangled with multi-ligand-chain systems (97% of morgan-NaN in full set are multi-chain vs 53% when present; 53% of S4 is multi-component). ~18% of S4 are ubiquitous cofactors/sugars (ADP/AMP/FAD/NAP/UDP/NAG...) that certainly HAVE training analogs -> their NaN is pipeline coverage, not true novelty."
+  },
+  "ccd_frequency_S4": {
+    "OJC": 3,
+    "AMP": 2,
+    "AO6": 2,
+    "GNL": 2,
+    "AR6": 2,
+    "MF6": 2,
+    "AMU": 2,
+    "DG2": 2,
+    "ERG": 2,
+    "7X9": 2,
+    "NAG": 1,
+    "LJU": 1,
+    "BGC": 1,
+    "UDP": 1,
+    "83B": 1,
+    "GDD": 1,
+    "80N": 1,
+    "FPS": 1,
+    "56B": 1,
+    "DCP": 1,
+    "UR0": 1,
+    "GLC-FRU": 1,
+    "UDX": 1,
+    "6OI": 1,
+    "FOH": 1
+  },
+  "receptor_class_S4": {
+    "TRANSFERASE": 19,
+    "HYDROLASE": 13,
+    "LIGASE": 6,
+    "VIRAL PROTEIN": 6,
+    "BIOSYNTHETIC PROTEIN": 4,
+    "DE NOVO PROTEIN": 4,
+    "METAL BINDING PROTEIN": 3,
+    "TRANSCRIPTION": 3,
+    "MEMBRANE PROTEIN": 3,
+    "OXIDOREDUCTASE": 2,
+    "LIPID BINDING PROTEIN": 2,
+    "CELL ADHESION": 1,
+    "LYASE": 1,
+    "LYASE/METAL BINDING PROTEIN": 1,
+    "DNA BINDING PROTEIN": 1
+  },
+  "difficulty": {
+    "S4_pose_accuracy": 0.444,
+    "rest_pose_accuracy": 0.669,
+    "note": "S4 is genuinely harder (44% vs 67% correct), consistent with real novelty in at least part of the stratum."
+  },
+  "clean_genuine_novelty_core": {
+    "definition": "single ligand chain AND single proper ligand chain AND non-cofactor/sugar (drug-like, monomeric)",
+    "count": 29,
+    "of_total_S4": 76,
+    "fraction": 0.382
+  },
+  "verdict_3line": [
+    "S4 is a MIXED stratum, not a clean no-analog set: every ligand parses and is drug-like, but 'missing similarity' means the PLINDER similarity SEARCH returned no neighbor for the WHOLE system (ligand+pocket+protein all NaN in lockstep), and this is heavily entangled with multi-ligand-chain systems (53% of S4; 97% of all morgan-NaN rows) and ~18% ubiquitous cofactors/sugars that plainly DO have training analogs.",
+    "There is NO in-file fallback: topological_tanimoto is NaN in lockstep with morgan (recovers 2/76), so S4 cannot be re-stratified without recomputing ECFP4/pocket similarity externally (PLINDER/RDKit) for the ~29 single-component drug-like members.",
+    "Bottom line: the abstract's 'no-analog tail is uncertifiable' claim is DIRECTIONALLY supported (S4 is 44% vs 67% accurate, genuinely hard) but OVER-STRONG as stated -- roughly half of S4 is a multi-component / cofactor similarity-pipeline coverage gap rather than confirmed genuine novelty; recommend either recomputing similarity to purify S4 or softening the claim to 'systems with no computable training analog', reporting the ~29-instance drug-like core separately."
+  ]
+}

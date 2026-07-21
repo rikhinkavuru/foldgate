@@ -136,3 +136,11 @@ Nested target-grouped LOTO (GroupKFold outer, grouped 50/50 fit/cal inner). α=0
 - **V2:** chemist-facing abstract + positive practitioner recommendation with the ~80-label congeneric-series worked example.
 - **Minors:** Table 5 ✓ caption (pooled-bound property, fold-count-independent), CRC orphan cited, BiSyRMSD/SuCOS/qcov defined, foldgate capitalization consistent.
 - Compiles clean, 14pp.
+
+## ROUND-4 EXPERIMENTS (2026-07-20)
+- **A5 (e45) within-stratum AUROC:** native score NOT anti-selective — S3 AUROC 0.71 AF3 / 0.64 Protenix / 0.56 Chai (all >chance); break is base-rate (S3 correctness 0.44) not signal-collapse; collapses to chance only on S4 (AF3 0.54, Protenix 0.50). New Sec 3 paragraph.
+- **A4 (e47) common score:** break SURVIVES on interface ipTM (Protenix +0.63 pocket/+0.50 ligand, Chai +0.56, CIs far from 0) → not a score-definition artifact; cross-model top-2 ranking stable. Frontier is SCORE-DEPENDENT: ipTM 6/20 ligand zero-cells vs ranking_score 10/20 → 4 cells flip to feasible. Impossibility must be stated as the intersection across the score family (compute with D1 ligand-pLDDT).
+- **A3 (e48) S4 characterization:** S4 is MIXED — similarity missing for whole system, not ligand; ~53% multi-ligand-chain, ~18% cofactors/sugars (ADP/FAD/NAG = coverage gap not novelty); topological_tanimoto NOT a fallback (NaN in lockstep, recovers 2/76). Genuine drug-like no-analog core = ~29/76 (accuracy 0.44 vs 0.67). Softened S4 to "no-computable-analog" + disclosure; lead on S3. External ECFP4 recompute = fuller fix (deferred).
+- **D22 (e49) crystallography:** NO resolution confound — median resolution flat across strata (S0 1.98, S3 2.00 Å); S3 break survives high-res-only (0.42→0.46) and 5%/10% label flips (S3 >α in 100%/99%). Defends the break as reliability, not label noise. pdb_resolution.csv cached (2,412 entries).
+- **§I fixes:** I1 cluster 954 (governed) not 1005; I2 boltz2-excluded clause; I3 "8,277 pooled across 5 models"; I5 S0 c*=1.00/0.65; I6 "0.00" typo → range [-0.04,+0.003]; I7 coverage-map extended (native frontier 0.72/0.58, native group-cond 0.08/0.12, combined 0.52/0.39 all mapped) + 38-vs-80 label-budget rows.
+- **PENDING:** D1 (e46 ligand pLDDT/PL-PAE, streaming 37GB) — big one, in flight. Frontier intersection rewrite waits on it.

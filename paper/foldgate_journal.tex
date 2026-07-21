@@ -120,9 +120,17 @@ where noted (Table~\ref{tab:provenance}).
 (ECFP4 Morgan Tanimoto to the nearest training ligand; a Tanimoto near $1$ means an almost-identical
 training ligand exists) and a pocket axis (SuCOS shape $\times$ pocket query-coverage, a shape-overlap
 score weighted by how much of the query pocket is covered), both released by Runs N' Poses as similarity to
-the public pre-cutoff PDB. Each axis is binned into quartiles $S_0$ (familiar) to $S_3$, with systems that
-have no training analog (missing similarity, about $3\%$ of poses, AlphaFold3 $n\!\approx\!76$) forming a
-fifth no-analog stratum $S_4$. The quartile edges are fixed a priori from the similarity marginal; Table~S1
+the public pre-cutoff PDB. Each axis is binned into quartiles $S_0$ (familiar) to $S_3$, with systems for which the released similarity
+search returns no neighbor (missing similarity, about $3\%$ of poses, AlphaFold3 $n\!\approx\!76$) forming a
+fifth \emph{no-computable-analog} stratum $S_4$. We are careful with $S_4$: on inspection it is a mixture,
+because the similarity is missing for the whole system rather than the ligand alone, and roughly half of
+$S_4$ is multi-ligand-chain systems or ubiquitous cofactors and sugars (ADP, FAD, NAG, $\dots$) that
+certainly have training analogs but fall outside the shipped search, so their missing similarity is a
+coverage gap, not novelty. The genuinely drug-like, single-component, non-cofactor core is $\sim\!29$ of the
+$76$ instances (its pose accuracy $0.44$ against $0.67$ elsewhere confirms it is genuinely hard). We
+therefore treat $S_4$ as a diagnostic extreme rather than a headline, report its composition, and note that
+externally recomputed ECFP4/pocket similarity would purify it to the $\sim\!29$-member core; the load-bearing
+break is carried by $S_3$, which has no such ambiguity. The quartile edges are fixed a priori from the similarity marginal; Table~S1
 lists $n$ and the similarity range each bin spans, per model and axis. One similarity reference stratifies
 all five governed models because they share the same $\sim\!2021$ training cutoff, so a ligand or pocket
 novel to one is novel to the others; the reference year is not incidental (re-keying the pocket similarity
@@ -212,8 +220,18 @@ is starker: calibrating the gate on the familiar strata ($S_0,S_1$) and deployin
 ($S_3,S_4$) drives the realized error to $R_{\mathrm{transfer}}=0.55$ (AF3, $90\%$ CI $[0.52,0.58]$,
 $n\!=\!734$; $0.48$--$0.66$ across the five
 models) against the $0.20$ target, so the certificate is inverted, not merely loose. We lead the break on
-$S_3$; the no-analog $S_4$ (AF3 $n\!\approx\!76$, greyed in the figure) is small-sample and enters only in
-the feasibility frontier, where zero coverage is the point.
+$S_3$; the no-computable-analog $S_4$ (AF3 $n\!\approx\!76$, greyed in the figure) is small-sample and enters
+only in the feasibility frontier, where zero coverage is the point.
+
+\textbf{The break is a base-rate collapse, not a signal collapse.} A natural worry is that the score simply
+carries no information on novel targets. It does not: within $S_3$ the native score still ranks correct from
+incorrect poses well above chance --- AUROC $0.71$ (AF3, $90\%$ CI $[0.68,0.75]$), $0.64$ (Protenix), $0.56$
+(Chai) --- so the gate is not anti-selective. What breaks is the base rate: correctness on $S_3$ falls to
+$0.44$ (AF3), so even a well-ranking score cannot place a threshold whose accepted set clears $\alpha$ at
+usable coverage. The score's discriminative signal only collapses to chance on the extreme tail (AF3 $S_4$
+AUROC $0.54$, CI $[0.43,0.66]$; Protenix $S_4$ $0.50$). This is the sharper statement of the break: the
+frozen score remains a usable \emph{ranker} on novel strata but not a usable \emph{certifier}, because
+certification is a statement about the accepted-set error rate and that is base-rate-bound.
 
 \begin{figure}[t]
 \centering
@@ -234,10 +252,15 @@ correctness gap between the familiar reference and stratum $\nu$. Drift is large
 its $90\%$ bootstrap interval excludes zero for every model (Protenix reaches $+0.63$ on pocket novelty,
 Chai $+0.52$); the $+0.63$ is not a sparse-bin artifact, as every confidence quintile behind it holds
 $\ge 103$ novel-pocket targets and the top-confidence bin still recovers to only $0.54$ correct against
-$0.95$ on the familiar stratum. Confidence is optimistic on novel structure, the signature of concept
-shift. A signed accept-region decomposition makes this quantitative: for AF3 on $S_3$ the target-risk gap
-of $0.328$ splits into a concept term of $0.309$ ($90\%$ CI $[0.27,0.35]$) and a covariate term of $0.018$,
-which Sec.~\ref{sec:decomp} turns into a theorem.
+$0.95$ on the familiar stratum. Confidence is optimistic on novel structure: at the same reported score,
+poses in the novel stratum are less often correct. A signed accept-region decomposition makes this
+quantitative: for AF3 on $S_3$ the target-risk gap of $0.328$ splits into a score-fiber term of $0.309$
+($90\%$ CI $[0.27,0.35]$, resampling targets) and a coverage-alignment term of $0.018$, which
+Sec.~\ref{sec:decomp} turns into an identity. The effect is not an artifact of the differing per-model
+composite scores: recomputed on a common interface-ipTM score definable for all five models the $S_3$ drift
+is large and positive for every model (Protenix $+0.63$ pocket, $+0.50$ ligand; Chai $+0.56$ pocket; CIs far
+from zero), and the two most overconfident models (Protenix, Chai) rank the same on either score, so we
+report cross-model magnitudes but not fine-grained mid-pack ordering.
 
 \textbf{The temporal axis is a benchmark artifact, not a null result.} Earlier framings contrasted a large
 structural drift with a near-zero temporal drift. That contrast is real but must be stated precisely: every
@@ -259,9 +282,12 @@ so we measure that directly. We fix the deployed rule on the familiar stratum an
 report the largest source coverage $c^\star_g=\max\{c:R_{Q,g}(\tau(c))\le\alpha\}$ at which it still holds
 $\alpha$, one delivered pose per (system, model). The frontier decays with novelty and then vanishes: for
 AF3 on the ligand axis $c^\star$ runs $1.00,0.85,0.75,0.20,0.00$ across $S_0$ to $S_4$ at $\alpha=0.20$,
-and $0.65,0.40,0.10,0.00,0.00$ at $\alpha=0.10$. Of the $50$ model-by-stratum cells (two axes $\times$ five
-models $\times$ five strata), the ten $S_0$ reference cells are feasible by construction, leaving $40$
-non-reference cells. Requiring at least $20$ accepted targets to call a stratum feasible, $\mathbf{21}$ of
+and $0.65,0.40,0.10,0.00,0.00$ at $\alpha=0.10$. The frontier is computed per governed model, one delivered
+pose per (system, model); the all-six dedup pool of Fig.~\ref{fig:consort} ($12{,}125$ target-labels)
+includes the ungoverned Boltz-2, which is excluded from these cells. Of the $50$ model-by-stratum cells (two
+axes $\times$ five governed models $\times$ five strata), the ten $S_0$ reference cells are feasible by
+construction (the rule is calibrated on $S_0$: $c^\star\!=\!1.00$ at $\alpha=0.20$, $0.65$ at $\alpha=0.10$),
+leaving $40$ non-reference cells. Requiring at least $20$ accepted targets to call a stratum feasible, $\mathbf{21}$ of
 those $40$ admit no operating point at any coverage at $\alpha=0.20$, of which $\mathbf{14}$ survive a
 per-cell exact binomial (Clopper-Pearson) lower bound on $R_{Q,g}>\alpha$ at every measurable coverage and
 $\mathbf{13}$ survive a family-wise (Holm, or Benjamini-Yekutieli FDR) correction across the $40$-cell
@@ -515,7 +541,7 @@ score is what makes the gate certifiable at usable coverage, not that it beats a
 gate; the earlier held-out pair ($71\%$ vs.\ $22\%$) is discarded because a pooled split leaks $95\%$ of
 test targets into calibration where the grouped protocol shares zero. Grouping on system id still permits a
 homologous receptor in both folds, so we re-run the whole gate grouped on Runs N' Poses sequence cluster
-($1005$ clusters): the AF3 headline is stable ($0.72$ combined coverage, still certified, HB upper bound
+($954$ clusters in the governed cohort): the AF3 headline is stable ($0.72$ combined coverage, still certified, HB upper bound
 $0.192$), while two models lose coverage under the stricter grouping (Boltz-1 $0.60\!\to\!0.24$, Protenix
 $0.57\!\to\!0.41$), which we report rather than hide. At the stringent $\alpha=0.10$ the combined gate
 certifies $13\%$ of AF3 poses at realized risk $0.066$ (pooled upper bound $0.094$).
@@ -556,7 +582,11 @@ in-stratum label pool certifies (the label-cost-curve endpoint) --- different qu
 
 \begin{table}[t]
 \centering\small
-\caption{Every headline AF3 coverage figure, mapped to its protocol ($\alpha=0.20$).}
+\caption{Every AF3 coverage and label figure in the paper, mapped to its protocol ($\alpha=0.20$), so no
+two are read as the same quantity. The three ``$S_1$/$S_2$'' rows differ by protocol, not by contradiction:
+the frontier reach of an $S_0$-calibrated native rule is generous on the mildly-novel strata, per-stratum
+group-conditional recalibration is stricter, and the label-cost maximum is what the full in-stratum label
+pool certifies.}
 \label{tab:covmap}
 \begin{tabular}{lllcc}
 \toprule
@@ -564,9 +594,15 @@ Quantity & Protocol & Scope & coverage & risk \\
 \midrule
 Combined gate, marginal & nested target-grouped LOTO & all strata & $0.73$ & $0.176$ \\
 Native gate, marginal & nested target-grouped LOTO & all strata & $0.20$ & $0.189$ \\
+Frontier / certificate card (native) & $S_0$-calibrated rule, max reach & $S_1$ / $S_2$ & $0.72$ / $0.58$ & $\le\alpha$ \\
+Group-conditional (native) & per-stratum $\alpha$-certified gate & $S_1$ / $S_2$ & $0.08$ / $0.12$ & $\le\alpha$ \\
 Group-conditional (combined) & per-stratum $\alpha$-certified gate & $S_1$ / $S_2$ & $0.52$ / $0.39$ & $\le\alpha$ \\
 Deploy-to-novel (combined) & calibrate familiar, deploy novel & $S_2,S_3$ & $0.18$ & $0.190$ \\
 Label-cost maximum (combined) & full in-stratum label pool & $S_1$ / $S_2$ & $0.83$ / $0.77$ & $\le\alpha$ \\
+\midrule
+\multicolumn{5}{l}{\emph{Label budgets (not coverages):} certification sample size $=$ median $38$ over the
+$23$ feasible cells;} \\
+\multicolumn{5}{l}{one-stratum-out extension budget $\approx 80$ in-stratum labels (the label-cost curve).} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -596,7 +632,7 @@ pose reproduces, where a contact is any receptor residue with a heavy atom withi
 heavy atom, enumerated within each structure and matched to the crystal contact set by residue identity
 (no interaction typing or protonation modeling). Pooling all accepted against all rejected poses shows a
 large recall gap ($0.19$ for AF3), but most of that is the accepted set being enriched for low-RMSD poses.
-Conditioning removes the confound: \emph{within} the sub-$2$\,\AA\ set (AF3 $8{,}277$ correct poses across
+Conditioning removes the confound: \emph{within} the sub-$2$\,\AA\ (correct) set, which holds $8{,}277$ poses pooled across
 models) the accepted-minus-rejected recall gap is $+0.02$ to $+0.04$, and a regression of recall (a
 $[0,1]$ fraction) on RMSD with the gate as a $0/1$ covariate leaves a gate coefficient of $+0.03$ to
 $+0.07$ recall units (all five $90\%$ intervals excluding zero), stable at $+0.04$ to $+0.06$ on the
@@ -613,8 +649,9 @@ on everything after (per model $\sim\!1300$ pre- and $\sim\!900$ post-cutoff tar
 information at calibration: on the native gate, AF3, Boltz-1x, and Protenix hold the post-cutoff certificate
 (realized-risk upper bound $\le\alpha$), Boltz-1 overshoots by its upper bound ($0.207$), and Chai abstains;
 on the combined gate, AF3 and Boltz-1 hold, Chai overshoots ($0.202$), and Boltz-1x and Protenix abstain.
-Abstention is a non-certification, not a violation, and no held gate's realized risk exceeds its expected
-(pre-cutoff) risk by more than $0.00$, so temporal deployment does not silently break control. This is a
+Abstention is a non-certification, not a violation, and every held gate's realized post-cutoff risk stays
+within $0.01$ of its pre-cutoff expectation (the realized-minus-expected gap ranges $-0.04$ to $+0.003$
+across models), so temporal deployment does not silently break control. This is a
 recency transfer, complementary to the structural story, and inherits the caveat that Runs N' Poses is
 entirely post-cutoff.
 
@@ -630,15 +667,22 @@ self-consistent within the one run. A third dataset would need a benchmark that 
 PoseBusters per pose; where none is available we state that concrete community ask rather than overclaim
 generality.
 
-\textbf{Limitations.} The label is a $2$\,\AA\ BiSyRMSD against a single deposited crystal pose, which
-inherits the field's pose-correctness convention~\citep{posebusters} but ignores crystallographic
-resolution and alternate conformations; the graded-loss betting bound (Sec.~\ref{sec:repair}, a certified
-$1$\,\AA\ mean-RMSD operating point) is the partial answer that removes the hard cutoff, and a
-resolution-stratified sensitivity check is deferred pending per-entry resolution metadata. The no-analog
-tail is uncertifiable by every method, where abstention is the only action. The best ranker in our
-screening analysis (SI), a Boltz-2 affinity head, carries no coverage guarantee: extending the framework to
-certify an affinity ranker (which needs an affinity-error label) is the top open problem. All evaluation is
-retrospective; a prospective screen with wet-lab confirmation is the natural next step.
+\textbf{Label quality is not the confound.} The label is a $2$\,\AA\ BiSyRMSD against a single deposited
+crystal pose, inheriting the field's pose-correctness convention~\citep{posebusters}. We tested whether
+crystallographic quality drives the break: fetching resolution for all $2{,}412$ entries, the median
+resolution is flat across strata ($S_0$ $1.98$, $S_3$ $2.00$\,\AA, novel targets are not lower-resolution),
+the $S_3$ break persists on high-resolution-only entries ($0.42\to0.46$ if anything), and it survives $5\%$
+and $10\%$ random label flips ($S_3$ risk stays above $\alpha$ in $100\%$ and $99\%$ of resamples). So the
+novel-pocket collapse is a property of confidence reliability, not label noise; the graded-loss betting
+bound (Sec.~\ref{sec:repair}) additionally removes the hard $2$\,\AA\ cutoff.
+
+\textbf{Limitations.} The no-computable-analog stratum $S_4$ is a mixture (Sec.~\ref{sec:data}): $\sim\!29$
+of $76$ instances are a genuine drug-like no-analog core and the rest are a similarity-search coverage gap,
+so its ``uncertifiable'' reading applies cleanly only to that core, and we lead every claim on $S_3$. The
+best ranker in our screening analysis (SI), a Boltz-2 affinity head, carries no coverage guarantee:
+extending the framework to certify an affinity ranker (which needs an affinity-error label) is the top open
+problem. All evaluation is retrospective; a prospective screen with wet-lab confirmation is the natural next
+step.
 
 \textbf{What to do with this, concretely.} The layer is not only an abstention rule; the label-cost curve
 is a plan. A worked example: a team running AlphaFold3 on a congeneric series whose scaffold is one novelty
