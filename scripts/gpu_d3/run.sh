@@ -25,6 +25,10 @@ while [ $# -gt 0 ]; do
   esac
 done
 N_SMOKE=2
+# D3 needs one delivered pose + its confidence per target for the frontier/drift; the
+# 5-sample ensemble spread is not used on the external sets. Default to 1 sample (~5x
+# faster). Set DIFFUSION_SAMPLES=5 to match RNP's per-seed sampling at 5x the wall-clock.
+DS="${DIFFUSION_SAMPLES:-1}"
 
 RES="results/gpu_d3"
 BOLTZ_MSA=(--use_msa_server); CHAI_MSA=(--use-msa-server)
@@ -45,7 +49,7 @@ run_boltz() {  # run_boltz <dataset>
     fi
     echo "  [boltz2/$ds] predict $name"
     venv_boltz/bin/boltz predict "$y" --out_dir "$out" \
-      --diffusion_samples 5 --output_format mmcif --override "${BOLTZ_MSA[@]}" \
+      --diffusion_samples "$DS" --output_format mmcif --override "${BOLTZ_MSA[@]}" \
       || echo "  [boltz2/$ds] FAILED $name"
   done
 }
@@ -63,7 +67,10 @@ run_chai() {  # run_chai <dataset>
     fi
     rm -rf "$tdir"    # chai requires a fresh output dir
     echo "  [chai/$ds] fold $name"
-    venv_chai/bin/chai-lab fold "${CHAI_MSA[@]}" "$fa" "$tdir" \
+    # --num-diffn-samples reduces chai's default 5 candidates; if this flag name is
+    # rejected on your chai_lab version the smoke test will surface it (remove CHAI_NS).
+    CHAI_NS=(--num-diffn-samples "$DS")
+    venv_chai/bin/chai-lab fold "${CHAI_NS[@]}" "${CHAI_MSA[@]}" "$fa" "$tdir" \
       || echo "  [chai/$ds] FAILED $name"
   done
 }

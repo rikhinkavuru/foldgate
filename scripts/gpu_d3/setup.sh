@@ -34,8 +34,19 @@ VIRTUAL_ENV=venv_chai uv pip install --python venv_chai/bin/python "chai_lab==${
 
 echo ">> venv_score (torch-free: gemmi, spyrmsd, pandas)"
 mk venv_score 3.11
+# spyrmsd's symmrmsd (graph isomorphism) REQUIRES a graph backend at runtime; networkx is
+# the default and rustworkx is the fast one. Without one, every RMSD score fails after the
+# full run. scipy is a spyrmsd core dep. rdkit is NOT needed (we use the low-level API).
 VIRTUAL_ENV=venv_score uv pip install --python venv_score/bin/python \
-  "gemmi>=0.7" "spyrmsd>=0.8" "pandas>=2.0" "numpy>=1.26" "pyarrow>=15"
+  "gemmi>=0.7" "spyrmsd>=0.8" "networkx>=3" "rustworkx>=0.14" "scipy>=1.11" \
+  "pandas>=2.0" "numpy>=1.26" "pyarrow>=15"
+echo ">> verify spyrmsd graph backend"
+venv_score/bin/python -c "
+import numpy as np
+from spyrmsd import rmsd as r
+a=np.array([[0,0,0],[1.5,0,0]]); n=np.array([6,8]); adj=np.array([[0,1],[1,0]])
+print('  spyrmsd symmrmsd OK:', round(float(r.symmrmsd(a,a,n,n,adj,adj,minimize=False)),3))
+"
 
 echo ">> versions"
 venv_boltz/bin/boltz --help >/dev/null 2>&1 && echo "  boltz OK: $(venv_boltz/bin/python -c 'import boltz;print(boltz.__version__)' 2>/dev/null || echo installed)"
