@@ -37,6 +37,9 @@ if [ -n "${MSA_SERVER_URL:-}" ]; then
   CHAI_MSA+=(--msa-server-url "$MSA_SERVER_URL")
 fi
 
+# BOLTZ_EXTRA lets you disable the cuequivariance fused kernels if they are not installed
+# for your CUDA/torch build: run with  BOLTZ_EXTRA=--no_kernels  as a guaranteed fallback.
+BOLTZ_EXTRA="${BOLTZ_EXTRA:-}"
 run_boltz() {  # run_boltz <dataset>
   local ds="$1" out="$RES/boltz2/$1"
   mkdir -p "$out"
@@ -49,7 +52,7 @@ run_boltz() {  # run_boltz <dataset>
     fi
     echo "  [boltz2/$ds] predict $name"
     venv_boltz/bin/boltz predict "$y" --out_dir "$out" \
-      --diffusion_samples "$DS" --output_format mmcif --override "${BOLTZ_MSA[@]}" \
+      --diffusion_samples "$DS" --output_format mmcif --override $BOLTZ_EXTRA "${BOLTZ_MSA[@]}" \
       || echo "  [boltz2/$ds] FAILED $name"
   done
 }
