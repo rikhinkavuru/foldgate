@@ -1,0 +1,149 @@
+{
+  "_meta": {
+    "model": "boltz2",
+    "alpha": 0.2,
+    "delta": 0.1,
+    "conf": "ranking_score",
+    "n_poses": 933,
+    "base_correct": 0.7352625937834941,
+    "pocket_reference": "sucos_shape_pocket_qcov_2023 (2023-referenced)",
+    "ligand_reference": "morgan_tanimoto",
+    "note": "Boltz-2 governed on its own 2023 pocket reference; strata mirror make_strata; break + drift mirror E2 / E12."
+  },
+  "axes": {
+    "ligand": {
+      "marginal_risk": 0.16909236501568345,
+      "worst_high_risk": 0.4097870365595834,
+      "excess_over_alpha": 0.20978703655958336,
+      "conditional": {
+        "0": {
+          "n_stratum": 225,
+          "base_correct": 0.8488888888888889,
+          "pooled_selective_risk": 0.07767035418797062,
+          "risk_p05": 0.03074592074592075,
+          "risk_p95": 0.12048192771084337,
+          "mean_coverage": 0.6382520135967523
+        },
+        "1": {
+          "n_stratum": 225,
+          "base_correct": 0.8577777777777778,
+          "pooled_selective_risk": 0.09492282227953347,
+          "risk_p05": 0.02857142857142857,
+          "risk_p95": 0.14707430340557276,
+          "mean_coverage": 0.7681326829267323
+        },
+        "2": {
+          "n_stratum": 225,
+          "base_correct": 0.8311111111111111,
+          "pooled_selective_risk": 0.14077983994551338,
+          "risk_p05": 0.08821913380736911,
+          "risk_p95": 0.19203197018731,
+          "mean_coverage": 0.8672289844633324
+        },
+        "3": {
+          "n_stratum": 225,
+          "base_correct": 0.4311111111111111,
+          "pooled_selective_risk": 0.4097870365595834,
+          "risk_p05": 0.2961873638344226,
+          "risk_p95": 0.5128551628551629,
+          "mean_coverage": 0.5737067986781138
+        },
+        "4": {
+          "n_stratum": 33,
+          "base_correct": 0.5454545454545454,
+          "pooled_selective_risk": 0.39919624916275953,
+          "risk_p05": 0.0,
+          "risk_p95": 0.75,
+          "mean_coverage": 0.3002908955096194
+        }
+      },
+      "drift_S0_to_S3": {
+        "available": true,
+        "ref_stratum": 0,
+        "target_stratum": 3,
+        "n_ref": 225,
+        "n_target": 225,
+        "D_signed": 0.40283621140764,
+        "D_signed_ci90": [
+          0.33808464325868604,
+          0.46540726013091316
+        ],
+        "D_abs": 0.40283621140764,
+        "D_abs_ci90": [
+          0.33808464325868604,
+          0.46540726013091316
+        ]
+      }
+    },
+    "pocket_2023": {
+      "marginal_risk": 0.16441284930892605,
+      "worst_high_risk": 0.5092971364819635,
+      "excess_over_alpha": 0.3092971364819635,
+      "conditional": {
+        "0": {
+          "n_stratum": 226,
+          "base_correct": 0.9646017699115044,
+          "pooled_selective_risk": 0.02532367942361879,
+          "risk_p05": 0.0,
+          "risk_p95": 0.04398046398046399,
+          "mean_coverage": 0.8235515443121002
+        },
+        "1": {
+          "n_stratum": 226,
+          "base_correct": 0.911504424778761,
+          "pooled_selective_risk": 0.04637172109707795,
+          "risk_p05": 0.012330804700282612,
+          "risk_p95": 0.07959117032392896,
+          "mean_coverage": 0.7884317778559984
+        },
+        "2": {
+          "n_stratum": 226,
+          "base_correct": 0.7300884955752213,
+          "pooled_selective_risk": 0.2242578173793563,
+          "risk_p05": 0.1506849315068493,
+          "risk_p95": 0.29069767441860467,
+          "mean_coverage": 0.7080137396930561
+        },
+        "3": {
+          "n_stratum": 226,
+          "base_correct": 0.35398230088495575,
+          "pooled_selective_risk": 0.5092971364819635,
+          "risk_p05": 0.3783783783783784,
+          "risk_p95": 0.6024362154500355,
+          "mean_coverage": 0.47541267435327667
+        },
+        "4": {
+          "n_stratum": 29,
+          "base_correct": 0.5862068965517241,
+          "pooled_selective_risk": 0.40594744121715076,
+          "risk_p05": 0.0,
+          "risk_p95": 0.75,
+          "mean_coverage": 0.3344883401915135
+        }
+      },
+      "drift_S0_to_S3": {
+        "available": true,
+        "ref_stratum": 0,
+        "target_stratum": 3,
+        "n_ref": 226,
+        "n_target": 226,
+        "D_signed": 0.5853954194304803,
+        "D_signed_ci90": [
+          0.5203876564075101,
+          0.6500619847354556
+        ],
+        "D_abs": 0.5853954194304803,
+        "D_abs_ci90": [
+          0.5203876564075101,
+          0.6500619847354556
+        ]
+      }
+    }
+  },
+  "_verdict": {
+    "max_excess_over_alpha": 0.3092971364819635,
+    "any_high_stratum_break": true,
+    "concept_drift_S3_significant": true,
+    "same_break_as_2021_cohort": true
+  }
+}

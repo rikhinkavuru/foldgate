@@ -110,6 +110,21 @@ selection~\citep{jin2023selection,bai2026score} (the latter an arXiv preprint) i
 which \emph{compounds} to advance given a labeled calibration set, while this layer certifies the
 \emph{pose} correctness a co-folding screen rests on, training-free.
 
+We connect four literatures. Using training-set similarity as a reliability predictor is the
+cheminformatics \emph{applicability domain}~\citep{sheridan2004,sahigara2012,norinder2014}, and our claim is
+narrowly the conformal treatment of co-folding \emph{pose} correctness with that similarity as the shift
+variable, not the idea of similarity-as-reliability. The abstention gate is selective
+prediction~\citep{chow1970,geifman2017} and its learning-to-defer descendants~\citep{madras2018,mozannar2020}.
+The failure of exchangeability under shift is exactly the regime of conformal prediction beyond
+exchangeability~\citep{barber2023beyond}, which bounds the coverage gap by a total-variation distance and is
+the alternative route to our problem; adaptive conformal~\citep{gibbs2021aci} and label-shift
+conformal~\citep{podkopaev2021labelshift} address the online and label-shift variants we do not. On the
+repair side, multicalibration and multivalid prediction~\citep{hebertjohnson2018,gupta2022multivalid} handle
+overlapping, computationally-identifiable groups rather than a fixed partition, a strictly more flexible
+alternative to the Mondrian repair we deploy, and the DRO certificate follows Duchi and
+Namkoong~\citep{duchinamkoong2021} and Cauchois et al.~\citep{cauchois2024}. Net-benefit analysis is due to
+Vickers and Elkin~\citep{vickers2006}.
+
 \section{Data and definitions}\label{sec:data}
 \textbf{Unit and loss.} The decision-relevant unit is a delivered top-1 pose per system with a native
 confidence $s$. The loss is $L=\mathbf{1}[\text{symmetry-corrected ligand-RMSD}>2\,\text{\AA}]$ against the
@@ -276,7 +291,11 @@ $+0.005$ ($90\%$ CI $[-0.075,0.079]$), while its structural $S_3$ break is uncha
 $2021$- or the correctly-referenced $2023$-training similarity ($0.364$ vs.\ $0.367$ correct). This is a
 single-model observation with $77$ in-cutoff targets, not a cohort result; we report it as the one available
 genuine temporal test and do not claim a temporal-generalization result. Structural similarity is the
-operative shift variable throughout.
+operative shift variable throughout. A protein sequence-identity axis is likewise uninformative here, but for
+the same benchmark-redundancy reason: $\sim\!37\%$ of Runs N' Poses systems sit at the sequence-identity
+ceiling, so its novelty quartiles collapse and produce no break (worst-stratum excess $-0.02$ against
+$+0.24$ ligand, $+0.29$ pocket); this is a property of the benchmark's homology redundancy, not evidence
+that sequence novelty is safe, and a low-homology benchmark is needed to test it.
 
 \section{The feasibility frontier}\label{sec:frontier}
 The break is a fixed-coverage statement; it leaves open whether $\alpha$ is reachable by lowering coverage,
@@ -447,7 +466,13 @@ coverage on the novel strata, because there the rule fails, not the estimate of 
 empirical. The combined score, a partly novelty-aware re-score and so on the achievability side, unlocks the
 moderate strata: AF3 reaches $22\%$ certified coverage on $S_1$ at $\sim\!80$ in-stratum labels and $83\%$
 with the full pool, and $77\%$ on $S_2$, while $S_3$ needs close to the full label pool for any coverage at
-all. The combined score raises the ceiling, not the label floor.
+all. The combined score raises the ceiling, not the label floor. The budget is not just measured but predictable:
+for a stratum whose cleanest accept region has error rate $r<\alpha$, the exact binomial certifies non-zero
+coverage at $(\alpha,\delta)$ once $n_g\ge\lceil\ln(1/\delta)/\mathrm{KL}(r\Vert\alpha)\rceil$ (binary
+relative entropy), a closed form a practitioner evaluates for their own $\alpha$; it floors at $11$ labels
+for a perfect accept region ($r{=}0$) and diverges as $r\!\uparrow\!\alpha$, which is exactly why a stratum
+whose best accept region already errs at $r\ge\alpha$ (every model's $S_4$; $S_3$ for Chai and Protenix)
+cannot be certified at any budget.
 
 \begin{figure}[t]
 \centering
@@ -546,9 +571,10 @@ across both novelty axes and both scores is in the SI.}
 \textbf{Ranking utility.} Every utility number is target-grouped. Under a nested leave-one-target-out
 protocol (outer GroupKFold on system id; within each training fold a grouped fit/calibration split, so the
 combiner, the threshold, and the test target are mutually disjoint), the certificate is the per-fold
-Learn-then-Test guarantee and its held-out validation is the number of folds whose realized risk lands
-$\le\alpha$. On that standard the combined-score gate keeps $\mathbf{73\%}$ of AF3 poses with the
-certificate holding in $4$ of $5$ folds and a pooled Hoeffding-Bentkus upper bound of $0.192\le\alpha$,
+Learn-then-Test guarantee, and we read it off the pooled Hoeffding-Bentkus upper bound rather than the fold
+count, which has little power ($5$ folds cannot resolve a $0.10$ failure probability, so ``$4$ of $5$'' is
+descriptive, not evidential). On that standard the combined-score gate keeps $\mathbf{73\%}$ of AF3 poses at
+a pooled Hoeffding-Bentkus upper bound of $0.192\le\alpha$ (folds holding $4/5$, reported for context),
 whereas the native gate does \emph{not} certify usable coverage leakage-free: at its $20\%$ coverage only
 $1$ of $2$ non-empty folds holds and the pooled upper bound is $0.223>\alpha$, and the Chai and Protenix
 native gates abstain outright (Table~\ref{tab:loto}). So the honest leakage-free story is that the combined
@@ -670,6 +696,16 @@ across models), so temporal deployment does not silently break control. This is 
 recency transfer, complementary to the structural story, and inherits the caveat that Runs N' Poses is
 entirely post-cutoff.
 
+\textbf{A newer-cutoff model, and seed stability.} Run as a fully governed model with its own $2023$
+similarity reference, Boltz-2 (a $2023$-cutoff model) shows the same break: its marginal risk of $0.17$ hides
+worst-stratum realized risk $0.41$ (ligand) and $0.51$ (pocket) against $\alpha=0.20$, with $S_3$ drift
+$+0.40$ (ligand) and $+0.59$ (pocket, $2023$-referenced), CIs excluding zero. The collapse is therefore not
+an artifact of the $2021$ cohort. The gate is also deployment-stable across the diffusion randomness that
+produces the pose: refitting the AF3 certified gate within each of the five diffusion seeds moves the
+threshold by $0.002$ and the coverage by $0.02$, and gating a random sample per target rather than the top-1
+changes coverage by $\sim\!0$ at the same certified risk, so the certificate is not an artifact of the
+delivery policy.
+
 \textbf{Cross-dataset.} Recast as risk control rather than ranking, a threshold frozen on Runs N' Poses and
 deployed on regenerated FoldBench~\citep{foldbench} Protenix predictions accepts only $3$ of the $52$
 low-homology targets (coverage $6\%$, Clopper-Pearson risk upper bound $0.63$), so the low-homology arm is
@@ -726,12 +762,14 @@ predictions on CPU and ships as certificate cards per model and novelty stratum.
 
 \textbf{Data and code availability.} Code and calibration tables are at
 \url{https://github.com/rikhinkavuru/foldgate} under an OSI-approved license; a one-command \texttt{make
-repro} reproduces the tabular results from a pinned environment (\texttt{uv.lock}, fixed seeds), with the
-screening, cross-model, and structure-feature arms opt-in because they consume larger released artifacts.
-Runs N' Poses is at Zenodo (\texttt{10.5281/zenodo.14794785}); the regenerated FoldBench predictions and
-self-scored labels are at Zenodo (\texttt{10.5281/zenodo.21417241}); the screening scores are
-from~\citet{shen2026vs}. The coverage grid, fixed-sequence order, binning, and endpoints are frozen in a
-timestamped pre-registration file in the repository.
+repro} reproduces the tabular results from a pinned environment (\texttt{uv.lock}, fixed seeds). We ship a
+single per-pose analysis table (\texttt{analysis\_table.csv}, one row per delivered pose with the scores,
+the label, both similarities and strata, sequence cluster, crystal resolution, and ligand-local pLDDT) from
+which every tabular result in the paper can be re-derived without the structure stream. Runs N' Poses is at
+Zenodo (\texttt{10.5281/zenodo.14794785}); the regenerated FoldBench predictions and self-scored labels are
+at Zenodo (\texttt{10.5281/zenodo.21417241}); the screening scores are from~\citet{shen2026vs}. The coverage
+grid, fixed-sequence order, binning, and endpoints are frozen in a pre-registration file, timestamped
+independently of the git history (OpenTimestamps), in the repository.
 
 \textbf{Funding.} No external funding. \textbf{Competing interests.} The author declares none.
 \textbf{Broader impact.} The layer is a decision gate for drug-discovery pipelines; its central message is
@@ -802,6 +840,32 @@ Betting. J. R. Stat. Soc. B, 2024 (arXiv:2010.09686).
 Econometrica 73, 2005.
 \bibitem{posebusters} M. Buttenschoen, G. M. Morris, C. M. Deane. PoseBusters: AI-based docking methods
 fail to generate physically valid poses or generalise to novel sequences. Chemical Science 15, 2024.
+\bibitem{barber2023beyond} R. Foygel Barber, E. Cand\`es, A. Ramdas, R. Tibshirani. Conformal Prediction
+Beyond Exchangeability. Annals of Statistics 51(2), 2023.
+\bibitem{gibbs2021aci} I. Gibbs, E. Cand\`es. Adaptive Conformal Inference Under Distribution Shift.
+NeurIPS, 2021.
+\bibitem{podkopaev2021labelshift} A. Podkopaev, A. Ramdas. Distribution-Free Uncertainty Quantification for
+Classification Under Label Shift. UAI, 2021.
+\bibitem{hebertjohnson2018} \'U. H\'ebert-Johnson, M. Kim, O. Reingold, G. Rothblum. Multicalibration:
+Calibration for the (Computationally-Identifiable) Masses. ICML, 2018.
+\bibitem{gupta2022multivalid} C. Gupta, C. Jung, G. Noarov, M. Pai, A. Roth. Online Multivalid Conformal
+Prediction. arXiv:2101.01739, 2022.
+\bibitem{duchinamkoong2021} J. Duchi, H. Namkoong. Learning Models with Uniform Performance via
+Distributionally Robust Optimization. Annals of Statistics 49(3), 2021.
+\bibitem{vickers2006} A. J. Vickers, E. B. Elkin. Decision Curve Analysis: A Novel Method for Evaluating
+Prediction Models. Medical Decision Making 26(6), 2006.
+\bibitem{sheridan2004} R. P. Sheridan, et al. Similarity to Molecules in the Training Set is a Good Discriminator
+for Prediction Accuracy in QSAR. J. Chem. Inf. Comput. Sci. 44(6), 2004.
+\bibitem{sahigara2012} F. Sahigara, et al. Comparison of Different Approaches to Define the Applicability
+Domain of QSAR Models. Molecules 17(5), 2012.
+\bibitem{norinder2014} U. Norinder, et al. Introducing Conformal Prediction in Predictive Modeling.
+J. Chem. Inf. Model. 54(6), 2014.
+\bibitem{chow1970} C. K. Chow. On Optimum Recognition Error and Reject Tradeoff. IEEE Trans. Information
+Theory 16(1), 1970.
+\bibitem{madras2018} D. Madras, T. Pitassi, R. Zemel. Predict Responsibly: Improving Fairness and Accuracy
+by Learning to Defer. NeurIPS, 2018.
+\bibitem{mozannar2020} H. Mozannar, D. Sontag. Consistent Estimators for Learning to Defer to an Expert.
+ICML, 2020.
 \end{thebibliography}
 
 \appendix
