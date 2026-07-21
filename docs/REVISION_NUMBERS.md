@@ -144,3 +144,18 @@ Nested target-grouped LOTO (GroupKFold outer, grouped 50/50 fit/cal inner). α=0
 - **D22 (e49) crystallography:** NO resolution confound — median resolution flat across strata (S0 1.98, S3 2.00 Å); S3 break survives high-res-only (0.42→0.46) and 5%/10% label flips (S3 >α in 100%/99%). Defends the break as reliability, not label noise. pdb_resolution.csv cached (2,412 entries).
 - **§I fixes:** I1 cluster 954 (governed) not 1005; I2 boltz2-excluded clause; I3 "8,277 pooled across 5 models"; I5 S0 c*=1.00/0.65; I6 "0.00" typo → range [-0.04,+0.003]; I7 coverage-map extended (native frontier 0.72/0.58, native group-cond 0.08/0.12, combined 0.52/0.39 all mapped) + 38-vs-80 label-budget rows.
 - **PENDING:** D1 (e46 ligand pLDDT/PL-PAE, streaming 37GB) — big one, in flight. Frontier intersection rewrite waits on it.
+
+## ROUND-4 TEXT TIER (2026-07-20, D3 running on GPU)
+- A5 (e45) within-stratum AUROC + reliability diagram (Fig) added: break is base-rate not signal-collapse.
+- A4 (e47) common-ipTM drift + A3 (e48) S4 softening + D22 (e49) crystallography defense integrated.
+- D1 (e46) ligand-pLDDT + e50 score-family frontier: impossibility = INTERSECTION 13/40 (ranking 22, ipTM 16, pLDDT 18); PL-PAE unavailable in dump.
+- A1/A2 theory reframe (sigma(s), 'concept shift'->score-conditional drift, part-d demoted); B1 numbered achievability proposition + binning caveat; B3/B4 (Ben-David 'analogous', crcgupta concurrency).
+- B2 (e52) closed-form label lower bound n_g>=ceil(ln(1/delta)/KL(r||alpha)); D19 (e53) seq-axis redundant; D25 (e54) seed-invariant; D26 (e55) Boltz-2 same break under 2023 ref.
+- D2 (e51) typed ProLIF IFP: gate lift LARGEST on polar/directional (H-bond +0.07/+0.08, pi-stack +0.06/+0.07).
+- G citations (Barber-beyond-exchangeability, multicalibration, Gibbs-Candes, applicability-domain, Chow/Madras/Mozannar, Vickers-Elkin, Duchi-Namkoong).
+- C7/C8/C10/C12/C13 stats-conventions note; C11 fold-power; C15 quartile-marginal; C16 via D25.
+- E: analysis_table.csv artifact, App C integrity callout, stratifier fragility (e44).
+- F: card-as-proposal, documented novelty search. D32 economic pricing. H: MIT license, determinism, pinned versions, card API, repro-by-default.
+- I1-I8 internal-consistency fixes. Paper 18pp, compiles clean.
+- **D3 (GPU, in flight):** Boltz-2 + Chai-1 on PoseBusters-V2 (308) + PLINDER-test (307), DS=5, --no_kernels. Awaiting d3_package.tar.gz.
+- **PENDING local:** e56-e59 bundle (C14 min-accept sensitivity, D20 joint-2D, D28 trained ceiling, RMSD sweep). Deferred: D21 apo/holo, D29 physics-rescore, D31 expert-study (inflated), J de-hedge/Fig-matrix presentation pass, SI restructuring (move screening/synthetic to SI).
