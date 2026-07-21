@@ -957,11 +957,20 @@ $Q_{w^\star}=Q$. $\square$ (A part-(d) ``$\alpha$ achievable at coverage $c$ iff
 R_{\mathrm{ref}}$'' is only (a)+(b) rearranged and we do not count it as a result; achievability by
 \emph{lowering} coverage is the empirical frontier of Sec.~\ref{sec:frontier}.) The statement binds only
 scalar thresholds of a fixed score with score-measurable weights; re-scoring on $\nu$ or a per-stratum
-threshold escapes it (the achievability side), and in-stratum split calibration~\citep{vovk2005} gives
-stratum-conditional miscoverage $\le 1/(n_g{+}1)$ regardless of drift; conformal risk
+threshold escapes it, which is the achievability side:
+
+\textbf{Proposition (achievability).} Fix a stratum $g$ and let its $n_g$ calibration labels be exchangeable
+with the deployment draw \emph{within} $g$. Then the split-conformal per-stratum gate~\citep{vovk2005} has
+stratum-conditional miscoverage $\le 1/(n_g{+}1)$ regardless of the cross-stratum drift, conformal risk
 control~\citep{angelopoulos2024crc} gives the same slack for the joint accept-and-err rate, and the ratio
-functional (a random-denominator selective risk) is controlled by Learn-then-Test at the finite-sample cost
-the label-cost curve measures.
+functional (a random-denominator selective risk) is controlled at level $\delta$ by Learn-then-Test with the
+finite-sample label cost the curve of Sec.~\ref{sec:repair} measures. \emph{Remark.} Within-stratum
+exchangeability is exact only for a homogeneous bin; because strata are quantile bins of a continuous
+similarity, a residual within-stratum drift remains, which we measure (splitting each ligand stratum on its
+pocket-similarity median leaves a signed gap of $+0.07$ to $+0.32$, Sec.~\ref{sec:repair} data). Finer bins
+shrink this residual at the cost of fewer labels per bin ($1/(n_g{+}1)$ grows), so the two-axis stratification
+we use is the practical compromise; the residual is the honest gap between the neighborhood-conditional
+guarantee and a pointwise one, which is impossible~\citep{barber2021limits}.
 
 \section{Benchmark and validation details}\label{app:bench}
 \small The synthetic generator draws a stratum from a tilted $\nu$-marginal, a score logit
