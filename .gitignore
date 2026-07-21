@@ -72,3 +72,6 @@ weights/
 data/2018/
 data/[0-9][0-9][0-9][0-9]/
 paper/*.log
+
+# TOC-graphic render inputs are small, committed on purpose (override *.pdb)
+!results/toc_render/*.pdb

@@ -1,0 +1,63 @@
+# ChimeraX render for the TOC graphic: two pocket panels, matched style.
+# Receptor surface + crystal ligand come from *_crystal.pdb (model #1); the
+# predicted ligand comes from *_pred.pdb (model #2), already superposed into the
+# crystal frame by scripts/export_toc_superposed.py. Run headless via scripts/render_toc.sh.
+#
+# Convention: surface pale steel blue and translucent, crystal pose grey, familiar
+# predicted pose green, novel predicted pose red. Silhouettes on for a clean
+# print look; transparent background so the compositor lays the panels into the
+# ACS layout.
+
+set bgColor white
+graphics silhouettes true
+graphics silhouettes width 1.4
+lighting soft
+lighting shadows false
+
+# ---- panel 1: 5sgt, familiar ligand, correct pose (green) ----
+open results/toc_render/5sgt_crystal.pdb
+open results/toc_render/5sgt_pred.pdb
+hide atoms
+hide cartoons
+surface #1/A resolution 4 gridSpacing 0.7
+color #1/A #b7c4d6
+transparency #1/A 45
+show #1/L atoms
+style #1/L stick
+color #1/L #8a8a8a
+show #2/L atoms
+style #2/L stick
+color #2/L byhet
+color #2/L & C green
+# frame the pocket on the two ligands, then ease back for context
+view #1/L #2/L
+zoom 0.62
+turn y 12
+turn x -6
+save results/toc_render/panel_5sgt.png width 1400 height 1400 transparentBackground true supersample 4
+close all
+
+# ---- panel 2: 5sku, novel chemotype, wrong pose (red) ----
+set bgColor white
+graphics silhouettes true
+open results/toc_render/5sku_crystal.pdb
+open results/toc_render/5sku_pred.pdb
+hide atoms
+hide cartoons
+surface #1/A resolution 4 gridSpacing 0.7
+color #1/A #b7c4d6
+transparency #1/A 45
+show #1/L atoms
+style #1/L stick
+color #1/L #8a8a8a
+show #2/L atoms
+style #2/L stick
+color #2/L byhet
+color #2/L & C firebrick
+view #1/L #2/L
+zoom 0.62
+turn y 12
+turn x -6
+save results/toc_render/panel_5sku.png width 1400 height 1400 transparentBackground true supersample 4
+close all
+exit
