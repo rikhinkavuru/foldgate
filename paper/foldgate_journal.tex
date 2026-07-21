@@ -53,30 +53,27 @@ Abstention for Protein--Ligand Confidence under Novelty Shift}}
 \begin{abstract}
 \small
 A practitioner who acts on a predicted protein--ligand pose needs to know when to trust it. Co-folding
-models (AlphaFold3, Boltz, Chai) report confidence scores that correlate with pose accuracy, but a
-correlation is not a decision rule, and it is weakest on exactly the novel pockets and chemotypes a
-discovery program pursues. We build \texttt{foldgate}, a training-free layer that turns frozen co-folding
-confidence into an accept/abstain gate with a finite-sample error guarantee, and we ask where that
-guarantee can and cannot be kept. Calibrating on familiar targets and deploying on novel ones drives the
+models (AlphaFold3, Boltz, Chai) report confidence scores that track pose accuracy, but a correlation is
+not a decision rule, and it is weakest on the novel pockets and chemotypes a discovery program pursues. We
+build \texttt{foldgate}, a training-free layer that turns frozen co-folding confidence into an
+accept/abstain gate carrying a finite-sample error guarantee, and we ask where that guarantee survives.
+It fails where it is needed most. Calibrating on familiar targets and deploying on novel ones drives the
 realized error among accepted poses to $0.55$ (AlphaFold3, $90\%$ CI $[0.52,0.58]$; $0.48$ to $0.66$
-across five models) against a $0.20$ target. A per-stratum feasibility analysis shows this is not a tuning
-problem, and not an artifact of a weak score: across a frozen score family --- the global ranking score,
-interface ipTM, and the ligand-local pLDDT that is the field's actual pose-triage signal --- $13$ of the
-$40$ non-reference model-by-novelty-stratum cells admit \emph{no} threshold on \emph{any} of them that
-reaches the target at any coverage at $\alpha=0.20$, so on structurally novel targets abstention is the only
-certified action. An exact
-decomposition of the error explains why --- the part that comes from confidence meaning something
-different on novel molecules is invisible to any label-free reweighting --- and turns into a diagnostic
-that picks the repair from a small labeled probe. Group-conditional recalibration restores per-stratum
-control (AlphaFold3 certifies $52\%$ and $39\%$ of the moderately-novel strata, against $8\%$ and $12\%$
-before), and marginally, under leakage-free target-grouped cross-validation, its combined-feature gate
-retains $73\%$ of AlphaFold3 poses with the certificate holding in four of five held-out folds where the
-raw-confidence gate certifies almost none. We price the repair honestly: extending certification one
-novelty stratum outward costs on the order of $80$ in-stratum crystal structures, the raw-confidence gate
-is CPU-only but the combined-feature gate consumes five diffusion samples and cross-model runs, and the
-most novel targets admit no repair by stratification at all. The layer runs on released predictions and
-ships a certificate card per model and novelty stratum that reads FEASIBLE, ABSTAIN-and-abandon, or
-ABSTAIN-and-collect-labels.
+across five models) against a $0.20$ target. Lowering coverage does not recover it, and neither does a
+better score: across a frozen score family (global ranking score, interface ipTM, and the ligand-local
+pLDDT that is the field's pose-triage signal), $13$ of the $40$ non-reference model-by-novelty-stratum
+cells admit \emph{no} threshold on \emph{any} of them reaching the target at any coverage, so abstention
+is the only certified action on structurally novel targets. The cause is a base-rate collapse rather than
+a loss of ranking signal, since the frozen score still separates correct from incorrect poses there (AUROC
+$0.71$). An exact decomposition isolates the responsible term, shows it is invisible to any label-free
+reweighting, and turns it into a diagnostic that picks the repair from a small labeled probe.
+Group-conditional recalibration restores per-stratum control (AlphaFold3 certifies $52\%$ and $39\%$ of
+the moderately-novel strata, against $8\%$ and $12\%$ before), and under leakage-free target-grouped
+cross-validation its combined-feature gate retains $73\%$ of AlphaFold3 poses at a certified risk bound of
+$0.192$. We price that repair rather than assert it: on the order of $80$ in-stratum crystal structures
+buys one novelty stratum of certified reach, and the most novel targets admit no repair by stratification
+at any budget. The layer runs on released predictions on CPU and ships a certificate card per model and
+novelty stratum reading FEASIBLE, ABSTAIN-and-abandon, or ABSTAIN-and-collect-labels.
 \end{abstract}
 
 \section{Introduction}
