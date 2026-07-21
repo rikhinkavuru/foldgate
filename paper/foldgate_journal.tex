@@ -50,9 +50,11 @@ confidence into an accept/abstain gate with a finite-sample error guarantee, and
 guarantee can and cannot be kept. Calibrating on familiar targets and deploying on novel ones drives the
 realized error among accepted poses to $0.55$ (AlphaFold3, $90\%$ CI $[0.52,0.58]$; $0.48$ to $0.66$
 across five models) against a $0.20$ target. A per-stratum feasibility analysis shows this is not a tuning
-problem: of the $40$ non-reference model-by-novelty-stratum cells, $21$ admit \emph{no} score threshold
-that reaches the target at any coverage at $\alpha=0.20$ (per-cell exact tests; $13$ survive a family-wise
-correction), so on structurally novel targets abstention is the only certified action. An exact
+problem, and not an artifact of a weak score: across a frozen score family --- the global ranking score,
+interface ipTM, and the ligand-local pLDDT that is the field's actual pose-triage signal --- $13$ of the
+$40$ non-reference model-by-novelty-stratum cells admit \emph{no} threshold on \emph{any} of them that
+reaches the target at any coverage at $\alpha=0.20$, so on structurally novel targets abstention is the only
+certified action. An exact
 decomposition of the error explains why --- the part that comes from confidence meaning something
 different on novel molecules is invisible to any label-free reweighting --- and turns into a diagnostic
 that picks the repair from a small labeled probe. Group-conditional recalibration restores per-stratum
@@ -287,20 +289,22 @@ pose per (system, model); the all-six dedup pool of Fig.~\ref{fig:consort} ($12{
 includes the ungoverned Boltz-2, which is excluded from these cells. Of the $50$ model-by-stratum cells (two
 axes $\times$ five governed models $\times$ five strata), the ten $S_0$ reference cells are feasible by
 construction (the rule is calibrated on $S_0$: $c^\star\!=\!1.00$ at $\alpha=0.20$, $0.65$ at $\alpha=0.10$),
-leaving $40$ non-reference cells. Requiring at least $20$ accepted targets to call a stratum feasible, $\mathbf{21}$ of
-those $40$ admit no operating point at any coverage at $\alpha=0.20$, of which $\mathbf{14}$ survive a
-per-cell exact binomial (Clopper-Pearson) lower bound on $R_{Q,g}>\alpha$ at every measurable coverage and
-$\mathbf{13}$ survive a family-wise (Holm, or Benjamini-Yekutieli FDR) correction across the $40$-cell
-family ($15$ under Benjamini-Hochberg), so the multiplicity-corrected infeasible count is essentially the
-same as the per-cell one; at $\alpha=0.10$ the counts are $26$ of $40$ zero-frontier, $21$ per-cell robust,
-$19$ family-wise robust. Pooling the two $\alpha$ levels ($47$ zero-frontier cell-tests) leaves
-$\mathbf{35}$ per-cell robust across both levels. We report both the per-cell test and the family-wise
-simultaneous statement, and the frontier is listed as such in the certificate ledger
-(Table~\ref{tab:ledger}). A zero frontier is strictly stronger than the
-coverage-pinned theorem of Sec.~\ref{sec:decomp}, which speaks only at the deployed coverage, and it is an
-empirical finding rather than a corollary. The infeasibility is not an artifact of the quartile binning:
-the zero-frontier fraction stays near $0.4$ whether we use $3$, $5$, or $7$ strata or fixed-similarity
-edges. The deployed view is starkest of all: the AF3 rule that Learn-then-Test certifies at $\alpha=0.20$
+leaving $40$ non-reference cells. Requiring at least $20$ accepted targets to call a stratum feasible, on the
+global ranking score $\mathbf{22}$ of those $40$ admit no operating point at any coverage at $\alpha=0.20$
+(of which $14$ survive a per-cell exact binomial lower bound on $R_{Q,g}>\alpha$ at every coverage, $13$ a
+family-wise Holm or Benjamini-Yekutieli correction). But the count is \emph{score-dependent}, because the
+frontier is bounded by the accepted-set base rate, not by ranking quality (Sec.~\ref{sec:break}): computed
+identically on interface ipTM it is $16$, and on ligand-local pLDDT --- the field's actual pose-triage
+signal, extracted from the predicted structures' per-atom confidence and a materially better ranker (AUROC
+$0.72$--$0.85$ against $0.59$--$0.70$ for the global score) --- it is $18$. We therefore state the
+impossibility across the frozen score family: $\mathbf{13}$ of the $40$ cells admit no threshold on
+\emph{any} of these scores (global ranking, interface ipTM, mean and worst-quartile ligand pLDDT) that
+reaches $\alpha$ at any coverage, and $21$ of $40$ at $\alpha=0.10$. Ligand pLDDT is a better ranker yet does
+not close the frontier precisely because the break is base-rate-bound, not discrimination-bound; the one
+pose-triage signal we could not test, the protein-ligand PAE block, is absent from the released prediction
+dump (it ships coordinates and ranking scores only) and would require regeneration. The infeasibility is not
+an artifact of the quartile binning: the zero-frontier fraction stays near $0.4$ whether we use $3$, $5$, or
+$7$ strata or fixed-similarity edges. The deployed view is starkest of all: the AF3 rule that Learn-then-Test certifies at $\alpha=0.20$
 on familiar targets realizes risk $R_{\mathrm{gate},S_3}=0.538$ on $S_3$, a margin of $-0.338$.
 
 A one-sided escape survives the impossibility, which constrains only certified \emph{upper} bounds:
@@ -708,10 +712,11 @@ is in, before it commits medicinal-chemistry effort to a wrong pose.
 \section{Conclusion}
 Co-folding confidence becomes a risk-controlled decision only when the guarantee is audited where it fails.
 On structural novelty a marginally valid gate that calibrates on familiar targets and deploys on novel ones
-realizes error $0.55$ against a $0.20$ target (about $2.7\times$), and across both $\alpha$ levels $35$ of
-$47$ zero-frontier cell-tests admit no threshold on the frozen score that is certifiable at any coverage. An
-exact decomposition explains why: the concept gap that opens there closes under in-stratum recalibration but
-under no training-free reweighting. Three honest bottom lines follow. Co-folding confidence is certifiable on
+realizes error $0.55$ against a $0.20$ target (about $2.7\times$; the frozen score still \emph{ranks} poses
+there, AUROC $0.71$, but the base rate is too low for any threshold to certify), and $13$ of $40$
+model-by-stratum cells admit no threshold on any score in the family --- global, interface, or ligand-local
+--- that is certifiable at any coverage. An exact decomposition explains why: the score-fiber gap that opens
+there closes under in-stratum recalibration but under no training-free reweighting. Three honest bottom lines follow. Co-folding confidence is certifiable on
 the familiar strata (where the exact binomial certifies from a median of $38$ labels over the $23$ feasible
 cells, against $102$ for Hoeffding). It is extendable one stratum outward at a measured price, on the order
 of $80$ in-stratum target structures for usable certified coverage, and with a public proxy stratifier for
