@@ -186,8 +186,8 @@ which governs the frozen \emph{native} score.
 \toprule
 $L$ & loss $\mathbf{1}[\text{RMSD}>2$\,\AA$]$ & $\alpha,\delta$ & risk target, failure prob.\ ($0.20,0.10$) \\
 $s,\tau$ & score, accept threshold ($s\ge\tau$) & $c$ & coverage (accepted fraction) \\
-$\nu, S_\nu$ & novelty axis, stratum & $\eta_P,\eta_Q$ & source/target error conditional $P(L{=}1\mid X)$ \\
-$R_{\mathrm{ref}}$ & covariate-corrected reference risk & $\bar\Delta_c$ & accept-region concept gap \\
+$\nu, S_\nu$ & novelty axis, stratum & $\eta_P,\eta_Q$ & source/target score-conditional error $P(L{=}1\mid s)$ \\
+$R_{\mathrm{ref}}$ & covariate-corrected reference risk & $\bar\Delta_c$ & accept-region score-fiber gap \\
 $D(\nu)$ & reliability drift at stratum $\nu$ & $m^\star,\beta^\star$ & certified min.\ subpop.\ mass, CVaR level \\
 $\rho^\star$ & DRO robustness radius & $n_g$ & in-stratum labels \\
 \bottomrule
@@ -213,6 +213,15 @@ Interaction-fingerprint recovery (Sec.~\ref{sec:utility}) & per-structure contac
 \bottomrule
 \end{tabular}
 \end{table}
+
+\textbf{A benchmark-integrity finding, of independent value.} Anyone recomputing pose geometry on Runs N'
+Poses will hit a silent trap we document in full in App.~\ref{app:integrity}: the benchmark ships only the
+receptor chain while co-folding models predict the full assembly, so a chain-ordinal superposition can seat
+the ligand in the wrong protomer of a homodimer, and a distance-consistency check passes at $0$ of
+$13{,}146$ pairs while $15\%$ of the recomputed binary labels are wrong; only comparison against the shipped
+BiSyRMSD exposes it, and restricting to single-chain receptors raises agreement from Spearman $0.62$ to
+$0.995$. We surface it here rather than bury it because it is a reusable finding for the benchmark, and we
+report which of our own results touch recomputed geometry (Table~\ref{tab:provenance}).
 
 \begin{figure}[t]
 \centering
@@ -543,10 +552,12 @@ Feasibility frontier (CP) & $0.10$ & per-cell exact, uncorrected & $40$ cells & 
 \end{tabular}
 \end{table}
 
-\textbf{The deliverable: certificate cards.} We package every repair verdict as a standardized card
-per (model, novelty stratum): $\alpha$, $\delta$, calibration $n$, accepted $n$, realized risk, exact
-Clopper-Pearson risk upper bound, retained coverage, reliability drift $D$, the recommended repair, and a
-three-way verdict (Fig.~\ref{fig:cards}). The verdict distinguishes the two actions a practitioner must not
+\textbf{A proposed deliverable: certificate cards.} We propose packaging every repair verdict as a
+standardized card per (model, novelty stratum): $\alpha$, $\delta$, calibration $n$, accepted $n$, realized
+risk, exact Clopper-Pearson risk upper bound, retained coverage, reliability drift $D$, the recommended
+repair, and a three-way verdict (Fig.~\ref{fig:cards}). We present the card as a proposal --- its numbers are
+validated but its ergonomics are not user-tested, and the FEASIBLE / ABSTAIN-infeasible / ABSTAIN-underpowered
+distinction is exactly the kind a reader can collapse. The verdict distinguishes the two actions a practitioner must not
 confuse: a FEASIBLE card carries a certified operating point; an ABSTAIN-infeasible card means the rule
 provably fails (the Clopper-Pearson lower bound exceeds $\alpha$ at every coverage), so the target should be
 abandoned for this model; an ABSTAIN-underpowered card means the stratum is undecided for lack of labels, so
