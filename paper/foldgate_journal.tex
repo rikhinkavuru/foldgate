@@ -99,8 +99,10 @@ evaluation and a decision-curve analysis follow (Sec.~\ref{sec:utility}).
 
 The closest prior work is CoDrug~\citep{codrug}, which conformalizes a \emph{scalar} molecular property
 under covariate shift with the same weighted-conformal tool~\citep{tibshirani2019} our decomposition shows
-concept shift defeats in this domain; we are not aware of a prior conformal treatment of co-folding pose
-correctness, or of training-set similarity used as the shift variable for it. Confidence-tracks-accuracy
+concept shift defeats in this domain; a search of Google Scholar, Semantic Scholar, and arXiv/bioRxiv
+(2019--2026; terms combining \{conformal, selective prediction, risk control, abstention\} with \{co-folding,
+AlphaFold3, Boltz, Chai, protein-ligand pose, docking pose\}) returned no prior conformal treatment of
+co-folding pose correctness, nor training-set similarity used as the shift variable for it. Confidence-tracks-accuracy
 studies for co-folding virtual screening~\citep{shen2026vs} rank by ipTM but supply neither a coverage
 guarantee nor an abstention rule, which is the gap this layer fills. A reweighting-invariant selective-risk
 floor of the same abstract character was shown independently and concurrently for LLM
@@ -238,8 +240,21 @@ experiments that consume it. Counts are recomputed live from the released predic
 certified $\le\alpha$ by Learn-then-Test with fixed-sequence testing~\citep{angelopoulos2021ltt}, testing
 each $H_0(\tau):P(L{=}1\mid s\ge\tau)\ge\alpha$ with an exact binomial tail along a pre-specified,
 data-independent coverage grid (top-$k$ ranks, $c\in\{0.05,0.06,\dots,1.00\}$, fixed before any risk was
-computed and archived in the repository). This gives $P(\text{selective risk}\le\alpha)\ge 1-\delta$,
-finite-sample and distribution-free.
+computed and archived in the repository). The fixed sequence runs from low coverage (conservative) to high,
+stopping at the first non-rejection, which controls the family-wise error at $\delta$ without a Bonferroni
+penalty. This gives $P(\text{selective risk}\le\alpha)\ge 1-\delta$, finite-sample and distribution-free.
+
+\textbf{Statistical conventions.} Every confidence interval on a risk or a coverage in this paper is either
+an exact Clopper-Pearson interval (labeled CP, on a single accepted set) or a percentile bootstrap that
+resamples whole \emph{targets} (sequence clusters where noted), never poses, since pose-level resampling is
+anti-conservative when a system contributes several ligand instances; bootstraps use $\ge1000$ replicates.
+Where a figure shows variability over calibrate/deploy resamples (Fig.~\ref{fig:break}) we label it a
+resample interval, not a CP interval, and never plot the two on one axis. The feasibility-frontier
+infeasibility test (Sec.~\ref{sec:frontier}) is a conjunction over the coverage grid (Clopper-Pearson lower
+bound $>\alpha$ at \emph{every} measurable coverage), an intersection-union test that is conservative at
+level $\delta$, not exact, which we state rather than treat as tight. The reliability-drift grid uses a
+Romano-Wolf step-down on studentized max-$t$ statistics with $2000$ bootstrap resamples
+(Sec.~\ref{sec:repair}).
 
 \section{The exchangeability break}\label{sec:break}
 \textbf{The break.} A single global threshold hides severe per-stratum under-coverage. For AF3 the marginal
@@ -260,7 +275,20 @@ $0.44$ (AF3), so even a well-ranking score cannot place a threshold whose accept
 usable coverage. The score's discriminative signal only collapses to chance on the extreme tail (AF3 $S_4$
 AUROC $0.54$, CI $[0.43,0.66]$; Protenix $S_4$ $0.50$). This is the sharper statement of the break: the
 frozen score remains a usable \emph{ranker} on novel strata but not a usable \emph{certifier}, because
-certification is a statement about the accepted-set error rate and that is base-rate-bound.
+certification is a statement about the accepted-set error rate and that is base-rate-bound. A reliability
+diagram (Fig.~\ref{fig:reliability}) makes this visible: the per-stratum score-vs-accuracy curves keep their
+monotone shape (the score ranks within every stratum) but shift down together on novel strata (the base rate
+drops), which is precisely the score-conditional drift $D(\nu)$ measures.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{../results/figures/reliability_diagram.png}
+\caption{Reliability diagram. Empirical $P(\text{correct})$ against the frozen ranking score (shared
+quantile bins), one curve per ligand-novelty stratum. The curves stay monotone (the score discriminates
+within each stratum, so the gate is not anti-selective) but drop together on novel strata (the base rate
+collapses), the visible form of the score-conditional reliability drift $D(\nu)$.}
+\label{fig:reliability}
+\end{figure}
 
 \begin{figure}[t]
 \centering
@@ -758,7 +786,10 @@ is a plan. A worked example: a team running AlphaFold3 on a congeneric series wh
 stratum out from the training set (an $S_1$--$S_2$ regime) should not trust the raw ranking score --- it
 certifies almost nothing there leakage-free --- but can recover a certified $\sim\!50\%$ acceptance rate by
 building a group-conditional gate, which costs on the order of $80$ solved structures of in-series analogs to
-calibrate. If the series is genuinely novel ($S_3$--$S_4$, no close training analog), the certificate card
+calibrate --- at a rough $\$10$k--$\$50$k and days to weeks per crystal or cryo-EM structure, a five-to-low-six-figure,
+one-to-few-month investment that is small against a mis-prioritized medicinal-chemistry campaign, and
+partly defrayable by in-house legacy structures or homolog transfer. If the series is genuinely novel
+($S_3$--$S_4$, no close training analog), the certificate card
 reads ABSTAIN-infeasible and the honest recommendation is to treat every delivered pose as unverified and
 fall back to experiment. The deliverable is the card that tells the team which of these three situations it
 is in, before it commits medicinal-chemistry effort to a wrong pose.
@@ -779,15 +810,23 @@ neither stratification nor a label-free certificate can supply one, so abstentio
 predictions on CPU and ships as certificate cards per model and novelty stratum.
 
 \textbf{Data and code availability.} Code and calibration tables are at
-\url{https://github.com/rikhinkavuru/foldgate} under an OSI-approved license; a one-command \texttt{make
-repro} reproduces the tabular results from a pinned environment (\texttt{uv.lock}, fixed seeds). We ship a
-single per-pose analysis table (\texttt{analysis\_table.csv}, one row per delivered pose with the scores,
-the label, both similarities and strata, sequence cluster, crystal resolution, and ligand-local pLDDT) from
-which every tabular result in the paper can be re-derived without the structure stream. Runs N' Poses is at
-Zenodo (\texttt{10.5281/zenodo.14794785}); the regenerated FoldBench predictions and self-scored labels are
-at Zenodo (\texttt{10.5281/zenodo.21417241}); the screening scores are from~\citet{shen2026vs}. The coverage
-grid, fixed-sequence order, binning, and endpoints are frozen in a pre-registration file, timestamped
-independently of the git history (OpenTimestamps), in the repository.
+\url{https://github.com/rikhinkavuru/foldgate} under the MIT license; a one-command \texttt{make repro}
+reproduces the full tabular pipeline by default from a pinned environment (\texttt{uv.lock}, fixed
+\texttt{numpy} seeds and \texttt{PYTHONHASHSEED}), with the structure-stream and external-GPU arms behind
+opt-out flags. The analysis is deterministic under the pinned environment (pure CPU \texttt{numpy}/scikit-learn,
+no nondeterministic reductions); the co-folding predictions we consume are frozen released artifacts, and the
+model versions used are recorded in a table in the repository (AF3 server outputs as released by Runs N'
+Poses; Boltz-1/1x, Chai-1, Protenix at the commits Runs N' Poses shipped; Boltz-2 2.2.1 and Chai-1 0.6.1 for
+the external regeneration). We ship a single per-pose analysis table (\texttt{analysis\_table.csv}, one row
+per delivered pose with the scores, the label, both similarities and strata, sequence cluster, crystal
+resolution, and ligand-local pLDDT) from which every tabular result can be re-derived without the structure
+stream, and a machine-readable certificate-card schema with a reference \texttt{card(scores, labels, strata,
+$\alpha$, $\delta$)} implementation. Runs N' Poses is at Zenodo (\texttt{10.5281/zenodo.14794785}); the
+regenerated FoldBench and external predictions with self-scored labels are at Zenodo
+(\texttt{10.5281/zenodo.21417241}); the screening scores are from~\citet{shen2026vs}. The output-usage terms
+of each model's predictions and of the reused benchmarks are noted in the repository. The coverage grid,
+fixed-sequence order, binning, and endpoints are frozen in a pre-registration file, timestamped independently
+of the git history (OpenTimestamps).
 
 \textbf{Funding.} No external funding. \textbf{Competing interests.} The author declares none.
 \textbf{Broader impact.} The layer is a decision gate for drug-discovery pipelines; its central message is
