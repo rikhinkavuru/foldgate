@@ -30,7 +30,9 @@ COORDS = ROOT / "results" / "toc_struct_coords.json"
 GREEN, RED, GREY, DARK = "#1a7f4b", "#c1272d", "#8a8a8a", "#1a1a1a"
 TRACE = "#9fb3c8"
 BOND_MAX = 1.85     # heavy-atom bond cutoff, angstrom
-CONTEXT_R = 11.5    # how much receptor to draw around the site
+CONTEXT_R = 12.0    # how much backbone trace to draw around the site
+SURFACE_R = 12.0    # radius of the soft pocket-envelope impression
+SURF = "#9fb3c8"
 
 plt.rcParams.update({"font.family": "serif",
                      "font.serif": ["Times New Roman", "DejaVu Serif"]})
@@ -69,6 +71,30 @@ def smooth(run, factor=6):
     return np.column_stack([np.interp(tt, t, run[:, k]) for k in range(run.shape[1])])
 
 
+def draw_surface(ax, ca, c0, B, x0, y0, s):
+    """Soft blob behind the trace so the site reads as an enclosed pocket.
+
+    Overlapping translucent discs at CA positions approximate a molecular envelope.
+    It is an impression of bulk, not a computed solvent-accessible surface, and the
+    caption must not describe it as one.
+    """
+    dist = np.linalg.norm(ca - c0, axis=1)
+    keep = dist < SURFACE_R
+    if keep.sum() == 0:
+        return
+    xy, z = project(ca[keep], c0, B)
+    zr = (z - z.min()) / max(np.ptp(z), 1e-6)
+    fade = np.clip(1.0 - (dist[keep] - 4.0) / (SURFACE_R - 4.0), 0.12, 1.0)
+    for size, alpha in ((104.0, 0.016), (76.0, 0.018), (54.0, 0.020),
+                        (36.0, 0.022), (22.0, 0.024)):
+        ax.scatter(x0 + xy[:, 0] * s, y0 + xy[:, 1] * s,
+                   s=size * s / 0.040, c=SURF,
+                   alpha=None, linewidths=0, zorder=1,
+                   edgecolors="none",
+                   facecolors=[(0.58, 0.68, 0.79, alpha * f * (0.45 + 0.55 * r))
+                               for f, r in zip(fade, zr)])
+
+
 def draw_trace(ax, ca, c0, B, x0, y0, s):
     """CA trace near the site, drawn as contiguous smoothed runs and depth-shaded."""
     keep = np.linalg.norm(ca - c0, axis=1) < CONTEXT_R
@@ -100,7 +126,7 @@ def draw_trace(ax, ca, c0, B, x0, y0, s):
     depths = np.array(depths)
     rank = (depths - depths.min()) / max(np.ptp(depths), 1e-6)
     lc = LineCollection(segs, colors=[TRACE] * len(segs),
-                        linewidths=1.5 + 1.5 * rank, alpha=0.22 + 0.40 * rank,
+                        linewidths=1.3 + 1.3 * rank, alpha=0.30 + 0.45 * rank,
                         capstyle="round", joinstyle="round", zorder=2)
     ax.add_collection(lc)
 
@@ -129,6 +155,7 @@ def panel(ax, data, x0, title, pdbid, ok, scale):
     c0, B = frame(lig_c, lig_p, ca)
     y0 = 0.92
 
+    draw_surface(ax, ca, c0, B, x0, y0, scale)
     draw_trace(ax, ca, c0, B, x0, y0, scale)
     # Crystal pose sits underneath and slightly heavier, so its grey rim stays
     # visible even where the predicted pose lands on top of it.

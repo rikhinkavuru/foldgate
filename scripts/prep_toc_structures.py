@@ -175,7 +175,7 @@ def main():
         "ranking": float(row.ranking_score),
         "iptm": float(row.iface_iptm),
         "plddt": float(row.ligand_plddt_mean),
-        "scale": 0.040,
+        "scale": 0.032,
         "note": ("AF3 reports the same confidence for 5sgt and 5sku to the precision "
                  "shown; poses superposed on pocket residues; validated against the "
                  "shipped BiSyRMSD."),
