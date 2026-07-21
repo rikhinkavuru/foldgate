@@ -317,31 +317,42 @@ The contribution of this section is a \emph{diagnostic}: a single quantity, meas
 probe, that tells a practitioner in advance whether a label-free repair (weighted conformal) will work or
 whether only in-stratum recalibration will. The supporting fact is an exact identity, a one-line
 tower-property lemma; we state it first and then show it is the diagnostic.
-Fix the frozen score $s$ and the accept rule $\{s\ge\tau\}$; write $Y=L$ for the error label. Let
-$\eta_P(x)=P(Y{=}1\mid X{=}x)$ and $\eta_Q$ be the error conditionals on the calibration law $P$ and the
-deployment law $Q$, and call a reweighting \emph{training-free} if its weights are covariate-measurable and
-use no target labels (density-ratio, classifier, or KLIEP weights, including the point mass of weighted
-conformal). Write $R_{\mathrm{ref}}(\tau_c)=\mathbb{E}_Q[\eta_P\mid s\ge\tau_c]$ and
-$\bar\Delta_c=\mathbb{E}_Q[\eta_Q-\eta_P\mid s\ge\tau_c]$.
+Fix the frozen score $s$ and the accept rule $\{s\ge\tau\}$; write $Y=L$ for the error label. We work in the
+score's own $\sigma$-algebra $\sigma(s)$, because that is what a gate on $s$ and a covariate-measurable
+weight on $s$ can see: let $\eta_P(s)=P_P(Y{=}1\mid s)$ and $\eta_Q(s)=P_Q(Y{=}1\mid s)$ be the
+score-conditional error rates under the calibration law $P$ and the deployment law $Q$, and call a
+reweighting \emph{training-free} if its weights are $\sigma(s)$-measurable and use no target labels
+(density-ratio, classifier, or KLIEP weights on $s$, including the point mass of weighted conformal). Write
+$R_{\mathrm{ref}}(\tau_c)=\mathbb{E}_Q[\eta_P(s)\mid s\ge\tau_c]$ and
+$\bar\Delta_c=\mathbb{E}_Q[\eta_Q(s)-\eta_P(s)\mid s\ge\tau_c]$. We estimate $\bar\Delta_c$ by binning $s$
+(Sec.~\ref{sec:break}), so it is the accept-region gap between the source and target label rates \emph{at
+the same score}. Whether that gap is a change in $P(Y\mid\text{full covariate})$ (concept shift proper) or
+covariate shift within a score fiber is not identifiable from $s$ alone; either way it is invisible to any
+$\sigma(s)$-measurable reweighting, which is exactly what the impossibility requires, so we name it
+\emph{score-conditional reliability drift} rather than concept shift, and report its binning sensitivity.
 
 \begin{quote}\small
 \textbf{Lemma (exact decomposition; App.~\ref{app:proof}).} At fixed coverage $c$ the realized target
 selective risk is $R_Q(\tau_c)=R_{\mathrm{ref}}(\tau_c)+\bar\Delta_c$, and $\bar\Delta_c$ is invariant to
-the choice of training-free weights. Hence the oracle-weighted plug-in certificate reports
-$R_{\mathrm{ref}}$ and under-states the realized risk by exactly $\bar\Delta_c$, and level $\alpha$ is
-unachievable at coverage $c$ by any training-free reweighting whenever
-$\bar\Delta_c>\alpha-R_{\mathrm{ref}}(\tau_c)$.
+the choice of training-free ($\sigma(s)$-measurable) weights. Hence the oracle-weighted plug-in certificate
+reports $R_{\mathrm{ref}}$ and under-states the realized risk by exactly $\bar\Delta_c$.
 \end{quote}
 
-The content is not that $\alpha$ is achievable iff the risk is $\le\alpha$ (definitional), nor that the
-accept set is fixed at fixed coverage (a one-line remark), but that the accept-region concept gap
-$\bar\Delta_c$ is \emph{measurable and invariant}: the part of the error that comes from confidence meaning
-something different on novel molecules is exactly the part no unlabeled reweighting can see or remove. The
-proof is a tower-property identity: a covariate-measurable weight recovers only the source conditional
-$\eta_P$ and cannot reach $\eta_Q$, completing the covariate-shift boundary of weighted
-conformal~\citep{tibshirani2019} and specializing the irreducible term of domain-adaptation lower
-bounds~\citep{bendavid2010}; the same reweighting-invariant floor was shown concurrently for LLM
-abstention~\citep{crcgupta}. Matching achievability: in-stratum recalibration attains the floor $R_{Q_g}$
+We deliberately do not dress this as an impossibility theorem: ``$\alpha$ is achievable at coverage $c$ iff
+$R_Q(\tau_c)\le\alpha$'' is a definitional rearrangement, and whether $\alpha$ is reachable by \emph{lowering}
+coverage is the empirical feasibility frontier of Sec.~\ref{sec:frontier}, not a corollary. The content is
+that the accept-region score-fiber gap $\bar\Delta_c$ is \emph{measurable and invariant}: the part of the
+error that comes from the score meaning something different on novel molecules is exactly the part no
+unlabeled reweighting can see or remove. Two distinct reasons are at work and we keep them apart: a
+$\sigma(s)$-measurable weight cannot change the within-fiber label rate (the tower-property identity below),
+while any weight at all, even a full-covariate one, that realizes coverage $c$ accepts the identical set and
+so cannot move the realized risk (coverage pinning). The proof is a tower-property identity: a
+$\sigma(s)$-measurable weight recovers only the source score-conditional $\eta_P$ and cannot reach $\eta_Q$,
+completing the covariate-shift boundary of weighted conformal~\citep{tibshirani2019} and analogous in spirit
+to the irreducible term of domain-adaptation lower bounds~\citep{bendavid2010}; a reweighting-invariant
+floor of the same character was shown concurrently and independently for LLM abstention~\citep{crcgupta},
+and our contribution is the co-folding instantiation with per-stratum localization, not priority on the
+abstract floor. Matching achievability: in-stratum recalibration attains the floor $R_{Q_g}$
 given $n_g$ stratum labels; pointwise conditional coverage being impossible~\citep{barber2021limits}, the
 guarantee is neighborhood-conditional, and its ratio functional is controlled with high probability by
 Learn-then-Test, whose finite-sample cost is exactly the label-cost curve of Sec.~\ref{sec:repair} rather
@@ -792,30 +803,34 @@ fail to generate physically valid poses or generalise to novel sequences. Chemic
 \section{Proof of the decomposition, and the ties bracket}\label{app:proof}
 \small
 \textbf{Setup.} Frozen score $s=s(X)$, error label $Y\in\{0,1\}$, accept region $A_\tau=\{s\ge\tau\}\in
-\sigma(X)$. A training-free reweighting has weights $w=w(X)\ge0$ that are $\sigma(X)$-measurable and use no
-target labels. Assume $s$ has no atom at the operating threshold, so for each coverage $c$ there is a unique
-$\tau_c$ with $Q(s\ge\tau_c)=c$; real scores carry ties handled by boundary randomization, under which the
-equalities become $\le/\ge$ brackets, and Sec.~\ref{sec:decomp} bounds the bracket empirically ($0$ on the
-ranking-score gate, $\le0.7\%$ coverage on ipTM).
+\sigma(s)$. We work with the score-conditional error rates $\eta_P(s)=\mathbb{E}_P[Y\mid s]$ and
+$\eta_Q(s)=\mathbb{E}_Q[Y\mid s]$, since a threshold gate and a density-ratio weight on the score both live
+in $\sigma(s)$; a training-free reweighting has weights $w=w(s)\ge0$ that are $\sigma(s)$-measurable and use
+no target labels. Assume $s$ has no atom at the operating threshold, so for each coverage $c$ there is a
+unique $\tau_c$ with $Q(s\ge\tau_c)=c$ (on the top-$k$ rank lattice this is $\tau_c$ up to the $1/n$
+granularity); real scores carry ties handled by boundary randomization, under which the equalities become
+$\le/\ge$ brackets, and Sec.~\ref{sec:decomp} bounds the bracket empirically ($0$ on the ranking-score gate,
+$\le0.7\%$ coverage on ipTM).
 
-\textbf{Lemma (reweighting sees only the source labels).} For any such $w$, the reweighted plug-in selective
-risk is $\widetilde{E}^w(\tau)=\mathbb{E}_P[w\,Y\,\mathbf{1}_{A_\tau}]/\mathbb{E}_P[w\,\mathbf{1}_{A_\tau}]=
-\mathbb{E}_{Q_w}[\eta_P\mid A_\tau]$, with $dQ_w\propto w\,dP_X$. \emph{Proof.} $w$ and
-$\mathbf{1}_{A_\tau}$ are $\sigma(X)$-measurable, so tower over $X$:
-$\mathbb{E}_P[w\,Y\,\mathbf{1}_{A_\tau}]=\mathbb{E}_P[w\,\eta_P\,\mathbf{1}_{A_\tau}]$; normalize. The target
-conditional $\eta_Q$ cannot appear. $\square$
+\textbf{Lemma (a score-measurable reweighting sees only the source score-conditional).} For any such $w$,
+the reweighted plug-in selective risk is $\widetilde{E}^w(\tau)=\mathbb{E}_P[w\,Y\,\mathbf{1}_{A_\tau}]/
+\mathbb{E}_P[w\,\mathbf{1}_{A_\tau}]=\mathbb{E}_{Q_w}[\eta_P(s)\mid A_\tau]$, with $dQ_w\propto w\,dP_s$.
+\emph{Proof.} $w$ and $\mathbf{1}_{A_\tau}$ are $\sigma(s)$-measurable, so tower over $s$:
+$\mathbb{E}_P[w\,Y\,\mathbf{1}_{A_\tau}]=\mathbb{E}_P[w\,\eta_P(s)\,\mathbf{1}_{A_\tau}]$; normalize. The
+target score-conditional $\eta_Q(s)$ cannot appear. $\square$
 
 \textbf{Proposition.} At coverage $c$: (a) $R_Q(\tau_c)=R_{\mathrm{ref}}(\tau_c)+\bar\Delta_c$ with
-$R_{\mathrm{ref}}(\tau_c)=\mathbb{E}_Q[\eta_P\mid A_{\tau_c}]$ and $\bar\Delta_c=\mathbb{E}_Q[\eta_Q-\eta_P
-\mid A_{\tau_c}]$; (b) any $w$ realizing coverage $c$ accepts exactly $A_{\tau_c}$, so its realized risk
-equals $R_Q(\tau_c)$, independent of $w$; (c) with oracle weights the certificate of the Lemma equals
-$R_{\mathrm{ref}}(\tau_c)$, under-reporting the realized risk by exactly $\bar\Delta_c$; (d) level $\alpha$
-is achievable at coverage $c$ by some training-free reweighting iff $\bar\Delta_c\le\alpha-
-R_{\mathrm{ref}}(\tau_c)$. \emph{Proof.} (a) $A_{\tau_c}\in\sigma(X)$, so $R_Q(\tau_c)=\mathbb{E}_Q[\eta_Q
-\mid A_{\tau_c}]$; add and subtract $\mathbb{E}_Q[\eta_P\mid A_{\tau_c}]$. (b) The no-atom assumption pins
-$\tau_c$ from $c$; realized risk is a functional of $(Q,\tau_c)$ alone. (c) Lemma with $w^\star=dQ_X/dP_X$
-gives $Q_{w^\star}=Q$. (d) is (a)+(b). $\square$ The statement is coverage-pinned and binds only scalar
-thresholds of a fixed score with covariate-measurable weights; re-scoring on $\nu$ or a per-stratum
+$R_{\mathrm{ref}}(\tau_c)=\mathbb{E}_Q[\eta_P(s)\mid A_{\tau_c}]$ and $\bar\Delta_c=\mathbb{E}_Q[\eta_Q(s)-
+\eta_P(s)\mid A_{\tau_c}]$; (b) \emph{coverage pinning:} any rule --- any weight, $\sigma(s)$-measurable or
+not --- that realizes coverage $c$ on $Q$ accepts exactly $A_{\tau_c}$, so its realized risk equals
+$R_Q(\tau_c)$, independent of the weight; (c) with the oracle score-weight $w^\star=dQ_s/dP_s$ the Lemma's
+certificate equals $R_{\mathrm{ref}}(\tau_c)$, under-reporting the realized risk by exactly $\bar\Delta_c$.
+\emph{Proof.} (a) add and subtract $\mathbb{E}_Q[\eta_P(s)\mid A_{\tau_c}]$. (b) the no-atom assumption pins
+$\tau_c$ from $c$, so realized risk is a functional of $(Q,\tau_c)$ alone. (c) Lemma with $w^\star$ gives
+$Q_{w^\star}=Q$. $\square$ (A part-(d) ``$\alpha$ achievable at coverage $c$ iff $\bar\Delta_c\le\alpha-
+R_{\mathrm{ref}}$'' is only (a)+(b) rearranged and we do not count it as a result; achievability by
+\emph{lowering} coverage is the empirical frontier of Sec.~\ref{sec:frontier}.) The statement binds only
+scalar thresholds of a fixed score with score-measurable weights; re-scoring on $\nu$ or a per-stratum
 threshold escapes it (the achievability side), and in-stratum split calibration~\citep{vovk2005} gives
 stratum-conditional miscoverage $\le 1/(n_g{+}1)$ regardless of drift; conformal risk
 control~\citep{angelopoulos2024crc} gives the same slack for the joint accept-and-err rate, and the ratio

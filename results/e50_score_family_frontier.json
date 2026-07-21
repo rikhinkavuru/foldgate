@@ -1,0 +1,28 @@
+{
+  "protocol": "d2 feasibility map, fixed delivered pose (top-1 ranking_score), source-split S0",
+  "pl_pae": "NOT AVAILABLE in released RNP dump (CIF + ranking_score only); needs regeneration",
+  "per_alpha": {
+    "0.2": {
+      "n_nonreference_cells": 40,
+      "zero_frontier_per_score": {
+        "ranking_score": 22,
+        "iface_iptm": 16,
+        "ligand_plddt_mean": 18,
+        "ligand_plddt_min": 18
+      },
+      "intersection_global_scores": 16,
+      "intersection_full_family_incl_ligand_local": 13
+    },
+    "0.1": {
+      "n_nonreference_cells": 40,
+      "zero_frontier_per_score": {
+        "ranking_score": 29,
+        "iface_iptm": 25,
+        "ligand_plddt_mean": 25,
+        "ligand_plddt_min": 25
+      },
+      "intersection_global_scores": 25,
+      "intersection_full_family_incl_ligand_local": 21
+    }
+  }
+}
