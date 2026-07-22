@@ -75,3 +75,7 @@ paper/*.log
 
 # TOC-graphic render inputs are small, committed on purpose (override *.pdb)
 !results/toc_render/*.pdb
+.gstack/
+
+# D3 GPU-regenerated predictions and scores (data artifacts, mirrored to Zenodo)
+results/gpu_d3/
