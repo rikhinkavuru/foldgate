@@ -56,30 +56,24 @@ A practitioner who acts on a predicted protein--ligand pose needs to know when t
 models (AlphaFold3, Boltz, Chai) report confidence scores that track pose accuracy, but a correlation is
 not a decision rule, and it is weakest on the novel pockets and chemotypes a discovery program pursues. We
 build \texttt{foldgate}, a training-free layer that turns frozen co-folding confidence into an
-accept/abstain gate carrying a finite-sample error guarantee, and we ask where that guarantee survives.
-It fails where it is needed most. Calibrating on familiar targets and deploying on novel ones drives the
-realized error among accepted poses to $0.55$ (AlphaFold3, $90\%$ CI $[0.52,0.58]$; $0.48$ to $0.66$
-across five models) against a $0.20$ target. Lowering coverage does not recover it, and neither does a
-better score: across a frozen score family (global ranking score, interface ipTM, and the ligand-local
-pLDDT that is the field's pose-triage signal), $13$ of the $40$ non-reference model-by-novelty-stratum
-cells admit \emph{no} threshold on \emph{any} of them reaching the target at any coverage, so abstention
-is the only certified action on structurally novel targets. The cause is a base-rate collapse rather than
-a loss of ranking signal: the frozen score still separates correct from incorrect poses there (AUROC $0.56$
-to $0.71$ across models), but the base rate is too low for any threshold to certify. An exact decomposition
-isolates the responsible term, shows it is invisible to any label-free reweighting, and turns it into a
-diagnostic that picks the repair from a small labeled probe. Group-conditional recalibration restores
-per-stratum control (AlphaFold3 certifies $52\%$ and $39\%$ of the moderately-novel strata, against $8\%$
-and $12\%$ before). The cheap side of the layer has a real limit: the native single-score gate,
-evaluated leakage-free, certifies almost no usable coverage, and the gate that does, retaining $73\%$ of
-AlphaFold3 poses at a certified risk bound of $0.192$, buys that with a combined feature that costs several
-model inferences per target rather than one released prediction. We price the repair rather than assert it:
-on the order of $80$ in-stratum crystal structures is where a moderate novelty stratum begins to certify
-(median coverage $0.22$ to $0.48$, with wide run-to-run variance), reliable coverage takes the full pool,
-and the most novel targets admit no repair by stratification at any budget. The break is a property of the
-confidence, not the benchmark or the metric: it reproduces on regenerated PoseBusters and PLINDER
-predictions and on any endpoint that requires recovering the binding-determinant interactions. The
-native-score layer runs on released predictions on CPU and ships a certificate card per model and
-novelty stratum reading FEASIBLE, ABSTAIN-and-abandon, or ABSTAIN-and-collect-labels.
+accept/abstain gate with a finite-sample error guarantee, and we map where that guarantee holds. It fails
+where it is needed most: a gate calibrated on familiar targets and deployed on novel ones realizes error
+$0.55$ (AlphaFold3; $0.48$ to $0.66$ across five models) against a $0.20$ target, because the transferred
+threshold accepts nearly every pose and so inherits the base rate of a set the model gets wrong half the
+time. Lowering coverage does not recover it, and neither does a better score: across a frozen score family
+(ranking score, interface ipTM, ligand-local pLDDT), $13$ of $40$ non-reference model-by-novelty-stratum
+cells admit no certifiable threshold at any coverage, so abstention is the only certified action on
+structurally novel targets. The score still ranks poses there (AUROC $0.56$ to $0.71$); the base rate is
+simply too low to certify, which an exact decomposition shows no label-free reweighting can fix.
+Group-conditional recalibration restores per-stratum control, and under leakage-free cross-validation
+retains $73\%$ of AlphaFold3 poses at a certified risk bound of $0.192$, though the native single-score
+gate certifies little leakage-free and this working gate costs several model inferences per target rather
+than one released prediction. We price the repair: on the order of $80$ in-stratum structures is where a
+moderate stratum begins to certify, with wide variance, and the most novel targets admit no repair by
+stratification at any budget. The break is a property of the confidence, not the benchmark or the metric:
+it reproduces on regenerated PoseBusters and PLINDER predictions and on any endpoint that requires
+recovering the binding-determinant interactions. The layer ships a certificate card per model and novelty
+stratum reading FEASIBLE, ABSTAIN-and-abandon, or ABSTAIN-and-collect-labels.
 \end{abstract}
 
 \section{Introduction}
@@ -334,9 +328,10 @@ risk (AF3 $0.55$). The break is carried by $S_3$.}
 \caption{The break as an operating characteristic. AF3 native-score selective risk against coverage,
 marginal and per ligand-novelty stratum (point estimates). The familiar stratum $S_0$ stays far below
 $\alpha$ at every coverage; the novel stratum $S_3$ sits above $\alpha$ except at the lowest coverage, and
-$S_4$ (omitted for scale) is above it throughout. The certified frontier of Sec.~\ref{sec:frontier} is
-stricter still, since it reads the Clopper-Pearson upper bound under a $\ge\!20$-accept rule rather than
-these point estimates.}
+$S_4$ (omitted for scale) is above it throughout. We show point estimates without bands deliberately: the rigorous per-coverage claim is the
+certified frontier of Sec.~\ref{sec:frontier}, which reads the Clopper-Pearson upper bound under a
+$\ge\!20$-accept rule and is uniformly stricter than these curves, so bands here would double-count the
+uncertainty the frontier already carries.}
 \label{fig:riskcov}
 \end{figure}
 
@@ -971,7 +966,8 @@ CPU and ships as certificate cards per model and novelty stratum, so a team can 
 it commits.
 
 \textbf{Data and code availability.} Code and calibration tables are at
-\url{https://github.com/rikhinkavuru/foldgate} under the MIT license; a one-command \texttt{make repro}
+\url{https://github.com/rikhinkavuru/foldgate} under the MIT license, with an immutable Zenodo snapshot of
+the repository at submission (DOI assigned on deposit) so the artifact is citable and permanent; a one-command \texttt{make repro}
 reproduces the full tabular pipeline by default from a pinned environment (\texttt{uv.lock}, fixed
 \texttt{numpy} seeds and \texttt{PYTHONHASHSEED}), with the structure-stream and external-GPU arms behind
 opt-out flags. The analysis is deterministic under the pinned environment (pure CPU \texttt{numpy}/scikit-learn,

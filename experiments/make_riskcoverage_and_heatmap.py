@@ -87,10 +87,15 @@ def heatmap():
             ax.add_patch(plt.Rectangle((s, i), 1, 1, facecolor=col, edgecolor="white",
                                        lw=1.2, hatch=hatch, alpha=0.9))
             cov = card.get("retained_coverage")
-            txt = f"{cov:.2f}" if isinstance(cov, (int, float)) and v == "FEASIBLE" else \
-                  ("labels" if v == "ABSTAIN-underpowered" else "abandon")
-            ax.text(s + 0.5, i + 0.5, txt, ha="center", va="center", fontsize=6.0,
-                    color="white", weight="bold")
+            acc = card.get("accepted_n_targets")
+            if v == "FEASIBLE" and isinstance(cov, (int, float)):
+                txt = f"{cov:.2f}\nn={acc}"
+            elif v == "ABSTAIN-underpowered":
+                txt = f"labels\nn={acc}" if acc else "labels"
+            else:
+                txt = "abandon"
+            ax.text(s + 0.5, i + 0.5, txt, ha="center", va="center", fontsize=5.2,
+                    color="white", weight="bold", linespacing=1.0)
     ax.set_xticks(np.arange(5) + 0.5)
     ax.set_xticklabels([f"$S_{s}$" for s in range(5)], fontsize=8)
     ax.set_yticks(np.arange(5) + 0.5)
