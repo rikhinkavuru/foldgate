@@ -73,8 +73,9 @@ and $12\%$ before). The cheap side of the layer has a real limit: the native sin
 evaluated leakage-free, certifies almost no usable coverage, and the gate that does, retaining $73\%$ of
 AlphaFold3 poses at a certified risk bound of $0.192$, buys that with a combined feature that costs several
 model inferences per target rather than one released prediction. We price the repair rather than assert it:
-on the order of $80$ in-stratum crystal structures buys one novelty stratum of certified reach, and the
-most novel targets admit no repair by stratification at any budget. The break is a property of the
+on the order of $80$ in-stratum crystal structures is where a moderate novelty stratum begins to certify
+(median coverage $0.22$ to $0.48$, with wide run-to-run variance), reliable coverage takes the full pool,
+and the most novel targets admit no repair by stratification at any budget. The break is a property of the
 confidence, not the benchmark or the metric: it reproduces on regenerated PoseBusters and PLINDER
 predictions and on any endpoint that requires recovering the binding-determinant interactions. The
 native-score layer runs on released predictions on CPU and ships a certificate card per model and
@@ -323,6 +324,22 @@ risk (AF3 $0.55$). The break is carried by $S_3$.}
 \label{fig:break}
 \end{figure}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.62\textwidth]{../results/figures/risk_coverage.png}
+\caption{The break as an operating characteristic. AF3 native-score selective risk against coverage,
+marginal and per ligand-novelty stratum (point estimates). The familiar stratum $S_0$ stays far below
+$\alpha$ at every coverage; the novel stratum $S_3$ sits above $\alpha$ except at the lowest coverage, and
+$S_4$ (omitted for scale) is above it throughout. The certified frontier of Sec.~\ref{sec:frontier} is
+stricter still, since it reads the Clopper-Pearson upper bound under a $\ge\!20$-accept rule rather than
+these point estimates.}
+\label{fig:riskcov}
+\end{figure}
+
+The operating characteristic makes the break concrete (Fig.~\ref{fig:riskcov}): a selective-prediction
+reader can see that no coverage brings the novel-stratum risk to $\alpha$, while the familiar stratum clears
+it comfortably.
+
 \textbf{Why it breaks: score-conditional reliability drift, not recency.} Weighted conformal would fix this if the shift were
 pure covariate shift, where $P(L\mid s)$ is stable and only the marginal $P(s)$ moves. We test that by
 measuring \emph{reliability drift}
@@ -569,8 +586,11 @@ cannot be certified at any budget.
 \centering
 \includegraphics[width=0.62\textwidth]{../results/figures/label_cost.png}
 \caption{Label-cost curve. Certified coverage bought by $n_g$ in-stratum target-labels, per ligand stratum
-(AF3, combined score, median over $200$ draws with a $90\%$ band). Moderate novelty ($S_1,S_2$) is
-certifiable at a measured label budget; the near-novel $S_3$ is label-starved even at the full pool.}
+(AF3, combined score, median over $200$ draws with a $90\%$ band). The band is wide by design: at $n_g=80$
+the median certified coverage is $0.22$ on $S_1$ and $0.48$ on $S_2$, but the $90\%$ band spans $[0,0.85]$
+and $[0,0.80]$ and only $56\%$ and $61\%$ of random label draws certify any coverage at all. The $80$-label
+figure is therefore the budget at which moderate strata \emph{begin} to certify, not a guarantee; reaching
+reliable coverage takes the full in-stratum pool. Near-novel $S_3$ is label-starved even at the full pool.}
 \label{fig:labelcost}
 \end{figure}
 
@@ -650,13 +670,15 @@ combined $5\%$ certified).
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.98\textwidth]{../results/figures/certificate_cards.png}
-\caption{Certificate cards, native \texttt{ranking\_score}, ligand axis, $\alpha=0.20$, one per (model,
-stratum). Green FEASIBLE cards carry a certified operating point (retained coverage, accepted $n$, realized
-risk with its Clopper-Pearson upper bound, drift $D$); red ABSTAIN-infeasible cards mean the rule provably
-fails (abandon); amber ABSTAIN-underpowered cards mean undecided (collect labels). The combined-feature
-group-conditional gate (Fig.~\ref{fig:repair}) is a different, higher-coverage protocol; the full grid
-across both novelty axes and both scores is in the SI.}
+\includegraphics[width=0.72\textwidth]{../results/figures/certificate_heatmap.png}
+\caption{Certificate verdict per (model, ligand-novelty stratum), native \texttt{ranking\_score},
+$\alpha=0.20$. Green FEASIBLE cells carry a certified operating point and are annotated with retained
+coverage; amber ABSTAIN cells are undecided for want of labels; red ABSTAIN cells provably fail (the
+Clopper-Pearson lower bound exceeds $\alpha$ at every coverage), so the target is abandoned for that model.
+Verdicts are encoded by both color and hatch to survive grayscale. Green gives way to red as novelty rises
+across every model. The full per-card detail (accepted $n$, realized risk with its Clopper-Pearson upper
+bound, drift $D$, recommended repair) and the pocket-axis grid are in the SI; the combined-feature
+group-conditional gate (Fig.~\ref{fig:repair}) is a different, higher-coverage protocol.}
 \label{fig:cards}
 \end{figure}
 
@@ -717,10 +739,12 @@ in-stratum label pool certifies (the label-cost-curve endpoint) --- different qu
 \begin{table}[t]
 \centering\small
 \caption{Every AF3 coverage and label figure in the paper, mapped to its protocol ($\alpha=0.20$), so no
-two are read as the same quantity. The three ``$S_1$/$S_2$'' rows differ by protocol, not by contradiction:
-the frontier reach of an $S_0$-calibrated native rule is generous on the mildly-novel strata, per-stratum
-group-conditional recalibration is stricter, and the label-cost maximum is what the full in-stratum label
-pool certifies.}
+two are read as the same quantity. The headline is the first row: the leakage-free nested-LOTO combined
+gate, which retains $0.73$ of AF3 poses at realized risk $0.176$. The remaining rows are the same layer read
+under stricter or more generous protocols and are reported so no two are conflated; the three ``$S_1$/$S_2$''
+rows differ by protocol, not by contradiction (an $S_0$-calibrated native rule's frontier reach is generous,
+per-stratum group-conditional recalibration is stricter, and the label-cost maximum is the full-pool
+ceiling).}
 \label{tab:covmap}
 \begin{tabular}{lllcc}
 \toprule
@@ -871,7 +895,7 @@ direct test of the payoff.
 \textbf{What to do with this, concretely.} The layer is not only an abstention rule; the label-cost curve
 is a plan. A worked example: a team running AlphaFold3 on a congeneric series whose scaffold is one novelty
 stratum out from the training set (an $S_1$--$S_2$ regime) should not trust the raw ranking score --- it
-certifies almost nothing there leakage-free --- but can recover a certified $\sim\!50\%$ acceptance rate by
+certifies almost nothing there leakage-free --- but can recover a certified acceptance rate with a median near $50\%$ (but wide draw-to-draw variance) by
 building a group-conditional gate, which costs on the order of $80$ solved structures of in-series analogs to
 calibrate. As an order-of-magnitude anchor only, and not a costing we claim precision over, a solved
 structure runs a rough $\$10$k--$\$50$k and days to weeks (the low end optimistic for a first structure on a
@@ -894,8 +918,9 @@ there closes under in-stratum recalibration but under no training-free reweighti
 map of exactly where a co-folding pose can be trusted, and at what price. Co-folding confidence is
 certifiable on the familiar strata, where the exact binomial certifies from a median of $38$ labels over
 the $23$ feasible cells against $102$ for Hoeffding. It is extendable one stratum outward at a measured and
-now-quantified price, on the order of $80$ in-stratum target structures for usable certified coverage, and
-with a public proxy stratifier for closed-training models. On the extreme novel tail, exactly where a
+now-quantified price, on the order of $80$ in-stratum target structures for a moderate stratum to begin
+certifying (reliable coverage takes the full pool), and with a public proxy stratifier for closed-training
+models. On the extreme novel tail, exactly where a
 program most needs a guarantee, no training-free certificate exists, and the safe action is the one
 the layer certifies: abstain. The break is a property of the confidence rather than of the benchmark or the
 metric; it reproduces on regenerated PoseBusters and PLINDER predictions and on any endpoint that requires
