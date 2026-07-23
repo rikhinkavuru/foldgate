@@ -1,0 +1,594 @@
+{
+  "provenance": "real: data/external/d3/scored.csv",
+  "n_targets": {
+    "plinder_test": 248,
+    "posebusters_v2": 210
+  },
+  "stratum_counts": {
+    "plinder_test|boltz2": {
+      "0": 45,
+      "1": 19,
+      "2": 51,
+      "3": 57
+    },
+    "plinder_test|chai": {
+      "1": 89,
+      "2": 79,
+      "3": 79
+    },
+    "posebusters_v2|boltz2": {
+      "0": 60,
+      "1": 35,
+      "2": 27,
+      "3": 25
+    },
+    "posebusters_v2|chai": {
+      "0": 88,
+      "1": 50,
+      "2": 36,
+      "3": 32
+    }
+  },
+  "external_frontier": {
+    "plinder_test|boltz2|ranking_score|a0.2": {
+      "0": {
+        "n": 45,
+        "frontier": 0.95,
+        "frontier_certified": 0.5,
+        "base_correct": 0.8
+      },
+      "1": {
+        "n": 19,
+        "frontier": null,
+        "underpowered": true
+      },
+      "2": {
+        "n": 51,
+        "frontier": 0.35,
+        "frontier_certified": 0.0,
+        "base_correct": 0.6666666666666666
+      },
+      "3": {
+        "n": 57,
+        "frontier": 0.5,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7017543859649122
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "plinder_test|boltz2|ranking_score|a0.1": {
+      "0": {
+        "n": 45,
+        "frontier": 0.55,
+        "frontier_certified": 0.0,
+        "base_correct": 0.8
+      },
+      "1": {
+        "n": 19,
+        "frontier": null,
+        "underpowered": true
+      },
+      "2": {
+        "n": 51,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": 0.6666666666666666
+      },
+      "3": {
+        "n": 57,
+        "frontier": 0.05,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7017543859649122
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "plinder_test|boltz2|iface_iptm|a0.2": {
+      "0": {
+        "n": 45,
+        "frontier": 0.85,
+        "frontier_certified": 0.6,
+        "base_correct": 0.8
+      },
+      "1": {
+        "n": 19,
+        "frontier": null,
+        "underpowered": true
+      },
+      "2": {
+        "n": 51,
+        "frontier": 0.5,
+        "frontier_certified": 0.0,
+        "base_correct": 0.6666666666666666
+      },
+      "3": {
+        "n": 57,
+        "frontier": 0.45,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7017543859649122
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "plinder_test|boltz2|iface_iptm|a0.1": {
+      "0": {
+        "n": 45,
+        "frontier": 0.7,
+        "frontier_certified": 0.0,
+        "base_correct": 0.8
+      },
+      "1": {
+        "n": 19,
+        "frontier": null,
+        "underpowered": true
+      },
+      "2": {
+        "n": 51,
+        "frontier": 0.2,
+        "frontier_certified": 0.0,
+        "base_correct": 0.6666666666666666
+      },
+      "3": {
+        "n": 57,
+        "frontier": 0.25,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7017543859649122
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "plinder_test|chai|ranking_score|a0.2": {
+      "0": {
+        "n": 0,
+        "frontier": null,
+        "underpowered": true
+      },
+      "1": {
+        "n": 89,
+        "frontier": 0.6,
+        "frontier_certified": 0.25,
+        "base_correct": 0.6179775280898876
+      },
+      "2": {
+        "n": 79,
+        "frontier": 0.8,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7341772151898734
+      },
+      "3": {
+        "n": 79,
+        "frontier": 0.65,
+        "frontier_certified": 0.0,
+        "base_correct": 0.6455696202531646
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "plinder_test|chai|ranking_score|a0.1": {
+      "0": {
+        "n": 0,
+        "frontier": null,
+        "underpowered": true
+      },
+      "1": {
+        "n": 89,
+        "frontier": 0.35,
+        "frontier_certified": 0.0,
+        "base_correct": 0.6179775280898876
+      },
+      "2": {
+        "n": 79,
+        "frontier": 0.15,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7341772151898734
+      },
+      "3": {
+        "n": 79,
+        "frontier": 0.2,
+        "frontier_certified": 0.0,
+        "base_correct": 0.6455696202531646
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "plinder_test|chai|iface_iptm|a0.2": {
+      "0": {
+        "n": 0,
+        "frontier": null,
+        "underpowered": true
+      },
+      "1": {
+        "n": 89,
+        "frontier": 0.6,
+        "frontier_certified": 0.25,
+        "base_correct": 0.6179775280898876
+      },
+      "2": {
+        "n": 79,
+        "frontier": 0.75,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7341772151898734
+      },
+      "3": {
+        "n": 79,
+        "frontier": 0.65,
+        "frontier_certified": 0.0,
+        "base_correct": 0.6455696202531646
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "plinder_test|chai|iface_iptm|a0.1": {
+      "0": {
+        "n": 0,
+        "frontier": null,
+        "underpowered": true
+      },
+      "1": {
+        "n": 89,
+        "frontier": 0.35,
+        "frontier_certified": 0.0,
+        "base_correct": 0.6179775280898876
+      },
+      "2": {
+        "n": 79,
+        "frontier": 0.15,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7341772151898734
+      },
+      "3": {
+        "n": 79,
+        "frontier": 0.2,
+        "frontier_certified": 0.0,
+        "base_correct": 0.6455696202531646
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "posebusters_v2|boltz2|ranking_score|a0.2": {
+      "0": {
+        "n": 60,
+        "frontier": 1.0,
+        "frontier_certified": 0.0,
+        "base_correct": 0.8333333333333334
+      },
+      "1": {
+        "n": 35,
+        "frontier": 0.75,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7142857142857143
+      },
+      "2": {
+        "n": 27,
+        "frontier": 0.45,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7037037037037037
+      },
+      "3": {
+        "n": 25,
+        "frontier": 0.7,
+        "frontier_certified": 0.0,
+        "base_correct": 0.72
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "posebusters_v2|boltz2|ranking_score|a0.1": {
+      "0": {
+        "n": 60,
+        "frontier": 0.25,
+        "frontier_certified": 0.0,
+        "base_correct": 0.8333333333333334
+      },
+      "1": {
+        "n": 35,
+        "frontier": 0.4,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7142857142857143
+      },
+      "2": {
+        "n": 27,
+        "frontier": 0.05,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7037037037037037
+      },
+      "3": {
+        "n": 25,
+        "frontier": 0.1,
+        "frontier_certified": 0.0,
+        "base_correct": 0.72
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "posebusters_v2|boltz2|iface_iptm|a0.2": {
+      "0": {
+        "n": 60,
+        "frontier": 1.0,
+        "frontier_certified": 0.75,
+        "base_correct": 0.8333333333333334
+      },
+      "1": {
+        "n": 35,
+        "frontier": 0.8,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7142857142857143
+      },
+      "2": {
+        "n": 27,
+        "frontier": 0.3,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7037037037037037
+      },
+      "3": {
+        "n": 25,
+        "frontier": 0.9,
+        "frontier_certified": 0.0,
+        "base_correct": 0.72
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "posebusters_v2|boltz2|iface_iptm|a0.1": {
+      "0": {
+        "n": 60,
+        "frontier": 0.75,
+        "frontier_certified": 0.0,
+        "base_correct": 0.8333333333333334
+      },
+      "1": {
+        "n": 35,
+        "frontier": 0.35,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7142857142857143
+      },
+      "2": {
+        "n": 27,
+        "frontier": 0.2,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7037037037037037
+      },
+      "3": {
+        "n": 25,
+        "frontier": 0.55,
+        "frontier_certified": 0.0,
+        "base_correct": 0.72
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "posebusters_v2|chai|ranking_score|a0.2": {
+      "0": {
+        "n": 88,
+        "frontier": 0.9,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7613636363636364
+      },
+      "1": {
+        "n": 50,
+        "frontier": 0.15,
+        "frontier_certified": 0.0,
+        "base_correct": 0.62
+      },
+      "2": {
+        "n": 36,
+        "frontier": 0.3,
+        "frontier_certified": 0.0,
+        "base_correct": 0.5277777777777778
+      },
+      "3": {
+        "n": 32,
+        "frontier": 0.8,
+        "frontier_certified": 0.0,
+        "base_correct": 0.65625
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "posebusters_v2|chai|ranking_score|a0.1": {
+      "0": {
+        "n": 88,
+        "frontier": 0.15,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7613636363636364
+      },
+      "1": {
+        "n": 50,
+        "frontier": 0.05,
+        "frontier_certified": 0.0,
+        "base_correct": 0.62
+      },
+      "2": {
+        "n": 36,
+        "frontier": 0.15,
+        "frontier_certified": 0.0,
+        "base_correct": 0.5277777777777778
+      },
+      "3": {
+        "n": 32,
+        "frontier": 0.65,
+        "frontier_certified": 0.0,
+        "base_correct": 0.65625
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "posebusters_v2|chai|iface_iptm|a0.2": {
+      "0": {
+        "n": 88,
+        "frontier": 0.9,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7613636363636364
+      },
+      "1": {
+        "n": 50,
+        "frontier": 0.15,
+        "frontier_certified": 0.0,
+        "base_correct": 0.62
+      },
+      "2": {
+        "n": 36,
+        "frontier": 0.3,
+        "frontier_certified": 0.0,
+        "base_correct": 0.5277777777777778
+      },
+      "3": {
+        "n": 32,
+        "frontier": 0.8,
+        "frontier_certified": 0.0,
+        "base_correct": 0.65625
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    },
+    "posebusters_v2|chai|iface_iptm|a0.1": {
+      "0": {
+        "n": 88,
+        "frontier": 0.15,
+        "frontier_certified": 0.0,
+        "base_correct": 0.7613636363636364
+      },
+      "1": {
+        "n": 50,
+        "frontier": 0.05,
+        "frontier_certified": 0.0,
+        "base_correct": 0.62
+      },
+      "2": {
+        "n": 36,
+        "frontier": 0.05,
+        "frontier_certified": 0.0,
+        "base_correct": 0.5277777777777778
+      },
+      "3": {
+        "n": 32,
+        "frontier": 0.7,
+        "frontier_certified": 0.0,
+        "base_correct": 0.65625
+      },
+      "4": {
+        "n": 0,
+        "frontier": 0.0,
+        "frontier_certified": 0.0,
+        "base_correct": NaN
+      }
+    }
+  },
+  "break": {
+    "plinder_test|boltz2": {
+      "tau": 0.8244855999946594,
+      "novel_realized_error": 0.3148148148148148,
+      "novel_coverage": 1.0,
+      "n_accept_novel": 108,
+      "target_alpha": 0.2
+    },
+    "plinder_test|chai": {
+      "tau": 0.8100582957267761,
+      "novel_realized_error": 0.18181818181818182,
+      "novel_coverage": 0.5569620253164557,
+      "n_accept_novel": 88,
+      "target_alpha": 0.2
+    },
+    "posebusters_v2|boltz2": {
+      "tau": 0.9214523434638976,
+      "novel_realized_error": 0.26666666666666666,
+      "novel_coverage": 0.8653846153846154,
+      "n_accept_novel": 45,
+      "target_alpha": 0.2
+    },
+    "posebusters_v2|chai": {
+      "tau": 0.7521024942398071,
+      "novel_realized_error": 0.24,
+      "novel_coverage": 0.7352941176470589,
+      "n_accept_novel": 50,
+      "target_alpha": 0.2
+    }
+  },
+  "vs_rnp": {
+    "external_zero_frontier": {
+      "plinder_test|a0.2": {
+        "zero_cells": 2,
+        "total_cells": 8
+      },
+      "plinder_test|a0.1": {
+        "zero_cells": 3,
+        "total_cells": 8
+      },
+      "posebusters_v2|a0.2": {
+        "zero_cells": 2,
+        "total_cells": 10
+      },
+      "posebusters_v2|a0.1": {
+        "zero_cells": 2,
+        "total_cells": 10
+      }
+    },
+    "rnp_reference": {
+      "n_nonreference_cells": 40,
+      "rnp_zero_ranking": 22,
+      "rnp_zero_full_family": 13
+    },
+    "interpretation": "If external zero-frontier fraction is comparable to RNP's, the break reproduces beyond RNP; report per-dataset and note power."
+  }
+}
