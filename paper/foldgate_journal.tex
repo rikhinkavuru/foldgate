@@ -58,22 +58,22 @@ not a decision rule, and it is weakest on the novel pockets and chemotypes a dis
 build \texttt{foldgate}, a training-free layer that turns frozen co-folding confidence into an
 accept/abstain gate with a finite-sample error guarantee, and we map where that guarantee holds. It fails
 where it is needed most: a gate calibrated on familiar targets and deployed on novel ones realizes error
-$0.55$ (AlphaFold3; $0.48$ to $0.66$ across five models) against a $0.20$ target, because the transferred
-threshold accepts nearly every pose and so inherits the base rate of a set the model gets wrong half the
-time. Lowering coverage does not recover it, and neither does a better score: across a frozen score family
-(ranking score, interface ipTM, ligand-local pLDDT), $13$ of $40$ non-reference model-by-novelty-stratum
-cells admit no certifiable threshold at any coverage, so abstention is the only certified action on
-structurally novel targets. The score still ranks poses there (AUROC $0.56$ to $0.71$); the base rate is
-simply too low to certify, which an exact decomposition shows no label-free reweighting can fix.
-Group-conditional recalibration restores per-stratum control, and under leakage-free cross-validation
-retains $73\%$ of AlphaFold3 poses at a certified risk bound of $0.192$, though the native single-score
-gate certifies little leakage-free and this working gate costs several model inferences per target rather
-than one released prediction. We price the repair: on the order of $80$ in-stratum structures is where a
-moderate stratum begins to certify, with wide variance, and the most novel targets admit no repair by
-stratification at any budget. The break is a property of the confidence, not the benchmark or the metric:
-it reproduces on regenerated PoseBusters and PLINDER predictions and on any endpoint that requires
-recovering the binding-determinant interactions. The layer ships a certificate card per model and novelty
-stratum reading FEASIBLE, ABSTAIN-and-abandon, or ABSTAIN-and-collect-labels.
+$0.55$ against a $0.20$ target, because the transferred threshold accepts nearly every pose and inherits the
+base rate of a set the model gets wrong half the time. Lowering coverage does not recover it, and neither
+does a better score: across a frozen score family (ranking score, interface ipTM, ligand-local pLDDT), $11$
+of $40$ non-reference model-by-novelty-stratum cells are provably uncertifiable on every score, the
+Clopper-Pearson lower bound exceeding $\alpha$ at all coverages, so abstention is the certified action on
+structurally novel targets. The score still ranks poses there; the base rate is simply too low to certify,
+which an exact decomposition shows no label-free reweighting can fix. Group-conditional recalibration
+restores per-stratum control and, under leakage-free cross-validation, retains $73\%$ of AlphaFold3 poses at
+a certified risk bound of $0.192$, though the native single-score gate certifies little leakage-free and
+this working gate costs several model inferences per target rather than one released prediction. We price
+the repair: on the order of $80$ in-stratum structures is where a moderate stratum begins to certify, and
+the most novel targets admit no repair by stratification at any budget. The break is a property of the
+confidence, not the benchmark or the metric: it reproduces on regenerated PoseBusters and PLINDER
+predictions and on any endpoint that requires recovering the binding-determinant interactions. The layer
+ships a certificate card per model and novelty stratum reading FEASIBLE, ABSTAIN-and-abandon, or
+ABSTAIN-and-collect-labels.
 \end{abstract}
 
 \section{Introduction}
@@ -232,8 +232,10 @@ without the structure stream.
 target. An optional combined score (a calibration-only gradient-boosted map from cheap per-prediction
 features to $P(\text{correct})$: confidence, interface ipTM, ensemble spread, cross-model agreement,
 PoseBusters validity, ligand descriptors) improves the operating point but consumes the five-sample
-ensemble and cross-model features, so it needs $N$ model inferences per target. We report the native-only
-guarantee prominently and flag the combined score as the upgrade. The combined score's cross-model features
+ensemble and cross-model features, so it needs $N$ model inferences per target. Both matter and we keep the
+prices attached: the native gate is the cheap, single-prediction, CPU-only option but certifies little
+under a leakage-free protocol, and the combined gate is what reaches usable certified coverage
+(Sec.~\ref{sec:utility}) at the cost of the several inferences per target. The combined score's cross-model features
 are moderately correlated with novelty ($|\rho|$ up to $0.35$), so it is a partly novelty-aware re-score;
 this is legitimate and places the \emph{combined} score on the achievability side of the theorem below,
 which governs the frozen \emph{native} score. Feeding novelty in even harder confirms where its value lies:
@@ -274,7 +276,7 @@ Romano-Wolf step-down on studentized max-$t$ statistics with $2000$ bootstrap re
 
 \section{The exchangeability break}\label{sec:break}
 \textbf{The premise, and what we add.} That co-folding accuracy degrades on targets dissimilar to the
-training set is established: Škrinjar et al.~\citep{rnp}, whose benchmark we consume, report that current
+training set is established: \v{S}krinjar et al.~\citep{rnp}, whose benchmark we consume, report that current
 methods largely memorise poses and that success rate falls almost linearly with training-set coverage, to
 roughly $20\%$ in the sparsest bin. We take that degradation as the premise, not the finding. Our subject
 is the decision it forces. A program does not act on an average success rate; it acts on a single delivered
@@ -406,11 +408,16 @@ frontier is bounded by the accepted-set base rate rather than by ranking quality
 count is \emph{score-dependent} --- computed identically on interface ipTM it is $16$, and on ligand-local
 pLDDT, a materially better ranker (AUROC $0.72$--$0.85$ against $0.59$--$0.70$ for the global score), it is
 $18$. Intersecting over the whole frozen family, $\mathbf{13}$ of the $40$ cells admit no threshold on
-\emph{any} of these four scores (global ranking, interface ipTM, mean and worst-quartile ligand pLDDT) that
-reaches $\alpha$ at any coverage, and $21$ of $40$ at $\alpha=0.10$. This family-intersection $13$ is a
-distinct quantity from the multiplicity-corrected ranking-score $13$ above, which the two happening to
-coincide should not obscure; it is a conservative point-estimate intersection, reported without a further
-across-cell correction, and it is the number the abstract and conclusion carry. Ligand pLDDT is a better ranker yet does
+\emph{any} of these four scores (global ranking, interface ipTM, mean and worst-quartile ligand pLDDT) whose
+realized risk reaches $\alpha$ at any coverage, and $21$ of $40$ at $\alpha=0.10$. That $13$ is a
+\emph{point-estimate} intersection, distinct from the multiplicity-corrected ranking-score $13$ above.
+Because ``abstention is the certified action'' is a claim about a bound, we also report the stricter
+\emph{CP-certified} intersection: $\mathbf{11}$ of the $40$ cells are provably uncertifiable on every score,
+in that the Clopper-Pearson lower bound on the accepted-set error exceeds $\alpha$ at every measurable
+coverage for all four scores (per-score CP-infeasible counts $20$ ranking, $14$ ipTM, $14$ and $17$ ligand
+pLDDT). The $11$ is the number the abstention conclusion rests on; the $13$ is the broader point-estimate
+map. Ligand pLDDT is a better ranker yet does
+not close the frontier precisely because the break is base-rate-bound, not discrimination-bound; the one Ligand pLDDT is a better ranker yet does
 not close the frontier precisely because the break is base-rate-bound, not discrimination-bound; the one
 pose-triage signal we could not test, the protein-ligand PAE block, is absent from the released prediction
 dump (it ships coordinates and ranking scores only) and would require regeneration. The infeasibility is not
@@ -535,27 +542,33 @@ budget faster ($1/(n_g{+}1)$ grows), which is the trade the label-cost curve pri
 certifies the neighborhood, not the point, and we mark on each card which axis it conditions.
 
 We demonstrate the two-axis grid rather than only recommend it (Table~\ref{tab:twoaxis}). Cross-classifying
-AF3 targets into familiar/novel on both axes and certifying each cell on its own separates two situations a
-ligand-only card conflates. A ligand-familiar but \emph{pocket}-novel target (base correctness $0.64$) is
-ABSTAIN, not the FEASIBLE a ligand-only card would grant it, which is precisely the up-to-$0.32$
-under-coverage made explicit; conversely a ligand-novel but \emph{pocket}-familiar target (base $0.84$) is
-certifiable to $95\%$ coverage, so pocket similarity can rescue a ligand a one-axis card would abandon. The
-grid costs the finer per-cell label budget and is what we recommend when both similarities are available;
-the full five-model grid is in the SI.
+AF3 targets on both axes into familiar ($S_0$--$S_1$), moderate ($S_2$), and novel ($S_3$--$S_4$) and
+certifying each cell on its own separates situations a ligand-only card conflates. Two cells make the point.
+The gate does real work in the ligand-familiar / pocket-moderate cell: base correctness there is $0.72$, so
+accept-all would realize error $0.28$ and miss the $\alpha=0.20$ target, yet the gate certifies at $20\%$
+coverage by keeping only the most confident poses; a coarse rule that took the whole familiar-ligand stratum
+could not. And pocket novelty degrades an otherwise-familiar ligand: the ligand-familiar / pocket-novel cell
+(base $0.51$) is ABSTAIN, not the FEASIBLE a ligand-only card grants the familiar-ligand stratum, which is
+the up-to-$0.32$ under-coverage made explicit. The grid costs the finer per-cell label budget and is what we
+recommend when both similarities are available; the full five-model grid is in the SI. This is the native
+score, so its coverages are not comparable to the combined-score label-cost curve (Fig.~\ref{fig:labelcost}).
 
 \begin{table}[t]
 \centering\small
-\caption{Two-axis certified gate (AF3, native \texttt{ranking\_score}, $\alpha=0.20$). Each familiar/novel
-$\times$ familiar/novel cell is calibrated and certified on its own. The off-diagonal cells are what a
-one-axis ligand card cannot see: pocket novelty alone removes certifiability (top-right), and pocket
-familiarity alone restores it (bottom-left).}
+\caption{Two-axis certified gate (AF3, native \texttt{ranking\_score}, $\alpha=0.20$), each cell calibrated
+and certified on its own. Bins are $S_0$--$S_1$ (familiar), $S_2$ (moderate), $S_3$--$S_4$ (novel) on each
+axis. Entries are the CP-certified coverage and verdict, base correctness in parentheses. The
+familiar/moderate cell certifies at \emph{reduced} coverage ($0.20$), where accept-all would fail, so the
+selective gate contributes; pocket novelty alone (right column) removes certifiability from a familiar
+ligand. The ligand-novel / pocket-familiar cell is underpowered ($n=32$).}
 \label{tab:twoaxis}
-\begin{tabular}{lll}
+\begin{tabular}{llll}
 \toprule
- & pocket familiar & pocket novel \\
+ligand $\backslash$ pocket & familiar & moderate & novel \\
 \midrule
-ligand familiar & FEASIBLE, cov $1.00$ (base $0.87$) & ABSTAIN (base $0.64$) \\
-ligand novel & FEASIBLE, cov $0.95$ (base $0.84$) & ABSTAIN (base $0.52$) \\
+familiar & FEAS.\ $1.00$ ($0.87$) & FEAS.\ $0.20$ ($0.72$) & ABSTAIN ($0.51$) \\
+moderate & FEAS.\ $1.00$ ($0.86$) & FEAS.\ $0.25$ ($0.74$) & ABSTAIN ($0.47$) \\
+novel & ABSTAIN, $n{=}32$ ($0.69$) & ABSTAIN ($0.58$) & ABSTAIN ($0.40$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -565,7 +578,7 @@ ligand novel & FEASIBLE, cov $0.95$ (base $0.84$) & ABSTAIN (base $0.52$) \\
 \includegraphics[width=0.98\textwidth]{../results/figures/e3_repair.png}
 \caption{The repair. Group-conditional calibration holds realized selective risk at or below $\alpha=0.20$
 on the strata where the marginal gate over-shoots, folding to zero coverage on the no-analog tail rather
-than issuing a false certificate. Coverage labels are direct; the coverage cost grows with novelty.}
+than issuing a false certificate. Coverage is printed on each bar; the coverage cost grows with novelty.}
 \label{fig:repair}
 \end{figure}
 
@@ -682,7 +695,8 @@ Betting bound (graded) & $0.10$ & anytime-valid (Ville) & accepted poses & per-m
 Drift grid & $0.10$ & Romano-Wolf step-down & $55$ cells & family-wise \\
 Feasibility frontier, per-cell & $0.10$ & CP exact, per-cell (uncorrected) & $40$ cells & per-test \\
 Ranking-score frontier, corrected & $0.10$ & Holm / Benjamini-Yekutieli & $22\!\to\!13$ cells & family-wise \\
-Score-family intersection ($13/40$) & $0.10$ & conjunction, no across-cell corr. & $40$ cells & per-test \\
+Score-family, CP-certified ($\mathbf{11/40}$) & $0.10$ & CP lower $>\alpha$, all scores & $40$ cells & per-cell \\
+Score-family, point estimate ($13/40$) & $0.10$ & conjunction, no across-cell corr. & $40$ cells & per-test \\
 ``For every model'' effects & $0.10$ & intersection-union & per-model $p$ & no penalty \\
 \bottomrule
 \end{tabular}
@@ -707,8 +721,10 @@ combined $5\%$ certified).
 \includegraphics[width=0.72\textwidth]{../results/figures/certificate_heatmap.png}
 \caption{Certificate verdict per (model, ligand-novelty stratum), native \texttt{ranking\_score},
 $\alpha=0.20$. Green FEASIBLE cells carry a certified operating point and are annotated with retained
-coverage; amber ABSTAIN cells are undecided for want of labels; red ABSTAIN cells provably fail (the
-Clopper-Pearson lower bound exceeds $\alpha$ at every coverage), so the target is abandoned for that model.
+coverage and the accepted target count $n$ (so the $\ge\!20$-accept feasibility rule is checkable from the
+figure); amber ABSTAIN cells are undecided for want of labels, annotated with the tested $n$; red ABSTAIN
+cells provably fail (the Clopper-Pearson lower bound exceeds $\alpha$ at every coverage), so the target is
+abandoned for that model.
 Verdicts are encoded by both color and hatch to survive grayscale. Green gives way to red as novelty rises
 across every model. The full per-card detail (accepted $n$, realized risk with its Clopper-Pearson upper
 bound, drift $D$, recommended repair) and the pocket-axis grid are in the SI; the combined-feature
@@ -835,8 +851,7 @@ equally-correct poses, the gate-accepted ones recover the SAR-relevant contacts 
 markedly better than the rejected ones. Separately, the accepted set is
 PoseBusters-valid at a higher rate than the rejected set for every model (AF3 $0.77$ vs.\ $0.58$), a free
 strengthening; certifying the joint label (RMSD $\le2$\,\AA\ \emph{and} physically valid) directly is
-expensive because the confidence ranks for correctness, not validity, and we report that cost rather than
-hide it.
+expensive because the confidence ranks for correctness, not validity, and we report that cost.
 
 \textbf{The interaction endpoint as a correctness label, and the scope of the infeasibility.} A single
 geometric cutoff can over-count failures for a flexible ligand whose solvent-exposed tail moves the
@@ -932,9 +947,9 @@ direct test of the payoff.
 \textbf{What to do with this, concretely.} The layer is not only an abstention rule; the label-cost curve
 is a plan. A worked example: a team running AlphaFold3 on a congeneric series whose scaffold is one novelty
 stratum out from the training set (an $S_1$--$S_2$ regime) should not trust the raw ranking score --- it
-certifies almost nothing there leakage-free --- but can recover a certified acceptance rate with a median near $50\%$ (but wide draw-to-draw variance) by
-building a group-conditional gate, which costs on the order of $80$ solved structures of in-series analogs to
-calibrate. As an order-of-magnitude anchor only, and not a costing we claim precision over, a solved
+certifies almost nothing there leakage-free --- but can recover a certified acceptance rate by building a group-conditional gate. At $\sim\!80$ in-stratum
+structures this is a median $0.22$ coverage on $S_1$ and $0.48$ on $S_2$ (wide draw-to-draw variance, only
+$\sim\!56\%$ of draws certifying anything), rising toward $0.5$--$0.8$ only with the full in-stratum pool. As an order-of-magnitude anchor only, and not a costing we claim precision over, a solved
 structure runs a rough $\$10$k--$\$50$k and days to weeks (the low end optimistic for a first structure on a
 novel target), so the calibration is a five-to-low-six-figure, one-to-few-month investment set against a
 mis-prioritized medicinal-chemistry campaign, and partly defrayable by in-house legacy structures or
@@ -948,9 +963,9 @@ is in, before it commits medicinal-chemistry effort to a wrong pose.
 Co-folding confidence becomes a risk-controlled decision only when the guarantee is audited where it fails.
 On structural novelty a marginally valid gate that calibrates on familiar targets and deploys on novel ones
 realizes error $0.55$ against a $0.20$ target (about $2.7\times$; the frozen score still \emph{ranks} poses
-there, AUROC $0.56$ to $0.71$ across models, but the base rate is too low for any threshold to certify), and $13$ of $40$
-model-by-stratum cells admit no threshold on any score in the family --- global, interface, or ligand-local
---- that is certifiable at any coverage. An exact decomposition explains why: the score-fiber gap that opens
+there, AUROC $0.56$ to $0.71$ across models, but the base rate is too low for any threshold to certify), and $11$ of $40$
+model-by-stratum cells are provably uncertifiable on every score in the family --- global, interface, or
+ligand-local --- with a further $2$ uncertifiable by the point estimate. An exact decomposition explains why: the score-fiber gap that opens
 there closes under in-stratum recalibration but under no training-free reweighting. This gives a program a
 map of exactly where a co-folding pose can be trusted, and at what price. Co-folding confidence is
 certifiable on the familiar strata, where the exact binomial certifies from a median of $38$ labels over
@@ -1011,7 +1026,7 @@ Randomization Enables Robust Guarantees. J. R. Stat. Soc. B, 2024.
 \bibitem{barber2021limits} R. Foygel Barber, E. Cand\`es, A. Ramdas, R. Tibshirani.
 The Limits of Distribution-Free Conditional Predictive Inference. Information and Inference 10(2), 2021.
 \bibitem{geifman2017} Y. Geifman, R. El-Yaniv. Selective Classification for Deep Neural Networks. NeurIPS, 2017.
-\bibitem{rnp} P. Škrinjar, J. Eberhardt, G. Studer, G. Tauriello, T. Schwede, J. Durairaj. Evaluating
+\bibitem{rnp} P. \v{S}krinjar, J. Eberhardt, G. Studer, G. Tauriello, T. Schwede, J. Durairaj. Evaluating
 generalization in protein-ligand cofolding methods. Nature Structural \& Molecular Biology 33(5),
 782--794, 2026, doi:10.1038/s41594-026-01797-5 (Runs N' Poses benchmark; earlier as bioRxiv
 2025.02.03.636309, ``Have protein-ligand cofolding methods moved beyond memorisation?''; Zenodo
@@ -1025,7 +1040,7 @@ AlphaFold3. Nature 630, 2024.
 \bibitem{chai} Chai Discovery Team. Chai-1: Decoding the Molecular Interactions of Life. bioRxiv (preprint), 2024.
 \bibitem{protenix} ByteDance AML AI4Science Team. Protenix: Advancing Structure Prediction Through a
 Comprehensive AlphaFold3 Reproduction. bioRxiv (preprint), 2025.
-\bibitem{codrug} K. Nguyen, et al. CoDrug: Conformal Drug Property Prediction with Density Estimation
+\bibitem{codrug} S. Laghuvarapu, Z. Lin, J. Sun. CoDrug: Conformal Drug Property Prediction with Density Estimation
 under Covariate Shift. NeurIPS, 2023.
 \bibitem{jin2023selection} Y. Jin, E. Cand\`es. Selection by Prediction with Conformal p-values. JMLR, 2023
 (arXiv:2210.01408).
@@ -1093,8 +1108,8 @@ with Structure-Aware Guarantees for Protein Structures. arXiv:2601.07201 (prepri
 \bibitem{quietfailure} M. Tursunbadalov, M. Tursunbadalov. A Quiet Failure in Calibrated Virtual Screening:
 Marginal Conformal Prediction Under-Covers the Minority Class, and a Class-Conditional Fix Recovers It.
 arXiv:2607.06605 (preprint), 2026.
-\bibitem{kmmcp} Selective Kernel Mean Matching for Conformal Prediction under Covariate Shift.
-arXiv:2603.26415 (preprint), 2026.
+\bibitem{kmmcp} S. Laghuvarapu, R. Deb, J. Sun. KMM-CP: Practical Conformal Prediction under Covariate
+Shift via Selective Kernel Mean Matching. arXiv:2603.26415 (preprint), 2026.
 \bibitem{dockq2} T. Bianchi, A. Elofsson. DockQ v2: improved automatic quality measure for protein
 complexes, nucleic acids and small molecules. Bioinformatics 40(10), btae586, 2024.
 \bibitem{errington2025} D. Errington, C. Schneider, C. Bouysset, F. A. Dreyer. Assessing interaction
@@ -1116,7 +1131,8 @@ J. A. Doudna. Functional Protein Mining with Conformal Guarantees. Nature Commun
 Supporting Information available: dataset flow diagram; notation and label-provenance tables; reliability
 diagram; decision-curve analysis; per-stratum bin sizes and similarity ranges; the screening arm; the
 cross-model danger floor; the synthetic-generator and public-benchmark validation; the full certificate-card
-grid; proof of the decomposition (PDF).
+grid (both novelty axes); the five-model two-axis and pocket-axis certified grids; proof of the
+decomposition (PDF).
 
 \begin{figure}[h]
 \centering

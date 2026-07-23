@@ -1,0 +1,537 @@
+{
+ "alpha": 0.2,
+ "delta": 0.1,
+ "min_accept": 20,
+ "definition": "CP-infeasible on a score = CP lower bound on accepted error > alpha at every coverage with >= min_accept; family intersection = CP-infeasible on ALL four scores. This is the count that licenses 'abstention is certified'.",
+ "n_nonreference_cells_tested": 40,
+ "cp_infeasible_per_score": {
+  "ranking_score": 20,
+  "iface_iptm": 14,
+  "ligand_plddt_mean": 14,
+  "ligand_plddt_min": 17
+ },
+ "cp_certified_family_intersection": 11,
+ "point_estimate_intersection_e50": 13,
+ "detail": [
+  {
+   "axis": "ligand",
+   "model": "af3",
+   "stratum": 1,
+   "n": 600,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "af3",
+   "stratum": 2,
+   "n": 590,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "af3",
+   "stratum": 3,
+   "n": 593,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "af3",
+   "stratum": 4,
+   "n": 66,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  },
+  {
+   "axis": "ligand",
+   "model": "boltz1",
+   "stratum": 1,
+   "n": 540,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "boltz1",
+   "stratum": 2,
+   "n": 542,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "boltz1",
+   "stratum": 3,
+   "n": 535,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": false,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "boltz1",
+   "stratum": 4,
+   "n": 62,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  },
+  {
+   "axis": "ligand",
+   "model": "boltz1x",
+   "stratum": 1,
+   "n": 530,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "boltz1x",
+   "stratum": 2,
+   "n": 534,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "boltz1x",
+   "stratum": 3,
+   "n": 523,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "boltz1x",
+   "stratum": 4,
+   "n": 59,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "chai",
+   "stratum": 1,
+   "n": 570,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "chai",
+   "stratum": 2,
+   "n": 584,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "chai",
+   "stratum": 3,
+   "n": 561,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "chai",
+   "stratum": 4,
+   "n": 63,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  },
+  {
+   "axis": "ligand",
+   "model": "protenix",
+   "stratum": 1,
+   "n": 586,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "protenix",
+   "stratum": 2,
+   "n": 581,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "protenix",
+   "stratum": 3,
+   "n": 575,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": false,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "ligand",
+   "model": "protenix",
+   "stratum": 4,
+   "n": 63,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  },
+  {
+   "axis": "pocket",
+   "model": "af3",
+   "stratum": 1,
+   "n": 575,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "af3",
+   "stratum": 2,
+   "n": 589,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "af3",
+   "stratum": 3,
+   "n": 609,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "af3",
+   "stratum": 4,
+   "n": 69,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  },
+  {
+   "axis": "pocket",
+   "model": "boltz1",
+   "stratum": 1,
+   "n": 521,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "boltz1",
+   "stratum": 2,
+   "n": 539,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "boltz1",
+   "stratum": 3,
+   "n": 526,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  },
+  {
+   "axis": "pocket",
+   "model": "boltz1",
+   "stratum": 4,
+   "n": 64,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  },
+  {
+   "axis": "pocket",
+   "model": "boltz1x",
+   "stratum": 1,
+   "n": 528,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "boltz1x",
+   "stratum": 2,
+   "n": 506,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "boltz1x",
+   "stratum": 3,
+   "n": 518,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "boltz1x",
+   "stratum": 4,
+   "n": 60,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  },
+  {
+   "axis": "pocket",
+   "model": "chai",
+   "stratum": 1,
+   "n": 561,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "chai",
+   "stratum": 2,
+   "n": 574,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "chai",
+   "stratum": 3,
+   "n": 563,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "chai",
+   "stratum": 4,
+   "n": 64,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  },
+  {
+   "axis": "pocket",
+   "model": "protenix",
+   "stratum": 1,
+   "n": 574,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": false
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "protenix",
+   "stratum": 2,
+   "n": 575,
+   "flags": {
+    "ranking_score": false,
+    "iface_iptm": false,
+    "ligand_plddt_mean": false,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": false
+  },
+  {
+   "axis": "pocket",
+   "model": "protenix",
+   "stratum": 3,
+   "n": 578,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  },
+  {
+   "axis": "pocket",
+   "model": "protenix",
+   "stratum": 4,
+   "n": 64,
+   "flags": {
+    "ranking_score": true,
+    "iface_iptm": true,
+    "ligand_plddt_mean": true,
+    "ligand_plddt_min": true
+   },
+   "all_infeasible": true
+  }
+ ]
+}

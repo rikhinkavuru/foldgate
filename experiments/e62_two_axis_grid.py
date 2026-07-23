@@ -55,19 +55,23 @@ def main():
     d = pd.read_csv(RESDIR / "analysis_table.csv")
     d = d[d.method.isin(GOVERNED)].dropna(
         subset=[CONF, "correct", "novelty_stratum", "pocket_novelty_stratum"]).copy()
-    d["lig_novel"] = (d["novelty_stratum"].astype(int) >= 2).astype(int)
-    d["poc_novel"] = (d["pocket_novelty_stratum"].astype(int) >= 2).astype(int)
+    # 3 bins per axis: familiar (S0-1), moderate (S2), novel (S3-4)
+    def _bin(x):
+        return np.where(x <= 1, 0, np.where(x == 2, 1, 2))
+    d["lig_b"] = _bin(d["novelty_stratum"].astype(int))
+    d["poc_b"] = _bin(d["pocket_novelty_stratum"].astype(int))
+    names = {0: "fam", 1: "mod", 2: "novel"}
 
-    out = {"alpha": ALPHA, "score": CONF, "grid": "2x2 familiar/novel on ligand and pocket",
-           "cells_def": "lig_novel = novelty_stratum>=2; poc_novel = pocket_novelty_stratum>=2",
+    out = {"alpha": ALPHA, "score": CONF, "grid": "3x3 familiar/moderate/novel on ligand and pocket",
+           "cells_def": "bin: S0-1=familiar, S2=moderate, S3-4=novel, on each of ligand and pocket novelty",
            "per_model": {}}
     for m in GOVERNED:
         t = _top1(d[d.method == m])
         grid = {}
-        for lig in (0, 1):
-            for poc in (0, 1):
-                g = t[(t.lig_novel == lig) & (t.poc_novel == poc)]
-                key = f"lig_{'novel' if lig else 'fam'}__poc_{'novel' if poc else 'fam'}"
+        for lig in (0, 1, 2):
+            for poc in (0, 1, 2):
+                g = t[(t.lig_b == lig) & (t.poc_b == poc)]
+                key = f"lig_{names[lig]}__poc_{names[poc]}"
                 if len(g) < MIN_ACCEPT:
                     grid[key] = {"n": int(len(g)), "verdict": "ABSTAIN-underpowered",
                                  "cp_certified_coverage": 0.0, "underpowered_small_n": True}
