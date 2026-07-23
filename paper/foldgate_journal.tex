@@ -749,9 +749,28 @@ Sec.~\ref{sec:break} reproduced on a second dataset; on the $384$ train-similar 
 accepts $18$ at realized risk $0.11$. The interface-ipTM gate out-ranks a \texttt{ranking\_score} control (AURC $0.380$ vs.\ $0.454$) but
 their $90\%$ bootstrap intervals overlap, and the regenerated model's self-scored top-1 success ($0.40$)
 differs from the released $0.57$, so this stays a directional transfer check, feature and label
-self-consistent within the one run. A third dataset would need a benchmark that releases ipTM and
-PoseBusters per pose; where none is available we state that concrete community ask rather than overclaim
-generality.
+self-consistent within the one run.
+
+To test the break itself, rather than only coverage starvation, on benchmarks that ship no released
+predictions, we regenerated Boltz-2 and Chai-1 predictions with confidence ($5$ diffusion samples) on
+PoseBusters-V2 and PLINDER-test and self-scored them under the same pocket-superposed symmetry-corrected
+$2$\,\AA\ convention (feature and label from the same run; $458$ targets survive scoring, $210$
+PoseBusters and $248$ PLINDER). Self-scoring here carries a trap of exactly the kind Sec.~\ref{sec:data}
+warns about: RCSB assemblies deposit several copies of a ligand in different sites ($63\%$ of the PLINDER
+subset, up to eight copies), and pooling their pockets into one superposition frame inflates every
+recomputed RMSD, so each copy must be scored in its own pocket frame; done correctly the four
+model-by-dataset cells recover the published pose accuracy ($0.66$--$0.76$ correct, median ligand-RMSD
+$0.67$--$1.16$\,\AA). On these predictions the break reproduces: a marginally-valid gate calibrated on the
+familiar targets over-covers on the novel ones, realized error $0.315$ (PLINDER, Boltz-2), $0.267$ and
+$0.240$ (PoseBusters, Boltz-2 and Chai-1) against the $0.20$ target, with the fourth cell marginal
+($0.182$). The full feasibility-frontier collapse is milder than on Runs N' Poses ($2$ of $10$
+zero-frontier cells here against $22$ of $40$ there), for two reasons we state rather than absorb: base
+pose accuracy is genuinely higher on these curated benchmarks (per-stratum $0.65$--$0.83$ against Runs N'
+Poses' $0.44$ on $S_3$), and the novelty axis here is a chemical-similarity proxy (maximum ECFP4 Tanimoto
+to a broad reference ligand set) rather than the training-cutoff similarity Runs N' Poses ships, so the
+strata are less cleanly separated by the shift the break responds to. A training-cutoff-matched novelty
+axis on these benchmarks is the proper sharpening and the one remaining external step; the direction of the
+break, though, does not depend on the benchmark.
 
 \textbf{Label quality is not the confound.} The label is a $2$\,\AA\ BiSyRMSD against a single deposited
 crystal pose, inheriting the field's pose-correctness convention~\citep{posebusters}. We tested whether
