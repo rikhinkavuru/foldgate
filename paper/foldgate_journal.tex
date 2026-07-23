@@ -61,7 +61,7 @@ where it is needed most: a gate calibrated on familiar targets and deployed on n
 $0.55$ against a $0.20$ target, because the transferred threshold accepts nearly every pose and inherits the
 base rate of a set the model gets wrong half the time. Lowering coverage does not recover it, and neither
 does a better score: across a frozen score family (ranking score, interface ipTM, ligand-local pLDDT), $11$
-of $40$ non-reference model-by-novelty-stratum cells are provably uncertifiable on every score, the
+of the $20$ non-reference novel-stratum cells are provably uncertifiable on every score, the
 Clopper-Pearson lower bound exceeding $\alpha$ at all coverages, so abstention is the certified action on
 structurally novel targets. The score still ranks poses there; the base rate is simply too low to certify,
 which an exact decomposition shows no label-free reweighting can fix. Group-conditional recalibration
@@ -278,7 +278,9 @@ Romano-Wolf step-down on studentized max-$t$ statistics with $2000$ bootstrap re
 \textbf{The premise, and what we add.} That co-folding accuracy degrades on targets dissimilar to the
 training set is established: \v{S}krinjar et al.~\citep{rnp}, whose benchmark we consume, report that current
 methods largely memorise poses and that success rate falls almost linearly with training-set coverage, to
-roughly $20\%$ in the sparsest bin. We take that degradation as the premise, not the finding. Our subject
+roughly $20\%$ in the sparsest bin, and FoldBench~\citep{foldbench} independently finds ligand-docking
+accuracy diminishing with training-set similarity on a second low-homology benchmark. We take that
+degradation as the premise, not the finding. Our subject
 is the decision it forces. A program does not act on an average success rate; it acts on a single delivered
 pose and needs to know whether to trust it. We turn the degradation into a risk-controlled accept/abstain
 gate with a finite-sample guarantee, prove exactly where that guarantee can and cannot be kept (the
@@ -395,29 +397,34 @@ includes the ungoverned Boltz-2, which is excluded from these cells. Of the $50$
 axes $\times$ five governed models $\times$ five strata), the ten $S_0$ reference cells are feasible by
 construction (the rule is calibrated on $S_0$: $c^\star\!=\!1.00$ at $\alpha=0.20$, $0.65$ at $\alpha=0.10$),
 leaving $40$ non-reference cells. Requiring at least $20$ accepted targets to call a stratum feasible, on the
-global ranking score $\mathbf{22}$ of those $40$ admit no operating point at any coverage at $\alpha=0.20$;
-$14$ survive a per-cell exact binomial lower bound on $R_{Q,g}>\alpha$ at every coverage, and $\mathbf{13}$
-survive a family-wise Holm or Benjamini-Yekutieli correction over the $40$-cell family, so the ranking-score
-frontier is not a multiplicity artifact. Each such cell is the empirical realization of a closed-form
+global ranking score $\mathbf{22}$ of those $40$ admit no operating point at any coverage at $\alpha=0.20$ by
+the point estimate; $20$ survive the stricter per-cell Clopper-Pearson lower bound $>\alpha$ at every
+coverage, and $\mathbf{13}$ survive a family-wise Holm or Benjamini-Yekutieli correction of the
+point-estimate frontier over the $40$-cell family, so the ranking-score frontier is not a multiplicity
+artifact. Each such cell is the empirical realization of a closed-form
 feasibility condition: when the accepted-set base risk exceeds $\alpha$, no distribution-free rule can
 certify, and the required abstention mass has a closed form, shown for structured risk control
 by~\citet{crcgupta} (arXiv preprint, June 2026). Our contribution here is not that condition but its
 per-stratum map in this domain, the demonstration that structural novelty is what drives the base rate above
 $\alpha$, and the score-family conjunction below. That conjunction is the load-bearing claim: because the
 frontier is bounded by the accepted-set base rate rather than by ranking quality (Sec.~\ref{sec:break}), the
-count is \emph{score-dependent} --- computed identically on interface ipTM it is $16$, and on ligand-local
-pLDDT, a materially better ranker (AUROC $0.72$--$0.85$ against $0.59$--$0.70$ for the global score), it is
-$18$. Intersecting over the whole frozen family, $\mathbf{13}$ of the $40$ cells admit no threshold on
-\emph{any} of these four scores (global ranking, interface ipTM, mean and worst-quartile ligand pLDDT) whose
-realized risk reaches $\alpha$ at any coverage, and $21$ of $40$ at $\alpha=0.10$. That $13$ is a
-\emph{point-estimate} intersection, distinct from the multiplicity-corrected ranking-score $13$ above.
-Because ``abstention is the certified action'' is a claim about a bound, we also report the stricter
-\emph{CP-certified} intersection: $\mathbf{11}$ of the $40$ cells are provably uncertifiable on every score,
-in that the Clopper-Pearson lower bound on the accepted-set error exceeds $\alpha$ at every measurable
-coverage for all four scores (per-score CP-infeasible counts $20$ ranking, $14$ ipTM, $14$ and $17$ ligand
-pLDDT). The $11$ is the number the abstention conclusion rests on; the $13$ is the broader point-estimate
-map. Ligand pLDDT is a better ranker yet does
-not close the frontier precisely because the break is base-rate-bound, not discrimination-bound; the one Ligand pLDDT is a better ranker yet does
+count is \emph{score-dependent}: the point-estimate zero-frontier counts over the four scores are $22$
+(ranking), $16$ (ipTM), $18$ (mean ligand pLDDT), and $18$ (worst-quartile ligand pLDDT), the last two from
+a materially better ranker (AUROC $0.72$--$0.85$ against $0.59$--$0.70$ for the global score). Intersecting
+over the whole frozen family, $\mathbf{13}$ of the $40$ cells have no threshold on \emph{any} of these four
+scores whose realized risk falls to $\alpha$ or below at any coverage, and $21$ of $40$ at $\alpha=0.10$.
+That $13$ is a \emph{point-estimate} intersection, distinct from the multiplicity-corrected ranking-score
+$13$ above. Because ``abstention is the certified action'' is a claim about a bound, we lead on the stricter
+\emph{CP-certified} intersection: $\mathbf{11}$ cells are provably uncertifiable on every score, the
+Clopper-Pearson lower bound on the accepted-set error exceeding $\alpha$ at every measurable coverage for all
+four (per-score CP-infeasible counts $20$ ranking, $14$ ipTM, $14$ mean and $17$ worst-quartile ligand
+pLDDT). Two facts sharpen this. All $11$ sit in the novel strata: they are $\mathbf{11}$ of the $20$
+non-reference \emph{novel}-stratum cells ($S_3$, $S_4$), with none in the moderate strata, so the certified
+uncertifiability lands exactly on the structurally novel targets the claim is about. And the count needs no
+further correction: the per-cell test is a Clopper-Pearson intersection-union over the coverage grid, already
+conservative at $\delta$, and the four-score conjunction only tightens it; across-cell multiplicity is the
+separate, ledger-reported Holm/BY choice we apply to the point-estimate frontier. The $11$ is the number the
+abstention conclusion rests on; the $13$ is the broader point-estimate map. Ligand pLDDT is a better ranker yet does
 not close the frontier precisely because the break is base-rate-bound, not discrimination-bound; the one
 pose-triage signal we could not test, the protein-ligand PAE block, is absent from the released prediction
 dump (it ships coordinates and ranking scores only) and would require regeneration. The infeasibility is not
@@ -549,8 +556,9 @@ accept-all would realize error $0.28$ and miss the $\alpha=0.20$ target, yet the
 coverage by keeping only the most confident poses; a coarse rule that took the whole familiar-ligand stratum
 could not. And pocket novelty degrades an otherwise-familiar ligand: the ligand-familiar / pocket-novel cell
 (base $0.51$) is ABSTAIN, not the FEASIBLE a ligand-only card grants the familiar-ligand stratum, which is
-the up-to-$0.32$ under-coverage made explicit. The grid costs the finer per-cell label budget and is what we
-recommend when both similarities are available; the full five-model grid is in the SI. This is the native
+the up-to-$0.32$ under-coverage made explicit. The finer grid has a real cost, which the table already shows: one of the nine AF3 cells is underpowered
+($n=32$ targets, too few to certify its $5\%$ point-estimate region at the $\ge\!20$-accept rule). We
+recommend it when both similarities are available, and give the full five-model grid in the SI. This is the native
 score, so its coverages are not comparable to the combined-score label-cost curve (Fig.~\ref{fig:labelcost}).
 
 \begin{table}[t]
@@ -560,7 +568,9 @@ and certified on its own. Bins are $S_0$--$S_1$ (familiar), $S_2$ (moderate), $S
 axis. Entries are the CP-certified coverage and verdict, base correctness in parentheses. The
 familiar/moderate cell certifies at \emph{reduced} coverage ($0.20$), where accept-all would fail, so the
 selective gate contributes; pocket novelty alone (right column) removes certifiability from a familiar
-ligand. The ligand-novel / pocket-familiar cell is underpowered ($n=32$).}
+ligand. Here $n$ is the number of targets in the cell; the ligand-novel / pocket-familiar cell is underpowered
+($n=32$, a $5\%$ point-estimate feasible region that $32$ targets cannot certify at the $\ge\!20$-accept rule,
+so more labels could still certify it).}
 \label{tab:twoaxis}
 \begin{tabular}{llll}
 \toprule
@@ -935,9 +945,8 @@ bound (Sec.~\ref{sec:repair}) additionally removes the hard $2$\,\AA\ cutoff.
 \textbf{Limitations.} We hold three boundaries in view. The no-computable-analog stratum $S_4$ is a mixture
 (Sec.~\ref{sec:data}): $\sim\!29$ of $76$ instances are a genuine drug-like no-analog core and the rest are
 a similarity-search coverage gap, so its ``uncertifiable'' reading applies cleanly only to that core, and
-we lead every claim on $S_3$. The external validation stratifies novelty by a chemical-similarity proxy
-rather than the training-cutoff similarity, so a cutoff-matched axis on PoseBusters and PLINDER is the one
-remaining external sharpening (Sec.~\ref{sec:general}); the direction of the break does not depend on it.
+we lead every claim on $S_3$. The external validation stratifies novelty by a chemical-similarity proxy, whose cutoff-matched sharpening
+Sec.~\ref{sec:general} names as the one remaining external step.
 And the framework certifies a pose-correctness label, so certifying an affinity ranker, which the SI
 screening analysis shows out-ranks pose confidence but which carries no coverage guarantee, is the natural
 extension once an affinity-error label is in hand. Evaluation is retrospective by design, since the point
@@ -963,9 +972,9 @@ is in, before it commits medicinal-chemistry effort to a wrong pose.
 Co-folding confidence becomes a risk-controlled decision only when the guarantee is audited where it fails.
 On structural novelty a marginally valid gate that calibrates on familiar targets and deploys on novel ones
 realizes error $0.55$ against a $0.20$ target (about $2.7\times$; the frozen score still \emph{ranks} poses
-there, AUROC $0.56$ to $0.71$ across models, but the base rate is too low for any threshold to certify), and $11$ of $40$
-model-by-stratum cells are provably uncertifiable on every score in the family --- global, interface, or
-ligand-local --- with a further $2$ uncertifiable by the point estimate. An exact decomposition explains why: the score-fiber gap that opens
+there, AUROC $0.56$ to $0.71$ across models, but the base rate is too low for any threshold to certify), and $11$ of the $20$
+novel-stratum cells are provably uncertifiable on every score in the family --- global, interface, or
+ligand-local --- with the moderate strata all certifiable and $13$ of $40$ uncertifiable by the point estimate. An exact decomposition explains why: the score-fiber gap that opens
 there closes under in-stratum recalibration but under no training-free reweighting. This gives a program a
 map of exactly where a co-folding pose can be trusted, and at what price. Co-folding confidence is
 certifiable on the familiar strata, where the exact binomial certifies from a median of $38$ labels over
@@ -1031,8 +1040,9 @@ generalization in protein-ligand cofolding methods. Nature Structural \& Molecul
 782--794, 2026, doi:10.1038/s41594-026-01797-5 (Runs N' Poses benchmark; earlier as bioRxiv
 2025.02.03.636309, ``Have protein-ligand cofolding methods moved beyond memorisation?''; Zenodo
 10.5281/zenodo.14794785).
-\bibitem{foldbench} Q. Feng, S. Xu, et al. FoldBench: a low-homology benchmark for biomolecular structure
-prediction. Nature Communications, 2025.
+\bibitem{foldbench} S. Xu, Q. Feng, L. Qiao, H. Wu, T. Shen, Y. Cheng, S. Zheng, S. Sun. Benchmarking
+all-atom biomolecular structure prediction with FoldBench. Nature Communications 17, 442, 2026,
+doi:10.1038/s41467-025-67127-3.
 \bibitem{shen2026vs} C. Shen, et al. Unlocking the application potential of AlphaFold3-like approaches in
 virtual screening. Chemical Science, 2026. Zenodo 10.5281/zenodo.17568813.
 \bibitem{af3} J. Abramson, et al. Accurate structure prediction of biomolecular interactions with
@@ -1261,7 +1271,7 @@ $0.05$ (ACS, covariate).
 receptor chain while co-folding models predict the full biological assembly, so a chain-ordinal
 superposition can land the ligand in the wrong protomer of a homodimer: the backbone still fits
 (superposition residual $\sim\!0.3$\,\AA) while the ligand sits tens of \AA ngstr\"om away. Neither the
-residual nor a triangle-inequality consistency check detects it, and a distance-consistency check flagged for none of the $13{,}146$ pairs while $21\%$ of recomputed distances and $15\%$ of binary correctness labels were wrong. Only
+residual nor a triangle-inequality consistency check detects it, and a distance-consistency check flags none of the $13{,}146$ pairs while $21\%$ of recomputed distances and $15\%$ of binary correctness labels were wrong. Only
 comparison against the shipped BiSyRMSD label exposes it; restricting to single-chain receptors with an
 unambiguous ligand copy raises agreement from Spearman $0.620$ to $0.995$ and defines the $6{,}163$-instance
 subset any recomputed-geometry result in this paper uses (Table~\ref{tab:provenance}). We flag this for
