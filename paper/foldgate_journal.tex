@@ -77,9 +77,11 @@ novelty stratum reading FEASIBLE, ABSTAIN-and-abandon, or ABSTAIN-and-collect-la
 \end{abstract}
 
 \section{Introduction}
-Co-folding models predict a protein--ligand complex and emit confidence scores (interface predicted
-TM-score, ipTM; ranking score; predicted aligned error). A practitioner who wants to act on a predicted
-pose needs a decision rule that carries an error guarantee. Conformal selective prediction supplies one:
+Co-folding models now place a ligand in its protein pocket accurately enough to seed real drug-discovery
+decisions, and they emit a confidence score with every prediction (interface predicted TM-score, ipTM;
+ranking score; predicted aligned error). What is missing is the step that turns that score into a decision
+a program can act on: accept this pose and commit medicinal-chemistry effort, or abstain. That step needs
+an error guarantee the score alone does not carry. Conformal selective prediction supplies one:
 accept a pose when its score clears a threshold, abstain otherwise, and certify that the error rate among
 accepted poses stays below a target $\alpha$ with high probability~\citep{vovk2005,geifman2017}. The catch
 is that this guarantee assumes exchangeability, that a new target is statistically interchangeable with the
@@ -93,8 +95,10 @@ released predictions on CPU.
 \textbf{(1)} We give a finite-sample selective-risk gate over frozen co-folding confidence, show its
 guarantee collapses under novelty shift, and map the collapse with a per-stratum \emph{feasibility
 frontier} that decays to zero on novel strata; the collapse is base-rate-bound rather than a loss of the
-score's ranking signal, and score-conditional reliability drift measures it
-(Sec.~\ref{sec:break}--\ref{sec:frontier}).
+score's ranking signal, and score-conditional reliability drift measures it. The collapse is a property of
+the confidence, not of the metric: it survives on any endpoint that requires reproducing the
+binding-determinant interactions, and reproduces on regenerated PoseBusters and PLINDER predictions
+(Sec.~\ref{sec:break}--\ref{sec:frontier}, Sec.~\ref{sec:general}).
 \textbf{(2)} We prove an exact decomposition of the realized selective risk into a covariate-corrected
 reference and an accept-region score-fiber gap that no training-free reweighting can move, turning it into a
 measurable diagnostic that selects, from a labeled probe, which repair a deployment region admits
@@ -719,6 +723,26 @@ strengthening; certifying the joint label (RMSD $\le2$\,\AA\ \emph{and} physical
 expensive because the confidence ranks for correctness, not validity, and we report that cost rather than
 hide it.
 
+\textbf{The interaction endpoint as a correctness label, and the scope of the impossibility.} A single
+geometric cutoff can over-count failures for a flexible ligand whose solvent-exposed tail moves the
+whole-ligand RMSD past $2$\,\AA\ while the core pose and the binding-determinant interactions are right, so
+we test the impossibility against interaction recovery treated as the correctness \emph{label}, not only as
+a downstream quality read. The mechanism is real: $614$ AF3 poses are RMSD-incorrect yet
+interaction-correct, concentrated on the flexible ligands (rotatable bonds $\ge 8$), against $33$ the other
+way. The impossibility then resolves cleanly by endpoint strictness, which we report rather than pick a
+convenient label. Under strict endpoints the novel-stratum break holds: on the $2$\,\AA\ geometry the AF3
+deploy-to-novel error is $0.41$, and on recovery of $\ge 70\%$ of the key directional interactions (H-bond,
+salt bridge, $\pi$-stacking, the binding determinants) it is $0.39$, both with zero-frontier cells on the
+novel tail. It relaxes only under a lenient all-contact fingerprint (untyped $F_1$, or $\ge 50\%$
+key-interaction recall), where hydrophobic contacts are numerous and easy to recover, novel-stratum base
+correctness rises above $1-\alpha$, and a conservative gate certifies at reduced coverage. So the
+impossibility is not an artifact of the RMSD convention: it governs any endpoint that requires reproducing
+the binding-determinant interactions, and the endpoint choice is itself the deployment decision the
+match-the-certifier-to-loss result (Sec.~\ref{sec:repair}) makes explicit. The whole-ligand geometry we
+lead with is the standardized pocket-aligned symmetry-corrected RMSD of the DockQ family~\citep{dockq2},
+which sharpens the metric but, being whole-ligand, shares the flexible-tail behavior; the interaction
+endpoint is what separates the two regimes.
+
 \section{Generality and limitations}\label{sec:general}
 \textbf{Pseudo-prospective.} Freezing calibration on everything deposited before $2023$-05-31 and deploying
 on everything after (per model $\sim\!1300$ pre- and $\sim\!900$ post-cutoff targets), with no stratum
@@ -781,13 +805,17 @@ and $10\%$ random label flips ($S_3$ risk stays above $\alpha$ in $100\%$ and $9
 novel-pocket collapse is a property of confidence reliability, not label noise; the graded-loss betting
 bound (Sec.~\ref{sec:repair}) additionally removes the hard $2$\,\AA\ cutoff.
 
-\textbf{Limitations.} The no-computable-analog stratum $S_4$ is a mixture (Sec.~\ref{sec:data}): $\sim\!29$
-of $76$ instances are a genuine drug-like no-analog core and the rest are a similarity-search coverage gap,
-so its ``uncertifiable'' reading applies cleanly only to that core, and we lead every claim on $S_3$. The
-best ranker in our screening analysis (SI), a Boltz-2 affinity head, carries no coverage guarantee:
-extending the framework to certify an affinity ranker (which needs an affinity-error label) is the top open
-problem. All evaluation is retrospective; a prospective screen with wet-lab confirmation is the natural next
-step.
+\textbf{Limitations.} We hold three boundaries in view. The no-computable-analog stratum $S_4$ is a mixture
+(Sec.~\ref{sec:data}): $\sim\!29$ of $76$ instances are a genuine drug-like no-analog core and the rest are
+a similarity-search coverage gap, so its ``uncertifiable'' reading applies cleanly only to that core, and
+we lead every claim on $S_3$. The external validation stratifies novelty by a chemical-similarity proxy
+rather than the training-cutoff similarity, so a cutoff-matched axis on PoseBusters and PLINDER is the one
+remaining external sharpening (Sec.~\ref{sec:general}); the direction of the break does not depend on it.
+And the framework certifies a pose-correctness label, so certifying an affinity ranker, which the SI
+screening analysis shows out-ranks pose confidence but which carries no coverage guarantee, is the natural
+extension once an affinity-error label is in hand. Evaluation is retrospective by design, since the point
+is to certify decisions on released predictions before any wet-lab commitment; a prospective screen is the
+direct test of the payoff.
 
 \textbf{What to do with this, concretely.} The layer is not only an abstention rule; the label-cost curve
 is a plan. A worked example: a team running AlphaFold3 on a congeneric series whose scaffold is one novelty
@@ -809,13 +837,18 @@ realizes error $0.55$ against a $0.20$ target (about $2.7\times$; the frozen sco
 there, AUROC $0.71$, but the base rate is too low for any threshold to certify), and $13$ of $40$
 model-by-stratum cells admit no threshold on any score in the family --- global, interface, or ligand-local
 --- that is certifiable at any coverage. An exact decomposition explains why: the score-fiber gap that opens
-there closes under in-stratum recalibration but under no training-free reweighting. Three honest bottom lines follow. Co-folding confidence is certifiable on
-the familiar strata (where the exact binomial certifies from a median of $38$ labels over the $23$ feasible
-cells, against $102$ for Hoeffding). It is extendable one stratum outward at a measured price, on the order
-of $80$ in-stratum target structures for usable certified coverage, and with a public proxy stratifier for
-closed-training models. And on the extreme novel tail, exactly where a program most needs a guarantee,
-neither stratification nor a label-free certificate can supply one, so abstention is the certified action. The layer runs on frozen models' released
-predictions on CPU and ships as certificate cards per model and novelty stratum.
+there closes under in-stratum recalibration but under no training-free reweighting. This gives a program a
+map of exactly where a co-folding pose can be trusted, and at what price. Co-folding confidence is
+certifiable on the familiar strata, where the exact binomial certifies from a median of $38$ labels over
+the $23$ feasible cells against $102$ for Hoeffding. It is extendable one stratum outward at a measured and
+now-quantified price, on the order of $80$ in-stratum target structures for usable certified coverage, and
+with a public proxy stratifier for closed-training models. On the extreme novel tail, exactly where a
+program most needs a guarantee, no training-free certificate exists, and the honest, safe action is the one
+the layer certifies: abstain. The break is a property of the confidence rather than of the benchmark or the
+metric; it reproduces on regenerated PoseBusters and PLINDER predictions and on any endpoint that requires
+reproducing the binding-determinant interactions. The layer runs on frozen models' released predictions on
+CPU and ships as certificate cards per model and novelty stratum, so a team can read its trust map before
+it commits.
 
 \textbf{Data and code availability.} Code and calibration tables are at
 \url{https://github.com/rikhinkavuru/foldgate} under the MIT license; a one-command \texttt{make repro}
@@ -839,6 +872,9 @@ of the git history (OpenTimestamps).
 \textbf{Funding.} No external funding; the author is an independent researcher with no institutional
 support, and no funder had any role in the study design, analysis, or decision to publish.
 \textbf{Competing interests.} The author declares no competing financial interest.
+\textbf{Acknowledgments.} The author thanks H.-P. Peng for the suggestion to treat protein--ligand
+interaction recovery as a pose-correctness endpoint, which motivated the analysis in
+Sec.~\ref{sec:utility}.
 \textbf{Use of AI tools.} A large language model (Anthropic Claude) was used as a coding and editing
 assistant: it assisted in writing analysis and figure code, in drafting and revising manuscript prose, and
 in literature search. It was not used to generate data, results, or figures' underlying numbers, every
@@ -945,6 +981,8 @@ Protein Structures. arXiv:2601.07201 (preprint), 2026.
 Minority-Class Collapse. arXiv:2607.06605 (preprint), 2026.
 \bibitem{kmmcp} Selective Kernel Mean Matching for Conformal Prediction under Covariate Shift.
 arXiv:2603.26415 (preprint), 2026.
+\bibitem{dockq2} T. Bianchi, A. Elofsson. DockQ v2: improved automatic quality measure for protein
+complexes, nucleic acids and small molecules. Bioinformatics 40(10), btae586, 2024.
 \end{thebibliography}
 
 \clearpage
