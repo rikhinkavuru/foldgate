@@ -64,15 +64,20 @@ better score: across a frozen score family (global ranking score, interface ipTM
 pLDDT that is the field's pose-triage signal), $13$ of the $40$ non-reference model-by-novelty-stratum
 cells admit \emph{no} threshold on \emph{any} of them reaching the target at any coverage, so abstention
 is the only certified action on structurally novel targets. The cause is a base-rate collapse rather than
-a loss of ranking signal, since the frozen score still separates correct from incorrect poses there (AUROC
-$0.71$). An exact decomposition isolates the responsible term, shows it is invisible to any label-free
-reweighting, and turns it into a diagnostic that picks the repair from a small labeled probe.
-Group-conditional recalibration restores per-stratum control (AlphaFold3 certifies $52\%$ and $39\%$ of
-the moderately-novel strata, against $8\%$ and $12\%$ before), and under leakage-free target-grouped
-cross-validation its combined-feature gate retains $73\%$ of AlphaFold3 poses at a certified risk bound of
-$0.192$. We price that repair rather than assert it: on the order of $80$ in-stratum crystal structures
-buys one novelty stratum of certified reach, and the most novel targets admit no repair by stratification
-at any budget. The layer runs on released predictions on CPU and ships a certificate card per model and
+a loss of ranking signal: the frozen score still separates correct from incorrect poses there (AUROC $0.56$
+to $0.71$ across models), but the base rate is too low for any threshold to certify. An exact decomposition
+isolates the responsible term, shows it is invisible to any label-free reweighting, and turns it into a
+diagnostic that picks the repair from a small labeled probe. Group-conditional recalibration restores
+per-stratum control (AlphaFold3 certifies $52\%$ and $39\%$ of the moderately-novel strata, against $8\%$
+and $12\%$ before). The cheap side of the layer is honest about its limit: the native single-score gate,
+evaluated leakage-free, certifies almost no usable coverage, and the gate that does, retaining $73\%$ of
+AlphaFold3 poses at a certified risk bound of $0.192$, buys that with a combined feature that costs several
+model inferences per target rather than one released prediction. We price the repair rather than assert it:
+on the order of $80$ in-stratum crystal structures buys one novelty stratum of certified reach, and the
+most novel targets admit no repair by stratification at any budget. The break is a property of the
+confidence, not the benchmark or the metric: it reproduces on regenerated PoseBusters and PLINDER
+predictions and on any endpoint that requires recovering the binding-determinant interactions. The
+native-score layer runs on released predictions on CPU and ships a certificate card per model and
 novelty stratum reading FEASIBLE, ABSTAIN-and-abandon, or ABSTAIN-and-collect-labels.
 \end{abstract}
 
@@ -195,7 +200,13 @@ ranking-score / interface-ipTM confidence fields the gate normalizes onto a comm
 (Sec.~\ref{sec:utility}) give $12{,}602$ governed poses over $2{,}425$ systems; deduplicating to one pose
 per (system, model) gives $11{,}254$ independent target-labels for the five governed models. Certificates
 that must be per deployed model use the target-label unit, since several ligand instances of one system
-fail together and pooling them as independent draws is anti-conservative. The cohort is chemically diverse
+fail together and pooling them as independent draws is anti-conservative. Boltz-2 plays three distinct and
+deliberately separated roles, which we declare once here: it is held out of the governed five-model cohort
+because its $2023$ cutoff does not match the cohort's $2021$ reference and it carries an affinity head the
+others do not (its screening use is in Sec.~\ref{sec:utility}); it is analyzed as a fully governed model
+against its own $2023$-referenced similarity for the single genuine temporal boundary
+(Sec.~\ref{sec:general}); and its regenerated $2.2.1$ predictions are one of the two external co-folders in
+the cross-dataset test (Sec.~\ref{sec:general}). Each analysis states which role is in force. The cohort is chemically diverse
 and not a single-family monoculture: $55\%$ drug-like ($300$--$500$\,Da) with a $24\%$ fragment tail,
 $954$ receptor sequence clusters (the largest covering $7\%$ of systems), and no PDB header class above
 $17\%$.
@@ -392,11 +403,13 @@ the single worst cell in $3$ of $5$ models (base correctness $0.29$--$0.41$, rea
 with novel-pocket-alone nearly as damaging. The deployed view is starkest of all: the AF3 rule that Learn-then-Test certifies at $\alpha=0.20$
 on familiar targets realizes risk $R_{\mathrm{gate},S_3}=0.538$ on $S_3$, a margin of $-0.338$.
 
-A one-sided escape survives the impossibility, which constrains only certified \emph{upper} bounds:
-cross-model pose disagreement supplies a label-free \emph{lower} bound on ensemble risk by triangle
-inequality to the crystal pose, extending an oracle-free disagreement floor known for discrete
-outputs~\citep{incoherence,credal} and the folklore that pose agreement filters wrong
-poses~\citep{consensusdocking} to a continuous structured target. It is blind to consensus error, where all
+A one-sided escape survives the impossibility, which constrains only certified \emph{upper} bounds. We call
+it the cross-model danger floor: because pairwise pose disagreement across the models lower-bounds the
+ensemble error by the triangle inequality to the crystal pose, a large disagreement certifies that at least
+one accepted pose is wrong without any label, flagging danger even where no upper-bound certificate exists.
+It extends an oracle-free disagreement floor known for discrete outputs~\citep{incoherence,credal} and the
+folklore that pose agreement filters wrong poses~\citep{consensusdocking} to a continuous structured
+target. It is blind to consensus error, where all
 models share one wrong mode: the consensus regime covers $64\%$ of the analyzed complexes at risk $0.152$
 against $0.698$ on the diverse remainder, and the hidden error grows from $0.058$ on $S_0$ to $0.120$ on
 $S_3$ even as consensus mass shrinks. The construction and its single-chain provenance are in the SI.
@@ -487,6 +500,17 @@ naive-transfer conformal at $0.41$ (Table~\ref{tab:baselines}). A randomized loc
 marginal-over-localization guarantee rather than the stratum-conditional finite-sample one we require, so we
 keep group-conditional as the operative repair and report RLCP as the higher-coverage option a practitioner
 may prefer when a randomized guarantee suffices.
+
+\textbf{What the certificate does and does not cover.} The guarantee is over the stratum marginal, not over
+every sub-slice of a stratum. We state the residual plainly because it bounds what a certificate card
+promises: splitting each ligand stratum on its pocket-similarity median leaves a signed within-stratum gap
+of $+0.07$ to $+0.32$, so a card issued on the ligand axis alone can under-cover on the pocket-novel half of
+a stratum by as much as $0.32$, an amount comparable to the $0.328$ headline break itself. The two-axis
+(ligand $\times$ pocket) grid removes this by construction, at the label cost of finer cells, and is the
+stratification we recommend when both similarities are available; the one-axis cards are the cheaper view
+whose scope is the stratum marginal. Finer bins shrink the residual further but spend the exact-binomial
+budget faster ($1/(n_g{+}1)$ grows), which is the trade the label-cost curve prices. A card therefore
+certifies the neighborhood, not the point, and we mark on each card which axis it conditions.
 
 \begin{figure}[t]
 \centering
@@ -723,8 +747,12 @@ ratio $\lambda=\text{cost(act on a wrong pose)}/\text{cost(abstain on a right po
 the same window), dominating a fixed-ipTM threshold at \emph{every} $\lambda$ and beating accept-all once
 wrong poses are more than $\sim\!0.65\times$ as costly as a missed right one. Below $\lambda\!=\!0.65$
 accept-all wins (abstention only forfeits benefit when wrong poses are cheap), and above $\lambda\!=\!4.55$
-abstain-all wins (no accepted set is worth its false positives), so the gate occupies the intermediate,
-high-but-finite-cost regime, which is where a delivered pose that must be trusted lives.
+abstain-all wins (no accepted set is worth its false positives). We do not assert that a discovery program
+lives inside this window; $\lambda$ is program-specific, and a team that judges a wrong pose to cost more
+than about $4.5\times$ a passed-over right one should read the same curve as saying abstain-all, which is
+still a decision the layer delivers rather than a failure of it. The window locates where an accept/abstain
+gate beats both extremes, and a program anchors $\lambda$ from its own economics, the cost of a wasted
+synthesis-and-assay cycle against the opportunity cost of a skipped active.
 
 \textbf{A non-circular quality, honestly conditioned.} Accepted-pose purity is $1-$ selective risk by
 construction, so it cannot show the gate buys anything past the guarantee. Interaction-fingerprint recovery
@@ -735,7 +763,9 @@ heavy atom, enumerated within each structure and matched to the crystal contact 
 large recall gap ($0.19$ for AF3), but most of that is the accepted set being enriched for low-RMSD poses.
 Conditioning removes the confound: \emph{within} the sub-$2$\,\AA\ (correct) set, which holds $8{,}277$ poses
 pooled across models, the untyped accepted-minus-rejected recall gap is $+0.02$ to $+0.04$ (all five $90\%$
-intervals excluding zero), stable on the single-chain subset. The chemically important question is whether
+intervals target-grouped and excluding zero), stable on the single-chain subset. Every interaction interval
+here bootstraps whole targets under the same leakage-free grouped protocol as the coverage results, not
+poses, so it is not anti-conservative from repeated instances of one system. The chemically important question is whether
 this survives when contacts are \emph{typed}: recomputed with a PLIP-style typed scheme (H-bond, salt
 bridge, $\pi$-stacking, hydrophobic; heavy-atom geometry, since the deposited coordinates carry no
 hydrogens), the within-correct gate lift is \emph{largest on the polar, directional interactions} --- H-bond
@@ -847,9 +877,11 @@ is a plan. A worked example: a team running AlphaFold3 on a congeneric series wh
 stratum out from the training set (an $S_1$--$S_2$ regime) should not trust the raw ranking score --- it
 certifies almost nothing there leakage-free --- but can recover a certified $\sim\!50\%$ acceptance rate by
 building a group-conditional gate, which costs on the order of $80$ solved structures of in-series analogs to
-calibrate --- at a rough $\$10$k--$\$50$k and days to weeks per crystal or cryo-EM structure, a five-to-low-six-figure,
-one-to-few-month investment that is small against a mis-prioritized medicinal-chemistry campaign, and
-partly defrayable by in-house legacy structures or homolog transfer. If the series is genuinely novel
+calibrate. As an order-of-magnitude anchor only, and not a costing we claim precision over, a solved
+structure runs a rough $\$10$k--$\$50$k and days to weeks (the low end optimistic for a first structure on a
+novel target), so the calibration is a five-to-low-six-figure, one-to-few-month investment set against a
+mis-prioritized medicinal-chemistry campaign, and partly defrayable by in-house legacy structures or
+homolog transfer. If the series is genuinely novel
 ($S_3$--$S_4$, no close training analog), the certificate card
 reads ABSTAIN-infeasible and the honest recommendation is to treat every delivered pose as unverified and
 fall back to experiment. The deliverable is the card that tells the team which of these three situations it
@@ -859,7 +891,7 @@ is in, before it commits medicinal-chemistry effort to a wrong pose.
 Co-folding confidence becomes a risk-controlled decision only when the guarantee is audited where it fails.
 On structural novelty a marginally valid gate that calibrates on familiar targets and deploys on novel ones
 realizes error $0.55$ against a $0.20$ target (about $2.7\times$; the frozen score still \emph{ranks} poses
-there, AUROC $0.71$, but the base rate is too low for any threshold to certify), and $13$ of $40$
+there, AUROC $0.56$ to $0.71$ across models, but the base rate is too low for any threshold to certify), and $13$ of $40$
 model-by-stratum cells admit no threshold on any score in the family --- global, interface, or ligand-local
 --- that is certifiable at any coverage. An exact decomposition explains why: the score-fiber gap that opens
 there closes under in-stratum recalibration but under no training-free reweighting. This gives a program a
