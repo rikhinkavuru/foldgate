@@ -128,10 +128,10 @@ downstream docking gain, but it \emph{trains} an evidential head rather than con
 released confidence, and it keys on modality and disorder rather than on training-set similarity, so the
 training-free constraint that makes our impossibility bite does not apply to it. Concurrently, marginal
 conformal coverage was shown to hide minority-class collapse in ligand-based virtual
-screening~\citep{quietfailure}, with a group-conditional repair; that is the same shape as our break and
-repair in a different corner of the field, on a scalar activity label stratified by class rather than on
-pose geometry stratified by novelty, and we read it as independent corroboration that marginal validity is
-the wrong target for drug-discovery deployment.
+screening~\citep{quietfailure} (arXiv preprint), with a group-conditional repair; that is the same shape as
+our break and repair in a different corner of the field, on a scalar activity label stratified by class
+rather than on pose geometry stratified by novelty, and we read it as independent corroboration that
+marginal validity is the wrong target for drug-discovery deployment.
 
 We connect four literatures. Using training-set similarity as a reliability predictor is the
 cheminformatics \emph{applicability domain}~\citep{sheridan2004,sahigara2012,norinder2014}, and our claim is
@@ -140,7 +140,10 @@ variable, not the idea of similarity-as-reliability. The abstention gate is sele
 prediction~\citep{chow1970,geifman2017} and its learning-to-defer descendants~\citep{madras2018,mozannar2020}.
 The failure of exchangeability under shift is exactly the regime of conformal prediction beyond
 exchangeability~\citep{barber2023beyond}, which bounds the coverage gap by a total-variation distance and is
-the alternative route to our problem; adaptive conformal~\citep{gibbs2021aci} and label-shift
+the alternative route to our problem; conformal prediction under covariate shift is established for
+biomolecular design~\citep{fannjiang2022} and for guaranteed protein search~\citep{boger2025}, and our
+contribution is to carry it to the structured pose-correctness label of co-folding with training-set
+similarity as the shift variable. Adaptive conformal~\citep{gibbs2021aci} and label-shift
 conformal~\citep{podkopaev2021labelshift} address the online and label-shift variants we do not. On the
 repair side, multicalibration and multivalid prediction~\citep{hebertjohnson2018,gupta2022multivalid} handle
 overlapping, computationally-identifiable groups rather than a fixed partition, a strictly more flexible
@@ -184,7 +187,10 @@ recency, as the operative shift variable, for a reason the data forces (Sec.~\re
 
 \textbf{Cohort.} We evaluate five models
 (AF3~\citep{af3}, Boltz-1~\citep{boltz1}, Boltz-1x~\citep{boltz1x}, Chai-1~\citep{chai}, Protenix~\citep{protenix}) on Runs
-N' Poses~\citep{rnp}. Figure~\ref{fig:consort} is the reduction chain: $13{,}535$ raw delivered poses
+N' Poses~\citep{rnp}, the benchmark of post-cutoff (deposited after 30 September 2021) systems with released
+predictions and training-similarity annotations. Runs N' Poses also ships RoseTTAFold-All-Atom predictions;
+we exclude that model because it is not an AF3-lineage diffusion co-folder and does not emit the
+ranking-score / interface-ipTM confidence fields the gate normalizes onto a common scale. Figure~\ref{fig:consort} is the reduction chain: $13{,}535$ raw delivered poses
 (six models) minus the $933$ Boltz-2~\citep{boltz2} poses used only as an ungoverned affinity comparator
 (Sec.~\ref{sec:utility}) give $12{,}602$ governed poses over $2{,}425$ systems; deduplicating to one pose
 per (system, model) gives $11{,}254$ independent target-labels for the five governed models. Certificates
@@ -261,6 +267,17 @@ Romano-Wolf step-down on studentized max-$t$ statistics with $2000$ bootstrap re
 (Sec.~\ref{sec:repair}).
 
 \section{The exchangeability break}\label{sec:break}
+\textbf{The premise, and what we add.} That co-folding accuracy degrades on targets dissimilar to the
+training set is established: Škrinjar et al.~\citep{rnp}, whose benchmark we consume, report that current
+methods largely memorise poses and that success rate falls almost linearly with training-set coverage, to
+roughly $20\%$ in the sparsest bin. We take that degradation as the premise, not the finding. Our subject
+is the decision it forces. A program does not act on an average success rate; it acts on a single delivered
+pose and needs to know whether to trust it. We turn the degradation into a risk-controlled accept/abstain
+gate with a finite-sample guarantee, prove exactly where that guarantee can and cannot be kept (the
+feasibility frontier and its closed-form reading, Secs.~\ref{sec:frontier}--\ref{sec:decomp}), and price the
+repair. The base-rate collapse below is the mechanism this decision layer must survive, restated in
+selective-risk terms so the certificate can be read against it.
+
 \textbf{The break.} A single global threshold hides severe per-stratum under-coverage. For AF3 the marginal
 realized risk $R_{\mathrm{marg}}=0.177$ masks $R_{\mathrm{marg},S_3}=0.375$ on the novel ligand stratum
 (Fig.~\ref{fig:break}, with Clopper-Pearson intervals and accepted $n$ per point). The operational failure
@@ -343,16 +360,24 @@ includes the ungoverned Boltz-2, which is excluded from these cells. Of the $50$
 axes $\times$ five governed models $\times$ five strata), the ten $S_0$ reference cells are feasible by
 construction (the rule is calibrated on $S_0$: $c^\star\!=\!1.00$ at $\alpha=0.20$, $0.65$ at $\alpha=0.10$),
 leaving $40$ non-reference cells. Requiring at least $20$ accepted targets to call a stratum feasible, on the
-global ranking score $\mathbf{22}$ of those $40$ admit no operating point at any coverage at $\alpha=0.20$
-(of which $14$ survive a per-cell exact binomial lower bound on $R_{Q,g}>\alpha$ at every coverage, $13$ a
-family-wise Holm or Benjamini-Yekutieli correction). But the count is \emph{score-dependent}, because the
-frontier is bounded by the accepted-set base rate, not by ranking quality (Sec.~\ref{sec:break}): computed
-identically on interface ipTM it is $16$, and on ligand-local pLDDT --- the field's actual pose-triage
-signal, extracted from the predicted structures' per-atom confidence and a materially better ranker (AUROC
-$0.72$--$0.85$ against $0.59$--$0.70$ for the global score) --- it is $18$. We therefore state the
-impossibility across the frozen score family: $\mathbf{13}$ of the $40$ cells admit no threshold on
-\emph{any} of these scores (global ranking, interface ipTM, mean and worst-quartile ligand pLDDT) that
-reaches $\alpha$ at any coverage, and $21$ of $40$ at $\alpha=0.10$. Ligand pLDDT is a better ranker yet does
+global ranking score $\mathbf{22}$ of those $40$ admit no operating point at any coverage at $\alpha=0.20$;
+$14$ survive a per-cell exact binomial lower bound on $R_{Q,g}>\alpha$ at every coverage, and $\mathbf{13}$
+survive a family-wise Holm or Benjamini-Yekutieli correction over the $40$-cell family, so the ranking-score
+frontier is not a multiplicity artifact. Each such cell is the empirical realization of a closed-form
+feasibility condition: when the accepted-set base risk exceeds $\alpha$, no distribution-free rule can
+certify, and the required abstention mass has a closed form, shown for structured risk control
+by~\citet{crcgupta} (arXiv preprint, June 2026). Our contribution here is not that condition but its
+per-stratum map in this domain, the demonstration that structural novelty is what drives the base rate above
+$\alpha$, and the score-family conjunction below. That conjunction is the load-bearing claim: because the
+frontier is bounded by the accepted-set base rate rather than by ranking quality (Sec.~\ref{sec:break}), the
+count is \emph{score-dependent} --- computed identically on interface ipTM it is $16$, and on ligand-local
+pLDDT, a materially better ranker (AUROC $0.72$--$0.85$ against $0.59$--$0.70$ for the global score), it is
+$18$. Intersecting over the whole frozen family, $\mathbf{13}$ of the $40$ cells admit no threshold on
+\emph{any} of these four scores (global ranking, interface ipTM, mean and worst-quartile ligand pLDDT) that
+reaches $\alpha$ at any coverage, and $21$ of $40$ at $\alpha=0.10$. This family-intersection $13$ is a
+distinct quantity from the multiplicity-corrected ranking-score $13$ above, which the two happening to
+coincide should not obscure; it is a conservative point-estimate intersection, reported without a further
+across-cell correction, and it is the number the abstract and conclusion carry. Ligand pLDDT is a better ranker yet does
 not close the frontier precisely because the break is base-rate-bound, not discrimination-bound; the one
 pose-triage signal we could not test, the protein-ligand PAE block, is absent from the released prediction
 dump (it ships coordinates and ranking scores only) and would require regeneration. The infeasibility is not
@@ -895,8 +920,10 @@ Randomization Enables Robust Guarantees. J. R. Stat. Soc. B, 2024.
 \bibitem{barber2021limits} R. Foygel Barber, E. Cand\`es, A. Ramdas, R. Tibshirani.
 The Limits of Distribution-Free Conditional Predictive Inference. Information and Inference 10(2), 2021.
 \bibitem{geifman2017} Y. Geifman, R. El-Yaniv. Selective Classification for Deep Neural Networks. NeurIPS, 2017.
-\bibitem{rnp} A. Morehead, N. Giri, et al. (Runs N' Poses). A benchmark of released co-folding predictions
-with training-similarity annotations. Zenodo 10.5281/zenodo.14794785, 2025.
+\bibitem{rnp} P. Škrinjar, J. Eberhardt, G. Tauriello, T. Schwede, J. Durairaj. Have protein-ligand
+co-folding methods moved beyond memorisation? bioRxiv 2025.02.03.636309, 2025; published as Evaluating
+generalization in protein-ligand co-folding methods, Nature Structural \& Molecular Biology, 2026
+(Runs N' Poses benchmark; Zenodo 10.5281/zenodo.14794785).
 \bibitem{foldbench} Q. Feng, S. Xu, et al. FoldBench: a low-homology benchmark for biomolecular structure
 prediction. Nature Communications, 2025.
 \bibitem{shen2026vs} C. Shen, et al. Unlocking the application potential of AlphaFold3-like approaches in
@@ -977,6 +1004,10 @@ Minority-Class Collapse. arXiv:2607.06605 (preprint), 2026.
 arXiv:2603.26415 (preprint), 2026.
 \bibitem{dockq2} T. Bianchi, A. Elofsson. DockQ v2: improved automatic quality measure for protein
 complexes, nucleic acids and small molecules. Bioinformatics 40(10), btae586, 2024.
+\bibitem{fannjiang2022} C. Fannjiang, S. Bates, A. N. Angelopoulos, J. Listgarten, M. I. Jordan. Conformal
+Prediction Under Feedback Covariate Shift for Biomolecular Design. PNAS 119(43), e2204569119, 2022.
+\bibitem{boger2025} R. S. Boger, S. Chithrananda, A. N. Angelopoulos, P. H. Yoon, M. I. Jordan,
+J. A. Doudna. Functional Protein Mining with Conformal Guarantees. Nature Communications 16, 2025.
 \end{thebibliography}
 
 \clearpage
