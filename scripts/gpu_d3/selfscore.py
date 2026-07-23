@@ -201,39 +201,47 @@ def score_pose(pred_cif: Path, gt_cif: Path, ccd: str, pocket_r: float = 10.0):
     if not gt_prot or not pred_prot:
         return None, "no-protein"
 
-    lig_xyz = np.array([xyz for cp in gt_lig for (_, xyz) in cp.values()])
-    gt_pts, pred_pts = [], []
+    # Precompute the CA correspondence once (sequence-matched, chain by chain).
+    ca_pairs = []
     for _c, cres in gt_prot:
         gp, pp = match_ca(cres, pred_prot)
-        for g, p in zip(gp, pp):
-            if np.min(np.linalg.norm(lig_xyz - g, axis=1)) <= pocket_r:
-                gt_pts.append(g)
-                pred_pts.append(p)
-    if len(gt_pts) < 4:  # fall back to global CA alignment
-        gt_pts, pred_pts = [], []
-        for _c, cres in gt_prot:
-            gp, pp = match_ca(cres, pred_prot)
-            gt_pts += gp
-            pred_pts += pp
-    if len(gt_pts) < 4:
+        ca_pairs.extend(zip(gp, pp))
+    if len(ca_pairs) < 4:
         return None, "too-few-ca"
+    ca_gt = np.array([g for g, _ in ca_pairs])
+    ca_pred = [p for _, p in ca_pairs]
 
-    tr = kabsch(gt_pts, pred_pts)  # maps pred -> gt frame
+    p_anum, p_adj, p_xyz0 = _mol(pred_lig)
 
-    p_anum, p_adj, p_xyz = _mol(pred_lig)
-    p_xyz = np.array([[(q := tr.apply(gemmi.Position(*x))).x, q.y, q.z] for x in p_xyz])
-
+    # Superpose per ligand COPY on that copy's own pocket, then take the best-matching
+    # site. RCSB deposits often carry several copies of a ligand in different sites (63%
+    # of the PLINDER subset); pooling their pockets into one frame scatters the alignment
+    # and inflates every RMSD, so each copy must define and be scored in its own frame.
     best = None
+    matched_any = False
     for gcopy in gt_lig:
         g_anum, g_adj, g_xyz = _mol(gcopy)
         if len(g_anum) != len(p_anum) or sorted(g_anum) != sorted(p_anum):
             continue  # element multiset must match for graph isomorphism
+        matched_any = True
+        cxyz = np.vstack([np.asarray(xyz) for (_el, xyz) in gcopy.values()])
+        # pocket = CA within pocket_r of THIS copy; fall back to global CA if too few
+        near = np.min(np.linalg.norm(ca_gt[:, None, :] - cxyz[None, :, :], axis=2), axis=1) <= pocket_r
+        if near.sum() >= 4:
+            gt_pts = ca_gt[near]
+            pred_pts = [ca_pred[i] for i in np.where(near)[0]]
+        else:
+            gt_pts, pred_pts = ca_gt, ca_pred
+        tr = kabsch(list(gt_pts), pred_pts)  # maps pred -> gt frame for this copy
+        p_xyz = np.array([[(q := tr.apply(gemmi.Position(*x))).x, q.y, q.z] for x in p_xyz0])
         try:
             r = srmsd.symmrmsd(g_xyz, p_xyz, g_anum, p_anum, g_adj, p_adj, minimize=False)
         except Exception:  # noqa: BLE001
             continue
         if best is None or r < best:
             best = float(r)
+    if not matched_any:
+        return None, "no-graph-match"
     if best is None:
         return None, "no-graph-match"
     return best, "ok"
