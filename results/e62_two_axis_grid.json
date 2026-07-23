@@ -1,0 +1,158 @@
+{
+ "alpha": 0.2,
+ "score": "ranking_score",
+ "grid": "2x2 familiar/novel on ligand and pocket",
+ "cells_def": "lig_novel = novelty_stratum>=2; poc_novel = pocket_novelty_stratum>=2",
+ "per_model": {
+  "af3": {
+   "lig_fam__poc_fam": {
+    "n": 883,
+    "cp_certified_coverage": 1.0,
+    "point_frontier": 1.0,
+    "verdict": "FEASIBLE",
+    "base_correct": 0.87
+   },
+   "lig_fam__poc_novel": {
+    "n": 275,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.35,
+    "verdict": "ABSTAIN-underpowered",
+    "base_correct": 0.644
+   },
+   "lig_novel__poc_fam": {
+    "n": 275,
+    "cp_certified_coverage": 0.95,
+    "point_frontier": 1.0,
+    "verdict": "FEASIBLE",
+    "base_correct": 0.84
+   },
+   "lig_novel__poc_novel": {
+    "n": 976,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.1,
+    "verdict": "ABSTAIN-underpowered",
+    "base_correct": 0.523
+   }
+  },
+  "boltz1": {
+   "lig_fam__poc_fam": {
+    "n": 753,
+    "cp_certified_coverage": 1.0,
+    "point_frontier": 1.0,
+    "verdict": "FEASIBLE",
+    "base_correct": 0.829
+   },
+   "lig_fam__poc_novel": {
+    "n": 244,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.15,
+    "verdict": "ABSTAIN-underpowered",
+    "base_correct": 0.57
+   },
+   "lig_novel__poc_fam": {
+    "n": 256,
+    "cp_certified_coverage": 0.25,
+    "point_frontier": 0.45,
+    "verdict": "FEASIBLE",
+    "base_correct": 0.742
+   },
+   "lig_novel__poc_novel": {
+    "n": 886,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.0,
+    "verdict": "ABSTAIN-infeasible",
+    "base_correct": 0.464
+   }
+  },
+  "boltz1x": {
+   "lig_fam__poc_fam": {
+    "n": 740,
+    "cp_certified_coverage": 1.0,
+    "point_frontier": 1.0,
+    "verdict": "FEASIBLE",
+    "base_correct": 0.826
+   },
+   "lig_fam__poc_novel": {
+    "n": 242,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.15,
+    "verdict": "ABSTAIN-underpowered",
+    "base_correct": 0.591
+   },
+   "lig_novel__poc_fam": {
+    "n": 269,
+    "cp_certified_coverage": 0.25,
+    "point_frontier": 0.8,
+    "verdict": "FEASIBLE",
+    "base_correct": 0.773
+   },
+   "lig_novel__poc_novel": {
+    "n": 840,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.0,
+    "verdict": "ABSTAIN-underpowered",
+    "base_correct": 0.487
+   }
+  },
+  "chai": {
+   "lig_fam__poc_fam": {
+    "n": 823,
+    "cp_certified_coverage": 1.0,
+    "point_frontier": 1.0,
+    "verdict": "FEASIBLE",
+    "base_correct": 0.854
+   },
+   "lig_fam__poc_novel": {
+    "n": 259,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.0,
+    "verdict": "ABSTAIN-underpowered",
+    "base_correct": 0.548
+   },
+   "lig_novel__poc_fam": {
+    "n": 269,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.95,
+    "verdict": "ABSTAIN-underpowered",
+    "base_correct": 0.792
+   },
+   "lig_novel__poc_novel": {
+    "n": 941,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.0,
+    "verdict": "ABSTAIN-infeasible",
+    "base_correct": 0.447
+   }
+  },
+  "protenix": {
+   "lig_fam__poc_fam": {
+    "n": 828,
+    "cp_certified_coverage": 1.0,
+    "point_frontier": 1.0,
+    "verdict": "FEASIBLE",
+    "base_correct": 0.865
+   },
+   "lig_fam__poc_novel": {
+    "n": 268,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.1,
+    "verdict": "ABSTAIN-underpowered",
+    "base_correct": 0.567
+   },
+   "lig_novel__poc_fam": {
+    "n": 273,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.75,
+    "verdict": "ABSTAIN-underpowered",
+    "base_correct": 0.769
+   },
+   "lig_novel__poc_novel": {
+    "n": 954,
+    "cp_certified_coverage": 0.0,
+    "point_frontier": 0.0,
+    "verdict": "ABSTAIN-underpowered",
+    "base_correct": 0.4
+   }
+  }
+ }
+}

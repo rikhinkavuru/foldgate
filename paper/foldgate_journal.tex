@@ -132,7 +132,7 @@ which \emph{compounds} to advance given a labeled calibration set, while this la
 neither occupies this cell. CalPro~\citep{calpro} conformalizes protein-structure prediction and reports a
 downstream docking gain, but it \emph{trains} an evidential head rather than consuming a frozen model's
 released confidence, and it keys on modality and disorder rather than on training-set similarity, so the
-training-free constraint that makes our impossibility bite does not apply to it. Concurrently, marginal
+training-free constraint that makes our infeasibility result bite does not apply to it. Concurrently, marginal
 conformal coverage was shown to hide minority-class collapse in ligand-based virtual
 screening~\citep{quietfailure} (arXiv preprint), with a group-conditional repair; that is the same shape as
 our break and repair in a different corner of the field, on a scalar activity label stratified by class
@@ -252,7 +252,7 @@ staying training-free.
 \textbf{A benchmark-integrity finding, of independent value.} Anyone recomputing pose geometry on Runs N'
 Poses will hit a silent trap we document in full in SI Sec.~\ref{app:integrity}: the benchmark ships only the
 receptor chain while co-folding models predict the full assembly, so a chain-ordinal superposition can seat
-the ligand in the wrong protomer of a homodimer, and a distance-consistency check passes at $0$ of
+the ligand in the wrong protomer of a homodimer, and a distance-consistency check flags none of the
 $13{,}146$ pairs while $15\%$ of the recomputed binary labels are wrong; only comparison against the shipped
 BiSyRMSD exposes it, and restricting to single-chain receptors raises agreement from Spearman $0.62$ to
 $0.995$. We surface it here because it is a reusable finding for the benchmark, and we
@@ -296,9 +296,13 @@ realized risk $R_{\mathrm{marg}}=0.177$ masks $R_{\mathrm{marg},S_3}=0.375$ on t
 is starker: calibrating the gate on the familiar strata ($S_0,S_1$) and deploying on the novel tail
 ($S_3,S_4$) drives the realized error to $R_{\mathrm{transfer}}=0.55$ (AF3, $90\%$ CI $[0.52,0.58]$,
 $n\!=\!734$; $0.48$--$0.66$ across the five
-models) against the $0.20$ target, so the certificate is inverted, not merely loose. We lead the break on
-$S_3$; the no-computable-analog $S_4$ (AF3 $n\!\approx\!76$, greyed in the figure) is small-sample and enters
-only in the feasibility frontier, where zero coverage is the point.
+models) against the $0.20$ target, so the certificate is inverted, not merely loose. The sharpest way to
+see the failure is the transferred gate's coverage: it accepts $99\%$ of the novel poses (Table~\ref{tab:baselines},
+naive-transfer conformal at coverage $0.99$, realized risk $0.412$, essentially the accept-all rate
+$0.417$). Under transfer the threshold is not a weak filter but no filter, and the base rate on the tail is
+what the accepted set then inherits. We lead the break on $S_3$; the no-computable-analog $S_4$ (AF3
+$n\!\approx\!76$, greyed in the figure) is small-sample and enters only in the feasibility frontier, where
+zero coverage is the point.
 
 \textbf{The break is a base-rate collapse, not a signal collapse.} A natural worry is that the score simply
 carries no information on novel targets. It does not: within $S_3$ the native score still ranks correct from
@@ -380,9 +384,15 @@ that sequence novelty is safe, and a low-homology benchmark is needed to test it
 The break is a fixed-coverage statement; it leaves open whether $\alpha$ is reachable by lowering coverage,
 so we measure that directly. We fix the deployed rule on the familiar stratum and, per target stratum,
 report the largest source coverage $c^\star_g=\max\{c:R_{Q,g}(\tau(c))\le\alpha\}$ at which it still holds
-$\alpha$, one delivered pose per (system, model). The frontier decays with novelty and then vanishes: for
-AF3 on the ligand axis $c^\star$ runs $1.00,0.85,0.75,0.20,0.00$ across $S_0$ to $S_4$ at $\alpha=0.20$,
-and $0.65,0.40,0.10,0.00,0.00$ at $\alpha=0.10$. The frontier is computed per governed model, one delivered
+$\alpha$, one delivered pose per (system, model). Two frontiers matter and we keep them separate: the
+\emph{point-estimate} frontier, on the realized risk $R_{Q,g}(\tau(c))\le\alpha$ that this section counts,
+and the stricter \emph{CP-certified} frontier, on the Clopper-Pearson upper bound $\le\alpha$ under the
+$\ge\!20$-accept rule, which is what the certificate cards (Fig.~\ref{fig:cards}) and Table~\ref{tab:covmap}
+report and what a user can stand behind. The point-estimate frontier decays with novelty and then vanishes:
+for AF3 on the ligand axis $c^\star$ runs $1.00,0.85,0.75,0.20,0.00$ across $S_0$ to $S_4$ at $\alpha=0.20$,
+and $0.65,0.40,0.10,0.00,0.00$ at $\alpha=0.10$; the CP-certified frontier is uniformly stricter (AF3
+ligand $S_1,S_2$ certify to $0.72$ and $0.58$ against the point $0.85$ and $0.75$), which is why the two
+appear at different values in the card and the table. The frontier is computed per governed model, one delivered
 pose per (system, model); the all-six dedup pool of Fig.~\ref{fig:consort} ($12{,}125$ target-labels)
 includes the ungoverned Boltz-2, which is excluded from these cells. Of the $50$ model-by-stratum cells (two
 axes $\times$ five governed models $\times$ five strata), the ten $S_0$ reference cells are feasible by
@@ -414,13 +424,13 @@ across $3$, $5$, or $7$ strata or fixed-similarity edges), in the $\ge\!20$-acce
 ranking-score count moves only within $19$--$24$ of $40$ as the rule slides from $10$ to $50$, and the
 zero-frontier cells retain a healthy median $20$--$25$ accepted targets, so they are not zero-frontier for
 want of samples), and in the RMSD label cutoff (loosening the $2$\,\AA\ line to $1.0/1.5/2.5/3.0$\,\AA\ gives
-$35/24/18/16$ of $40$ --- the impossibility persists even at $3$\,\AA). It tracks the frozen score's ranking,
+$35/24/18/16$ of $40$ --- the infeasibility persists even at $3$\,\AA). It tracks the frozen score's ranking,
 not the thresholds we chose. On the two axes jointly, the both-novel corner (ligand- and pocket-novel) is
 the single worst cell in $3$ of $5$ models (base correctness $0.29$--$0.41$, realized risk up to $0.87$),
 with novel-pocket-alone nearly as damaging. The deployed view is starkest of all: the AF3 rule that Learn-then-Test certifies at $\alpha=0.20$
 on familiar targets realizes risk $R_{\mathrm{gate},S_3}=0.538$ on $S_3$, a margin of $-0.338$.
 
-A one-sided escape survives the impossibility, which constrains only certified \emph{upper} bounds. We call
+A one-sided escape survives the infeasibility, which constrains only certified \emph{upper} bounds. We call
 it the cross-model danger floor: because pairwise pose disagreement across the models lower-bounds the
 ensemble error by the triangle inequality to the crystal pose, a large disagreement certifies that at least
 one accepted pose is wrong without any label, flagging danger even where no upper-bound certificate exists.
@@ -448,7 +458,7 @@ $\bar\Delta_c=\mathbb{E}_Q[\eta_Q(s)-\eta_P(s)\mid s\ge\tau_c]$. We estimate $\b
 (Sec.~\ref{sec:break}), so it is the accept-region gap between the source and target label rates \emph{at
 the same score}. Whether that gap is a change in $P(Y\mid\text{full covariate})$ (concept shift proper) or
 covariate shift within a score fiber is not identifiable from $s$ alone; either way it is invisible to any
-$\sigma(s)$-measurable reweighting, which is exactly what the impossibility requires, so we name it
+$\sigma(s)$-measurable reweighting, which is exactly what the infeasibility requires, so we name it
 \emph{score-conditional reliability drift} rather than concept shift, and report its binning sensitivity.
 
 \begin{quote}\small
@@ -529,6 +539,32 @@ whose scope is the stratum marginal. Finer bins shrink the residual further but 
 budget faster ($1/(n_g{+}1)$ grows), which is the trade the label-cost curve prices. A card therefore
 certifies the neighborhood, not the point, and we mark on each card which axis it conditions.
 
+We demonstrate the two-axis grid rather than only recommend it (Table~\ref{tab:twoaxis}). Cross-classifying
+AF3 targets into familiar/novel on both axes and certifying each cell on its own separates two situations a
+ligand-only card conflates. A ligand-familiar but \emph{pocket}-novel target (base correctness $0.64$) is
+ABSTAIN, not the FEASIBLE a ligand-only card would grant it, which is precisely the up-to-$0.32$
+under-coverage made explicit; conversely a ligand-novel but \emph{pocket}-familiar target (base $0.84$) is
+certifiable to $95\%$ coverage, so pocket similarity can rescue a ligand a one-axis card would abandon. The
+grid costs the finer per-cell label budget and is what we recommend when both similarities are available;
+the full five-model grid is in the SI.
+
+\begin{table}[t]
+\centering\small
+\caption{Two-axis certified gate (AF3, native \texttt{ranking\_score}, $\alpha=0.20$). Each familiar/novel
+$\times$ familiar/novel cell is calibrated and certified on its own. The off-diagonal cells are what a
+one-axis ligand card cannot see: pocket novelty alone removes certifiability (top-right), and pocket
+familiarity alone restores it (bottom-left).}
+\label{tab:twoaxis}
+\begin{tabular}{lll}
+\toprule
+ & pocket familiar & pocket novel \\
+\midrule
+ligand familiar & FEASIBLE, cov $1.00$ (base $0.87$) & ABSTAIN (base $0.64$) \\
+ligand novel & FEASIBLE, cov $0.95$ (base $0.84$) & ABSTAIN (base $0.52$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.98\textwidth]{../results/figures/e3_repair.png}
@@ -570,16 +606,17 @@ $38$ independent target-labels against $60$ for a Hoeffding-Bentkus bound and $1
 that $38$ is a \emph{certification} sample size on already-feasible (familiar) strata, not the budget to
 push coverage one stratum outward. Figure~\ref{fig:labelcost} turns the latter into a design tool: certified
 coverage as a function of the label budget $n_g$, per stratum. With the native score, no budget buys usable
-coverage on the novel strata, because there the rule fails, not the estimate of it, the impossibility made
+coverage on the novel strata, because there the rule fails, not the estimate of it, the infeasibility made
 empirical. The combined score, a partly novelty-aware re-score and so on the achievability side, unlocks the
-moderate strata: AF3 reaches $22\%$ certified coverage on $S_1$ at $\sim\!80$ in-stratum labels and $83\%$
-with the full pool, and $77\%$ on $S_2$, while $S_3$ needs close to the full label pool for any coverage at
+moderate strata: AF3 reaches a median $22\%$ certified coverage on $S_1$ at $\sim\!80$ in-stratum labels
+(with a wide $[0,0.85]$ band, and only $56\%$ of label draws certifying any coverage) rising to $83\%$
+with the full pool, and a median $48\%$ on $S_2$, while $S_3$ needs close to the full label pool for any coverage at
 all. The combined score raises the ceiling, not the label floor. The budget is not just measured but predictable:
 for a stratum whose cleanest accept region has error rate $r<\alpha$, the exact binomial certifies non-zero
 coverage at $(\alpha,\delta)$ once $n_g\ge\lceil\ln(1/\delta)/\mathrm{KL}(r\Vert\alpha)\rceil$ (binary
 relative entropy), a closed form a practitioner evaluates for their own $\alpha$; it floors at $11$ labels
 for a perfect accept region ($r{=}0$) and diverges as $r\!\uparrow\!\alpha$, which is exactly why a stratum
-whose best accept region already errs at $r\ge\alpha$ (every model's $S_4$; $S_3$ for Chai and Protenix)
+whose best accept region already errs at $r\ge\alpha$ (every model's $S_4$, and Chai's $S_3$)
 cannot be certified at any budget.
 
 \begin{figure}[t]
@@ -648,7 +685,9 @@ Joint LOTO gate & $0.02$ & Bonferroni $\delta/K$ & target-labels & joint (5 mode
 CVaR / DRO bound & $0.02$ & Bonferroni $\delta/K$ & accepted poses & joint (5 models) \\
 Betting bound (graded) & $0.10$ & anytime-valid (Ville) & accepted poses & per-model \\
 Drift grid & $0.10$ & Romano-Wolf step-down & $55$ cells & family-wise \\
-Feasibility frontier (CP) & $0.10$ & per-cell exact, uncorrected & $40$ cells & per-test \\
+Feasibility frontier, per-cell & $0.10$ & CP exact, per-cell (uncorrected) & $40$ cells & per-test \\
+Ranking-score frontier, corrected & $0.10$ & Holm / Benjamini-Yekutieli & $22\!\to\!13$ cells & family-wise \\
+Score-family intersection ($13/40$) & $0.10$ & conjunction, no across-cell corr. & $40$ cells & per-test \\
 ``For every model'' effects & $0.10$ & intersection-union & per-model $p$ & no penalty \\
 \bottomrule
 \end{tabular}
@@ -752,7 +791,8 @@ Quantity & Protocol & Scope & coverage & risk \\
 \midrule
 Combined gate, marginal & nested target-grouped LOTO & all strata & $0.73$ & $0.176$ \\
 Native gate, marginal & nested target-grouped LOTO & all strata & $0.20$ & $0.189$ \\
-Frontier / certificate card (native) & $S_0$-calibrated rule, max reach & $S_1$ / $S_2$ & $0.72$ / $0.58$ & $\le\alpha$ \\
+Frontier / certificate card (native) & $S_0$-calib., CP-certified reach & $S_1$ / $S_2$ & $0.72$ / $0.58$ & $\le\alpha$ \\
+Frontier, point estimate (native) & $S_0$-calib., $R_Q\le\alpha$ reach & $S_1$ / $S_2$ & $0.85$ / $0.75$ & $\le\alpha$ \\
 Group-conditional (native) & per-stratum $\alpha$-certified gate & $S_1$ / $S_2$ & $0.08$ / $0.12$ & $\le\alpha$ \\
 Group-conditional (combined) & per-stratum $\alpha$-certified gate & $S_1$ / $S_2$ & $0.52$ / $0.39$ & $\le\alpha$ \\
 Deploy-to-novel (combined) & calibrate familiar, deploy novel & $S_2,S_3$ & $0.18$ & $0.190$ \\
@@ -760,7 +800,8 @@ Label-cost maximum (combined) & full in-stratum label pool & $S_1$ / $S_2$ & $0.
 \midrule
 \multicolumn{5}{l}{\emph{Label budgets (not coverages):} certification sample size $=$ median $38$ over the
 $23$ feasible cells;} \\
-\multicolumn{5}{l}{one-stratum-out extension budget $\approx 80$ in-stratum labels (the label-cost curve).} \\
+\multicolumn{5}{l}{one-stratum-out extension budget $\approx 80$ labels to \emph{begin} certifying a moderate stratum, wide
+variance, full pool for reliable coverage (Fig.~\ref{fig:labelcost}).} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -790,7 +831,7 @@ pooled across models, the untyped accepted-minus-rejected recall gap is $+0.02$ 
 intervals target-grouped and excluding zero), stable on the single-chain subset. Every interaction interval
 here bootstraps whole targets under the same leakage-free grouped protocol as the coverage results, not
 poses, so it is not anti-conservative from repeated instances of one system. The chemically important question is whether
-this survives when contacts are \emph{typed}: recomputed with a PLIP-style typed scheme (H-bond, salt
+this survives when contacts are \emph{typed}: recomputed with a PLIP-style typed scheme~\citep{plip} (H-bond, salt
 bridge, $\pi$-stacking, hydrophobic; heavy-atom geometry, since the deposited coordinates carry no
 hydrogens), the within-correct gate lift is \emph{largest on the polar, directional interactions} --- H-bond
 $+0.072$ (AF3) and $+0.082$ (Chai), $\pi$-stacking $+0.073$ and $+0.061$, both intervals excluding zero and
@@ -802,20 +843,21 @@ strengthening; certifying the joint label (RMSD $\le2$\,\AA\ \emph{and} physical
 expensive because the confidence ranks for correctness, not validity, and we report that cost rather than
 hide it.
 
-\textbf{The interaction endpoint as a correctness label, and the scope of the impossibility.} A single
+\textbf{The interaction endpoint as a correctness label, and the scope of the infeasibility.} A single
 geometric cutoff can over-count failures for a flexible ligand whose solvent-exposed tail moves the
 whole-ligand RMSD past $2$\,\AA\ while the core pose and the binding-determinant interactions are right, so
-we test the impossibility against interaction recovery treated as the correctness \emph{label}, not only as
-a downstream quality read. The mechanism is real: $614$ AF3 poses are RMSD-incorrect yet
+we test the infeasibility against interaction recovery treated as the correctness \emph{label}, not only as
+a downstream quality read. Interaction recovery as a co-folding evaluation is itself established: ignoring it
+overestimates model quality because current co-folding methods often miss key interactions~\citep{errington2025};
+our step is to use it as a certification \emph{endpoint} inside the risk-controlled gate, not as a metric. The mechanism is real: $614$ AF3 poses are RMSD-incorrect yet
 interaction-correct, concentrated on the flexible ligands (rotatable bonds $\ge 8$), against $33$ the other
-way. The impossibility then resolves cleanly by endpoint strictness, which we report rather than pick a
-convenient label. Under strict endpoints the novel-stratum break holds: on the $2$\,\AA\ geometry the AF3
+way. The infeasibility then resolves cleanly by endpoint strictness. Under strict endpoints the novel-stratum break holds: on the $2$\,\AA\ geometry the AF3
 deploy-to-novel error is $0.41$, and on recovery of $\ge 70\%$ of the key directional interactions (H-bond,
 salt bridge, $\pi$-stacking, the binding determinants) it is $0.39$, both with zero-frontier cells on the
 novel tail. It relaxes only under a lenient all-contact fingerprint (untyped $F_1$, or $\ge 50\%$
 key-interaction recall), where hydrophobic contacts are numerous and easy to recover, novel-stratum base
 correctness rises above $1-\alpha$, and a conservative gate certifies at reduced coverage. So the
-impossibility is not an artifact of the RMSD convention: it governs any endpoint that requires reproducing
+infeasibility is not an artifact of the RMSD convention: it governs any endpoint that requires reproducing
 the binding-determinant interactions, and the endpoint choice is itself the deployment decision the
 match-the-certifier-to-loss result (Sec.~\ref{sec:repair}) makes explicit. The whole-ligand geometry we
 lead with is the standardized pocket-aligned symmetry-corrected RMSD of the DockQ family~\citep{dockq2},
@@ -844,7 +886,7 @@ threshold by $0.002$ and the coverage by $0.02$, and gating a random sample per 
 changes coverage by $\sim\!0$ at the same certified risk, so the certificate is not an artifact of the
 delivery policy.
 
-\textbf{Cross-dataset.} A frozen Runs N' Poses threshold deployed on a FoldBench regeneration reproduces the
+\textbf{Cross-dataset.} A frozen Runs N' Poses threshold deployed on a FoldBench~\citep{foldbench} regeneration reproduces the
 coverage \emph{starvation} of Sec.~\ref{sec:break} on low-homology targets, but that regeneration did not
 reproduce the released model (self-scored top-1 success $0.40$ against the released $0.57$), so we keep it
 only as a directional coverage check and give the numbers in the SI. The load-bearing external test is the
@@ -973,10 +1015,11 @@ Randomization Enables Robust Guarantees. J. R. Stat. Soc. B, 2024.
 \bibitem{barber2021limits} R. Foygel Barber, E. Cand\`es, A. Ramdas, R. Tibshirani.
 The Limits of Distribution-Free Conditional Predictive Inference. Information and Inference 10(2), 2021.
 \bibitem{geifman2017} Y. Geifman, R. El-Yaniv. Selective Classification for Deep Neural Networks. NeurIPS, 2017.
-\bibitem{rnp} P. Škrinjar, J. Eberhardt, G. Tauriello, T. Schwede, J. Durairaj. Have protein-ligand
-co-folding methods moved beyond memorisation? bioRxiv 2025.02.03.636309, 2025; published as Evaluating
-generalization in protein-ligand co-folding methods, Nature Structural \& Molecular Biology, 2026
-(Runs N' Poses benchmark; Zenodo 10.5281/zenodo.14794785).
+\bibitem{rnp} P. Škrinjar, J. Eberhardt, G. Studer, G. Tauriello, T. Schwede, J. Durairaj. Evaluating
+generalization in protein-ligand cofolding methods. Nature Structural \& Molecular Biology 33(5),
+782--794, 2026, doi:10.1038/s41594-026-01797-5 (Runs N' Poses benchmark; earlier as bioRxiv
+2025.02.03.636309, ``Have protein-ligand cofolding methods moved beyond memorisation?''; Zenodo
+10.5281/zenodo.14794785).
 \bibitem{foldbench} Q. Feng, S. Xu, et al. FoldBench: a low-homology benchmark for biomolecular structure
 prediction. Nature Communications, 2025.
 \bibitem{shen2026vs} C. Shen, et al. Unlocking the application potential of AlphaFold3-like approaches in
@@ -996,8 +1039,8 @@ arXiv:2603.24704 (preprint), 2026.
 (Mondrian / group-conditional conformal).
 \bibitem{vovk2014vennabers} V. Vovk, I. Petej. Venn-Abers Predictors. UAI, 2014.
 \bibitem{crcgupta} V. Kotte. When Can Conformal Risk Control Certify LLM Outputs? Bounds, Impossibility, and
-Adaptation for Structured Generation. arXiv:2606.29054 (preprint), 2026 (concurrent, independent
-reweighting-invariant selective-risk floor, LLM domain).
+Adaptation for Structured Generation. arXiv:2606.29054 (preprint), 2026 (concurrent, independent; gives the
+closed-form base-risk feasibility condition and abstention floor we realize per stratum).
 \bibitem{boltz1} J. Wohlwend, et al. Boltz-1: Democratizing Biomolecular Interaction Modeling. bioRxiv
 (preprint), 2024.
 \bibitem{boltz1x} J. Wohlwend, et al. Boltz-1x: confidence-refined structure prediction. Model release,
@@ -1049,14 +1092,19 @@ Theory 16(1), 1970.
 by Learning to Defer. NeurIPS, 2018.
 \bibitem{mozannar2020} H. Mozannar, D. Sontag. Consistent Estimators for Learning to Defer to an Expert.
 ICML, 2020.
-\bibitem{calpro} CalPro: Prior-Aware Evidential-Conformal Prediction with Structure-Aware Guarantees for
-Protein Structures. arXiv:2601.07201 (preprint), 2026.
-\bibitem{quietfailure} A Quiet Failure in Calibrated Virtual Screening: Marginal Conformal Coverage Hides
-Minority-Class Collapse. arXiv:2607.06605 (preprint), 2026.
+\bibitem{calpro} I. F. Shihab, S. Akter, A. Sharma. CalPro: Prior-Aware Evidential-Conformal Prediction
+with Structure-Aware Guarantees for Protein Structures. arXiv:2601.07201 (preprint), 2026.
+\bibitem{quietfailure} M. Tursunbadalov, M. Tursunbadalov. A Quiet Failure in Calibrated Virtual Screening:
+Marginal Conformal Prediction Under-Covers the Minority Class, and a Class-Conditional Fix Recovers It.
+arXiv:2607.06605 (preprint), 2026.
 \bibitem{kmmcp} Selective Kernel Mean Matching for Conformal Prediction under Covariate Shift.
 arXiv:2603.26415 (preprint), 2026.
 \bibitem{dockq2} T. Bianchi, A. Elofsson. DockQ v2: improved automatic quality measure for protein
 complexes, nucleic acids and small molecules. Bioinformatics 40(10), btae586, 2024.
+\bibitem{errington2025} D. Errington, C. Schneider, C. Bouysset, F. A. Dreyer. Assessing interaction
+recovery of predicted protein-ligand poses. Journal of Cheminformatics 17, 2025 (arXiv:2409.20227).
+\bibitem{plip} S. Salentin, S. Schreiber, V. J. Haupt, M. F. Adasme, M. Schroeder. PLIP: fully automated
+protein-ligand interaction profiler. Nucleic Acids Research 43(W1), W443--W447, 2015.
 \bibitem{fannjiang2022} C. Fannjiang, S. Bates, A. N. Angelopoulos, J. Listgarten, M. I. Jordan. Conformal
 Prediction Under Feedback Covariate Shift for Biomolecular Design. PNAS 119(43), e2204569119, 2022.
 \bibitem{boger2025} R. S. Boger, S. Chithrananda, A. N. Angelopoulos, P. H. Yoon, M. I. Jordan,
@@ -1180,8 +1228,9 @@ finite-sample label cost the curve of Sec.~\ref{sec:repair} measures. \emph{Rema
 exchangeability is exact only for a homogeneous bin; because strata are quantile bins of a continuous
 similarity, a residual within-stratum drift remains, which we measure (splitting each ligand stratum on its
 pocket-similarity median leaves a signed gap of $+0.07$ to $+0.32$, Sec.~\ref{sec:repair} data). Finer bins
-shrink this residual at the cost of fewer labels per bin ($1/(n_g{+}1)$ grows), so the two-axis stratification
-we use is the practical compromise; the residual is the gap between the neighborhood-conditional
+shrink this residual at the cost of fewer labels per bin ($1/(n_g{+}1)$ grows), so the two-axis grid is the
+practical compromise we recommend when both similarities are available; the one-axis cards we ship are the
+cheaper view whose scope is the stratum marginal. The residual is the gap between the neighborhood-conditional
 guarantee and a pointwise one, which is impossible~\citep{barber2021limits}.
 
 \section{Benchmark and validation details}\label{app:bench}
@@ -1200,8 +1249,7 @@ $0.05$ (ACS, covariate).
 receptor chain while co-folding models predict the full biological assembly, so a chain-ordinal
 superposition can land the ligand in the wrong protomer of a homodimer: the backbone still fits
 (superposition residual $\sim\!0.3$\,\AA) while the ligand sits tens of \AA ngstr\"om away. Neither the
-residual nor a triangle-inequality consistency check detects it, and a distance-consistency check passed at
-$0/13{,}146$ while $21\%$ of recomputed distances and $15\%$ of binary correctness labels were wrong. Only
+residual nor a triangle-inequality consistency check detects it, and a distance-consistency check flagged for none of the $13{,}146$ pairs while $21\%$ of recomputed distances and $15\%$ of binary correctness labels were wrong. Only
 comparison against the shipped BiSyRMSD label exposes it; restricting to single-chain receptors with an
 unambiguous ligand copy raises agreement from Spearman $0.620$ to $0.995$ and defines the $6{,}163$-instance
 subset any recomputed-geometry result in this paper uses (Table~\ref{tab:provenance}). We flag this for
